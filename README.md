@@ -5,6 +5,9 @@ The desktop client-side application for SwEng Group 1
 Within the home folder of the repository, there is a UML Class diagram outlining the structure of the application.
 This has been broken down into separate packages and views, allowing the development of each to be mostly indendent, allowing easier allocation of separate jobs
 
+# UML Class Diagram
+![Diagram](MMPE UML Diagram.png)
+
 # Libraries to Use
 All of the external libraries will be installed using maven, which is integrated within eclipse 
 ## General Graphics
