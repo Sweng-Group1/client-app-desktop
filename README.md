@@ -31,5 +31,5 @@ All of the external libraries will be installed using maven, which is integrated
 # Presentation Environment
 Each element within a slide will extend JComponent. We have agreed that the slide component will run on a point coordinate system (e.g no matter the resolution of a screen/size of the window, the elements will stay in the same place and same size relative to each other). This means that within the paint method of each element to be developed the point information will have to be scaled to pixels (Component.setSize & Component.setLocation() will be usefull for this).
 
-## Outsourcing
+# Outsourcing
 The module specification requires that we outsource 2 of the modules; we are going to outsource Graphics and Text. This allows us to focus on the media (images, video and audio). This decision has been made as these components will eventually downloading media from our server.
