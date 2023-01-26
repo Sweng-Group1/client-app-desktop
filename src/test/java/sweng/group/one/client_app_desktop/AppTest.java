@@ -1,4 +1,4 @@
-package sweng.group.one.client_application;
+package sweng.group.one.client_app_desktop;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
