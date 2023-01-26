@@ -5,8 +5,6 @@ import javax.swing.JPanel;
 public class optionsScene extends JPanel {
 	private Boolean isOpen;
 	
-	private JPanel open;
-	private Jpanel close;
 	
 	// change these to boolean to test, can be made into JButton
 	// When functions are ready
@@ -15,13 +13,29 @@ public class optionsScene extends JPanel {
 	private JButton helpButton;
 	private JButton closeButton;
 	
-	Public optionsScene() {
+	
+	
+	public static void optionsScene() {
+		
+		JFrane 
 		super();
 		
 		open = new JPanel();
 		
 		
+		
 		accountButton = new JButton();
+	}
+	
+	public void open() {
+		optionsScene();
+		
+		
+	}
+	
+	public void close() {
+		optionsScene();
+		
 	}
 	
 	
