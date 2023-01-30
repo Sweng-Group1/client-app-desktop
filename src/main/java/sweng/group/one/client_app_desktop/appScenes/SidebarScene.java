@@ -3,7 +3,6 @@ package sweng.group.one.client_app_desktop.appScenes;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,7 +26,7 @@ public class SidebarScene extends JPanel {
 	public SidebarScene() {
 		// Init the top
 		
-		top = new JPanel(new FlowLayout());
+		top = new JPanel(new BorderLayout());
 		
 		// Init its elements
 		minimise = new JButton("_");
@@ -43,12 +42,11 @@ public class SidebarScene extends JPanel {
 		
 		searchBar = new JTextField();
 		searchBar.setName("Searchbar");
-		searchBar.setSize(100, 500);
 		
 		// Add them
 		
-		top.add(minimise);
-		top.add(searchBar);
+		top.add(minimise, BorderLayout.WEST);
+		top.add(searchBar, BorderLayout.CENTER);
 		
 		// Set the colour (Mostly for demonstration atm)
 		top.setBackground(Color.blue);
@@ -61,6 +59,7 @@ public class SidebarScene extends JPanel {
 		this.add(top, BorderLayout.NORTH);
 		this.add(thumbs, BorderLayout.CENTER);
 		this.setName("Sidebar");
+		this.setPreferredSize(new Dimension(200,200));
 	}
 	
 	public void open() {

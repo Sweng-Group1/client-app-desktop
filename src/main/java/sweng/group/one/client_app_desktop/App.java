@@ -1,6 +1,7 @@
 package sweng.group.one.client_app_desktop;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
