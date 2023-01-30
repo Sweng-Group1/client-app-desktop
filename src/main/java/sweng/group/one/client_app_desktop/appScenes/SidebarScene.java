@@ -14,13 +14,13 @@ public class SidebarScene extends JPanel {
 	private boolean isOpen;
 	
 	// Top of the side bar, containing search bar and minimise button
-	static JPanel top;
+	private JPanel top;
 	
 	// Lower portion, containing presentation thumbnails
-	static JPanel thumbs;
+	private JPanel thumbs;
 	
-	static JTextField searchBar;
-	static JButton minimise;
+	private JTextField searchBar;
+	private JButton minimise;
 	
 	public SidebarScene() {
 		top = new JPanel(new FlowLayout());

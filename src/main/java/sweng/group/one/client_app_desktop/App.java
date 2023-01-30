@@ -15,5 +15,6 @@ public class App
     	JFrame f=new JFrame("Unnamed App");
     	SidebarScene sidebar = new SidebarScene();
     	f.add(sidebar);
+    	f.setVisible(true);
     }
 }
