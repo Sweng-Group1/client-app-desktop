@@ -51,7 +51,9 @@ public class SidebarSceneTest {
 	@Test
 	public void minimise() {
 		minimise.click();
+		
+		// AssertJ swing doesn't have methods to pull values out
+		// But it does have methods to directly make assertions
 		sidebar.requireNotVisible();
 	}
-
 }
