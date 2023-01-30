@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
+import java.awt.Color;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -7,6 +8,8 @@ import javax.swing.JPanel;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import sweng.group.one.client_app_desktop.uiElements.CircleButton;
 
 
 public class UploadSceneTest {
@@ -25,12 +28,7 @@ public class UploadSceneTest {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);	
 		frame.add(background);
-		
-		//upload = new UploadScene();
-		//background.add(upload);
-		//upload.setSize(1000,600);
-		//upload.setLocation(100,100);
-		
+				
 	}
 	@Test
 	public void testUploadScene() throws IOException {
@@ -38,8 +36,17 @@ public class UploadSceneTest {
 		background.add(upload);
 		upload.setSize(1000,600);
 		upload.setLocation(100,100);
+		//CircleButton button = new CircleButton();
+		//background.add(button);
+		//button.setSize(100);
+		//button.setLocation(400, 400);
+		//button.setText("THIS IS A BUTTON");
+		//button.setMainBackground(Color.blue);
+		//button.setBorder(Color.GREEN, 5);
+		
 		while (true) {
 			//do nothing
+		
 		}
 		
 		

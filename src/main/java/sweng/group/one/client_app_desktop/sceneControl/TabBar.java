@@ -26,9 +26,9 @@ public class TabBar extends RoundedPanel{
 	
 	MouseListener meDeleteButton;
 	MouseListener meAddButton;
-	MouseListener meTabClicked;
+	MouseListener meTabBar;
 	
-	Tab tab;
+	
 
 	
 	public TabBar() {
@@ -53,7 +53,7 @@ public class TabBar extends RoundedPanel{
 	private void createAddTabButton() throws IOException {
 		addTabButton= new CircleButton();
 		this.add(addTabButton);
-		addTabButton.setBackgroundMainColour(Color.LIGHT_GRAY);
+		addTabButton.setMainBackground(Color.LIGHT_GRAY);
 		addTabButton.setImageIcon(ImageIO.read(new File("./Assets/plus-small.png")));
 		addTabButton.addMouseListener(meAddButton);
 		
@@ -62,23 +62,28 @@ public class TabBar extends RoundedPanel{
 	private void createTabsPanel() {
 		tabsPanel= new JPanel();
 		this.add(tabsPanel);
-		//tabsPanel.setBackground(this.getBackground());
 		tabsPanel.setLayout(new BoxLayout(tabsPanel, BoxLayout.X_AXIS));
 	}
 
 	private void addNewTab() {
 
 		int tabNumber= tabs.size()+1;
-		tab= new Tab(tabNumber);
+		Tab tab= new Tab(tabNumber);
 		tabs.add(tab);
 		tabsPanel.add(tab);
 		tab.getDeleteButton().addMouseListener(meDeleteButton);
 		tab.setCurvatureRadius(30);
-		tab.setBackground(Color.white);
-		tab.addMouseListener(meTabClicked);
-		tab.setBottomLineVisible(true);
+		tab.setBackground(Color.white);;
+		tab.addMouseListener(meTabBar);
+		for(int i=0;i<tabs.size();i++) {
+			setTabColour(tabs.get(i),Color.LIGHT_GRAY);
+		}
+		setTabColour(tab, Color.white);
 		
 		
+	}
+	private void setTabColour(Tab tab, Color color) {
+		tab.setBackground(color);
 	}
 	private void createMouseListeners() {
 		meDeleteButton= new MouseListener() {
@@ -159,20 +164,20 @@ public class TabBar extends RoundedPanel{
 			}
 			
 		};
-		meTabClicked= new MouseListener() {
+		meTabBar= new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for(int i=0;i<tabs.size();i++) {
-					if(tabs.get(i).checkClicked()==true) {
-						tabs.get(i).setCurrentTab(true);
-						tabs.get(i).setClicked(false);
-					}else {
-						tabs.get(i).setClicked(false);
-						tabs.get(i).setCurrentTab(false);
-					}
-				}
 				
+					for(int j=0;j<tabs.size();j++) {
+						if(tabs.get(j).checkClicked()==true) {
+							tabs.get(j).setBackground(Color.white);
+							tabs.get(j).setClicked(false);
+						}else {
+							tabs.get(j).setBackground(Color.LIGHT_GRAY);
+						}	
+					}
+
 			}
 
 			@Override
@@ -200,6 +205,7 @@ public class TabBar extends RoundedPanel{
 			}
 			
 		};
+		//this.addMouseListener(meTabBar);
 	}
 	public void setSize(int width, int height) {
 		super.setSize(width, height);

@@ -25,7 +25,7 @@ public class ToolBar extends RoundedPanel{
 	}
 	public void addButton(Image icon) {
 		CircleButton button = new CircleButton();
-		button.setBackgroundMainColour(Color.white);
+		button.setMainBackground(Color.white);
 		button.setImageIcon(icon);
 		buttons.add(button);
 		this.add(button);

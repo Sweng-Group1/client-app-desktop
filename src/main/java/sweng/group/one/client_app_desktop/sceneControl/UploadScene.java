@@ -59,7 +59,13 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		toolBar = new ToolBar();
 		middlePanel.add(toolBar);
 		toolBar.addButton(ImageIO.read(new File("./Assets/pencil.png")));
-	//	toolBar.addButton(ImageIO.read(new File("./Assets/.png")));
+		toolBar.addButton(ImageIO.read(new File("./Assets/resources.png")));
+		toolBar.addButton(ImageIO.read(new File("./Assets/fill_editor.png")));
+		toolBar.addButton(ImageIO.read(new File("./Assets/shapes_editor.png")));
+		toolBar.addButton(ImageIO.read(new File("./Assets/text_editor.png")));
+		toolBar.addButton(ImageIO.read(new File("./Assets/center_allign.png")));
+		toolBar.addButton(ImageIO.read(new File("./Assets/settings-sliders.png")));
+		
 		toolBar.addButton(ImageIO.read(new File("./Assets/arrow-small-left.png")));
 		toolBar.addButton(ImageIO.read(new File("./Assets/arrow-small-right.png")));
 		toolBar.addButton(ImageIO.read(new File("./Assets/check.png")));
@@ -71,7 +77,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		tabBar= new TabBar();
 		middlePanel.add(tabBar);
 		tabBar.setBackground(Color.LIGHT_GRAY);
-		tabBar.getAddTabButton().setBackgroundMainColour(Color.white);
+		tabBar.getAddTabButton().setMainBackground(Color.white);
 	}
 	private void setComponentPositions(int width,int height) {
 		presentation.setLocation(0,(height/2)-(presentation.getHeight()/2));
