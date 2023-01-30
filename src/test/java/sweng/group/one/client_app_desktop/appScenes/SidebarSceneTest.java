@@ -14,8 +14,9 @@ import sweng.group.one.client_app_desktop.App;
 
 public class SidebarSceneTest {
 
-	private FrameFixture window;
+	// Handles for simulating interaction with various elements
 	
+	private FrameFixture window;
 	private JPanelFixture sidebar;
 	private JButtonFixture minimise;
 	
