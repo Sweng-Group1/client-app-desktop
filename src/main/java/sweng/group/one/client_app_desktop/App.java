@@ -1,5 +1,7 @@
 package sweng.group.one.client_app_desktop;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 import sweng.group.one.client_app_desktop.appScenes.SidebarScene;
@@ -8,13 +10,19 @@ import sweng.group.one.client_app_desktop.appScenes.SidebarScene;
  * Hello world!
  *
  */
-public class App 
+public class App extends JFrame
 {
-    public static void main( String[] args )
+    private static final long serialVersionUID = 1L;
+
+	public App()
     {
-    	JFrame f=new JFrame("Unnamed App");
+    	setLayout(new BorderLayout());
     	SidebarScene sidebar = new SidebarScene();
-    	f.add(sidebar);
-    	f.setVisible(true);
+    	add(sidebar, BorderLayout.WEST);
     }
+	
+	public static void main(String[] args) {
+		JFrame frame = new App();
+		frame.setVisible(true);
+	}
 }
