@@ -35,6 +35,10 @@ public class SidebarScene extends JPanel {
 			}
 		});
 		
+		searchBar = new JTextField();
+		
+		thumbs = new JPanel();
+		
 		top.add(minimise);
 		top.add(searchBar);
 		
