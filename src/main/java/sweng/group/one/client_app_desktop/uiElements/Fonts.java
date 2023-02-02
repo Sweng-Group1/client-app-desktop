@@ -10,4 +10,7 @@ public interface Fonts {
 	public static Font italic(int size) {
 		return new Font("ITALIC",Font.ITALIC,size);
 	}
+	public static Font tabFont(int size) {
+		return new Font("TAB",Font.PLAIN,size);
+	}
 }

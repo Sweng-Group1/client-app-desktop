@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class RoundedPanel extends JPanel{
 	
-	private int curvedRadius;
+	protected int curvedRadius;
 	private Color border;
 	private int borderSize;
 	

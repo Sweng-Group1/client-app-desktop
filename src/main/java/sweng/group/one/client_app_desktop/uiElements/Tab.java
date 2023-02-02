@@ -19,13 +19,13 @@ public class Tab extends RoundedPanel{
 	private boolean clicked;
 
 
-	
+	private Color tabColour;
 
 	
 	public Tab(int tabNumber) {
 		clicked=false;
 		
-		
+		tabColour=Color.white;
 		this.tabNumber= String.valueOf(tabNumber);
 		this.setLayout(null);		
 		MouseListener mouseListener= new MouseListener() {
@@ -81,61 +81,12 @@ public class Tab extends RoundedPanel{
 
 	public void setSize(int width, int height) {
 		super.setSize(width, height);
-			number.setSize(height, height);
-			deleteButton.setSize(height);
-			number.setText(tabNumber);
+		number.setSize(height, height);
+		deleteButton.setSize(height);
+		number.setText(tabNumber);
+		number.setLocation(width/2, 0);
 			
-			
-			//number.setFont(Fonts.italic(height/2));	
-			number.setLocation(width/2, 0);
-			
-			
-			//deleteButton.setLocation(this.getWidth()-deleteButton.getWidth(),0);
-		//	try {
-				//deleteButton.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
-			//	deleteButton.setMainBackground(Color.lightGray);	
-			//	deleteButton.addMouseListener(new MouseListener() {
-				
-				
-
-			//	@Override
-			//public void mouseClicked(MouseEvent e) {
-			//		// this needs to notify another component that is has been clicked, i.e tab bar
-					
-			//	}
-
-			//	@Override
-			//	public void mousePressed(MouseEvent e) {
-					
-					
-			//	}
-
-			//	@Override
-			//	public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-			//	}
-
-			//	@Override
-			//	public void mouseEntered(MouseEvent e) {
-			//		setDeleteButtonVisibleTo(true);
-					
-					
-					
-			//	}
-//
-//				@Override
-//				public void mouseExited(MouseEvent e) {
-//					setDeleteButtonVisibleTo(false);
-					
-//				}
-				
-//			});
-//			//	deleteButton
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-			}
+	}
 	public boolean checkClicked() {
 		return clicked;
 	}

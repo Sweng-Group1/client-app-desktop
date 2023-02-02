@@ -21,7 +21,8 @@ public class ToolBar extends RoundedPanel{
 	}
 	private void createBackground() {
 		this.setCurvatureRadius(10);
-		this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+		//this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+		this.setLayout(null);
 	}
 	public void addButton(Image icon) {
 		CircleButton button = new CircleButton();
@@ -35,7 +36,7 @@ public class ToolBar extends RoundedPanel{
 		
 		for(int i=0;i<buttons.size();i++) {
 			buttons.get(i).setSize(height);
-			System.out.println("111");
+			buttons.get(i).setLocation(i*height,0);
 		}
 	}
 

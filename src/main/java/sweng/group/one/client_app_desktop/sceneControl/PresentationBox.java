@@ -84,20 +84,24 @@ import javax.swing.JPanel;
 		
 		//	layer= new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
 		}
-		public void setSize(int width, int height) {
+		public void setSize(int width,int height) {
+			
 			//must be 16:9 ratio so
 			int widthFactor= 16;
 			int heightFactor= 9;
 			
-			int newWidth= 1* widthFactor;
-			int newHeight= 1* heightFactor;
+			int newHeight= (width/widthFactor)*heightFactor;
+			//int newWidth= 1* widthFactor;
+			//int newHeight= 1* heightFactor;
 			
+			/*
 			//Increases new width and height by the factors until one cant increase anymore
 			while((newWidth+widthFactor<width) && (newHeight+heightFactor<height)) {
 				newWidth= newWidth+ widthFactor;
 				newHeight= newHeight+ heightFactor;
 			}
-			super.setSize(newWidth, newHeight);
+			*/
+			super.setSize(width, newHeight);
 		}
 		public void paint(Graphics g) {
 			super.paint(g);

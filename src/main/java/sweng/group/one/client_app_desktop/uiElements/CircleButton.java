@@ -115,8 +115,8 @@ public class CircleButton extends JButton{
 		int colourG= colour.getGreen();
 		int colourB= colour.getBlue();
 	
-		int alphaNormal= 255/6;
-		int alphaHover= 255/3;
+		int alphaNormal= 0;
+		int alphaHover= 255/6;
 		int alphaPressed= alphaHover*2;
 		
 		backgroundColour= new Color(colourR,colourG,colourB,alphaNormal);

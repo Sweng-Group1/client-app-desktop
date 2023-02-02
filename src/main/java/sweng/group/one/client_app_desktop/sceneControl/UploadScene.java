@@ -22,35 +22,69 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	PresentationBox presentation;
 	ToolBar toolBar;
 	TabBar tabBar;
+	
+	TextBox boxOne;
+	TextBox boxTwo;
+	TextBox boxThree;
+	TextBox boxFour;
 
-	public UploadScene() throws IOException {
-		createBackground();
+	
+	int curvatureRadius;
+	int gapWidth;
+	
+	Color colour1;
+	Color colour2;
+	Color colour3;
+
+	public UploadScene(Color colour1, Color colour2) throws IOException {	
+		create(colour1,colour2);
 		createPanels();
 		addTabBar();	
 		addPresentationBox();
 		addToolBar();
-	
+		addTextBoxes();
 	}	
+	
+	private void create(Color colour1, Color colour2) {
+		this.colour1=colour1;
+		this.colour2= colour2;
+		this.setLayout(null);
+		curvatureRadius=25;
+		setBackground(colour1);
+	}
 	private void createPanels() {
-		this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		leftPanel = new JPanel();
 		middlePanel= new JPanel();
 		rightPanel= new JPanel();;
 		
 		leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
-		//middlePanel.setLayout(new BoxLayout(middlePanel,BoxLayout.Y_AXIS));
 		middlePanel.setLayout(null);
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
+		
+		leftPanel.setBackground(new Color(255,255,255,0));
+		middlePanel.setBackground(new Color(255,255,255,0));
+		rightPanel.setBackground(new Color(255,255,255,0));
+		
 		
 		this.add(leftPanel);
 		this.add(middlePanel);
 		this.add(rightPanel);
 	}
-	
-	private void createBackground() {
-		this.setCurvatureRadius(20);
-		this.setBackground(Color.gray);
+	private void addTextBoxes() {
+		Color textBoxInnerColour= new Color(colour1.getRed(),colour1.getGreen(),colour1.getBlue(),100);
+		boxOne= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
+		boxTwo= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
+		boxThree= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
+		boxFour= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
+		
+		rightPanel.setLayout(null);
+		leftPanel.add(boxOne);
+		rightPanel.add(boxTwo);
+		rightPanel.add(boxThree);
+		rightPanel.add(boxFour);
+		
 	}
+
 	public void addPresentationBox() {
 		presentation= new PresentationBox();
 		middlePanel.add(presentation);
@@ -73,27 +107,52 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		toolBar.setBackground(Color.LIGHT_GRAY);
 		
 	}
-	public void addTabBar() {
-		tabBar= new TabBar();
+	public void addTabBar() throws IOException {
+		tabBar= new TabBar(colour1,curvatureRadius);
 		middlePanel.add(tabBar);
-		tabBar.setBackground(Color.LIGHT_GRAY);
-		tabBar.getAddTabButton().setMainBackground(Color.white);
 	}
-	private void setComponentPositions(int width,int height) {
+	private void setComponentPositions(int width,int height,int gapWidth) {
 		presentation.setLocation(0,(height/2)-(presentation.getHeight()/2));
 		tabBar.setLocation(0, presentation.getY()-tabBar.getHeight());
-		toolBar.setLocation(0, presentation.getY()+presentation.getHeight());
+		toolBar.setLocation(0, presentation.getY()+presentation.getHeight()+(gapWidth/2));
+	}
+	private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeight, int gapWidth ) {
+		boxOne.setSize(leftPanel.getWidth(), leftPanel.getHeight());
+		int rightTextBoxesRatio= (uploadSceneHeight- (4*gapWidth))/7;
+		boxTwo.setSize(textBoxWidth, rightTextBoxesRatio*4);
+		boxThree.setSize(textBoxWidth,rightTextBoxesRatio);
+		boxFour.setSize(textBoxWidth, rightTextBoxesRatio*2);
+		
+		boxTwo.setLocation(0, 0);
+		boxThree.setLocation(0, boxTwo.getHeight()+gapWidth);
+		boxFour.setLocation(0, boxThree.getHeight()+boxThree.getY()+(gapWidth));
+		
 	}
 	public void setSize(int width, int height) {
-		super.setSize(width,height);
-		int presentationBoxWidth= 3*(width/4);
+		super.setSize(width,height, curvatureRadius);
+		gapWidth= width/100;
+		int spaceRatio= width/6;
+		
+		leftPanel.setSize(spaceRatio-(2*gapWidth),height-(2*gapWidth));
+		rightPanel.setSize(spaceRatio-(2*gapWidth), height-(2*gapWidth));
+		middlePanel.setSize((spaceRatio*4), height-(2*gapWidth));
+		
+		leftPanel.setLocation(gapWidth,gapWidth );
+		middlePanel.setLocation(spaceRatio, gapWidth);
+		rightPanel.setLocation((spaceRatio*5)+gapWidth,gapWidth);
+		
+		setSizeAndPositionOfTextBoxes(leftPanel.getWidth(),height,gapWidth);
+		
+		//boxOne.setLocation(0,0);
+		
 		//this method will scale the presentation box to be 16:9 
-		presentation.setSize(presentationBoxWidth,height);
-		int toolBarHeight= 50;
-		toolBar.setSize(presentationBoxWidth, toolBarHeight);
-		tabBar.setSize(presentationBoxWidth, toolBarHeight);
-		setComponentPositions(width,height);
+		presentation.setSize(middlePanel.getWidth(),height);
+		int toolBarHeight= presentation.getHeight()/15;
+		toolBar.setSize(middlePanel.getWidth(), toolBarHeight);
+		tabBar.setSize(middlePanel.getWidth(), toolBarHeight);
+		setComponentPositions(width,height,gapWidth);
 		this.validate();
+		
 	}
 }
 
