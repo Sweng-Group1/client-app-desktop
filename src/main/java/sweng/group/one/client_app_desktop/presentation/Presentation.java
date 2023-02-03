@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Presentation extends JPanel {
 	private ArrayList<Slide> slides;
 	private int currentSlide;
@@ -38,5 +39,13 @@ public class Presentation extends JPanel {
 		int maxSlide = slides.size()-1;
 		currentSlide = (currentSlide + maxSlide - 1) % maxSlide;
 		showCurrentSlide();
+	}
+	
+	public Slide getCurrentSlide() {
+		return slides.get(currentSlide);
+	}
+	
+	public ArrayList<Slide> getSlides() {
+		return slides;
 	}
 }
