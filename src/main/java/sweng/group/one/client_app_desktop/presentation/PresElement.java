@@ -5,11 +5,25 @@ import java.awt.Graphics2D;
 import javax.swing.JComponent;
 
 public abstract class PresElement extends JComponent{
-	private int xPoint;
-	private int yPoint;
-	private int pointWidth;
-	private int pointHeight;
-	private float duration;
+	protected int xPoint;
+	protected int yPoint;
+	protected int pointWidth;
+	protected int pointHeight;
+	protected float duration;
+	protected Slide slide;
 	
-	public abstract void draw(Graphics2D g, int slidePointWidth, int slidePointHeight);
+	protected PresElement(int xPoint, 
+						int yPoint, 
+						int pointWidth, 
+						int pointHeight, 
+						float duration, 
+						Slide slide) {
+		
+		this.xPoint = xPoint;
+		this.yPoint = yPoint;
+		this.pointWidth = pointWidth;
+		this.pointHeight = pointHeight;
+		this.duration = duration;
+		this.slide = slide;
+	}
 }
