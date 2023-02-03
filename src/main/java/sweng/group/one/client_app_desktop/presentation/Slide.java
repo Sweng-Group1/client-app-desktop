@@ -15,7 +15,23 @@ public class Slide extends JPanel {
 	//example constructor
 	public Slide(int PtWidth, int PtHeight){
 		super();
-		this.pointWidth = PtWidth;
-		this.pointHeight = PtHeight;
+		this.setPointWidth(PtWidth);
+		this.setPointHeight(PtHeight);
+	}
+
+	public int getPointWidth() {
+		return pointWidth;
+	}
+
+	public void setPointWidth(int pointWidth) {
+		this.pointWidth = pointWidth;
+	}
+
+	public int getPointHeight() {
+		return pointHeight;
+	}
+
+	public void setPointHeight(int pointHeight) {
+		this.pointHeight = pointHeight;
 	}
 }
