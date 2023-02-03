@@ -23,18 +23,27 @@ public abstract class MediaElement extends PresElement {
 						int pointHeight, 
 						float duration, 
 						Slide slide, 
-						URL fileURL,
-						String pathExtension){
+						URL fileURL){
 		super(pos, pointWidth, pointHeight, duration, slide);
 		this.fileURL = fileURL;
-		this.localPath = System.getProperty("java.io.tmpdir") + "/WhatsOn" + pathExtension;
+		String fileName = fileURL.getFile();
+		fileName = fileName.substring(fileName.lastIndexOf("/")+1); //prevent new folders from being made
+		this.localPath = System.getProperty("java.io.tmpdir") + "WhatsOn\\assets\\" + fileName;
+		try {
+			downloadFromURL();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public void downloadFromURL() throws IOException {
+	private void downloadFromURL() throws IOException {
 		try {
 			InputStream inp = fileURL.openStream();
 			ReadableByteChannel rbc = Channels.newChannel(inp);
-			FileOutputStream out = new FileOutputStream(new File(localPath));
+			File outputFile = new File(localPath);
+			outputFile.getParentFile().mkdirs();
+			FileOutputStream out = new FileOutputStream(outputFile);
 			out.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			out.close();
 			rbc.close();
@@ -43,5 +52,9 @@ public abstract class MediaElement extends PresElement {
 		}
 	}
 	
-	public abstract void loadFile();
+	protected abstract void loadFile();
+	
+	public String getLocalPath() {
+		return this.localPath;
+	}
 }
