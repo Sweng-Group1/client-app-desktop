@@ -71,7 +71,7 @@ public class MediaElementTest {
 		URL samplemp4 = null;
 		//using a URL to a file that wont get deleted
 		try {
-			samplemp4 = new URL("https://getsamplefiles.com/download/mp4/sample-1.mp4");
+			samplemp4 = new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4");
 					
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
