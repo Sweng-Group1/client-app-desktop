@@ -1,4 +1,4 @@
-package sweng.group.one.client_app_desktop.presentation;
+package sweng.group.one.client_app_desktop.media;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -19,11 +19,12 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import sweng.group.one.client_app_desktop.media.MediaElement;
+import sweng.group.one.client_app_desktop.presentation.Slide;
 
 public class MediaElementTest {
 	
 	private Slide slide;
-	private final static String TEST_ASSET_PATH = "./src/test/java/sweng/group/one/client_app_desktop/presentation/testAssets/";
+	private final static String TEST_ASSET_PATH = "./src/test/java/sweng/group/one/client_app_desktop/media/testAssets/";
 	
 	@Before
 	public void setup() {
