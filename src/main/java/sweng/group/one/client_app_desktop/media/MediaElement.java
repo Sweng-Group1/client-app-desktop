@@ -27,7 +27,7 @@ public abstract class MediaElement extends PresElement {
 						String pathExtension){
 		super(pos, pointWidth, pointHeight, duration, slide);
 		this.fileURL = fileURL;
-		this.localPath = System.getProperty("java.io.tmpdir") + pathExtension;
+		this.localPath = System.getProperty("java.io.tmpdir") + "/WhatsOn" + pathExtension;
 	}
 	
 	public void downloadFromURL() throws IOException {
