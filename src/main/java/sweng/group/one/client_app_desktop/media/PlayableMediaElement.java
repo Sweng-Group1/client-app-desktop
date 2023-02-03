@@ -16,9 +16,8 @@ public abstract class PlayableMediaElement extends MediaElement {
 									float duration, 
 									Slide slide, 
 									URL fileURL,
-									String pathExtension,
 									boolean loops){
-		super(pos, pointWidth, pointHeight, duration, slide, fileURL, pathExtension);
+		super(pos, pointWidth, pointHeight, duration, slide, fileURL);
 		this.loops = loops;
 	}
 	
