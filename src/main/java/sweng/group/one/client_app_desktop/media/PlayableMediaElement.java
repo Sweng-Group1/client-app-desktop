@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.media;
 
+import java.awt.Point;
 import java.net.URL;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
@@ -9,8 +10,7 @@ public abstract class PlayableMediaElement extends MediaElement {
 	
 	protected Boolean loops;
 
-	protected PlayableMediaElement(int xPoint, 
-									int yPoint, 
+	protected PlayableMediaElement(Point pos, 
 									int pointWidth, 
 									int pointHeight, 
 									float duration, 
@@ -18,7 +18,7 @@ public abstract class PlayableMediaElement extends MediaElement {
 									URL fileURL,
 									String pathExtension,
 									boolean loops){
-		super(xPoint, yPoint, pointWidth, pointHeight, duration, slide, fileURL, pathExtension);
+		super(pos, pointWidth, pointHeight, duration, slide, fileURL, pathExtension);
 		this.loops = loops;
 	}
 	

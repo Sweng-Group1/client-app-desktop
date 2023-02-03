@@ -1,26 +1,24 @@
 package sweng.group.one.client_app_desktop.presentation;
 
-import java.awt.Graphics2D;
+import java.awt.Point;
 
 import javax.swing.JComponent;
 
+@SuppressWarnings("serial")
 public abstract class PresElement extends JComponent{
-	protected int xPoint;
-	protected int yPoint;
+	protected Point pos;
 	protected int pointWidth;
 	protected int pointHeight;
 	protected float duration;
 	protected Slide slide;
 	
-	protected PresElement(int xPoint, 
-						int yPoint, 
+	protected PresElement(Point pos, 
 						int pointWidth, 
 						int pointHeight, 
 						float duration, 
 						Slide slide) {
 		
-		this.xPoint = xPoint;
-		this.yPoint = yPoint;
+		this.pos = pos;
 		this.pointWidth = pointWidth;
 		this.pointHeight = pointHeight;
 		this.duration = duration;
