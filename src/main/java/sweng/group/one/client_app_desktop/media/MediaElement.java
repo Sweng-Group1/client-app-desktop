@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.media;
 
+import java.awt.Point;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,15 +18,14 @@ public abstract class MediaElement extends PresElement {
 	private String localPath;
 	private URL fileURL;
 	
-	protected MediaElement(int xPoint, 
-						int yPoint, 
+	protected MediaElement(Point pos, 
 						int pointWidth, 
 						int pointHeight, 
 						float duration, 
 						Slide slide, 
 						URL fileURL,
 						String pathExtension){
-		super(xPoint, yPoint, pointWidth, pointHeight, duration, slide);
+		super(pos, pointWidth, pointHeight, duration, slide);
 		this.fileURL = fileURL;
 		this.localPath = System.getProperty("java.io.tmpdir") + pathExtension;
 	}
