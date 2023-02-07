@@ -23,5 +23,5 @@ public abstract class PlayableMediaElement extends MediaElement {
 	
 	public abstract void togglePlaying();
 	
-	public abstract void getPlaying();
+	public abstract boolean getPlaying();
 }
