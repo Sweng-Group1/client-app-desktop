@@ -58,6 +58,8 @@ public class SidebarSceneTest  {
 	// Tests if the minimise button works
 	@Test
 	public void minimise() {
+		sidebarFixture.requireVisible();
+		
 		minimise.click();
 		
 		// AssertJ swing doesn't have methods to pull values out
