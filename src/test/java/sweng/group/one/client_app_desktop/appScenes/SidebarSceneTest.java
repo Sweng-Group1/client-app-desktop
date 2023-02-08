@@ -1,5 +1,8 @@
 package sweng.group.one.client_app_desktop.appScenes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
 
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
@@ -11,8 +14,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
 
-import sweng.group.one.client_app_desktop.App;
+import sweng.group.one.client_app_desktop.presentation.Presentation;
 
 public class SidebarSceneTest  {
 
@@ -33,6 +38,8 @@ public class SidebarSceneTest  {
 	
 	@Before
 	public void setUp() throws Exception {
+		// Since we can only interact with swing elements in the EDT, we
+		// have to use GuiActionRunner to interact with JFrames and JPanels
 		JFrame frame = GuiActionRunner.execute(() -> new JFrame());
 		sidebar = GuiActionRunner.execute(() -> new SidebarScene());
 		GuiActionRunner.execute(() -> frame.add(sidebar));
@@ -57,4 +64,34 @@ public class SidebarSceneTest  {
 		// But it does have methods to directly make assertions
 		sidebarFixture.requireNotVisible();
 	}
+	
+	// Tests if we can add presentations to the sidebar.
+	// This should, by rights, be parametrised but there are dependency issues with JUnit 4.
+	@Test
+	public void AddPres() {
+		int size = 5;
+		List<Presentation> toAdd = new ArrayList<Presentation>();
+		
+		// Generate a list of blank presentations
+		for (int i = 0; i < size; i++) {
+			Presentation p = GuiActionRunner.execute(() -> new Presentation());
+			String name = Integer.toString(i);
+			
+			GuiActionRunner.execute(() -> p.setName(name));
+			toAdd.add(p);
+		}
+		
+		GuiActionRunner.execute(() -> sidebar.replacePres(toAdd));
+		
+		for (int i = 0; i < size; i++) {
+			JPanelFixture presFix = sidebarFixture.panel(Integer.toString(i));
+			presFix.requireVisible();
+		}
+	}
 }
+
+
+
+
+
+
