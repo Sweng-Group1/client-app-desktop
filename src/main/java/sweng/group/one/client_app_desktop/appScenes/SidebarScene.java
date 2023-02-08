@@ -57,11 +57,11 @@ public class SidebarScene extends JPanel {
 		// Set the colour (Mostly for demonstration atm)
 		top.setBackground(Color.blue);
 		
-		presPanel = new JPanel(new BoxLayout(presPanel, BoxLayout.Y_AXIS));
+		//presPanel = new JPanel(new BoxLayout(presPanel, BoxLayout.Y_AXIS));
 		
 		this.setLayout(new BorderLayout());
 		this.add(top, BorderLayout.NORTH);
-		this.add(new JScrollPane(presPanel), BorderLayout.CENTER);
+		//this.add(new JScrollPane(presPanel), BorderLayout.CENTER);
 		this.setName("Sidebar");
 		this.setPreferredSize(new Dimension(200,200));
 	}
