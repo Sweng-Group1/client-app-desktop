@@ -1,5 +1,10 @@
 package sweng.group.one.client_app_desktop.appScenes;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFrame;
+
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
@@ -9,15 +14,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
 
-import sweng.group.one.client_app_desktop.App;
+import sweng.group.one.client_app_desktop.presentation.Presentation;
 
-public class SidebarSceneTest {
+public class SidebarSceneTest  {
 
 	// Handles for simulating interaction with various elements
 	
 	private FrameFixture window;
-	private JPanelFixture sidebar;
+	private SidebarScene sidebar;
+	private JPanelFixture sidebarFixture;
 	private JButtonFixture minimise;
 	
 	@BeforeClass
@@ -30,16 +38,15 @@ public class SidebarSceneTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		App frame = GuiActionRunner.execute(() -> new App());
+		// Since we can only interact with swing elements in the EDT, we
+		// have to use GuiActionRunner to interact with JFrames and JPanels
+		JFrame frame = GuiActionRunner.execute(() -> new JFrame());
+		sidebar = GuiActionRunner.execute(() -> new SidebarScene());
+		GuiActionRunner.execute(() -> frame.add(sidebar));
 		window = new FrameFixture(frame);
 		window.show(); // shows the frame to test
 		
-		// The easiest way to lookup components is by name.
-		// You can assign names to components using *.setName()
-		// Annoyingly you can't lookup hidden components this way
-		// so we have to do it all first.
-		
-		sidebar = window.panel("Sidebar");
+		sidebarFixture = new JPanelFixture(window.robot(), sidebar);
 		minimise = window.button("Minimise");
 	}
 
@@ -51,10 +58,42 @@ public class SidebarSceneTest {
 	// Tests if the minimise button works
 	@Test
 	public void minimise() {
+		sidebarFixture.requireVisible();
+		
 		minimise.click();
 		
 		// AssertJ swing doesn't have methods to pull values out
 		// But it does have methods to directly make assertions
-		sidebar.requireNotVisible();
+		sidebarFixture.requireNotVisible();
+	}
+	
+	// Tests if we can add presentations to the sidebar.
+	// This should, by rights, be parametrised but there are dependency issues with JUnit 4.
+	@Test
+	public void AddPres() {
+		int size = 5;
+		List<Presentation> toAdd = new ArrayList<Presentation>();
+		
+		// Generate a list of blank presentations
+		for (int i = 0; i < size; i++) {
+			Presentation p = GuiActionRunner.execute(() -> new Presentation());
+			String name = Integer.toString(i);
+			
+			GuiActionRunner.execute(() -> p.setName(name));
+			toAdd.add(p);
+		}
+		
+		GuiActionRunner.execute(() -> sidebar.replacePres(toAdd));
+		
+		for (int i = 0; i < size; i++) {
+			JPanelFixture presFix = sidebarFixture.panel(Integer.toString(i));
+			presFix.requireVisible();
+		}
 	}
 }
+
+
+
+
+
+
