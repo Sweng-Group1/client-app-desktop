@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import sweng.group.one.client_app_desktop.appScenes.SidebarScene;
+import sweng.group.one.client_app_desktop.sceneControl.SidebarScene;
 
 /**
  * Hello world!
