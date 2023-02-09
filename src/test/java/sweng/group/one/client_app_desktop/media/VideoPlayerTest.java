@@ -11,6 +11,7 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -102,21 +103,8 @@ public class VideoPlayerTest {
 		
 	} */
 		
-/*	
-	@AfterClass
-	public static void cleanup() {
-		File assetFolder = new File(System.getProperty("java.io.tmpdir") + "WhatsOn\\assets\\");
-		File tempFolder = new File(System.getProperty("java.io.tmpdir") + "WhatsOn\\");
-		
-		for (File file:assetFolder.listFiles()) {
-			try {
-				file.delete();
-			} finally {
-				
-			}
-		}
-		assetFolder.delete();
-		tempFolder.delete();
+	@After
+	public void teardown() {
+		testFrame.dispose();
 	}
-	*/
 }
