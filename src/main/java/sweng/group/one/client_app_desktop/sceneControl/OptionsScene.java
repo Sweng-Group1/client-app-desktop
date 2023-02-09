@@ -12,30 +12,29 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class optionsScene extends JFrame {
+public class OptionsScene extends JPanel {
 	private Boolean isOpen;
 	
 	
 	// change these to boolean to test, can be made into JButton
 	// When functions are ready
 	private JButton optionsButton, accountButton, addPostButton, helpButton, closeButton;
-	private JPanel mainPanel, optionsPanel, optionsBox;
-	private Icon buttonImage = new ImageIcon("optionsicon.PNG");
-	private Icon buttonImage2 = new ImageIcon("optionsicon.PNG");
+	private JPanel optionsPanel, optionsBox;
+	private Icon buttonImage = new ImageIcon("optionsicon.png"); //Add a file to github here of the options icon or like yk draw it here which imma work on it prolly n do sum graphics thing instead of using images?
+	private Icon buttonImage2 = new ImageIcon("optionsicon.png");
 	
-	public optionsScene() { 
+	public OptionsScene() { 
 		super();
 		setupGUI();
 		
 	}
 	
-	public void setupGUI() {
-		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+	private void setupGUI() {	
 		
 		isOpen = false;
 		
-		mainPanel = new JPanel(new BorderLayout());
+		setLayout(new BorderLayout());
+		
 		optionsPanel = new JPanel(new GridLayout(2, 1));
 		
 		optionsBox = new JPanel(new GridBagLayout());	
@@ -66,14 +65,12 @@ public class optionsScene extends JFrame {
 		optionsBox.add(closeButton, gbc);
 		
 		optionsButton = new JButton(buttonImage);
-		optionsButton.setBorder(null);
-		
+				
 		optionsPanel.add(optionsButton);
 		optionsPanel.add(optionsBox);
 		
-		mainPanel.add(optionsPanel, BorderLayout.PAGE_START);
-		
-		add(mainPanel, BorderLayout.LINE_END);	
+		add(optionsPanel, BorderLayout.PAGE_START);
+			
 		open();
 		
 		setVisible(true);	
