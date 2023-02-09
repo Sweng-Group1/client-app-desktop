@@ -22,14 +22,12 @@ public class VideoPlayerTest {
 	
 	private Slide slide;
 	private final static String TEST_ASSET_PATH = "./src/test/java/sweng/group/one/client_app_desktop/media/testAssets/";
+	private VideoPlayer testVideoPlayer;
+	
 	
 	@Before
 	public void setup() {
 		Slide slide = new Slide(400, 400); 
-	}
-	
-	@Test
-	public void togglePlayingTest() {
 		JFrame f= new JFrame("Panel Example");    
         JPanel panel=new JPanel();  
         //panel.setBounds(40,80,200,200);     
@@ -50,17 +48,22 @@ public class VideoPlayerTest {
 			e.printStackTrace();
 		}
 		
-		VideoPlayer TestVideoPlayer = new VideoPlayer(pos, width, height, duration, slide, samplemp4, true);
+		testVideoPlayer = new VideoPlayer(pos, width, height, duration, slide, samplemp4, true);
 		  
-		panel.add(TestVideoPlayer);
+		panel.add(testVideoPlayer);
+		testVideoPlayer.setVisible(true);
 		panel.setVisible(true);
 		f.add(panel);  
 		f.setVisible(true);
-		TestVideoPlayer.loadFile();
+	}
+	
+	@Test
+	public void togglePlayingTest() {
+		testVideoPlayer.loadFile();
 		System.out.println("Video loaded successfully.");
-		assertFalse(TestVideoPlayer.getPlaying());
-		TestVideoPlayer.togglePlaying();
-		assertTrue(TestVideoPlayer.getPlaying());
+		assertFalse("Video player starts running", testVideoPlayer.getPlaying());
+		testVideoPlayer.togglePlaying();
+		assertTrue("Video player does not unpause", testVideoPlayer.getPlaying());
 	}
 	
 	/*	@Test
