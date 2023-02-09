@@ -28,7 +28,7 @@ public abstract class MediaElement extends PresElement {
 		this.fileURL = fileURL;
 		String fileName = fileURL.getFile();
 		fileName = fileName.substring(fileName.lastIndexOf("/")+1); //prevent new folders from being made
-		this.localPath = System.getProperty("java.io.tmpdir") + "WhatsOn\\assets\\" + fileName;
+		this.localPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/assets/" + fileName;
 		try {
 			downloadFromURL();
 		} catch (IOException e) {
