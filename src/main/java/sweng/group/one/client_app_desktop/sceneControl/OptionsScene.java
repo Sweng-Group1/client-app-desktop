@@ -2,7 +2,11 @@ package sweng.group.one.client_app_desktop.sceneControl;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.event.ActionListener;
@@ -20,16 +24,27 @@ public class OptionsScene extends JPanel {
 	// When functions are ready
 	private JButton optionsButton, accountButton, addPostButton, helpButton, closeButton;
 	private JPanel optionsPanel, optionsBox;
-	private Icon buttonImage = new ImageIcon("optionsicon.png"); //Add a file to github here of the options icon or like yk draw it here which imma work on it prolly n do sum graphics thing instead of using images?
-	private Icon buttonImage2 = new ImageIcon("optionsicon.png");
+	private ImageIcon buttonIcon, buttonIcon2;
+	private BufferedImage buttonImage, buttonImage2;
+	
 	
 	public OptionsScene() { 
 		super();
-		setupGUI();
+		try {
+			setupGUI();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
-	private void setupGUI() {	
+	private void setupGUI() throws IOException {	
+		buttonImage = ImageIO.read(new File("./Assets/optionsicon.png"));
+		buttonImage2 = ImageIO.read(new File("./Assets/optionsicon.png"));
+		
+		buttonIcon = resizeIcon(new ImageIcon(buttonImage), 75, 75);
+		buttonIcon2 = resizeIcon(new ImageIcon(buttonImage2), 75, 75);
 		
 		isOpen = false;
 		
@@ -64,7 +79,9 @@ public class OptionsScene extends JPanel {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		optionsBox.add(closeButton, gbc);
 		
-		optionsButton = new JButton(buttonImage);
+		optionsButton = new JButton(buttonIcon);
+		optionsButton.setBorder(BorderFactory.createEmptyBorder());
+		optionsButton.setContentAreaFilled(false);
 				
 		optionsPanel.add(optionsButton);
 		optionsPanel.add(optionsBox);
@@ -76,14 +93,20 @@ public class OptionsScene extends JPanel {
 		setVisible(true);	
 	}
 	
+	public ImageIcon resizeIcon(ImageIcon icon, int x, int y) {
+		Image img = icon.getImage();
+		img = img.getScaledInstance(x, y, java.awt.Image.SCALE_SMOOTH);
+		return icon = new ImageIcon(img);
+	}
+	
 	public void open() {
 		optionsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(optionsButton.getIcon() == buttonImage) {
+				if(optionsButton.getIcon() == buttonIcon) {
 					isOpen = true;
 					optionsBox.setVisible(isOpen);
-					optionsButton.setIcon(buttonImage2);
+					optionsButton.setIcon(buttonIcon2);
 				} else {
 					close();
 				}
@@ -92,10 +115,10 @@ public class OptionsScene extends JPanel {
 	}
 	
 	public void close() {
-		if(optionsButton.getIcon() == buttonImage2) {
+		if(optionsButton.getIcon() == buttonIcon2) {
 			isOpen = false;
 			optionsBox.setVisible(isOpen);
-			optionsButton.setIcon(buttonImage);
+			optionsButton.setIcon(buttonIcon);
 		}
 	}
 	/*
