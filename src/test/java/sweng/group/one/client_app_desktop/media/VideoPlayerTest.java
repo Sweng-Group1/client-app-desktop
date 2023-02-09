@@ -56,15 +56,11 @@ public class VideoPlayerTest {
 		panel.setVisible(true);
 		f.add(panel);  
 		f.setVisible(true);
-		try {
-				TestVideoPlayer.loadFile();
-				System.out.println("Video loaded successfully.");
-				assertFalse(TestVideoPlayer.getPlaying());
-				TestVideoPlayer.togglePlaying();
-				assertTrue(TestVideoPlayer.getPlaying());
-			 } catch (IllegalStateException exception) {
-				 System.out.println("Failed to load Video.");
-			 }  
+		TestVideoPlayer.loadFile();
+		System.out.println("Video loaded successfully.");
+		assertFalse(TestVideoPlayer.getPlaying());
+		TestVideoPlayer.togglePlaying();
+		assertTrue(TestVideoPlayer.getPlaying());
 	}
 	
 	/*	@Test
