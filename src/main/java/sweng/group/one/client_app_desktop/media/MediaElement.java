@@ -12,23 +12,22 @@ import java.nio.channels.ReadableByteChannel;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
-@SuppressWarnings("serial")
 public abstract class MediaElement extends PresElement {
 	
-	private String localPath;
+	protected String localPath;
 	private URL fileURL;
 	
 	protected MediaElement(Point pos, 
-						int pointWidth, 
-						int pointHeight, 
+						int width, 
+						int height, 
 						float duration, 
 						Slide slide, 
 						URL fileURL){
-		super(pos, pointWidth, pointHeight, duration, slide);
+		super(pos, width, height, duration, slide);
 		this.fileURL = fileURL;
 		String fileName = fileURL.getFile();
 		fileName = fileName.substring(fileName.lastIndexOf("/")+1); //prevent new folders from being made
-		this.localPath = System.getProperty("java.io.tmpdir") + "WhatsOn\\assets\\" + fileName;
+		this.localPath = System.getProperty("java.io.tmpdir") + "WhatsOn/assets/" + fileName;
 		try {
 			downloadFromURL();
 		} catch (IOException e) {

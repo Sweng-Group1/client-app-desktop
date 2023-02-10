@@ -5,19 +5,18 @@ import java.net.URL;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
-@SuppressWarnings("serial")
 public abstract class PlayableMediaElement extends MediaElement {
 	
 	protected Boolean loops;
 
 	protected PlayableMediaElement(Point pos, 
-									int pointWidth, 
-									int pointHeight, 
+									int width, 
+									int height, 
 									float duration, 
 									Slide slide, 
 									URL fileURL,
 									boolean loops){
-		super(pos, pointWidth, pointHeight, duration, slide, fileURL);
+		super(pos, width, height, duration, slide, fileURL);
 		this.loops = loops;
 	}
 	
