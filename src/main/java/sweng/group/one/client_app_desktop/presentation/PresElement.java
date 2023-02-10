@@ -4,23 +4,23 @@ import java.awt.Point;
 
 import javax.swing.JComponent;
 
-@SuppressWarnings("serial")
-public abstract class PresElement extends JComponent{
+public abstract class PresElement{
 	protected Point pos;
-	protected int pointWidth;
-	protected int pointHeight;
+	protected int width;
+	protected int height;
 	protected float duration;
 	protected Slide slide;
+	protected JComponent component;
 	
 	protected PresElement(Point pos, 
-						int pointWidth, 
-						int pointHeight, 
+						int width, 
+						int height, 
 						float duration, 
 						Slide slide) {
 		
 		this.pos = pos;
-		this.pointWidth = pointWidth;
-		this.pointHeight = pointHeight;
+		this.width = width;
+		this.height = height;
 		this.duration = duration;
 		this.slide = slide;
 	}
