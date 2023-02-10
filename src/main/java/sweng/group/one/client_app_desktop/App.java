@@ -6,7 +6,7 @@ import java.awt.Point;
 import javax.swing.JFrame;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
-import sweng.group.one.client_app_desktop.presentation.TestElement;
+import sweng.group.one.client_app_desktop.presentation.DemoElement;
 
 /**
  * Hello world!
@@ -27,7 +27,7 @@ public class App
     	frame.add(slide, BorderLayout.CENTER);
     	
     	//create testElement and add to slide
-    	TestElement test = new TestElement(new Point(40, 20), 40, 20, 0, slide);
+    	DemoElement test = new DemoElement(new Point(40, 20), 40, 20, 0, slide);
     	slide.add(test);
     	
     	frame.validate();
