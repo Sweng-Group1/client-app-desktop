@@ -2,6 +2,7 @@ package sweng.group.one.client_app_desktop.presentation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -10,8 +11,8 @@ public class Presentation extends JPanel {
 	private ArrayList<Slide> slides;
 	private int currentSlide;
 	
-	public Presentation(ArrayList<Slide> slides){
-		this.slides = slides;
+	public Presentation(List<Slide> slides){
+		this.slides = (ArrayList<Slide>) slides;
 		currentSlide = 0;
 		showCurrentSlide();
 	}
@@ -27,6 +28,7 @@ public class Presentation extends JPanel {
 		for (Slide slide:slides) {
 			slide.setVisible(slide == desiredSlide);
 		}
+		desiredSlide.displaySlide();
 	}
 	
 	public void nextSlide() {
@@ -45,7 +47,7 @@ public class Presentation extends JPanel {
 		return slides.get(currentSlide);
 	}
 	
-	public ArrayList<Slide> getSlides() {
+	public List<Slide> getSlides() {
 		return slides;
 	}
 }

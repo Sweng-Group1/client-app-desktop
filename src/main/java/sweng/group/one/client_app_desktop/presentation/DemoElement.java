@@ -11,6 +11,6 @@ public class DemoElement extends PresElement{
 		super(pos, width, height, duration, slide);
 		this.component = new JPanel();
 		this.component.setBackground(Color.RED);
+		this.displayElement();
 	}
-
 }

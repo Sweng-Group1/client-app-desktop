@@ -26,7 +26,7 @@ public class PresentationTest {
 		pres.nextSlide();
 		assertEquals(slides.get(1), pres.getCurrentSlide());
 		
-		ArrayList<Slide> retrievedSlides = pres.getSlides();
+		ArrayList<Slide> retrievedSlides = (ArrayList<Slide>) pres.getSlides();
 		assertEquals(false, retrievedSlides.get(0).isVisible());
 		assertEquals(true, retrievedSlides.get(1).isVisible());
 		assertEquals(false, retrievedSlides.get(2).isVisible());
@@ -38,7 +38,7 @@ public class PresentationTest {
 		pres.prevSlide();
 		assertEquals(slides.get(2), pres.getCurrentSlide());
 		
-		ArrayList<Slide> retrievedSlides = pres.getSlides();
+		ArrayList<Slide> retrievedSlides = (ArrayList<Slide>) pres.getSlides();
 		assertEquals(false, retrievedSlides.get(0).isVisible());
 		assertEquals(false, retrievedSlides.get(1).isVisible());
 		assertEquals(true, retrievedSlides.get(2).isVisible());
@@ -50,7 +50,7 @@ public class PresentationTest {
 		Slide newSlide = new Slide(400, 300);
 		
 		pres.addSlide(newSlide);
-		ArrayList<Slide> retrievedSlides = pres.getSlides();
+		ArrayList<Slide> retrievedSlides = (ArrayList<Slide>) pres.getSlides();
 		
 		assertEquals(4, retrievedSlides.size());
 	}

@@ -24,4 +24,19 @@ public abstract class PresElement{
 		this.duration = duration;
 		this.slide = slide;
 	}
+	
+	protected void displayElement() {
+		component.setVisible(true);
+		if (duration > 0) {
+			new java.util.Timer().schedule( 
+			        new java.util.TimerTask() {
+			            @Override
+			            public void run() {
+			                component.setVisible(false);
+			            }
+			        }, 
+			        (long) (duration*1000) 
+			);
+		}
+	}
 }

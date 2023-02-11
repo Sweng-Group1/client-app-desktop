@@ -54,6 +54,12 @@ public class Slide extends JPanel {
 		this.add(element.component, gbc);
 		this.elements.add(element);
 	}
+	
+	public void displaySlide() {
+		for (PresElement e:elements) {
+			e.displayElement();
+		}
+	}
 
 	public int getPointWidth() {
 		return pointWidth;
