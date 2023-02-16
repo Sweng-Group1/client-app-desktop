@@ -40,6 +40,12 @@ public class Slide extends JPanel {
 		this.validate();
 	}
 	
+	/**
+	 * Adds a given PresElement to this Slide
+	 * 
+	 * @param element - PresElement to be added
+	 * @throws IllegalArgumentException
+	 */
 	public void add(PresElement element) throws IllegalArgumentException{
 		
 		if (element.pos.x + element.width > pointWidth ||
