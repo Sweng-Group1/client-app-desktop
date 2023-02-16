@@ -27,7 +27,7 @@ public class App
     	frame.add(slide, BorderLayout.CENTER);
     	
     	//create testElement and add to slide
-    	DemoElement test = new DemoElement(new Point(40, 20), 40, 20, 0, slide);
+    	DemoElement test = new DemoElement(new Point(40, 0), 40, 20, 0, slide);
     	slide.add(test);
     	
     	frame.validate();

@@ -18,7 +18,7 @@ public class Slide extends JPanel {
 	public Slide(int PtWidth, int PtHeight){
 		super(new GridBagLayout());
 		
-		this.elements = new ArrayList<>();
+		this.setElements(new ArrayList<>());
 		
 		this.setPointWidth(PtWidth);
 		this.setPointHeight(PtHeight);
@@ -29,7 +29,7 @@ public class Slide extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		
-		//fill the grid with glue -> allows empty cells
+		//fill the grid with glue -> sets up grid system
 		for (int x = 0; x < pointWidth; x++) {
 			for (int y = 0; y < pointHeight; y++) {
 				gbc.gridx = x;
@@ -40,7 +40,13 @@ public class Slide extends JPanel {
 		this.validate();
 	}
 	
-	public void add(PresElement element) {
+	public void add(PresElement element) throws IllegalArgumentException{
+		
+		if (element.pos.x + element.width > pointWidth ||
+				element.pos.y + element.height > pointHeight) {
+			throw new IllegalArgumentException("Element the dimensions of this slide");
+		}
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.fill = GridBagConstraints.BOTH;
@@ -52,11 +58,11 @@ public class Slide extends JPanel {
 		gbc.gridheight = element.height;
 		
 		this.add(element.component, gbc);
-		this.elements.add(element);
+		this.getElements().add(element);
 	}
 	
 	public void displaySlide() {
-		for (PresElement e:elements) {
+		for (PresElement e:getElements()) {
 			e.displayElement();
 		}
 	}
@@ -75,5 +81,13 @@ public class Slide extends JPanel {
 
 	public void setPointHeight(int pointHeight) {
 		this.pointHeight = pointHeight;
+	}
+
+	public ArrayList<PresElement> getElements() {
+		return elements;
+	}
+
+	public void setElements(ArrayList<PresElement> elements) {
+		this.elements = elements;
 	}
 }

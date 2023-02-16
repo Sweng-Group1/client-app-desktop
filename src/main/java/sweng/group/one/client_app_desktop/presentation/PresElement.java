@@ -25,6 +25,12 @@ public abstract class PresElement{
 		this.slide = slide;
 	}
 	
+	/**
+	 * Method to which makes the element visible for a given time
+	 * specified as "duration"
+	 * The element will not disappear if the duration > 0
+	 *
+	 */
 	protected void displayElement() {
 		component.setVisible(true);
 		if (duration > 0) {
