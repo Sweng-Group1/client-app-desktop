@@ -92,9 +92,9 @@ public class CircleButton extends JButton{
 			
 			Icon iconIm= new ImageIcon(masking);
 			Image imageIcon= ((ImageIcon)iconIm).getImage();
-			g2.setColor(Color.black);
-			g2.drawImage(imageIcon, 0, 0, null);
 			
+			g2.drawImage(imageIcon, 0, 0, null);
+			g2.dispose();
 		}	
 		
 		if(borderThickness>0) {

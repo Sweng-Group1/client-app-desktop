@@ -21,11 +21,11 @@ import javax.swing.JPanel;
 		private int xMousePos;
 		private int yMousePos;
 		
-		public PresentationBox() {
+		public PresentationBox(Color background) {
 		
 			this.setLayout(null);
 			canvas= new Canvas();
-			this.setBackground(new Color(255,255,255));
+			this.setBackground(background);
 
 			this.addMouseListener(new MouseListener(){
 

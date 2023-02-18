@@ -2,6 +2,7 @@ package sweng.group.one.client_app_desktop.sceneControl;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -19,38 +20,43 @@ import sweng.group.one.client_app_desktop.uiElements.CircleTab;
 import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
 import sweng.group.one.client_app_desktop.uiElements.Tab;
 
-public class TabBar extends RoundedPanel{
+public class TabBar extends JPanel{
 	List<CircleTab>tabs;
 	JPanel tabsHolder;
 	CircleButton addTabButton;
 	
 	MouseListener meDeleteButton;
 	MouseListener meAddButton;
-	MouseListener meTab;
+	MouseListener meTabListener;
 	
 	Color colour1;
 	
-	public TabBar(Color colour1, int curvatureRadius) throws IOException {
-		create(colour1,curvatureRadius);	
+	int gapWidth;
+	Dimension tabSize;
+	
+	public TabBar(Color colour1) throws IOException {
+		create(colour1);	
 		createMouseListeners();
 		createAddTabButton();	
 		tabs= Collections.synchronizedList(new ArrayList<>());
 		addNewTab();
 
 	}
-	private void create(Color colour1,int curvatureRadius) {
+	private void create( Color colour1) {
 		this.colour1=colour1;
-		this.curvedRadius= curvatureRadius;
+		this.setOpaque(false);
 		this.setLayout(null);
 		tabsHolder= new JPanel();
+		tabsHolder.setOpaque(false);
 		this.add(tabsHolder);
 		tabsHolder.setLayout(new BoxLayout(tabsHolder,BoxLayout.X_AXIS));
+		gapWidth=0;
 	}
 	
 	private void createAddTabButton() throws IOException {
 		addTabButton= new CircleButton();
 		this.add(addTabButton);
-		addTabButton.setMainBackground(colour1);
+		addTabButton.setMainBackground(Color.white);
 		addTabButton.setImageIcon(ImageIO.read(new File("./Assets/plus-small.png")));
 		addTabButton.addMouseListener(meAddButton);
 		
@@ -61,51 +67,19 @@ public class TabBar extends RoundedPanel{
 		for(int i=0;i<tabs.size();i++) {
 			tabs.get(i).setOnTop(false);
 		}
-		int tabNumber= tabs.size()+1;
-		CircleTab tab= new CircleTab(Color.white,tabNumber, curvedRadius,colour1);
+		int tabNumber;
+		if(tabs.size()==0) {
+			tabNumber=1;
+		}else {
+			tabNumber= tabs.get(tabs.size()-1).getTabNumber()+1;
+		}
+		CircleTab tab= new CircleTab(gapWidth,colour1,tabNumber, 10,Color.white);
 		tabs.add(tab);
-		tabsHolder.add(tab);	
-		tab.addMouseListener(meDeleteButton);
-		tab.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				for(int i=0;i<tabs.size();i++) {
-					if(tabs.get(i).getIsClicked()==false) {
-						tabs.get(i).setOnTop(false);
-					}else {
-						tabs.get(i).setOnTop(true);
-						tabs.get(i).setClicked(false);
-					}
-					
-				}
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		tabsHolder.add(tab);
+		setTabOnTop(tab);
+		
+		tab.getDeleteButton().addMouseListener(meDeleteButton);
+		tab.addMouseListener(meTabListener); 
 	}
 
 	private void createMouseListeners() {
@@ -114,10 +88,21 @@ public class TabBar extends RoundedPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(tabs.size()>1) {
-					tabs.get(tabs.size()-1).setVisible(false);
-					tabs.remove(tabs.get(tabs.size()-1));
-					resizeTabs();
+					for(int i=0; i<tabs.size();i++) {
+						CircleTab tab= tabs.get(i);
+						if(tab.getDeleteClick()==true) {
+							
+							if(tab.isOnTop()==true) {
+								setTabOnTop(tabs.get(0));
+							}
+							tab.setVisible(false);
+							tabs.remove(tab);
+							
+						}
+						
+					}
 					
+					resizeTabs();
 				}	
 			}
 
@@ -157,7 +142,6 @@ public class TabBar extends RoundedPanel{
 					e1.printStackTrace();
 				}
 				resizeTabs();
-				//tabsPanel.validate();
 			}
 
 			@Override
@@ -185,36 +169,86 @@ public class TabBar extends RoundedPanel{
 			}
 			
 		};
+		meTabListener= new MouseListener() {
 
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				for(int i=0;i<tabs.size();i++) {
+					CircleTab tab= tabs.get(i);
+					if(tab.getIsClicked()==true) {
+						//if(tab.isOnTop()==false) {
+							setTabOnTop(tab);
+						//}
+					}
+					tab.setClicked(false);
+					tab.repaint();
+				}
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+			
+		
+	}
+	private void resizeTabs() {
+		int tabWidth= tabsHolder.getWidth()/tabs.size();
+		if(gapWidth!=0) {
+			for(int i=0;i<tabs.size();i++) {
+				tabs.get(i).setSize(tabWidth, tabsHolder.getHeight());
+				tabs.get(i).setLocation(i*tabWidth, 0);
+			}	
+		}
 	}
 	public void setSize(int width, int height) {
-		curvedRadius= curvedRadius/height;
 		super.setSize(width, height);
 		
-		int gapWidth= width/10;
-		addTabButton.setSize(height);
 		
-		tabsHolder.setSize(width-(2*gapWidth)-addTabButton.getWidth(), height);
-		tabsHolder.setLocation(gapWidth, 0);
+		gapWidth= width/100;
+		setTabsGapWidthSize(gapWidth);
+		
+		addTabButton.setSize(height-(2*gapWidth));
+		tabsHolder.setSize(width-(3*gapWidth)-addTabButton.getWidth(), height);
 		resizeTabs();
-		addTabButton.setLocation(width-(height/2), height/4);
+		
+		tabsHolder.setLocation(gapWidth, 0);
+		addTabButton.setLocation(width-gapWidth-addTabButton.getWidth(), gapWidth);
 		addTabButton.setVisible(true);
+		
+		
 	}
-
-	private void resizeTabs() {
-		int width= tabsHolder.getWidth();
-		int height= this.getHeight();
-		int tabWidth;
-		if(tabs.size()<5) {
-			tabWidth=  (width)/5;
-		}
-		else{
-			tabWidth= (width)/tabs.size();
-		}
+	private void setTabsGapWidthSize(int gapWidth) {
 		for(int i=0;i<tabs.size();i++) {
-			tabs.get(i).setSize(tabWidth,height);
-			tabs.get(i).setLocation(i*tabWidth, 0);
+			tabs.get(i).setGapWidth(gapWidth);
 		}
+	}
+	private void setTabOnTop(CircleTab tab) {
+		for(int i=0;i<tabs.size();i++) {
+			tabs.get(i).setOnTop(false);
+		}
+		tab.setOnTop(true);
 	}
 	
 	public CircleButton getAddTabButton() {

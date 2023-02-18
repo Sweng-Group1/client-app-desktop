@@ -13,7 +13,8 @@ import org.junit.Test;
 public class UploadSceneTest {
 	JFrame frame; 
 	JPanel background;
-
+	Color colourD;
+	Color colourL;
 	
 	@Before
 	public void SetUpSceneTest() throws IOException{
@@ -27,8 +28,8 @@ public class UploadSceneTest {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setVisible(true);	
 		frame.add(background);
-		
-				
+		colourD= new Color(46,71,117);
+		colourL= new Color(78,106,143);
 	}
 	@Test
 	public void testUploadScene() throws IOException {
@@ -42,7 +43,7 @@ public class UploadSceneTest {
 		
 		
 		//Upload Scene TEST
-		UploadScene upload = new UploadScene(Color.gray,Color.DARK_GRAY);
+		UploadScene upload = new UploadScene(colourD,colourL);
 		background.add(upload);
 		upload.setSize(1000,600);
 		upload.setLocation(100,100);

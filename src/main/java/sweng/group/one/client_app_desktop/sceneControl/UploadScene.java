@@ -24,7 +24,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	TabBar tabBar;
 	
 	TextBox boxOne;
-	TextBox boxTwo;
+	GraphicsBox boxTwo;
 	TextBox boxThree;
 	TextBox boxFour;
 
@@ -32,25 +32,26 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	int curvatureRadius;
 	int gapWidth;
 	
-	Color colour1;
-	Color colour2;
-	Color colour3;
+	Color colourDark;
+	Color colourLight;
 
-	public UploadScene(Color colour1, Color colour2) throws IOException {	
-		create(colour1,colour2);
+
+	public UploadScene(Color colourDark, Color colourLight) throws IOException {	
+		create(colourDark,colourLight);
 		createPanels();
 		addTabBar();	
 		addPresentationBox();
 		addToolBar();
 		addTextBoxes();
+		//createMouseListeners();
 	}	
-	
-	private void create(Color colour1, Color colour2) {
-		this.colour1=colour1;
-		this.colour2= colour2;
+
+	private void create(Color colourDark, Color colourLight) {
+		this.colourDark=colourDark;
+		this.colourLight= colourLight;
 		this.setLayout(null);
 		curvatureRadius=25;
-		setBackground(colour1);
+		setBackground(colourDark);
 	}
 	private void createPanels() {
 		leftPanel = new JPanel();
@@ -61,21 +62,27 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		middlePanel.setLayout(null);
 		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
 		
-		leftPanel.setBackground(new Color(255,255,255,0));
-		middlePanel.setBackground(new Color(255,255,255,0));
-		rightPanel.setBackground(new Color(255,255,255,0));
-		
+		leftPanel.setOpaque(false);
+		middlePanel.setOpaque(false);
+		rightPanel.setOpaque(false);
 		
 		this.add(leftPanel);
 		this.add(middlePanel);
 		this.add(rightPanel);
 	}
 	private void addTextBoxes() {
-		Color textBoxInnerColour= new Color(colour1.getRed(),colour1.getGreen(),colour1.getBlue(),100);
-		boxOne= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
-		boxTwo= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
-		boxThree= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
-		boxFour= new TextBox(textBoxInnerColour,colour2,curvatureRadius);
+
+		boxOne= new TextBox(colourLight,curvatureRadius);
+		boxOne.setAddMediaIconVisible(true);
+		boxTwo= new GraphicsBox(colourLight,curvatureRadius);
+		boxTwo.setAddMediaElementsToAjustIsVisible(true);
+		//.setBackground(colourLight);
+		boxThree= new TextBox(colourLight,curvatureRadius);
+		boxThree.setAddTagsIconIsVisible(true);
+		boxThree.setSearchLocationHeaderIsVisible(true);
+		
+		boxFour= new TextBox(colourLight,curvatureRadius);
+		boxFour.setAddDescriptionIconIsVisible(true);
 		
 		rightPanel.setLayout(null);
 		leftPanel.add(boxOne);
@@ -86,29 +93,24 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	}
 
 	public void addPresentationBox() {
-		presentation= new PresentationBox();
+		presentation= new PresentationBox(colourLight);
 		middlePanel.add(presentation);
 	}
 	public void addToolBar() throws IOException {
-		toolBar = new ToolBar();
+		toolBar = new ToolBar(colourLight);
 		middlePanel.add(toolBar);
-		toolBar.addButton(ImageIO.read(new File("./Assets/pencil.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/resources.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/fill_editor.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/shapes_editor.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/text_editor.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/center_allign.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/settings-sliders.png")));
+		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/cursor.png")));
+		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/text.png")));
+		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/pencil.png")));
+		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/shapes.png")));
 		
-		toolBar.addButton(ImageIO.read(new File("./Assets/arrow-small-left.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/arrow-small-right.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/check.png")));
-		toolBar.addButton(ImageIO.read(new File("./Assets/cross.png")));
-		toolBar.setBackground(Color.LIGHT_GRAY);
-		
+		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/tick.png")));
+		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/cross.png")));
+		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/back.png")));
+		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/download.png")));
 	}
 	public void addTabBar() throws IOException {
-		tabBar= new TabBar(colour1,curvatureRadius);
+		tabBar= new TabBar(colourLight);
 		middlePanel.add(tabBar);
 	}
 	private void setComponentPositions(int width,int height,int gapWidth) {
@@ -124,7 +126,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		boxFour.setSize(textBoxWidth, rightTextBoxesRatio*2);
 		
 		boxTwo.setLocation(0, 0);
-		boxThree.setLocation(0, boxTwo.getHeight()+gapWidth);
+		boxThree.setLocation(0,boxTwo.getHeight()+ gapWidth);
 		boxFour.setLocation(0, boxThree.getHeight()+boxThree.getY()+(gapWidth));
 		
 	}
@@ -147,7 +149,8 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		
 		//this method will scale the presentation box to be 16:9 
 		presentation.setSize(middlePanel.getWidth(),height);
-		int toolBarHeight= presentation.getHeight()/15;
+		
+		int toolBarHeight= presentation.getHeight()/10;
 		toolBar.setSize(middlePanel.getWidth(), toolBarHeight);
 		tabBar.setSize(middlePanel.getWidth(), toolBarHeight);
 		setComponentPositions(width,height,gapWidth);

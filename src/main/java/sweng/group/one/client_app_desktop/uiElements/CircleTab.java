@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,36 +15,59 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class CircleTab extends JPanel{
-	private JLabel numberLabel;
+	private int number;
+	private String tabNumber;
+
 	private int curvatureRadius;
 	
 	private Color tabColour;
+	private Color textColour;
+	
 	private boolean tabOnTop;
 	private CircleButton deleteButton;
+	private boolean deleteClick;
 	private boolean isClicked;
 
+	private int gapWidth;
 	
-	
-	public CircleTab(Color tabStartColour, int tabNumber, int curvatureRadius, Color deleteButtonColour) throws IOException {
-		create(tabStartColour,curvatureRadius);
-		createNumberLabel(tabNumber);
+	public CircleTab(int gapWidth,Color tabStartColour, int tabNumber, int curvatureRadius, Color deleteButtonColour) throws IOException {
+		create(tabNumber,gapWidth,tabStartColour,curvatureRadius);
 		createDeleteButton(deleteButtonColour);
 		addMouseListeners();
 		
 
 	}
-	public void create(Color tabStartColour, int curvatureRadius) {
+	public void create(int tabNumber,int gapWidth,Color tabStartColour, int curvatureRadius) {
 		this.tabColour=tabStartColour;
+		setTextColour();
 		this.curvatureRadius=curvatureRadius;
 		this.setLayout(null);
 		tabOnTop= true;
 		setOpaque(false);
-
+		this.gapWidth= gapWidth;
+		number= tabNumber;
+		this.tabNumber= String.valueOf(tabNumber);
 		
 	}
-	public void createNumberLabel(int tabNumber) {
-		numberLabel= new JLabel("Slide " + String.valueOf(tabNumber));
-		this.add(numberLabel);
+	//public void createNumberLabel() {
+	//	numberLabel= new JLabel("Slide " + String.valueOf(tabNumber));
+	//	this.add(numberLabel);
+
+	//}
+
+	private void setTextColour() {
+		int R= tabColour.getRed();
+		int G= tabColour.getGreen();
+		int B= tabColour.getBlue();
+		
+		//Average value
+		int avV= (R+G+B)/3;
+		if(avV<125) {
+			textColour=Color.white;
+			
+		}else {
+			textColour= Color.black;
+		}
 	}
 	public void createDeleteButton(Color deleteButtonColour) throws IOException {
 		deleteButton= new CircleButton();
@@ -55,7 +79,7 @@ public class CircleTab extends JPanel{
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+				deleteClick= true;
 				
 			}
 
@@ -94,6 +118,7 @@ public class CircleTab extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				isClicked=true;
+				System.out.println("Tab Clicked: " + tabNumber);
 				
 			}
 
@@ -136,28 +161,32 @@ public class CircleTab extends JPanel{
 		int width= this.getWidth();
 		int height= this.getHeight();
 		g2.setColor(tabColour);
-		g2.fillRoundRect(0,height/4,width, height/2, curvatureRadius, curvatureRadius);
+		g2.fillRoundRect(gapWidth/2,gapWidth,width-gapWidth, height-(2*gapWidth), curvatureRadius, curvatureRadius);
 		
 		if(tabOnTop==true) {
-			g2.fillRect(0, height/2,width,height/2);
+			g2.fillRect(gapWidth/2,height- (gapWidth*2),width-gapWidth, gapWidth*2);
 		}
-		super.paint(g);
+		//add text
+		g2.setColor(textColour);
+		g2.drawString(tabNumber, this.getWidth()/2, 2*this.getHeight()/3);
+		
+		super.paint(g2);
 	}
 	public void setSize(int width, int height) {
 		super.setSize(width,height);
 		
 		//Set tab number size and placement
 		int fontSize= height/4;
-		numberLabel.setFont(Fonts.tabFont(fontSize));
-		int textWidth= numberLabel.getFontMetrics(numberLabel.getFont()).stringWidth(numberLabel.getText());
-		numberLabel.setSize(textWidth, fontSize);
-		numberLabel.setLocation((width-numberLabel.getWidth())/2, (height-numberLabel.getHeight())/2);
+		
+		
 		
 		//set delete button size and placement
 		int deleteButtonDiameter= fontSize;
 		int deleteButtonXPosition= width-(3*(deleteButtonDiameter/2));
 		deleteButton.setSize(deleteButtonDiameter);
 		deleteButton.setLocation(deleteButtonXPosition,(height-deleteButtonDiameter)/2);
+		
+	
 	}
 
 	public void setOnTop(boolean bool) {
@@ -166,6 +195,9 @@ public class CircleTab extends JPanel{
 		}else {
 			tabOnTop=true;
 		}
+	}
+	public boolean getDeleteClick() {
+		return deleteClick;
 	}
 	public boolean isOnTop() {
 		return tabOnTop;
@@ -178,6 +210,19 @@ public class CircleTab extends JPanel{
 	}
 	public CircleButton getDeleteButton() {
 		return deleteButton;
+	}
+	public void setGapWidth(int gapWidth) {
+		this.gapWidth= gapWidth;
+	}
+	public int getTabNumber() {
+		return number;
+	}
+	
+	public void setTabColour(Color tabColour) {
+		this.tabColour=tabColour; 
+	}
+	public Color getTabColour() {
+		return tabColour;
 	}
 	
 }

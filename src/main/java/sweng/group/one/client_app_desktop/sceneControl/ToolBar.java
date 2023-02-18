@@ -7,36 +7,52 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 import sweng.group.one.client_app_desktop.uiElements.CircleButton;
 import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
 
-public class ToolBar extends RoundedPanel{
-	List<CircleButton>buttons;
-	
-	public ToolBar() {
+public class ToolBar extends JPanel{
+	List<CircleButton>buttonsLtoR;
+	List<CircleButton>buttonsRtoL;
+	Color colour1;
+	Color colour2;
+	public ToolBar(Color background) {
 		createBackground();
-		buttons= Collections.synchronizedList(new ArrayList<>());
+		
 		
 	}
 	private void createBackground() {
-		this.setCurvatureRadius(10);
-		//this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+		this.setOpaque(false);	
 		this.setLayout(null);
+		buttonsLtoR= Collections.synchronizedList(new ArrayList<>());
+		buttonsRtoL= Collections.synchronizedList(new ArrayList<>());
 	}
-	public void addButton(Image icon) {
+	public void addButtonLtoR(Image icon) {
 		CircleButton button = new CircleButton();
 		button.setMainBackground(Color.white);
 		button.setImageIcon(icon);
-		buttons.add(button);
+		buttonsLtoR.add(button);
+		this.add(button);
+	}
+	public void addButtonRtoL(Image icon) {
+		CircleButton button = new CircleButton();
+		button.setMainBackground(Color.white);
+		button.setImageIcon(icon);
+		buttonsRtoL.add(button);
 		this.add(button);
 	}
 	public void setSize(int width, int height) {
 		super.setSize(width, height);
 		
-		for(int i=0;i<buttons.size();i++) {
-			buttons.get(i).setSize(height);
-			buttons.get(i).setLocation(i*height,0);
+		for(int i=0;i<buttonsLtoR.size();i++) {
+			buttonsLtoR.get(i).setSize(height);
+			buttonsLtoR.get(i).setLocation(i*height,0);
+		}
+		
+		for(int i=0;i<buttonsRtoL.size();i++) {
+			buttonsRtoL.get(i).setSize(height);
+			buttonsRtoL.get(i).setLocation(this.getWidth()-(i*height)-height,0);
 		}
 	}
 
