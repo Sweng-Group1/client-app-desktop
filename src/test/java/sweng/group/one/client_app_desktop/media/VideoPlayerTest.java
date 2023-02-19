@@ -31,6 +31,19 @@ public class VideoPlayerTest {
 	private JFrame testFrame;
 	private Slide testSlide;
 	
+	/* By rights this should be part of setup, but the current design of VideoPlayer
+	 * makes it difficult to parameterise tests */
+	private void initPlayer(String str) throws MalformedURLException {
+		Point pos = new Point(0, 0);
+		int width = 400;
+		int height = 400;
+		float duration = 1;
+		URL url = new URL(str);
+		testVideoPlayer = new VideoPlayer(pos, width, height, duration, testSlide, url, false);
+		testFrame.add(testVideoPlayer);
+		testVideoPlayer.setVisible(true); 
+	}
+	
 	@Before
 	public void setup() {
 		testFrame = new JFrame();  
@@ -49,28 +62,24 @@ public class VideoPlayerTest {
          "https://getsamplefiles.com/download/mov/sample-2.mov",
          "https://getsamplefiles.com/download/webm/sample-3.webm"
 	})
-	public void loadFileTest(String str) throws MalformedURLException {
-		Point pos = new Point(0, 0);
-		int width = 400;
-		int height = 400;
-		float duration = 1;
-		URL url = new URL(str);
-		testVideoPlayer = new VideoPlayer(pos, width, height, duration, testSlide, url, false);
-		testFrame.add(testVideoPlayer);
-		testVideoPlayer.setVisible(true); 
+	public void loadFileTest(String url) throws MalformedURLException {
+		initPlayer(url);
 		testVideoPlayer.loadFile();
 	}
 	
 	@Test
-	public void togglePlayingTest() {
-		
-		System.out.println("Video loaded successfully.");
+	public void togglePlayingTest() throws MalformedURLException {
+		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
 		assertFalse("Video player starts running", testVideoPlayer.getPlaying());
 		testVideoPlayer.togglePlaying();
 		assertTrue("Video player does not unpause", testVideoPlayer.getPlaying());
 	}
 	
-	
+	@Test
+	public void detectLibsTest() throws MalformedURLException {
+		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
+		assertTrue("Native libraries not found", testVideoPlayer.nativeLibs());
+	}
 	
 	/*@Test
 	public void getPlayingTest() {
