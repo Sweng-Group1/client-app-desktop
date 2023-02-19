@@ -57,7 +57,7 @@ public class VideoPlayerTest {
 		URL url = new URL(str);
 		testVideoPlayer = new VideoPlayer(pos, width, height, duration, testSlide, url, false);
 		testFrame.add(testVideoPlayer);
-		testVideoPlayer.setVisible(true);
+		testVideoPlayer.setVisible(true); 
 		testVideoPlayer.loadFile();
 	}
 	
