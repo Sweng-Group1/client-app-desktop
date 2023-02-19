@@ -4,10 +4,15 @@ import java.awt.Point;
 import java.net.URL;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
+import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoPlayer extends PlayableMediaElement {
 
+	private static final long serialVersionUID = 1L;
+	private final EmbeddedMediaPlayerComponent VideoPlayer;
+	private Boolean nativeLib;
+	
 	protected VideoPlayer(Point pos, 
 						  int pointWidth, 
 						  int pointHeight, 
@@ -18,11 +23,11 @@ public class VideoPlayer extends PlayableMediaElement {
 		
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
 		this.VideoPlayer = new EmbeddedMediaPlayerComponent();
-		
+		this.add(VideoPlayer);
+		VideoPlayer.setVisible(true);
+		nativeLib = new NativeDiscovery().discover();
 		// TODO Auto-generated constructor stub
 	}
-	private static final long serialVersionUID = 1L;
-	private final EmbeddedMediaPlayerComponent VideoPlayer;
 	
 	@Override
 	public void togglePlaying() {
@@ -47,6 +52,11 @@ public class VideoPlayer extends PlayableMediaElement {
 		String VideoLocalPath = getLocalPath();
 		VideoPlayer.mediaPlayer().media().startPaused(VideoLocalPath); 
 		
+	}
+	
+	/* Tests if the user has native libraries installed for VLC */
+	public boolean nativeLibs() {
+		return nativeLib;
 	}
 	
 }
