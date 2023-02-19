@@ -21,12 +21,12 @@ public class Slide extends JPanel implements LayoutManager {
 	private ArrayList<PresElement> elements;
 
 	//example constructor
-	public Slide(int PtWidth, int PtHeight){
+	public Slide(int ptWidth, int ptHeight){
 		super();
 		this.setLayout(this);
 		this.setElements(new ArrayList<>());
-		this.setPointWidth(PtWidth);
-		this.setPointHeight(PtHeight);
+		this.setPointWidth(ptWidth);
+		this.setPointHeight(ptHeight);
 		this.validate();
 	}
 	
