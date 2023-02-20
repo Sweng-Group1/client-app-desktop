@@ -129,20 +129,20 @@ public class Slide extends JPanel implements LayoutManager {
 	 */
 	@Override
 	public void layoutContainer(Container parent) {
-		int w = parent.getWidth();
-		int h = parent.getHeight();
+		float w = parent.getWidth();
+		float h = parent.getHeight();
 		
-		int cellW = w/pointWidth;
-		int cellH = h/pointHeight;
+		float cellW = w/pointWidth;
+		float cellH = h/pointHeight;
 		
 		for(PresElement e : elements) {
-			int eWidth = e.width * cellW;
-			int eHeight = e.height * cellH;
+			float eWidth = e.width * cellW;
+			float eHeight = e.height * cellH;
 			
-			int eX = e.pos.x * cellW;
-			int eY = e.pos.y * cellH;
+			float eX = e.pos.x * cellW;
+			float eY = e.pos.y * cellH;
 			
-			e.component.setBounds(eX, eY, eWidth, eHeight);
+			e.component.setBounds((int)eX, (int)eY, (int)eWidth, (int)eHeight);
 		}
 	}
 }

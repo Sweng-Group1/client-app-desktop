@@ -46,6 +46,7 @@ public class Presentation extends JPanel {
 		}
 		desiredSlide.displaySlide();
 		resizeCurrentSlide();
+		desiredSlide.validate();
 	}
 	
 	public void nextSlide() {
@@ -56,7 +57,8 @@ public class Presentation extends JPanel {
 	
 	public void prevSlide() {
 		int maxSlide = slides.size()-1;
-		currentSlide = (currentSlide + maxSlide - 1) % maxSlide;
+		currentSlide--;
+		currentSlide = currentSlide > 0 ? currentSlide : maxSlide;
 		showCurrentSlide();
 	}
 	
