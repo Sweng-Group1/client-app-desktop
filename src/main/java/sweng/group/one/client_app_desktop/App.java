@@ -1,5 +1,7 @@
 package sweng.group.one.client_app_desktop;
 
+import java.io.File;
+
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -17,11 +19,14 @@ public class App
 		frame.setTitle("Map Demo");
 		
 		MapScene ms = new MapScene();
+		
 	    frame.add(ms);
 		frame.pack();
 		frame.setSize(1024, 768);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-       frame.setVisible(true);
+        frame.setVisible(true);
+        
+        ms.loadMapFile(new File("./assets/map/york.map"));
     }
 }

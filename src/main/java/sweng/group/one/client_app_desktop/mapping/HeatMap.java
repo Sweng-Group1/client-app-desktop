@@ -36,9 +36,6 @@ public class HeatMap extends Layer {
 		}
     	this.setDisplayModel(mapView.getModel().displayModel);
     	this.markers = markers;
-    	
-    	for (EventMarker m : markers) {
-    	}
     }
     
     @Override
@@ -55,7 +52,7 @@ public class HeatMap extends Layer {
         Image scaledImage = this.image.getScaledInstance((int)radius*2, (int)radius*2, java.awt.Image.SCALE_SMOOTH);
         
         ArrayList<EventMarker> visableMarkers = new ArrayList<>();
-        int maxNumPosts = 0;
+        int maxNumPosts = 1;
         
         for(EventMarker m : markers) {
         	if(!boundingBox.contains(m.getLatLong())) {
@@ -94,7 +91,6 @@ public class HeatMap extends Layer {
     			heatmap.setRGB(x, y, newRGB | pixel); //give pixel the same alpha as before
     		}
     	}
-    	
     	canvas.drawBitmap(new AwtBitmap(heatmap), 0, 0, width, height, 0, 0, width, height);
     }
 }
