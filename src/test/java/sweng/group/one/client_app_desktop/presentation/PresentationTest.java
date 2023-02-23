@@ -10,11 +10,12 @@ import org.junit.Test;
 public class PresentationTest {
 
 	private static ArrayList<Slide> slides;
+	private final static int NUM_SLIDES = 5;
 	
 	@BeforeClass
 	public static void setup() {
 		slides = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < NUM_SLIDES; i++) {
 			Slide newSlide = new Slide(400, 300);
 			slides.add(newSlide);
 		}
@@ -26,7 +27,7 @@ public class PresentationTest {
 		pres.nextSlide();
 		assertEquals(slides.get(1), pres.getCurrentSlide());
 		
-		ArrayList<Slide> retrievedSlides = pres.getSlides();
+		ArrayList<Slide> retrievedSlides = (ArrayList<Slide>) pres.getSlides();
 		assertEquals(false, retrievedSlides.get(0).isVisible());
 		assertEquals(true, retrievedSlides.get(1).isVisible());
 		assertEquals(false, retrievedSlides.get(2).isVisible());
@@ -36,12 +37,12 @@ public class PresentationTest {
 	public void prevSlideTest() {
 		Presentation pres = new Presentation(slides);
 		pres.prevSlide();
-		assertEquals(slides.get(2), pres.getCurrentSlide());
+		assertEquals(slides.get(NUM_SLIDES-1), pres.getCurrentSlide());
 		
-		ArrayList<Slide> retrievedSlides = pres.getSlides();
-		assertEquals(false, retrievedSlides.get(0).isVisible());
-		assertEquals(false, retrievedSlides.get(1).isVisible());
-		assertEquals(true, retrievedSlides.get(2).isVisible());
+		ArrayList<Slide> retrievedSlides = (ArrayList<Slide>) pres.getSlides();
+		for (Slide s : retrievedSlides) {
+			 assertEquals(s == pres.getCurrentSlide(), s.isVisible());
+		}
 	}
 	
 	@Test
@@ -50,9 +51,9 @@ public class PresentationTest {
 		Slide newSlide = new Slide(400, 300);
 		
 		pres.addSlide(newSlide);
-		ArrayList<Slide> retrievedSlides = pres.getSlides();
+		ArrayList<Slide> retrievedSlides = (ArrayList<Slide>) pres.getSlides();
 		
-		assertEquals(4, retrievedSlides.size());
+		assertEquals(NUM_SLIDES + 1, retrievedSlides.size());
 	}
 
 }
