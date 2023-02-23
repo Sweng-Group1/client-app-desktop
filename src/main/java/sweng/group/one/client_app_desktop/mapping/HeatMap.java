@@ -21,6 +21,7 @@ public class HeatMap extends Layer {
     private static final String CIRCLEPIC_PATH = "./assets/map/bolilla.png";
     private static final String GRADIENT_PATH = "./assets/map/colors.png";
     private static final int HEAT_RADIUS_METERS = 100;
+    private MapView mapView;
     private BufferedImage image;
     private BufferedImage gradient;
     private ArrayList<EventMarker> markers;
@@ -35,6 +36,7 @@ public class HeatMap extends Layer {
 			e.printStackTrace();
 		}
     	this.setDisplayModel(mapView.getModel().displayModel);
+    	this.mapView = mapView;
     	this.markers = markers;
     }
     
@@ -55,19 +57,20 @@ public class HeatMap extends Layer {
         int maxNumPosts = 1;
         
         for(EventMarker m : markers) {
-        	if(!boundingBox.contains(m.getLatLong())) {
-    			continue;
-    		}
-        	visableMarkers.add(m);
-        	int numPosts = m.getNumPosts();
-        	maxNumPosts = numPosts > maxNumPosts ? numPosts : maxNumPosts;
+        	Point pxPos = mapView.getMapViewProjection().toPixels(m.getLatLong());
+        	
+        	boolean heatPointVisable = pxPos.x+radius > 0 || pxPos.x-radius < width || pxPos.y+radius > 0 || pxPos.y+radius < height;
+        	
+        	if (heatPointVisable) {
+        		int numPosts = m.getNumPosts();
+            	maxNumPosts = numPosts > maxNumPosts ? numPosts : maxNumPosts;
+            	visableMarkers.add(m);
+        	}
+        	
         }
     	
     	for(EventMarker m: visableMarkers) {
     		LatLong point = m.getLatLong();
-    		if(!boundingBox.contains(point)) { //not the best as wont render something just outside
-    			continue;
-    		}
 	        double pixelX = MercatorProjection.longitudeToPixelX(point.longitude, mapSize);
 	        double pixelY = MercatorProjection.latitudeToPixelY(point.latitude, mapSize);
 	        int left = (int) (pixelX - topLeftPoint.x - radius);
