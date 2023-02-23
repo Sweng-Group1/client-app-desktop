@@ -17,8 +17,26 @@ public class App extends JFrame
 	public App()
     {
     	//setLayout(new BorderLayout());
-		setSize(800, 600);
-    	OptionsScene optionsScene = new OptionsScene();
+		setSize(1280, 720);
+		
+    	OptionsScene optionsScene = new OptionsScene() {
+    		@Override
+    		public void accountButtonCreate () {
+    			
+    		}
+    		@Override
+    		public void addPostButtonCreate() {
+    			
+    		}
+    		@Override
+    		public void helpButtonCreate() {
+    			
+    		}    	
+    		@Override
+    		public void closeButton() {
+    			
+    		}
+    	};    		
     	add(optionsScene, BorderLayout.LINE_END);
     }
 	
@@ -26,4 +44,5 @@ public class App extends JFrame
 		JFrame frame = new App();
 		frame.setVisible(true);
 	}
+	
 }

@@ -121,26 +121,22 @@ public class OptionsScene extends JPanel {
 			optionsButton.setIcon(buttonIcon);
 		}
 	}
-	/*
+	
 	public void accountButtonCreate () {
-		ImageIcon accountImage = new ImageIcon("icon file name");
-		accountButton = new JButton(accountImage);	
+		// Overridden in main
 	}
 	
 	public void addPostButtonCreate() {
-		ImageIcon addPostImage = new ImageIcon("icon file name");
-		addPostButton = new JButton(addPostImage);	
+		
 	}
 	
 	public void helpButtonCreate() {
-		ImageIcon helpButtonImage = new ImageIcon("icon file name");
-		helpButton = new JButton(helpButtonImage);
+		
 	}
 	
 	public void closeButton() {
-		ImageIcon closeButtonImage = new ImageIcon("icon file name");
-		closeButton = new JButton(closeButtonImage);
+		
 	}
-	*/
+	
 	
 }
