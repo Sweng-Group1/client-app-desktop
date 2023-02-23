@@ -18,7 +18,7 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 
-public class AudioPlayer extends JFrame{
+public class AudioPlayer extends PlayableMediaElement{
 	private static final String AUDIO_PATH = "where Ever Frasers folder is";
 	private AudioPlayerComponent audioPlayerComponent;
 	// Play and Pause Buttons will be combined 
@@ -79,7 +79,25 @@ public class AudioPlayer extends JFrame{
 	
 	public void loadAudio(String path) {
 		audioPlayerComponent.mediaPlayer().media().startPaused(path);
+		PlayableMediaElement
 	}
+	@Override
+	public void togglePlaying() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean getPlaying() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	protected void loadFile() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	// class is based needs to be tendered towards the playable media element
 	
 	// some more stuff on loading files here:
 	// https://www.tutorialspoint.com/vlcj/vlcj_audio_player.htm
