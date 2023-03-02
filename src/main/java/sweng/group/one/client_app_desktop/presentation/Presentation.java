@@ -6,6 +6,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -114,6 +115,7 @@ public class Presentation extends JPanel {
 						//is in format YYYY-MM-DDD
 						this.date = LocalDate.parse(infoItem.getTextContent());
 						break;
+						//TODO: Complete this
 					default:
 						break;
 					}
@@ -128,6 +130,7 @@ public class Presentation extends JPanel {
 				
 				Slide newSlide = new Slide(width, height);
 				this.addSlide(newSlide);
+				System.out.println("New Slide");
 				
 				for(int s = 0; s < slideXML.getLength(); s++) {
 					final String[] varNames = {"width", 
@@ -224,10 +227,11 @@ public class Presentation extends JPanel {
 							
 							//cast to URL
 							case "url":
-								if ((String)value == "") {
-									break;
+								try {
+									value = new URL((String)value);
+								} catch (MalformedURLException e) {
+									value = null;
 								}
-								value = new URL((String)value);
 								break;
 							}
 							
@@ -240,12 +244,44 @@ public class Presentation extends JPanel {
 					
 					switch (slideItemName) {
 					case "image":
+						System.out.println(varDict.get("url") + " " + 
+											varDict.get("width") + " " +
+											varDict.get("height") + " " +
+											varDict.get("rotation") + " " +
+											varDict.get("delay") + " " +
+											varDict.get("xCoordinate") + " " +
+											varDict.get("yCoordinate") + " " +
+											varDict.get("timeOnScreen"));
 						break;
 					case "video":
-						break;
+						System.out.println(varDict.get("url") + " " + 
+											varDict.get("width") + " " +
+											varDict.get("height") + " " +
+											varDict.get("xCoordinate") + " " +
+											varDict.get("yCoordinate") + " " +
+											varDict.get("loops"));
+						break; 
 					case "audio":
+						System.out.println(varDict.get("url") + " " + 
+								varDict.get("width") + " " +
+								varDict.get("height") + " " +
+								varDict.get("xCoordinate") + " " +
+								varDict.get("yCoordinate") + " " +
+								varDict.get("loops"));
 						break;
 					case "rectangle":
+						System.out.println(varDict.get("borderColour") + " " +
+											varDict.get("borderWidth"));
+						System.out.println(varDict.get("shadowColour") + " " +
+											varDict.get("shadowDx") + " " +
+											varDict.get("shadowDy") + " " +
+											varDict.get("shadowRadius"));
+						System.out.println(varDict.get("width") + " " +
+										varDict.get("height") + " " +
+										varDict.get("xCoordinate") + " " +
+										varDict.get("yCoordinate") + " " +
+										varDict.get("colour") + " " +
+										varDict.get("timeOnScreen"));
 						break;
 					case "circle":
 						break;
