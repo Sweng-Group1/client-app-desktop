@@ -22,11 +22,7 @@ public class OptionsScene extends JPanel {
 	
 	// change these to boolean to test, can be made into JButton
 	// When functions are ready
-	private JButton optionsButton;
-
-
-	protected JButton accountButton, addPostButton, helpButton, closeButton;
-	
+	private JButton optionsButton, accountButton, addPostButton, helpButton, closeButton;
 	private JPanel optionsPanel, optionsBox;
 	private ImageIcon buttonIcon, buttonIcon2;
 	private BufferedImage buttonImage, buttonImage2;
@@ -62,22 +58,46 @@ public class OptionsScene extends JPanel {
 		optionsBox.setVisible(isOpen);
 		
 		accountButton = new JButton("User");
+		accountButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {    		
+				
+			}
+		});
+		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		optionsBox.add(accountButton, gbc);
 		
 		addPostButton = new JButton("New Post");
+		addPostButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {    		
+				
+			}
+		});
+		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		optionsBox.add(addPostButton, gbc);
 		
 		helpButton = new JButton("Help");
+		helpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {    		
+				
+			}
+		});
+		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		optionsBox.add(helpButton, gbc);
 		
 		closeButton = new JButton("Exit");
+		helpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {    		
+				
+			}
+		});
+		
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -126,19 +146,19 @@ public class OptionsScene extends JPanel {
 		}
 	}
 	
-	public void accountButtonCreate () {
+	public void accountButtonPressed () {
 		// Overridden in main
 	}
 	
-	public void addPostButtonCreate() {
+	public void addPostButtonPressed() {
 		
 	}
 	
-	public void helpButtonCreate() {
+	public void helpButtonPressed() {
 		
 	}
 	
-	public void closeButton() {
+	public void closeButtonPressed() {
 		
 	}
 	

@@ -8,10 +8,6 @@ import javax.swing.JFrame;
 
 import sweng.group.one.client_app_desktop.sceneControl.OptionsScene;
 
-/**
- * Hello world!
- *
- */
 public class App extends JFrame
 {
     private static final long serialVersionUID = 1L;
@@ -23,36 +19,20 @@ public class App extends JFrame
 		
     	OptionsScene optionsScene = new OptionsScene() {
     		@Override
-    		public void accountButtonCreate () {
-    			accountButton.addActionListener(new ActionListener() {
-    				public void actionPerformed(ActionEvent e) {    		
-        				
-        			}
-    			});
+    		public void accountButtonPressed () {
+    			System.out.println("Account Button Pressed");
     		}
     		@Override
-    		public void addPostButtonCreate() {
-    			addPostButton.addActionListener(new ActionListener() {
-    				public void actionPerformed(ActionEvent e) {    		
-        				
-        			}
-    			});
+    		public void addPostButtonPressed() {
+    			System.out.println("Add Post Button Presssed");
     		}
     		@Override
-    		public void helpButtonCreate() {
-    			helpButton.addActionListener(new ActionListener() {
-    				public void actionPerformed(ActionEvent e) {    		
-        				
-        			}
-    			});
+    		public void helpButtonPressed() {
+    			System.out.println("Help Button Pressed");
     		}    	
     		@Override
-    		public void closeButton() {
-    			helpButton.addActionListener(new ActionListener() {
-    				public void actionPerformed(ActionEvent e) {    		
-        				
-        			}
-    			});
+    		public void closeButtonPressed() {
+    			System.out.println("Close Button Pressed");
     		}
     	};    		
     	add(optionsScene, BorderLayout.LINE_END);
