@@ -22,7 +22,11 @@ public class OptionsScene extends JPanel {
 	
 	// change these to boolean to test, can be made into JButton
 	// When functions are ready
-	private JButton optionsButton, accountButton, addPostButton, helpButton, closeButton;
+	private JButton optionsButton;
+
+
+	protected JButton accountButton, addPostButton, helpButton, closeButton;
+	
 	private JPanel optionsPanel, optionsBox;
 	private ImageIcon buttonIcon, buttonIcon2;
 	private BufferedImage buttonImage, buttonImage2;
