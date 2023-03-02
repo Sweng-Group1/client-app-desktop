@@ -18,23 +18,21 @@ public class ImageViewer extends MediaElement {
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL);
 		loadFile();
 		component = new JPanel() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
-
+		
+			 // Draws the whole of the loaded image at the specified dimensions
 			@Override
 			public void paint(Graphics g) {
 				super.paint(g);
 				// TODO Auto-generated method stub
 				g.drawImage(image, 0, 0, (int)g.getClipBounds().getWidth(), (int)(g.getClipBounds().getHeight()), null);
-				
 			}
 		};
 	}
 
 	private BufferedImage image; 
 
+	// Loads the image stored at the local path to a BufferedImage type
 	@Override
 	protected void loadFile() {
 		String imageLocalPath = getLocalPath();
