@@ -23,6 +23,8 @@ public class VideoPlayer extends PlayableMediaElement {
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
 		this.VideoPlayer = new EmbeddedMediaPlayerComponent();
 		this.component = this.VideoPlayer;
+		component.setLocation(pos);
+		component.setSize(pointWidth, pointHeight);
 		VideoPlayer.setVisible(true);
 		nativeLib = new NativeDiscovery().discover();
 		// TODO Auto-generated constructor stub
