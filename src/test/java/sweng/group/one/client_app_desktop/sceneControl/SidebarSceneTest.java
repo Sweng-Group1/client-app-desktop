@@ -1,5 +1,7 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -33,12 +35,12 @@ public class SidebarSceneTest  {
 	private JTextComponentFixture searchBar;
 	private JButtonFixture searchButton;
 	
-	private String testStr;
+	private String searchBarContent;
 	
 	private ActionListener searchAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			assert Boolean.TRUE; // Basically just a NOP
+			GuiActionRunner.execute(() -> searchBarContent = sidebar.getSearchText());
 		}
 	};
 	
@@ -107,10 +109,13 @@ public class SidebarSceneTest  {
 	}
 	
 	// Checks if the searchAction is being passed correctly
-//	@Test 
-//	public void searchButton() {
-//		
-//	}
+	@Test 
+	public void searchButton() {
+		String str = "Hello World";
+		searchBar.enterText(str);
+		searchButton.click();
+		assertEquals(searchBarContent, str);
+	}
 }
 
 
