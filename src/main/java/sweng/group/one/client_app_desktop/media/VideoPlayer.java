@@ -22,7 +22,7 @@ public class VideoPlayer extends PlayableMediaElement {
 		
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
 		this.VideoPlayer = new EmbeddedMediaPlayerComponent();
-		this.component.add(VideoPlayer);
+		this.component = this.VideoPlayer;
 		VideoPlayer.setVisible(true);
 		nativeLib = new NativeDiscovery().discover();
 		// TODO Auto-generated constructor stub
@@ -34,9 +34,13 @@ public class VideoPlayer extends PlayableMediaElement {
 		if ( getPlaying()) {
 			VideoPlayer.mediaPlayer().controls().pause(); 
 		}
-		else {
+		// This check should prevent it from throwing a nasty exception
+		else if (VideoPlayer.mediaPlayer().status().isPlayable()) {
 			VideoPlayer.mediaPlayer().controls().play();
-		} 			
+		}
+		else {
+			System.out.println("Not playable");
+		}
 	}
 	
 	@Override
