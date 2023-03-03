@@ -1,5 +1,7 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JButtonFixture;
 import org.assertj.swing.fixture.JPanelFixture;
+import org.assertj.swing.fixture.JTextComponentFixture;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -27,6 +30,17 @@ public class SidebarSceneTest  {
 	private SidebarScene sidebar;
 	private JPanelFixture sidebarFixture;
 	private JButtonFixture minimise;
+	private JTextComponentFixture searchBar;
+	private JButtonFixture searchButton;
+	
+	private String testStr;
+	
+	private ActionListener searchAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			assert Boolean.TRUE; // Basically just a NOP
+		}
+	};
 	
 	@BeforeClass
 	public static void setUpOnce() {
@@ -41,13 +55,15 @@ public class SidebarSceneTest  {
 		// Since we can only interact with swing elements in the EDT, we
 		// have to use GuiActionRunner to interact with JFrames and JPanels
 		JFrame frame = GuiActionRunner.execute(() -> new JFrame());
-		sidebar = GuiActionRunner.execute(() -> new SidebarScene());
+		sidebar = GuiActionRunner.execute(() -> new SidebarScene(searchAction));
 		GuiActionRunner.execute(() -> frame.add(sidebar));
 		window = new FrameFixture(frame);
 		window.show(); // shows the frame to test
 		
 		sidebarFixture = new JPanelFixture(window.robot(), sidebar);
 		minimise = window.button("Minimise");
+		searchButton = window.button("SearchButton");
+		searchBar = window.textBox("Searchbar");
 	}
 
 	@After
@@ -68,7 +84,6 @@ public class SidebarSceneTest  {
 	}
 	
 	// Tests if we can add presentations to the sidebar.
-	// This should, by rights, be parametrised but there are dependency issues with JUnit 4.
 	@Test
 	public void AddPres() {
 		int size = 5;
@@ -90,6 +105,12 @@ public class SidebarSceneTest  {
 			presFix.requireVisible();
 		}
 	}
+	
+	// Checks if the searchAction is being passed correctly
+//	@Test 
+//	public void searchButton() {
+//		
+//	}
 }
 
 
