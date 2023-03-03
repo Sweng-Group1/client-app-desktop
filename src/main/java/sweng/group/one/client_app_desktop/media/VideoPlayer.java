@@ -8,12 +8,11 @@ import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoPlayer extends PlayableMediaElement {
-
-	private static final long serialVersionUID = 1L;
+	
 	private final EmbeddedMediaPlayerComponent VideoPlayer;
 	private Boolean nativeLib;
 	
-	protected VideoPlayer(Point pos, 
+	public VideoPlayer(Point pos, 
 						  int pointWidth, 
 						  int pointHeight, 
 						  float duration, 
@@ -23,7 +22,7 @@ public class VideoPlayer extends PlayableMediaElement {
 		
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
 		this.VideoPlayer = new EmbeddedMediaPlayerComponent();
-		this.add(VideoPlayer);
+		this.component.add(VideoPlayer);
 		VideoPlayer.setVisible(true);
 		nativeLib = new NativeDiscovery().discover();
 		// TODO Auto-generated constructor stub
