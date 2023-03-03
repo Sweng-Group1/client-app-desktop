@@ -1,23 +1,26 @@
 package sweng.group.one.client_app_desktop.media;
 
-import java.net.MalformedURLException;
+import java.awt.Point;
+import java.net.URL;
 
-@SuppressWarnings("serial")
+import sweng.group.one.client_app_desktop.presentation.Slide;
+
 public abstract class PlayableMediaElement extends MediaElement {
 	
-	private Boolean loops;
+	protected Boolean loops;
 
-	public PlayableMediaElement(int mediaID) throws MalformedURLException {
-		super(mediaID);
-		loops = false;
-	}
-	
-	public PlayableMediaElement(int mediaID, Boolean loops) throws MalformedURLException {
-		super(mediaID);
+	protected PlayableMediaElement(Point pos, 
+									int width, 
+									int height, 
+									float duration, 
+									Slide slide, 
+									URL fileURL,
+									boolean loops){
+		super(pos, width, height, duration, slide, fileURL);
 		this.loops = loops;
 	}
 	
 	public abstract void togglePlaying();
 	
-	public abstract void getPlaying();
+	public abstract boolean getPlaying();
 }
