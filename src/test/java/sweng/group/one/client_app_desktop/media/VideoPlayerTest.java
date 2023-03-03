@@ -40,8 +40,9 @@ public class VideoPlayerTest {
 		float duration = 1;
 		URL url = new URL(str);
 		testVideoPlayer = new VideoPlayer(pos, width, height, duration, testSlide, url, false);
-		testFrame.add(testVideoPlayer);
-		testVideoPlayer.setVisible(true); 
+		testSlide = new Slide(width, height);
+		testSlide.add(testVideoPlayer);
+		testFrame.add(testSlide);
 	}
 	
 	@Before
@@ -62,19 +63,23 @@ public class VideoPlayerTest {
          "https://getsamplefiles.com/download/mov/sample-2.mov",
          "https://getsamplefiles.com/download/webm/sample-3.webm"
 	})
-	public void loadFileTest(String url) throws MalformedURLException {
+	public void loadFileTest(String url) throws Exception {
 		initPlayer(url);
 		testVideoPlayer.loadFile();
 	}
 	
 	@Test
-	public void togglePlayingTest() throws MalformedURLException {
+	public void togglePlayingTest() throws Exception {
 		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
+		testVideoPlayer.loadFile();
 		assertFalse("Video player starts running", testVideoPlayer.getPlaying());
 		testVideoPlayer.togglePlaying();
+		Thread.sleep(1000);
 		assertTrue("Video player does not unpause", testVideoPlayer.getPlaying());
 	}
 	
+	/* This test doesnt tell us anything about videoplayer, but gives us 
+	 * an easy way to detect if VLC isnt working on the host machine. */
 	@Test
 	public void detectLibsTest() throws MalformedURLException {
 		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
