@@ -75,6 +75,9 @@ public class VideoPlayerTest {
 		testVideoPlayer.togglePlaying();
 		Thread.sleep(1000);
 		assertTrue("Video player does not unpause", testVideoPlayer.getPlaying());
+		testVideoPlayer.togglePlaying();
+		Thread.sleep(1000);
+		assertFalse("Video player pauses", testVideoPlayer.getPlaying());
 	}
 	
 	/* This test doesnt tell us anything about videoplayer, but gives us 
