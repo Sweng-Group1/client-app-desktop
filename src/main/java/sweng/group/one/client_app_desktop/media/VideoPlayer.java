@@ -3,65 +3,66 @@ package sweng.group.one.client_app_desktop.media;
 import java.awt.Point;
 import java.net.URL;
 
+import javax.swing.JTextArea;
+
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoPlayer extends PlayableMediaElement {
 	
-	private final EmbeddedMediaPlayerComponent VideoPlayer;
+	private final EmbeddedMediaPlayerComponent mediaPlayer;
 	private Boolean nativeLib;
 	
 	public VideoPlayer(Point pos, 
 						  int pointWidth, 
-						  int pointHeight, 
-						  float duration, 
+						  int pointHeight,
 						  Slide slide, 
 						  URL fileURL,
 						  boolean loops) {
 		
-		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
-		this.VideoPlayer = new EmbeddedMediaPlayerComponent();
-		this.component = this.VideoPlayer;
-		component.setLocation(pos);
-		component.setSize(pointWidth, pointHeight);
-		VideoPlayer.setVisible(true);
+		super(pos, pointWidth, pointHeight, 0, slide, fileURL, loops);
 		nativeLib = new NativeDiscovery().discover();
-		// TODO Auto-generated constructor stub
+		this.mediaPlayer = new EmbeddedMediaPlayerComponent();
+		
+		if (Boolean.TRUE.equals(nativeLib)) {
+			this.component = mediaPlayer;
+			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
+			loadFile();
+		}
+		else {
+			this.component = new JTextArea("VLC is required for media to be used in this application");
+		}
 	}
 	
 	@Override
 	public void togglePlaying() {
 				
 		if ( getPlaying()) {
-			VideoPlayer.mediaPlayer().controls().pause(); 
+			mediaPlayer.mediaPlayer().controls().pause(); 
 		}
 		// This check should prevent it from throwing a nasty exception
-		else if (VideoPlayer.mediaPlayer().status().isPlayable()) {
-			VideoPlayer.mediaPlayer().controls().play();
+		else if (mediaPlayer.mediaPlayer().media().isValid()) {
+			mediaPlayer.mediaPlayer().controls().play();
 		}
 		else {
 			System.out.println("Not playable");
 		}
+		
 	}
 	
 	@Override
 	public boolean getPlaying() {
-		
-		return VideoPlayer.mediaPlayer().status().isPlaying();
-		
+		return mediaPlayer.mediaPlayer().status().isPlaying();
 	}
+	
 	@Override
 	protected void loadFile() {
-		
-		String VideoLocalPath = getLocalPath();
-		VideoPlayer.mediaPlayer().media().startPaused(VideoLocalPath); 
-		
+		mediaPlayer.mediaPlayer().media().prepare(localPath);
 	}
 	
 	/* Tests if the user has native libraries installed for VLC */
 	public boolean nativeLibs() {
 		return nativeLib;
 	}
-	
 }

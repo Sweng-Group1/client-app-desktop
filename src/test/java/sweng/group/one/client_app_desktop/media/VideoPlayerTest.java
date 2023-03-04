@@ -37,9 +37,8 @@ public class VideoPlayerTest {
 		Point pos = new Point(0, 0);
 		int width = 400;
 		int height = 400;
-		float duration = 1;
 		URL url = new URL(str);
-		testVideoPlayer = new VideoPlayer(pos, width, height, duration, testSlide, url, false);
+		testVideoPlayer = new VideoPlayer(pos, width, height, testSlide, url, false);
 		testSlide = new Slide(width, height);
 		testSlide.add(testVideoPlayer);
 		testFrame.add(testSlide);
