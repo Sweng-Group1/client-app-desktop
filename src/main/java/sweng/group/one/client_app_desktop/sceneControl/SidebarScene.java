@@ -107,6 +107,7 @@ public class SidebarScene extends JPanel {
 		presentations = p;
 		for (Presentation pres : p) {
 			presPanel.add(pres);
+			pres.setEnabled(true);
 		}
 	}
 	

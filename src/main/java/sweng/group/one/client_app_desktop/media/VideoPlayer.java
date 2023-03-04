@@ -47,7 +47,7 @@ public class VideoPlayer extends PlayableMediaElement {
 		
 	}
 	@Override
-	protected void loadFile() {
+	public void loadFile() {
 		
 		String VideoLocalPath = getLocalPath();
 		VideoPlayer.mediaPlayer().media().startPaused(VideoLocalPath); 

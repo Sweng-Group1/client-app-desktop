@@ -2,13 +2,23 @@ package sweng.group.one.client_app_desktop;
 
 import javax.swing.JFrame;
 
+import java.awt.BorderLayout;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import sweng.group.one.client_app_desktop.media.VideoPlayer;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
+import sweng.group.one.client_app_desktop.presentation.Slide;
+import sweng.group.one.client_app_desktop.sceneControl.SidebarScene;
 
 /**
  * Hello world!
@@ -17,36 +27,30 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 public class App extends JFrame
 {
 
-    public static void main( String[] args ) throws SAXException, IOException, ParserConfigurationException
-    {
-    	//Set up JFrame
-//    	JFrame frame = new JFrame();
-//    	frame.setSize(800, 400);
-//    	frame.setVisible(true);
-//    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//    	
-//    	int slideX = 50;
-//    	int slideY = 40;
-//    	
-//    	//create slide and add to frame
-//    	Slide slide = new Slide(slideX, slideY);
-//    	ArrayList<Slide> slides = new ArrayList<>();
-//    	slides.add(slide);
-//    	
-//    	slide.add(new DemoElement(new Point(0, 0), 1, 1, 0, slide));
-//    	slide.add(new DemoElement(new Point(slideX-1, slideY-1), 1, 1, 0, slide));
-//    	slide.add(new DemoElement(new Point(slideX/2-1, slideY/2-1), 10, 10, 0, slide));
-//    	
-//    	Presentation pres = new Presentation(slides);
-//    	
-//    	frame.add(pres, BorderLayout.CENTER);
-//    	
-//    	frame.add(pres);
-//    	frame.validate();
-//    	pres.validate();
-//    	slide.validate();
-    	
-    	Presentation pFile = new Presentation(new File("assets/xml/evaluation.xml"));
+		private ArrayList<Presentation> presentations;
 
+		public App() throws MalformedURLException
+	    {
+			presentations = new ArrayList<Presentation>();
+			for (int i = 0; i < 10; i++) {
+				Slide s = new Slide(400, 200);
+				VideoPlayer vp = new VideoPlayer(new Point(0, 0), 
+						400, 200, 10, s, 
+						new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4"), true);
+				s.add(vp);
+				presentations.add(new Presentation());
+				presentations.get(i).setVisible(true);
+				presentations.get(i).add(s);
+				presentations.get(i).nextSlide();
+			}
+	    	setLayout(new BorderLayout());
+	    	SidebarScene sidebar = new SidebarScene(null);
+	    	add(sidebar, BorderLayout.WEST);
+	    	sidebar.replacePres(presentations);
+	    }
+		
+		public static void main(String[] args) throws MalformedURLException {
+			JFrame frame = new App();
+			frame.setVisible(true);
+		}
 	}
-}
