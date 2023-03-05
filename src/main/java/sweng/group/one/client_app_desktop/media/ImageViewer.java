@@ -42,5 +42,12 @@ public class ImageViewer extends MediaElement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// If the image does not fit in the slide at the desired position, resize the image to fit
+		if (width > slide.getPointWidth()-pos.x)  {
+			width = slide.getPointWidth()-pos.x;
+		}
+		if (height > slide.getPointHeight()-pos.y) {
+			height = slide.getPointHeight()-pos.y;
+		}
 	}
 }
