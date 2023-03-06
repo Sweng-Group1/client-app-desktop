@@ -85,7 +85,7 @@ public class VideoPlayerTest {
 	@Test
 	public void detectLibsTest() throws MalformedURLException {
 		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
-		assertTrue("Native libraries not found", testVideoPlayer.nativeLibs());
+		assertTrue("Native libraries not found", testVideoPlayer.nativeLibsInstalled());
 	}
 	
 	/*@Test
