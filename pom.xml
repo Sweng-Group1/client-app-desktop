@@ -69,7 +69,12 @@
     	<artifactId>JUnitParams</artifactId>
     	<version>1.0.5</version>
     <scope>test</scope>
-</dependency>
+	</dependency>
+	<dependency>
+    	<groupId>org.mockito</groupId>
+    	<artifactId>mockito-core</artifactId>
+    	<version>5.1.1</version>
+	</dependency>
   </dependencies>
   
   
