@@ -2,53 +2,80 @@ package sweng.group.one.client_app_desktop.media;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
-import java.awt.Color;
 import java.awt.Point;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import sweng.group.one.client_app_desktop.presentation.Slide;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
+import org.assertj.swing.edt.GuiActionRunner;
+import org.assertj.swing.fixture.FrameFixture;
+import org.assertj.swing.fixture.JTextComponentFixture;
 
 
 @RunWith(JUnitParamsRunner.class)
 public class VideoPlayerTest {
 	
+	@Mock
+	private NativeDiscovery mockNativeDiscovery;
+	
 	private VideoPlayer testVideoPlayer;
 	private JFrame testFrame;
 	private Slide testSlide;
 	
+	private FrameFixture testFrameFix;
+	
 	/* By rights this should be part of setup, but the current design of VideoPlayer
 	 * makes it difficult to parameterise tests */
+
 	private void initPlayer(String str) throws MalformedURLException {
+		// Use an actual native discovery by default.
+		initPlayer(str, new NativeDiscovery());
+	}
+	
+	private void initPlayer(String str, NativeDiscovery nd) throws MalformedURLException {
 		Point pos = new Point(0, 0);
 		int width = 400;
 		int height = 400;
 		URL url = new URL(str);
-		testVideoPlayer = new VideoPlayer(pos, width, height, testSlide, url, false);
+		testVideoPlayer = new VideoPlayer(pos, width, height, testSlide, url, false, nd);
 		testSlide = new Slide(width, height);
 		testSlide.add(testVideoPlayer);
 		testFrame.add(testSlide);
 	}
 	
+	@BeforeClass
+	public static void setupOnce() {
+		// Causes tests to fail if they aren't executing on the EDT
+		// They'll probably fail anyways, but this will throw an 
+		// EdtViolationException so you know WHY its failing.
+		FailOnThreadViolationRepaintManager.install();
+	}
+	
 	@Before
 	public void setup() {
-		testFrame = new JFrame();  
-        testFrame.setSize(400,400);    
-        testFrame.setVisible(true);
+		GuiActionRunner.execute( () -> {
+			MockitoAnnotations.openMocks(this);
+			testFrame = new JFrame();  
+	        testFrame.setSize(400,400);    
+	        testFrame.setVisible(true);
+		});
 	}
 	
 	@Test
@@ -63,29 +90,35 @@ public class VideoPlayerTest {
          "https://getsamplefiles.com/download/webm/sample-3.webm"
 	})
 	public void loadFileTest(String url) throws Exception {
-		initPlayer(url);
-		testVideoPlayer.loadFile();
+		GuiActionRunner.execute( () -> {
+			initPlayer(url);
+			testVideoPlayer.loadFile();
+		});
 	}
 	
 	@Test
 	public void togglePlayingTest() throws Exception {
-		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
-		testVideoPlayer.loadFile();
-		assertFalse("Video player starts running", testVideoPlayer.getPlaying());
-		testVideoPlayer.togglePlaying();
-		Thread.sleep(1000);
-		assertTrue("Video player does not unpause", testVideoPlayer.getPlaying());
-		testVideoPlayer.togglePlaying();
-		Thread.sleep(1000);
-		assertFalse("Video player pauses", testVideoPlayer.getPlaying());
+		GuiActionRunner.execute( () -> {
+			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
+			testVideoPlayer.loadFile();
+			assertFalse("Video player starts running", testVideoPlayer.getPlaying());
+			testVideoPlayer.togglePlaying();
+			Thread.sleep(1000);
+			assertTrue("Video player does not unpause", testVideoPlayer.getPlaying());
+			testVideoPlayer.togglePlaying();
+			Thread.sleep(1000);
+			assertFalse("Video player pauses", testVideoPlayer.getPlaying());
+		});
 	}
 	
 	/* This test doesnt tell us anything about videoplayer, but gives us 
 	 * an easy way to detect if VLC isnt working on the host machine. */
 	@Test
 	public void detectLibsTest() throws MalformedURLException {
-		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
-		assertTrue("Native libraries not found", testVideoPlayer.nativeLibs());
+		GuiActionRunner.execute( () -> {
+			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
+			assertTrue("Native libraries not found", testVideoPlayer.nativeLibs());
+		});
 	}
 	
 	/*@Test
@@ -121,6 +154,8 @@ public class VideoPlayerTest {
 		
 	@After
 	public void teardown() {
-		testFrame.dispose();
+		GuiActionRunner.execute( () -> {
+			testFrame.dispose();
+		});
 	}
 }
