@@ -14,7 +14,7 @@ public class VideoPlayer extends PlayableMediaElement {
 	private final EmbeddedMediaPlayerComponent mediaPlayer;
 	private Boolean nativeLib;
 	
-	public VideoPlayer(Point pos, 
+	protected VideoPlayer(Point pos, 
 			  int pointWidth, 
 			  int pointHeight,
 			  Slide slide, 
