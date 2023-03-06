@@ -76,6 +76,7 @@ public class VideoPlayerTest {
 	        testFrame.setSize(400,400);    
 	        testFrame.setVisible(true);
 		});
+		testFrameFix = new FrameFixture(testFrame);
 	}
 	
 	@Test
@@ -119,6 +120,18 @@ public class VideoPlayerTest {
 			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
 			assertTrue("Native libraries not found", testVideoPlayer.nativeLibs());
 		});
+	}
+	
+	/* Tests to see if the no VLC error message is shown */
+	@Test
+	public void noLibraryError() {
+		GuiActionRunner.execute( () -> {
+			when(mockNativeDiscovery.discover()).thenReturn(Boolean.FALSE);
+			
+			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4", mockNativeDiscovery);
+		});
+		JTextComponentFixture errMsg = testFrameFix.textBox("VLC Error Message");
+		errMsg.requireVisible();
 	}
 	
 	/*@Test
