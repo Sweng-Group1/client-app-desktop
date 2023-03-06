@@ -39,8 +39,10 @@ public class Slide extends JPanel implements LayoutManager {
 	public void add(PresElement element) throws IllegalArgumentException{
 		
 		if (element.pos.x + element.width > pointWidth ||
-				element.pos.y + element.height > pointHeight) {
-			throw new IllegalArgumentException("Element the dimensions of this slide");
+			element.pos.y + element.height > pointHeight ||
+			element.pos.x < 0 ||
+			element.pos.y < 0){
+			throw new IllegalArgumentException("Element does not fit this slide");
 		}
 		
 		this.add(element.component);
