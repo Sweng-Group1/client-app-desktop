@@ -76,7 +76,7 @@ public class VideoPlayer extends PlayableMediaElement {
 	}
 	
 	/* Tests if the user has native libraries installed for VLC */
-	public boolean nativeLibs() {
+	public boolean nativeLibsInstalled() {
 		return nativeLib;
 	}
 }
