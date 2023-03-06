@@ -33,8 +33,6 @@
 		<version>3.24.0</version>
 		<scope>test</scope>
 	</dependency>
-<<<<<<< HEAD
-    
     <dependency>
 	    <groupId>org.mapsforge</groupId>
 	    <artifactId>mapsforge-core</artifactId>
@@ -76,16 +74,12 @@
     	<artifactId>mockito-core</artifactId>
     	<version>5.1.1</version>
 	</dependency>
-=======
-	
 	<dependency>
   		<groupId>org.assertj</groupId>
   		<artifactId>assertj-swing-junit</artifactId>
   		<version>3.9.2</version>
   		<scope>test</scope>
 	</dependency>
-	
->>>>>>> 193a846 (Added AssertJ Swing to dependencies)
   </dependencies>
   
   
