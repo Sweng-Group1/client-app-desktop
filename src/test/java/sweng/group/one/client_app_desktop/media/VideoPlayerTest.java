@@ -2,6 +2,7 @@ package sweng.group.one.client_app_desktop.media;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.awt.Point;
@@ -30,9 +31,6 @@ import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 
 @RunWith(JUnitParamsRunner.class)
 public class VideoPlayerTest {
-	
-	@Mock
-	private NativeDiscovery mockNativeDiscovery;
 	
 	private VideoPlayer testVideoPlayer;
 	private JFrame testFrame;
@@ -70,7 +68,6 @@ public class VideoPlayerTest {
 	@Before
 	public void setup() {
 		GuiActionRunner.execute( () -> {
-			MockitoAnnotations.openMocks(this);
 			testFrame = new JFrame();  
 	        testFrame.setSize(400,400);    
 	        testFrame.setVisible(true);
@@ -121,9 +118,10 @@ public class VideoPlayerTest {
 	@Test
 	public void noLibraryError() {
 		GuiActionRunner.execute( () -> {
-			when(mockNativeDiscovery.discover()).thenReturn(Boolean.FALSE);
+			NativeDiscovery mockND = mock(NativeDiscovery.class);
+			when(mockND.discover()).thenReturn(Boolean.FALSE);
 			
-			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4", mockNativeDiscovery);
+			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4", mockND);
 		});
 		JTextComponentFixture errMsg = testFrameFix.textBox("VLC Error Message");
 		errMsg.requireVisible();
