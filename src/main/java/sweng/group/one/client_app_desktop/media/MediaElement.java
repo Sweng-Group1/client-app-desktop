@@ -27,8 +27,9 @@ public abstract class MediaElement extends PresElement {
 		super(pos, width, height, duration, slide);
 		
 		this.fileURL = fileURL;
+
 		this.localPath = "DEFAULT_PATH";
-		
+
 		try {
 			//connect to a URL & check if there is a file there
 			URLConnection con = fileURL.openConnection();
@@ -38,7 +39,7 @@ public abstract class MediaElement extends PresElement {
 			}
 			String fileName = fieldValue.substring(fieldValue.indexOf("filename=") + 9, fieldValue.length());
 			fileName = fileName.substring(fileName.lastIndexOf("/")+1); //prevent new folders from being made
-			this.localPath = System.getProperty("java.io.tmpdir") + "WhatsOn/assets/" + fileName;
+			this.localPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/assets/" + fileName;
 			
 			downloadFromURL();
 		} catch (IOException e) {
