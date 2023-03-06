@@ -111,7 +111,6 @@ public class VideoPlayerTest {
 	 * an easy way to detect if VLC isnt working on the host machine. */
 	@Test
 	public void detectLibsTest() throws MalformedURLException {
-<<<<<<< HEAD
 		GuiActionRunner.execute( () -> {
 			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
 			assertTrue("Native libraries not found", testVideoPlayer.nativeLibs());
@@ -128,10 +127,6 @@ public class VideoPlayerTest {
 		});
 		JTextComponentFixture errMsg = testFrameFix.textBox("VLC Error Message");
 		errMsg.requireVisible();
-=======
-		initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
-		assertTrue("Native libraries not found", testVideoPlayer.nativeLibsInstalled());
->>>>>>> 5bcb77688f6bda7cc7c54c41fd991d67bf8238e9
 	}
 	
 	/*@Test
