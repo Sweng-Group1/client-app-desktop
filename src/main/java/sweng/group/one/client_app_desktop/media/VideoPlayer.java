@@ -15,23 +15,37 @@ public class VideoPlayer extends PlayableMediaElement {
 	private Boolean nativeLib;
 	
 	public VideoPlayer(Point pos, 
+			  int pointWidth, 
+			  int pointHeight,
+			  Slide slide, 
+			  URL fileURL,
+			  boolean loops) {
+		this(pos, pointWidth, pointHeight, slide, fileURL, loops, new NativeDiscovery());
+	}
+	
+	/* Alternative constructor that allows the user to pass a native discovery object.
+	 * Primarily used for mocking.  */
+	public VideoPlayer(Point pos, 
 						  int pointWidth, 
 						  int pointHeight,
 						  Slide slide, 
 						  URL fileURL,
-						  boolean loops) {
+						  boolean loops,
+						  NativeDiscovery nd) {
 		
 		super(pos, pointWidth, pointHeight, 0, slide, fileURL, loops);
-		nativeLib = new NativeDiscovery().discover();
+		nativeLib = nd.discover();
 		this.mediaPlayer = new EmbeddedMediaPlayerComponent();
 		
 		if (Boolean.TRUE.equals(nativeLib)) {
 			this.component = mediaPlayer;
+			this.component.setName("Video Player");
 			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
 			loadFile();
 		}
 		else {
 			this.component = new JTextArea("VLC is required for media to be used in this application");
+			this.component.setName("VLC Error Message");
 		}
 	}
 	
