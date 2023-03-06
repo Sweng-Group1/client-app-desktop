@@ -5,28 +5,27 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.awt.Point;
-import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.JFrame;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import sweng.group.one.client_app_desktop.presentation.Slide;
-import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JTextComponentFixture;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import sweng.group.one.client_app_desktop.presentation.Slide;
+import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 
 
 @RunWith(JUnitParamsRunner.class)
@@ -93,7 +92,6 @@ public class VideoPlayerTest {
 	public void loadFileTest(String url) throws Exception {
 		GuiActionRunner.execute( () -> {
 			initPlayer(url);
-			testVideoPlayer.loadFile();
 		});
 	}
 	
@@ -101,13 +99,10 @@ public class VideoPlayerTest {
 	public void togglePlayingTest() throws Exception {
 		GuiActionRunner.execute( () -> {
 			initPlayer("https://getsamplefiles.com/download/mp4/sample-5.mp4");
-			testVideoPlayer.loadFile();
 			assertFalse("Video player starts running", testVideoPlayer.getPlaying());
 			testVideoPlayer.togglePlaying();
-			Thread.sleep(1000);
 			assertTrue("Video player does not unpause", testVideoPlayer.getPlaying());
 			testVideoPlayer.togglePlaying();
-			Thread.sleep(1000);
 			assertFalse("Video player pauses", testVideoPlayer.getPlaying());
 		});
 	}
