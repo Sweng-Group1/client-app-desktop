@@ -1,106 +1,87 @@
-// published by Oli Partridge
-
 package sweng.group.one.client_app_desktop.media;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.io.File;
+import java.net.URL;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-// import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
-// potentially replace with code made in the company, not sure
-// if its been made or not yet
+import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
+
 
 public class AudioPlayer extends PlayableMediaElement{
-	private static final String AUDIO_PATH = "where Ever Frasers folder is";
-	private AudioPlayerComponent audioPlayerComponent;
-	// Play and Pause Buttons will be combined 
-	private JButton playAudioButton;
-	private JButton pauseAudioButton;
 	
+	JPanel audioPanel;
+	Icon icon;
+	JToggleButton toggleB;
+	//ButtonHandler bHandler = new ButtonHandler();
 	
-	public AudioPlayer(String title) {
-		super(title);
+	public AudioPlayer(Point pos, int pointWidth, int pointHeight,
+						float duration, Slide slide, URL fileURL, boolean loops) {
 		
-		audioPlayerComponent = new AudioPlayerComponent();
-		audioPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-	         @Override
-	         public void finished(MediaPlayer mediaPlayer) {
-	            System.out.println("Audio Playback Finished.");
-	         }
-	         @Override
-	         public void error(MediaPlayer mediaPlayer) {
-	            System.out.println("Failed to load Audio.");
-	         }
-		});
-   }
-// initialise audio player like speaker button in PP.
-// needs to be sorted out and not just a button, will be picture instead.
-	public void initialize() {
-		this.setBounds(100, 100, 100, 100);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				audioPlayerComponent.release();
-				System.exit(0);
-			}
-			
-		});
+		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
+		this.AudioPlayer = new EmbeddedMediaPlayerComponent();
 		
-		//Border audioBorder = BorderFactory.createTitledBorder("Audio Controls");
-		JPanel audioControls = new JPanel();
-		//audioControls.setBorder(audioBorder);
-		playAudioButton = new JButton("image will replace this");
-		pauseAudioButton = new JButton("image will replace this");
+		audioPanel = new JPanel();
+		audioPanel.setBounds(pointHeight, pointHeight, pointWidth, pointHeight);
+		audioPanel.setBackground(Color.blue);
+		slide.add(audioPanel);
 		
-		//play and pause will overlap one another, depending on which has been clicked.
-		playAudioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				audioPlayerComponent.mediaPlayer().controls().play();
-			}
-		});
+		icon = new ImageIcon(".//assets//speaker_icon.png");
 		
-		pauseAudioButton.addActionListener(new ActionListener() {
-	         public void actionPerformed(ActionEvent e) {
-	            audioPlayerComponent.mediaPlayer().controls().pause();
-	         }
-	      });
-		this.setContentPane(audioControls);
-		this.setVisible(true);
+		toggleB = new JToggleButton(icon);
+		toggleB.setFocusPainted(false);
+		//toggleB.addActionListener(bHandler);
+		audioPanel.add(toggleB);
 	}
-	
-	public void loadAudio(String path) {
-		audioPlayerComponent.mediaPlayer().media().startPaused(path);
-		PlayableMediaElement
-	}
+	private final EmbeddedMediaPlayerComponent AudioPlayer;
+
 	@Override
 	public void togglePlaying() {
-		// TODO Auto-generated method stub
-		
+		if(getPlaying()) {
+			AudioPlayer.mediaPlayer().controls().pause();
+		}
+		else {
+			AudioPlayer.mediaPlayer().controls().play();
+		}
 	}
 	@Override
 	public boolean getPlaying() {
-		// TODO Auto-generated method stub
-		return false;
+		return AudioPlayer.mediaPlayer().status().isPlaying();
 	}
 	@Override
 	protected void loadFile() {
-		// TODO Auto-generated method stub
+		String AudioLocalPath = getLocalPath();
+		AudioPlayer.mediaPlayer().media().startPaused(AudioLocalPath);
 		
 	}
 	
-	// class is based needs to be tendered towards the playable media element
 	
-	// some more stuff on loading files here:
-	// https://www.tutorialspoint.com/vlcj/vlcj_audio_player.htm
-	
-			
+
 }
+
+//public class ButtonHandler implements ActionListener{
+//	
+//	public void actionPerformed(ActionEvent event){
+//		
+//		AudioButton.loadFile();
+//		AudioButton.togglePlaying();
+//							
+//	}
+//}
+
+
+
+
+
+
