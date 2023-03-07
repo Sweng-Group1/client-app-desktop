@@ -27,8 +27,9 @@ public abstract class MediaElement extends PresElement {
 		super(pos, width, height, duration, slide);
 		
 		this.fileURL = fileURL;
+
 		this.localPath = "DEFAULT_PATH";
-		
+
 		try {
 			//connect to a URL & check if there is a file there
 			URLConnection con = fileURL.openConnection();
@@ -56,11 +57,24 @@ public abstract class MediaElement extends PresElement {
 		out.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		out.close();
 		rbc.close();
+		outputFile.deleteOnExit();
 	}
 	
 	protected abstract void loadFile();
 	
 	public String getLocalPath() {
 		return this.localPath;
+	}
+	
+	@Override
+	public void finalize() {
+		File file;
+		try {
+			file = new File(localPath);
+			file.delete();
+		} catch (Exception e) {
+			//this means that the item is already deleted
+		}
+		
 	}
 }

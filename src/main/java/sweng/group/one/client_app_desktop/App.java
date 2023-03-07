@@ -6,7 +6,9 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+
 import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +18,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import sweng.group.one.client_app_desktop.media.VideoPlayer;
-import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
+import sweng.group.one.client_app_desktop.presentation.DemoElement;
+import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.sceneControl.SidebarScene;
 
 /**
@@ -37,7 +40,7 @@ public class App extends JFrame
 				ArrayList<Slide> slides = new ArrayList<>();
 				slides.add(s);
 				VideoPlayer vp = new VideoPlayer(new Point(0, 0), 
-						400, 200, 10, s, 
+						400, 200, s, 
 						new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4"), true);
 				s.add(vp);
 				presentations.add(new Presentation(slides));
@@ -56,3 +59,4 @@ public class App extends JFrame
 			frame.setVisible(true);
 		}
 	}
+
