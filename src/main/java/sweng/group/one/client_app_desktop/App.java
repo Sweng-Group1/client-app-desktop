@@ -36,11 +36,11 @@ public class App extends JFrame
 	    {
 			presentations = new ArrayList<Presentation>();
 			for (int i = 0; i < 10; i++) {
-				Slide s = new Slide(50, 40);
+				Slide s = new Slide(300, 300);
 				ArrayList<Slide> slides = new ArrayList<>();
 				slides.add(s);
 				VideoPlayer vp = new VideoPlayer(new Point(0, 0), 
-						50, 40, s, 
+						300, 300, s, 
 						new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4"), true);
 				s.add(vp);
 				presentations.add(new Presentation(slides));
