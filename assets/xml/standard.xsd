@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:SWENG="urn:SWENG"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xml:lang="EN"
+    targetNamespace="urn:SWENG" elementFormDefault="qualified">
+    <xs:attributeGroup name="position">
+        <xs:attribute name="xCoordinate" type="xs:decimal" use="required">
+            <xs:annotation>
+                <xs:documentation> The x coordinate of the item within the slide </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="yCoordinate" type="xs:decimal" use="required">
+            <xs:annotation>
+                <xs:documentation> The y coordinate of the item within the slide </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="colour">
+        <xs:attribute name="colour" use="required">
+            <xs:annotation>
+                <xs:documentation> HEX string for fill colour in RGBA format. </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="#([a-fA-F0-9]{8})" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="border">
+        <xs:attribute name="borderWidth" type="xs:decimal" use="optional">
+            <xs:annotation>
+                <xs:documentation> Thickness of the border. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="borderColour" use="optional">
+            <xs:annotation>
+                <xs:documentation> HEX string for border colour in RGBA format. </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="#([a-fA-F0-9]{8})" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="shadow">
+        <xs:attribute name="shadowRadius" type="xs:decimal" use="optional">
+            <xs:annotation>
+                <xs:documentation> Shadow blur radius. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="shadowDy" type="xs:decimal" use="optional">
+            <xs:annotation>
+                <xs:documentation> Shadow y offset. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="shadowDx" type="xs:decimal" use="optional">
+            <xs:annotation>
+                <xs:documentation> Shadow x offset. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="shadowColour" use="optional">
+            <xs:annotation>
+                <xs:documentation> HEX string for shadow colour in RGBA format. </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="#([a-fA-F0-9]{8})" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="timeOnScreen">
+        <xs:attribute name="timeOnScreen" type="xs:time" use="optional">
+            <xs:annotation>
+                <xs:documentation> Amount of time the element is visible on screen. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:element name="presentation">
+        <xs:annotation>
+            <xs:documentation> A SWENG 2022/2023 presentation. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="info" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation> Presentation information element. MUST be present in all
+                            presentations. </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string" minOccurs="1" maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation> The presentation title. </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="author" type="xs:string" minOccurs="1" maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation> The presentation author. </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="date" type="xs:date" minOccurs="1" maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation> The presentation creation date. </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element name="numSlides" type="xs:decimal" minOccurs="1"
+                                maxOccurs="1">
+                                <xs:annotation>
+                                    <xs:documentation> Number of slides in the presentation. </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="slide" minOccurs="1" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation> The slide element contains the content to display. Every
+                            presentation MUST contain AT LEAST ONE slide. There is no maximum amount
+                            of slides. </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="text" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>A text box. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType mixed="true">
+                                    <xs:attribute name="width" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Width of the text box within the
+                                                slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="height" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Height of the text box within the
+                                                slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="fontName" type="xs:string" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Name of the font to use to display
+                                                the text contained in this textbox. The application
+                                                should provide the appropriate font. If the named
+                                                font is not provided by the application fallback
+                                                behaviour should be implmented. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="fontSize" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Size of text in points (pt). </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attributeGroup ref="SWENG:colour" />
+                                    <xs:attributeGroup ref="SWENG:position" />
+                                    <xs:attributeGroup ref="SWENG:timeOnScreen" />
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="audio" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation> This element carries information about a
+                                        digital audio source. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="url" type="xs:string" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> URL to the audio blob. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="loop" type="xs:boolean" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Whether the audio blob should be
+                                                played in a loop. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attributeGroup ref="SWENG:position" />
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="video" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation> This element carries information about a
+                                        digital video source. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="url" type="xs:string" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> URL to the video blob. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="loop" type="xs:boolean" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Whether the video blob should be
+                                                played in a loop. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="width" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Width of the video within the slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="height" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Height of the video within the slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attributeGroup ref="SWENG:position" />
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="image" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation> This element carries information about a
+                                        digital image source. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="url" type="xs:string" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> URL to the image blob. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="width" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Width of the image within the slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="height" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Height of the image within the slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="rotation" use="optional">
+                                        <xs:annotation>
+                                            <xs:documentation> Rotation of the image in degrees.
+                                                Must be between 0 (included) and 360 (excluded). </xs:documentation>
+                                        </xs:annotation>
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:decimal">
+                                                <xs:minInclusive value="0" />
+                                                <xs:maxExclusive value="360" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    <xs:attribute name="delay" use="optional">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:float">
+                                                <xs:minInclusive value="0.1"></xs:minInclusive>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    <xs:attributeGroup ref="SWENG:position" />
+                                    <xs:attributeGroup ref="SWENG:timeOnScreen" />
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="rectangle" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation> This element carries information about a
+                                        rectangle shape. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="width" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Width of the rectangle within the
+                                                slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="height" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Height of the rectangle within the
+                                                slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attributeGroup ref="SWENG:colour" />
+                                    <xs:attributeGroup ref="SWENG:border" />
+                                    <xs:attributeGroup ref="SWENG:position" />
+                                    <xs:attributeGroup ref="SWENG:shadow" />
+                                    <xs:attributeGroup ref="SWENG:timeOnScreen" />
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="circle" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation> This element carries information about a
+                                        circle shape. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="radius" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> The radius of the circle within the
+                                                slide. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attributeGroup ref="SWENG:colour" />
+                                    <xs:attributeGroup ref="SWENG:border" />
+                                    <xs:attributeGroup ref="SWENG:position" />
+                                    <xs:attributeGroup ref="SWENG:shadow" />
+                                    <xs:attributeGroup ref="SWENG:timeOnScreen" />
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="line" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation> This element carries information about a line
+                                        shape. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:attribute name="thickness" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Thickness of the line. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="fromX" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Start x coordinate of the line. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="fromY" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> Start y coordinate of the line. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="toX" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> End x coordinate of the line. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="toY" type="xs:decimal" use="required">
+                                        <xs:annotation>
+                                            <xs:documentation> End y coordinate of the line. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attributeGroup ref="SWENG:colour" />
+                                    <xs:attributeGroup ref="SWENG:timeOnScreen" />
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:choice>
+                        <xs:attribute name="title" type="xs:string" use="optional">
+                            <xs:annotation>
+                                <xs:documentation> Slide title. </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="width" type="xs:decimal" use="required">
+                            <xs:annotation>
+                                <xs:documentation> Slide width. This is not in pixels. It should
+                                    instead be used as a "coordinates reference". </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="height" type="xs:decimal" use="required">
+                            <xs:annotation>
+                                <xs:documentation> Slide height. This is not in pixels. It should
+                                    instead be used as a "coordinates reference". </xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
