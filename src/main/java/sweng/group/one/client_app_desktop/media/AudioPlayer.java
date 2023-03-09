@@ -1,9 +1,12 @@
 package sweng.group.one.client_app_desktop.media;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 
 import javax.swing.Icon;
@@ -18,7 +21,7 @@ import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 public class AudioPlayer extends PlayableMediaElement{
 	
 	JPanel audioPanel;
-	Icon icon;
+	ImageIcon icon;
 	JToggleButton toggleB;
 	
 	public AudioPlayer(Point pos, int pointWidth, int pointHeight,
@@ -33,8 +36,14 @@ public class AudioPlayer extends PlayableMediaElement{
 //		slide.add(audioPanel);
 //		
 		icon = new ImageIcon(".//assets//speaker_icon.png");
+		Image img = icon.getImage();
+		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.createGraphics();
+		g.drawImage(img, 0, 0, pointWidth+10, pointHeight+10, null);
+		ImageIcon newIcon = new ImageIcon(bi);
 		
-		toggleB = new JToggleButton(icon);
+		
+		toggleB = new JToggleButton(newIcon);
 		component = toggleB;
 		component.setPreferredSize(new Dimension(pointWidth, pointHeight));
 		
@@ -71,6 +80,8 @@ public class AudioPlayer extends PlayableMediaElement{
 	}
 
 }
+
+
 
 
 
