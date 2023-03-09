@@ -147,6 +147,12 @@ public class SidebarSceneTest  {
 		searchBar.enterText(str);
 		searchButton.click();
 		assertEquals(searchBarContent, str);
+		System.out.println(searchBarContent);
+	}
+	
+	@Test 
+	public void testTemp() {
+		
 	}
 }
 

@@ -3,6 +3,7 @@ package sweng.group.one.client_app_desktop;
 import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import sweng.group.one.client_app_desktop.sceneControl.SidebarScene;
 public class App extends JFrame
 {
 
+		private static Dimension minSize = new Dimension(330, 100);
 		private ArrayList<Presentation> presentations;
 
 		public App() throws MalformedURLException
@@ -56,6 +58,7 @@ public class App extends JFrame
 		
 		public static void main(String[] args) throws MalformedURLException {
 			JFrame frame = new App();
+			frame.setMinimumSize(minSize);
 			frame.setVisible(true);
 		}
 	}

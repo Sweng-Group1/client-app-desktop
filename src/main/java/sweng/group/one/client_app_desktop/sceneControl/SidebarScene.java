@@ -42,24 +42,29 @@ public class SidebarScene extends JPanel {
         
         this.setLayout(new GridBagLayout());
         
+        // The whole sidebar object
+        // Can be in 'minimised' or 'maximised' mode
         sidebar = new JPanel();
         sidebar.setLayout(new GridBagLayout());  
         sidebar.setName("Sidebar");
         
-		minimise = new JButton("<<");
+        // The minimise button
+        // Appears when the sidebar is maximised
+        minimise = new JButton("<<");
 		minimise.addActionListener(new ActionListener() {
-
+			// Minimise on button click
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				close();
-				
+				close();	
 			}
 		});
 		minimise.setName("Minimise");
 		
+		// The maximise button 
+		// Appears when the sidebar is minimised
 		maximise = new JButton(">>");
 		maximise.addActionListener(new ActionListener() {
-
+			// Maximise on button click
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				open();
@@ -67,13 +72,16 @@ public class SidebarScene extends JPanel {
 			}
 		});
 		maximise.setName("Maximise");
-		maximise.setVisible(false);
+		maximise.setVisible(false); // Hide when maximised
 		
+		// Search text input box
 		searchBar = new JTextField();
 		searchBar.setName("Searchbar");
 		
+		// Search confirm button
 		search = new JButton("Search");
 		search.setName("Search");
+		// Search occurs when clicked
 		search.addActionListener(searchAction);
 		
 		presPanel = new JPanel();
