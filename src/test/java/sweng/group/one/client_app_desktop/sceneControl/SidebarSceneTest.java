@@ -1,14 +1,18 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import org.assertj.swing.core.GenericTypeMatcher;
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
@@ -32,6 +36,7 @@ public class SidebarSceneTest  {
 	private SidebarScene sidebar;
 	private JPanelFixture sidebarFixture;
 	private JButtonFixture minimise;
+	private JButtonFixture maximise;
 	private JTextComponentFixture searchBar;
 	private JButtonFixture searchButton;
 	
@@ -62,9 +67,18 @@ public class SidebarSceneTest  {
 		window = new FrameFixture(frame);
 		window.show(); // shows the frame to test
 		
-		sidebarFixture = new JPanelFixture(window.robot(), sidebar);
+		sidebarFixture = window.panel("Sidebar");
+		
+		// Since maximise is invisible, we have to override the normal matchers
+		maximise = window.button(new GenericTypeMatcher<JButton>(JButton.class) {
+			  @Override
+			  protected boolean isMatching(JButton button) {
+			    return "Maximise".equals(button.getName());
+			  }
+			});
+		
 		minimise = window.button("Minimise");
-		searchButton = window.button("SearchButton");
+		searchButton = window.button("Search");
 		searchBar = window.textBox("Searchbar");
 	}
 
@@ -73,6 +87,12 @@ public class SidebarSceneTest  {
 		window.cleanUp();
 	}
 
+	@Test 
+	public void startOpened () {
+		sidebarFixture.requireVisible();
+		maximise.requireNotVisible();
+		assertTrue(GuiActionRunner.execute(() -> sidebar.isOpen()));
+	}
 	// Tests if the minimise button works
 	@Test
 	public void minimise() {
@@ -83,6 +103,18 @@ public class SidebarSceneTest  {
 		// AssertJ swing doesn't have methods to pull values out
 		// But it does have methods to directly make assertions
 		sidebarFixture.requireNotVisible();
+		maximise.requireVisible();
+		assertFalse(GuiActionRunner.execute(() -> sidebar.isOpen()));
+	}
+	
+	@Test
+	public void maximise() {
+		GuiActionRunner.execute(() -> sidebar.close());
+		
+		maximise.click();
+		sidebarFixture.requireVisible();
+		maximise.requireNotVisible();
+		assertTrue(GuiActionRunner.execute(() -> sidebar.isOpen()));
 	}
 	
 	// Tests if we can add presentations to the sidebar.
