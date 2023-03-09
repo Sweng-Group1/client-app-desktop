@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
@@ -42,12 +43,9 @@ public class ImageViewer extends MediaElement {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		// If the image does not fit in the slide at the desired position, resize the image to fit
-//		if (width > slide.getPointWidth()-pos.x)  {
-//			width = slide.getPointWidth()-pos.x;
-//		}
-//		if (height > slide.getPointHeight()-pos.y) {
-//			height = slide.getPointHeight()-pos.y;
-//		}
+	}
+	
+	public JComponent getComponent() {
+		return component;
 	}
 }
