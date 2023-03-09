@@ -31,13 +31,13 @@ import sweng.group.one.client_app_desktop.sceneControl.SidebarScene;
 public class App extends JFrame
 {
 
-		private static Dimension minSize = new Dimension(330, 100);
+		private static Dimension minSize = new Dimension(400, 600);
 		private ArrayList<Presentation> presentations;
 
 		public App() throws MalformedURLException
 	    {
 			presentations = new ArrayList<Presentation>();
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 3; i++) {
 				Slide s = new Slide(300, 300);
 				ArrayList<Slide> slides = new ArrayList<>();
 				slides.add(s);

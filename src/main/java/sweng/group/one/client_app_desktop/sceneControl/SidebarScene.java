@@ -26,6 +26,8 @@ public class SidebarScene extends JPanel {
 	// The sidebar itself. Packing a JPanel into a JPanel isn't great, but it means
 	// We can quickly hide the sidebar as a whole.
 	private JPanel sidebar;
+	private JPanel sidebarHeader;
+	private JPanel sidebarBody;
 	
 	// Lower portion, containing presentations
 	private JPanel presPanel;
@@ -47,6 +49,14 @@ public class SidebarScene extends JPanel {
         sidebar = new JPanel();
         sidebar.setLayout(new GridBagLayout());  
         sidebar.setName("Sidebar");
+        
+        sidebarHeader = new JPanel();
+        sidebarHeader.setLayout(new GridBagLayout());  
+        sidebarHeader.setName("Sidebar");
+        
+        sidebarBody = new JPanel();
+        sidebarHeader.setLayout(new GridBagLayout());  
+        sidebarHeader.setName("Sidebar");
         
         // The minimise button
         // Appears when the sidebar is maximised
@@ -96,22 +106,29 @@ public class SidebarScene extends JPanel {
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
-		sidebar.add(searchBar, gbc);
+		sidebarHeader.add(searchBar, gbc);
 		gbc.gridx = 1;
 		gbc.weightx = 0;
 		gbc.fill = GridBagConstraints.NONE;
-		sidebar.add(search, gbc);
+		sidebarHeader.add(search, gbc);
 		gbc.gridx = 2;
-		sidebar.add(minimise, gbc);
+		sidebarHeader.add(minimise, gbc);
 		gbc.gridy = 1;
 		gbc.gridx = 0;
 		gbc.gridwidth = 3;
 		gbc.gridheight = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-		sidebar.add(presScroll, gbc);
-		sidebar.setBorder(BorderFactory.createLineBorder(Color.black));
-		sidebar.setPreferredSize(new Dimension(350, 100));
+		sidebarBody.add(presScroll, gbc);
+		sidebarBody.setBorder(BorderFactory.createLineBorder(Color.black));
+		sidebarBody.setPreferredSize(new Dimension(350, 100));
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		sidebar.add(sidebarHeader, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		sidebar.add(sidebarBody, gbc);
 		
 		gbc.gridx = 0;
 		gbc.fill = GridBagConstraints.VERTICAL;
