@@ -50,13 +50,15 @@ public class SidebarScene extends JPanel {
         sidebar.setLayout(new GridBagLayout());  
         sidebar.setName("Sidebar");
         
+        // Search bar and search button
         sidebarHeader = new JPanel();
         sidebarHeader.setLayout(new GridBagLayout());  
-        sidebarHeader.setName("Sidebar");
+        sidebarHeader.setName("SidebarHead");
         
+        // Presentation viewer
         sidebarBody = new JPanel();
-        sidebarHeader.setLayout(new GridBagLayout());  
-        sidebarHeader.setName("Sidebar");
+        sidebarBody.setLayout(new GridBagLayout());  
+        sidebarBody.setName("SidebarBody");
         
         // The minimise button
         // Appears when the sidebar is maximised
@@ -94,25 +96,36 @@ public class SidebarScene extends JPanel {
 		// Search occurs when clicked
 		search.addActionListener(searchAction);
 		
+		// Presentation Panel
 		presPanel = new JPanel();
 		presPanel.setLayout(new GridBagLayout());
 		presPanel.setName("Presentations");
 		
+		// Scroll Bar
 		presScroll = new JScrollPane(presPanel);
 		
-		// Add them
+		// Add the elements to the class
 		
+		// Search text bar
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
 		sidebarHeader.add(searchBar, gbc);
+		
+		// Search button
 		gbc.gridx = 1;
 		gbc.weightx = 0;
+		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		sidebarHeader.add(search, gbc);
+		
+		// Minimise button
 		gbc.gridx = 2;
+		gbc.gridy = 0;
 		sidebarHeader.add(minimise, gbc);
+		
+		// Scroll bar
 		gbc.gridy = 1;
 		gbc.gridx = 0;
 		gbc.gridwidth = 3;
@@ -123,6 +136,7 @@ public class SidebarScene extends JPanel {
 		sidebarBody.setBorder(BorderFactory.createLineBorder(Color.black));
 		sidebarBody.setPreferredSize(new Dimension(350, 100));
 		
+		// Add Header and Body
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		sidebar.add(sidebarHeader, gbc);
@@ -130,9 +144,13 @@ public class SidebarScene extends JPanel {
 		gbc.gridy = 1;
 		sidebar.add(sidebarBody, gbc);
 		
+		// Add the whole sidebar to the class
 		gbc.gridx = 0;
+		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.VERTICAL;
 		this.add(sidebar, gbc);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
 		this.add(maximise, gbc);
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		
