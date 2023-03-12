@@ -37,7 +37,7 @@ public class App extends JFrame
 		public App() throws MalformedURLException
 	    {
 			presentations = new ArrayList<Presentation>();
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 10; i++) {
 				Slide s = new Slide(300, 300);
 				ArrayList<Slide> slides = new ArrayList<>();
 				slides.add(s);

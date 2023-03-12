@@ -20,26 +20,36 @@ import javax.swing.border.Border;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 
 public class SidebarScene extends JPanel {
+	
+	// -------------------------------------------------------------- //
+	// --------------------- Initialisations ------------------------ //
+	// -------------------------------------------------------------- //
+	
 	private static final long serialVersionUID = 1L;
 	private boolean isOpen;
 	
 	// The sidebar itself. Packing a JPanel into a JPanel isn't great, but it means
 	// We can quickly hide the sidebar as a whole.
 	private JPanel sidebar;
-	private JPanel sidebarHeader;
-	private JPanel sidebarBody;
+	// private JPanel searchBar;
 	
 	// Lower portion, containing presentations
 	private JPanel presPanel;
 	private List<Presentation> presentations;
 	
-	private JTextField searchBar;
-	private JButton minimise;
-	private JButton maximise;
-	private JButton search;
+	private JTextField searchTextField;
+	private JButton minimiseButton;
+	private JButton maximiseButton;
+	private JButton searchButton;
 	private JScrollPane presScroll;
 	
+	// -------------------------------------------------------------- //
+	// ----------------------- CONSTRUCTOR -------------------------- //
+	// -------------------------------------------------------------- //
+	
 	public SidebarScene(ActionListener searchAction) {
+		
+		// Initialise
 		GridBagConstraints gbc = new GridBagConstraints();  
         
         this.setLayout(new GridBagLayout());
@@ -50,32 +60,22 @@ public class SidebarScene extends JPanel {
         sidebar.setLayout(new GridBagLayout());  
         sidebar.setName("Sidebar");
         
-        // Search bar and search button
-        sidebarHeader = new JPanel();
-        sidebarHeader.setLayout(new GridBagLayout());  
-        sidebarHeader.setName("SidebarHead");
-        
-        // Presentation viewer
-        sidebarBody = new JPanel();
-        sidebarBody.setLayout(new GridBagLayout());  
-        sidebarBody.setName("SidebarBody");
-        
         // The minimise button
         // Appears when the sidebar is maximised
-        minimise = new JButton("<<");
-		minimise.addActionListener(new ActionListener() {
+        minimiseButton = new JButton("<<");
+		minimiseButton.addActionListener(new ActionListener() {
 			// Minimise on button click
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				close();	
 			}
 		});
-		minimise.setName("Minimise");
+		minimiseButton.setName("Minimise");
 		
 		// The maximise button 
 		// Appears when the sidebar is minimised
-		maximise = new JButton(">>");
-		maximise.addActionListener(new ActionListener() {
+		maximiseButton = new JButton(">>");
+		maximiseButton.addActionListener(new ActionListener() {
 			// Maximise on button click
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -83,18 +83,18 @@ public class SidebarScene extends JPanel {
 				
 			}
 		});
-		maximise.setName("Maximise");
-		maximise.setVisible(false); // Hide when maximised
+		maximiseButton.setName("Maximise");
+		maximiseButton.setVisible(false); // Hide when maximised
 		
 		// Search text input box
-		searchBar = new JTextField();
-		searchBar.setName("Searchbar");
+		searchTextField = new JTextField();
+		searchTextField.setName("Searchbar");
 		
 		// Search confirm button
-		search = new JButton("Search");
-		search.setName("Search");
+		searchButton = new JButton("Search");
+		searchButton.setName("Search");
 		// Search occurs when clicked
-		search.addActionListener(searchAction);
+		searchButton.addActionListener(searchAction);
 		
 		// Presentation Panel
 		presPanel = new JPanel();
@@ -104,54 +104,48 @@ public class SidebarScene extends JPanel {
 		// Scroll Bar
 		presScroll = new JScrollPane(presPanel);
 		
-		// Add the elements to the class
+		//---------------------------------------------------//
+		//------------- ADD ELEMENTS TO LAYOUT --------------//
+		//---------------------------------------------------//
 		
 		// Search text bar
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
-		sidebarHeader.add(searchBar, gbc);
+		sidebar.add(searchTextField, gbc);
 		
 		// Search button
 		gbc.gridx = 1;
 		gbc.weightx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.NONE;
-		sidebarHeader.add(search, gbc);
+		sidebar.add(searchButton, gbc);
 		
 		// Minimise button
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		sidebarHeader.add(minimise, gbc);
+		sidebar.add(minimiseButton, gbc);
 		
 		// Scroll bar
 		gbc.gridy = 1;
 		gbc.gridx = 0;
-		gbc.gridwidth = 3;
-		gbc.gridheight = 1;
+		gbc.gridwidth = 0;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-		sidebarBody.add(presScroll, gbc);
-		sidebarBody.setBorder(BorderFactory.createLineBorder(Color.black));
-		sidebarBody.setPreferredSize(new Dimension(350, 100));
-		
-		// Add Header and Body
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		sidebar.add(sidebarHeader, gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		sidebar.add(sidebarBody, gbc);
+		sidebar.add(presScroll, gbc);
+		sidebar.setBorder(BorderFactory.createLineBorder(Color.black));
+		sidebar.setPreferredSize(new Dimension(350, 100));
 		
 		// Add the whole sidebar to the class
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.gridwidth = 0;
 		gbc.fill = GridBagConstraints.VERTICAL;
 		this.add(sidebar, gbc);
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		this.add(maximise, gbc);
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		this.add(maximiseButton, gbc);
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		isOpen = true;
@@ -159,12 +153,12 @@ public class SidebarScene extends JPanel {
 	
 	public void open() {
 		isOpen = true;
-		maximise.setVisible(false);
+		maximiseButton.setVisible(false);
 		sidebar.setVisible(true);
 	}
 	public void close() {
 		isOpen = false;
-		maximise.setVisible(true);
+		maximiseButton.setVisible(true);
 		sidebar.setVisible(false);
 	}
 	public boolean isOpen() {
@@ -190,6 +184,7 @@ public class SidebarScene extends JPanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
+		gbc.gridy = 0;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		presPanel.removeAll();
@@ -204,6 +199,6 @@ public class SidebarScene extends JPanel {
 	
 	/* Gets the content of the searchbar */
 	public String getSearchText() {
-		return searchBar.getText();
+		return searchTextField.getText();
 	}
 }
