@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -22,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 
@@ -53,6 +55,13 @@ public class SidebarScene extends JPanel {
 	
 	private GridBagConstraints gbc;
 	
+	// ----------- CONSTANTS -------------
+	
+	private final static int searchBarInset = 10;
+	private final static int rectCurveRadius = 20;
+	
+	private final static Color sideBarBlue = new Color(32,41,57);
+	
 	// -------------------------------------------------------------- //
 	// ----------------------- CONSTRUCTOR -------------------------- //
 	// -------------------------------------------------------------- //
@@ -70,17 +79,207 @@ public class SidebarScene extends JPanel {
 	}
 	
 	// -------------------------------------------------------------- //
+	// -------------------- ANONYMOUS CLASSES ----------------------- //
+	// -------------------------------------------------------------- //
+	
+	/** Search text field bubble */
+	class SearchBar extends JPanel {
+		
+		// Initialisations
+		int curveRadius;
+		
+		// ----------------------------------------------- //
+		// ------------------ CONSTRUCTION --------------- //
+		// ----------------------------------------------- //
+		
+		public SearchBar() {
+			this.setOpaque(false);
+			this.setLayout(null);
+			//this.setBackground(Color.white);
+		}
+		
+		// ----------------------------------------------- //
+		// ----------------- VISUALISATION --------------- //
+		// ----------------------------------------------- //
+		
+		public void paint(Graphics g) {
+			Graphics2D g2= (Graphics2D) g.create();
+			g2.setColor(Color.white);
+			g2.fillRoundRect(0,0, this.getWidth(), this.getHeight(), curveRadius,curveRadius);
+		}
+		
+		public void minimise(long timeToMinimise) {
+			System.out.println("Search bar minimise");
+		}
+		
+		public void maximise(long timeToMaximise) {
+			System.out.println("Search bar");
+		}
+		
+		// ---------------- SETTERS AND GETTERS -----------
+		
+		public void setSize(int width, int height, int curveRadius) {
+			super.setSize(width, height);
+			this.curveRadius= curveRadius;
+		}
+	};
+	
+	/** Creates the visual sidebar with animations */
+	class SideBar extends JPanel {
+
+		// ----------------------------------------------------------------
+		// -------------------- INITIALISATIONS ---------------------------
+		// ----------------------------------------------------------------
+		
+		int sideBarDrawnX; //this is moveable with maximising and minimising 
+		int gapWidth;
+		int maximisePos;
+		int minimisePos;
+		boolean isMoving;
+		boolean isMaximised;
+		int curveRadius;
+		
+		// ----------------------------------------------------------------
+		// ----------------------- CONSTRUCTOR ----------------------------
+		// ----------------------------------------------------------------
+		
+		public SideBar() {
+
+			this.setOpaque(false);
+			this.setLayout(null);
+			
+		}
+		
+		// -----------------------------------------------------------------
+		// ---------------------- WINDOW BEHAVIOUR -------------------------
+		// -----------------------------------------------------------------
+		
+		public void maximise(long timeToMaximise) {
+			isMoving=true;
+			long timeIntervals= timeToMaximise/(maximisePos-minimisePos);
+			int timeIncrement=1;
+			Timer timer= new Timer();
+			for(int i=minimisePos;i<maximisePos;i++) {
+				timer.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+						sideBarDrawnX= sideBarDrawnX+1;
+						repaintThis();
+						if(sideBarDrawnX==maximisePos) {
+							isMoving=false;
+							isMaximised=true;
+						}
+						
+					}
+					
+				}, (timeIntervals*timeIncrement));	
+				timeIntervals++;
+			}
+		}
+		
+		public void minimise(int timeToMinimise) {
+			isMoving=true;
+			long timeIntervals= timeToMinimise/(maximisePos-minimisePos);
+			int timeIncrement=1;
+			///int distanceToMove= this.getWidth();
+			Timer timer= new Timer();
+			for(int i=minimisePos;i<maximisePos;i++) {
+				timer.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+						sideBarDrawnX= sideBarDrawnX-1;
+						repaintThis();
+						if(sideBarDrawnX==minimisePos) {
+							isMoving=false;
+							isMaximised=false;
+						}
+						
+					}
+					
+				}, (timeIntervals*timeIncrement));	
+				timeIntervals++;
+			}
+			
+		}
+		
+		// -----------------------------------------------------------------
+		// ---------------------- GRAPHICS ---------------------------------
+		// -----------------------------------------------------------------
+		
+		public void paint(Graphics g) {
+			int recX= sideBarDrawnX;
+			int recY= gapWidth;
+			int recWidth= this.getWidth()-(2*gapWidth);
+			int recHeight= this.getHeight()- (2*gapWidth);
+				
+			g.setColor(new Color(32,41,57));
+			g.fillRoundRect(recX,recY,recWidth,recHeight, curveRadius,curveRadius);	
+		}
+		
+		private void repaintThis() {
+			this.repaint();
+		}
+		
+		// -----------------------------------------------------------------
+		// ---------------------- WINDOW BEHAVIOUR -------------------------
+		// -----------------------------------------------------------------
+		
+		public boolean getMovingStatus() {
+			return isMoving;
+		}
+		
+		public boolean getMaximisedStatus() {
+			return isMaximised;
+		}
+		
+		public void setSize(int width, int height,int gapWidth, int curveRadius) {
+			super.setSize(width, height);
+			this.curveRadius = curveRadius;
+			this.gapWidth = gapWidth;
+			maximisePos = gapWidth;
+			minimisePos = maximisePos - width;
+			//start with maximised
+			isMaximised = true;
+			isMoving = false;
+			sideBarDrawnX = maximisePos;
+			
+		}
+	}
+
+	// -------------------------------------------------------------- //
 	// -------------------------- LAYOUT ---------------------------- //
 	// -------------------------------------------------------------- //
 	
 	private void setUpBackground() {
-		// Initialise
+		// -------------- OBJECTS AND APPEARANCE ------------------
         
         // The whole sidebar object
         // Can be in 'minimised' or 'maximised' mode
-        background = new JPanel();
+		
+		background = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				
+				int recWidth;
+				if (isOpen) {
+					recWidth = this.getWidth();
+				}
+				else {
+					recWidth = 0;
+				}
+				
+				int recHeight = this.getHeight();
+					
+				g.setColor(sideBarBlue);
+				g.fillRoundRect(0,0,recWidth,recHeight,rectCurveRadius,rectCurveRadius);
+			}
+		};
+		
         background.setLayout(new GridBagLayout());  
-        background.setName("SideBar");	
+        background.setName("SideBarScene");
 
         // The maximise button 
      	// Appears when the sidebar is minimised
@@ -98,6 +297,7 @@ public class SidebarScene extends JPanel {
      	maximiseButton.setVisible(false); // Hide when maximised        
         
         // ---------- LAYOUT --------- //
+     	gbc = new GridBagConstraints();
      	
         // searchBar
         gbc.gridx = 0;
@@ -107,7 +307,7 @@ public class SidebarScene extends JPanel {
      	gbc.weightx = 1;
 		gbc.weighty = 0;
      	gbc.fill = GridBagConstraints.HORIZONTAL;
-     	gbc.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
+     	gbc.anchor = GridBagConstraints.CENTER;
      	background.add(searchBar, gbc);
      	
      	// sideBar
@@ -127,7 +327,7 @@ public class SidebarScene extends JPanel {
      	gbc.fill = GridBagConstraints.VERTICAL;
      	gbc.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
      	background.add(maximiseButton, gbc);
-     	background.setBorder(BorderFactory.createLineBorder(Color.black));
+     	//background.setBorder(BorderFactory.createLineBorder(Color.black));
      	
      	// add background to JPanel
      	gbc.gridx = 0;
@@ -144,13 +344,31 @@ public class SidebarScene extends JPanel {
 	private void setUpSearchBar(ActionListener searchAction) {
 		// --------- GENERATE ELEMENTS -------------- //
 		
-		searchBar = new JPanel();
+		searchBar = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				int recWidth = this.getWidth() - searchBarInset*2;
+				int recHeight = this.getHeight() - searchBarInset;
+					
+				g.setColor(Color.WHITE);
+				g.fillRoundRect(	searchBarInset,searchBarInset,recWidth,recHeight,
+									rectCurveRadius,rectCurveRadius);
+			}
+		};
         searchBar.setLayout(new GridBagLayout());  
         searchBar.setName("SideBar");	
 		
 		// Search text input box
-		searchTextField = new JTextField();
+		searchTextField = new JTextField() {
+			@Override
+			public void paintComponent(Graphics g) {
+				super.paintComponent(g);
+			}
+		};
 		searchTextField.setName("Searchbar");
+		searchTextField.setBorder(new LineBorder(Color.WHITE));
+		searchTextField.setFont(new Font("Ariel", Font.PLAIN, 14));
+		searchTextField.setHorizontalAlignment(JTextField.CENTER);
 		
 		// Search confirm button
 		searchButton = new JButton("S");
@@ -171,14 +389,18 @@ public class SidebarScene extends JPanel {
 		});
 		minimiseButton.setName("Minimise");
 		
+		
 		// ------------ LAYOUT ------------- //
+		gbc = new GridBagConstraints();
+		int inset = searchBarInset;
 		
 		// Search text bar
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
-		gbc.ipadx = 10;
+		gbc.ipadx = 300;
+		gbc.insets = new Insets(inset*2, inset*2, inset, 0);
 		searchTextField.setMinimumSize(new Dimension(200, searchButton.getHeight()));
 		searchBar.add(searchTextField, gbc);
 		
@@ -186,20 +408,38 @@ public class SidebarScene extends JPanel {
 		gbc.gridx = 1;
 		gbc.weightx = 0;
 		gbc.gridy = 0;
+		gbc.ipadx = 0;
+		gbc.insets = new Insets(inset*2, 0,inset, 0);
 		gbc.fill = GridBagConstraints.NONE;
 		searchBar.add(searchButton, gbc);
 		
 		// Minimise button
 		gbc.gridx = 2;
 		gbc.gridy = 0;
+		gbc.insets = new Insets(inset*2, 0, inset, inset*2);
 		searchBar.add(minimiseButton, gbc);
 	}
 	
 	private void setUpSideBar(ActionListener searchAction) {
+		
 		sideBar = new JPanel();
+		/*
+		{
+			@Override
+			public void paint(Graphics g) {
+				int recWidth= this.getWidth();
+				int recHeight= this.getHeight();
+					
+				g.setColor(sideBarBlue);
+				g.fillRoundRect(0,0,recWidth,recHeight,70,70);
+			}
+		};
+		*/
+		
         sideBar.setLayout(new GridBagLayout());  
         sideBar.setName("SideBar");	
-				
+        sideBar.setOpaque(false);		
+        
 		// Presentation Panel
 		presPanel = new JPanel();
 		presPanel.setLayout(new GridBagLayout());
@@ -209,7 +449,8 @@ public class SidebarScene extends JPanel {
 		presScroll = new JScrollPane(presPanel);
 				
 		//---------------------- LAYOUT --------------------------//
-				
+		gbc = new GridBagConstraints();		
+		
 		// Scroll bar
 		gbc.gridy = 1;
 		gbc.gridx = 0;
@@ -218,7 +459,7 @@ public class SidebarScene extends JPanel {
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		//sideBar.add(presScroll, gbc);
-		sideBar.setBorder(BorderFactory.createLineBorder(Color.black));
+		//sideBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		sideBar.setPreferredSize(new Dimension(350, 100));
 	}
 	

@@ -74,7 +74,9 @@ public class App extends JFrame
 		public static void main(String[] args) throws MalformedURLException {
 			JFrame frame = new App();
 			frame.setMinimumSize(minSize);
+			frame.validate();
 			frame.setVisible(true);
+			frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
 	}
 
