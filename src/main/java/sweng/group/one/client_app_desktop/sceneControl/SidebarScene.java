@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -106,6 +107,7 @@ public class SidebarScene extends JPanel {
      	gbc.weightx = 1;
 		gbc.weighty = 0;
      	gbc.fill = GridBagConstraints.HORIZONTAL;
+     	gbc.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
      	background.add(searchBar, gbc);
      	
      	// sideBar
@@ -116,6 +118,7 @@ public class SidebarScene extends JPanel {
      	gbc.weightx = 1;
 		gbc.weighty = 1;
      	gbc.fill = GridBagConstraints.BOTH;
+     	gbc.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
      	background.add(sideBar, gbc);
      	
      	// maximiseButton
@@ -131,9 +134,10 @@ public class SidebarScene extends JPanel {
      	gbc.gridy = 0;
      	gbc.gridwidth = 0;
      	gbc.gridheight = 1;
-     	gbc.weightx = 0;
+     	gbc.weightx = 1;
 		gbc.weighty = 1;
      	gbc.fill = GridBagConstraints.BOTH;
+     	gbc.anchor = GridBagConstraints.ABOVE_BASELINE_LEADING;
      	this.add(background, gbc);
 	}
 	
@@ -149,7 +153,7 @@ public class SidebarScene extends JPanel {
 		searchTextField.setName("Searchbar");
 		
 		// Search confirm button
-		searchButton = new JButton("Search");
+		searchButton = new JButton("S");
 		searchButton.setName("Search");
 		// Search occurs when clicked
 		searchButton.addActionListener(searchAction);
@@ -174,6 +178,7 @@ public class SidebarScene extends JPanel {
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
+		gbc.ipadx = 10;
 		searchTextField.setMinimumSize(new Dimension(200, searchButton.getHeight()));
 		searchBar.add(searchTextField, gbc);
 		
@@ -212,7 +217,7 @@ public class SidebarScene extends JPanel {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-		sideBar.add(presScroll, gbc);
+		//sideBar.add(presScroll, gbc);
 		sideBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		sideBar.setPreferredSize(new Dimension(350, 100));
 	}

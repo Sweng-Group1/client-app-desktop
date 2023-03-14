@@ -33,6 +33,7 @@ public class App extends JFrame
 {
 
 		private static Dimension minSize = new Dimension(400, 600);
+		private static Dimension maxSize = new Dimension(2000, 600);
 		private ArrayList<Presentation> presentations;
 
 		SidebarScene sidebar = new SidebarScene(null);
@@ -63,9 +64,8 @@ public class App extends JFrame
 	    	gbc.gridy = 0;
 	    	gbc.weightx = 1;
 	    	gbc.weighty = 1;
-	    	gbc.fill = GridBagConstraints.BOTH;
-	    	gbc.ipadx = 0;
-	    	gbc.ipady = 0;
+	    	gbc.fill = GridBagConstraints.VERTICAL;
+	    	gbc.anchor = GridBagConstraints.BASELINE_LEADING;
 	    	
 	    	this.add(sidebar, gbc);
 	    	sidebar.replacePres(presentations);
