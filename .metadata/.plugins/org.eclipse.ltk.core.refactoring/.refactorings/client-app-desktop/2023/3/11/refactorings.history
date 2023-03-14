@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;client-app-desktop&apos;&#x0A;- Original project: &apos;client-app-desktop&apos;&#x0A;- Original element: &apos;sweng.group.one.client_app_desktop.sceneControl.OptionsScene.java&apos;" description="Delete element" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;sweng.group.one.client_app_desktop.sceneControl{OptionsScene.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1678825460895" subPackages="false" version="1.0"/>
+</session>

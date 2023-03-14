@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 0 elements to &apos;client-app-desktop/src/main/java/sweng.group.one.client_app_desktop.sceneControl&apos;&#x0A;- Destination element: &apos;client-app-desktop/src/main/java/sweng.group.one.client_app_desktop.sceneControl&apos;&#x0A;- Update references to refactored element" description="Move compilation units" destination="=client-app-desktop/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;sweng.group.one.client_app_desktop.sceneControl" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1678822396601" units="0" version="1.0"/>
+</session>

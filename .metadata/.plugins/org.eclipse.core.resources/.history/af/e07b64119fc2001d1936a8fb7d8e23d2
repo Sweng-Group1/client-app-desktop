@@ -1,0 +1,91 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.IOException;
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
+import OptionsScene.OptionsScene;
+import Projects.Project;
+import loginScreen.LoginScene;
+import sideBarScene.Scene;
+
+
+
+public class Test {
+	Project project;
+	JFrame frame;
+	JPanel background;
+	Dimension screenSize;
+	
+	public Test() {
+		setUpForSideBarScene();
+	}
+	private void setUpForSideBarScene() {
+		screenSize= Toolkit.getDefaultToolkit().getScreenSize();
+		frame= new JFrame();
+		frame.setSize(screenSize);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);	
+		background= new JPanel();
+		background.setBackground(Color.black);
+		frame.add(background);
+		background.setLayout(null);
+		frame.validate();	
+	}
+	public void testForLoginScene() throws IOException {
+		LoginScene loginScene= new LoginScene();
+		background.add(loginScene);
+		loginScene.setSize(450, 500);
+		loginScene.setLocation((int)screenSize.getWidth()/3, (int)screenSize.getHeight()/6);
+		background.validate();
+	}
+	
+	public void testForSideBarScene() {
+		Scene scene= new Scene(background);
+		int gapWidth= 10;
+		scene.setSize(0, 0,gapWidth ,(int)screenSize.getWidth()/3, (int) screenSize.getHeight());
+		
+	}
+	public void testForOptionsScene() throws IOException {
+		OptionsScene opSc= new OptionsScene();
+		background.add(opSc);
+		opSc.setSize(200,200);
+		opSc.setLocation((int)screenSize.getWidth()-250,50);
+		
+		OptionsScene opScTwo= new OptionsScene();
+		background.add(opScTwo);
+		opScTwo.setSize(400,400);
+		opScTwo.setLocation(100,100);
+		
+		OptionsScene opScTHree= new OptionsScene();
+		background.add(opScTHree);
+		opScTHree.setSize(100,100);
+		opScTHree.setLocation(100,700);
+
+
+		background.validate();
+	}
+	
+	
+	public void doFizzBuzz() {
+		int from= 1;
+		int to=50;
+		String[] words = {"Fizz","Buzz"};
+		int[] multiples= {3,5};
+
+		project.FizzBuzz(from,to,multiples,words);
+	}
+
+
+	public static void main(String[] args) throws IOException {
+		Test test= new Test();
+		////test.testForSideBarScene();
+		//test.testForLoginScene();
+		test.testForOptionsScene();
+	}
+
+}

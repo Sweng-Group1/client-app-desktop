@@ -1,0 +1,188 @@
+package sweng.group.one.client_app_desktop;
+
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+import org.mapsforge.core.model.Dimension;
+
+import sweng.group.one.client_app_desktop.sceneControl.OptionsScene;
+import sweng.group.one.client_app_desktop.sceneControl.OptionsScenee;
+
+public class App extends JFrame
+{
+    private static final long serialVersionUID = 1L;
+
+	public App()
+    {
+    }
+	public void testOptionsScene() throws IOException {
+		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize((int)screenSize.getWidth(), (int) screenSize.getHeight());
+		this.setLayout(null);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);	
+		
+		OptionsScenee optionsScene= new OptionsScenee();
+		optionsScene.setSize(400,400);
+		optionsScene.setLocation(((int) screenSize.getWidth())-400,400);
+    	add(optionsScene);
+    	this.validate();
+    	
+    	//Options button listeners:
+    	optionsScene.getAccountButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// Account view visible
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
+    	optionsScene.getHelpButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				/*
+				  
+				  Help view visible
+				  
+				*/
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
+    	optionsScene.getAddPostButton().addMouseListener(new MouseListener() {
+
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				/*
+				 *  Add post view is visible
+				 */
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
+    	optionsScene.getCloseButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				/*
+				 *  Close application
+				 */
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+    		
+    	});
+	}
+	
+	public static void main(String[] args) throws IOException {
+		App frame = new App();
+		frame.setVisible(true);
+		frame.testOptionsScene();
+	}
+	
+}

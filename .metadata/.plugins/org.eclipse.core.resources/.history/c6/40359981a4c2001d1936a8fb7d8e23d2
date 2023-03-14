@@ -1,0 +1,57 @@
+package sweng.group.one.client_app_desktop;
+
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+
+import org.mapsforge.core.model.Dimension;
+
+import sweng.group.one.client_app_desktop.sceneControl.OptionsScene;
+import sweng.group.one.client_app_desktop.sceneControl.OptionsScenee;
+
+public class App extends JFrame
+{
+    private static final long serialVersionUID = 1L;
+
+	public App() throws IOException
+    {
+    	//setLayout(new BorderLayout());
+		setSize(1280, 720);
+		
+    	/*OptionsScenee optionsScene = new OptionsScenee() {
+    		@Override
+    		public void accountButtonPressed () {
+    			System.out.println("Account Button Pressed");
+    		}
+    		@Override
+    		public void addPostButtonPressed() {
+    			System.out.println("Add Post Button Presssed");
+    		}
+    		@Override
+    		public void helpButtonPressed() {
+    			System.out.println("Help Button Pressed");
+    		}    	
+    		@Override
+    		public void closeButtonPressed() {
+    			System.out.println("Close Button Pressed");
+    		}
+    	};    	
+    	*/
+		java.awt.Dimension screenDimensions= Toolkit.getDefaultToolkit().getScreenSize();
+		OptionsScenee optionsScene= new OptionsScenee();
+		optionsScene.setSize(400,400);
+		optionsScene.setLocation(((int)screenDimensions.getWidth())-400,400);
+		
+    	add(optionsScene);
+    }
+	
+	public static void main(String[] args) throws IOException {
+		JFrame frame = new App();
+		frame.setVisible(true);
+	}
+	
+}

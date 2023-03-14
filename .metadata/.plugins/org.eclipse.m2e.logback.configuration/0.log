@@ -1,2 +1,122 @@
 2023-02-02 13:27:55,532 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2023-02-09 14:59:00,056 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2023-03-14 19:30:09,583 [Worker-8: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2023-03-14 19:30:36,365 [Worker-34: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: sweng.group.one:client-app-desktop:0.0.1-SNAPSHOT @ /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/pom.xml.
+2023-03-14 19:30:38,066 [Worker-16: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: sweng.group.one:client-app-desktop:0.0.1-SNAPSHOT @ /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/pom.xml.
+2023-03-14 19:30:40,629 [Worker-16: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:30:40,632 [Worker-16: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:30:40,647 [Worker-16: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:30:40,647 [Worker-16: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:30:45,008 [Worker-2: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: sweng.group.one:client-app-desktop:0.0.1-SNAPSHOT @ /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/pom.xml.
+2023-03-14 19:30:46,278 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:30:46,282 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:30:46,336 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:30:46,336 [Worker-41: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:30:47,970 [Worker-40: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:30:47,973 [Worker-40: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:30:47,984 [Worker-40: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:30:47,984 [Worker-40: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:33:06,587 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:33:06,594 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:33:06,599 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:33:06,599 [Worker-28: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:33:46,782 [Worker-26: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:33:46,784 [Worker-26: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:33:46,786 [Worker-26: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:33:46,786 [Worker-26: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:45:52,513 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:45:52,514 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:45:52,516 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:45:52,516 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:46:44,226 [Worker-47: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:46:44,232 [Worker-47: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:46:44,237 [Worker-47: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:46:44,238 [Worker-47: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:47:06,751 [Worker-47: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:06,753 [Worker-47: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:47:06,758 [Worker-47: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:06,758 [Worker-47: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:47:11,753 [Worker-48: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:11,753 [Worker-48: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:47:11,755 [Worker-48: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:11,757 [Worker-48: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:47:14,748 [Worker-52: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:14,748 [Worker-52: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:47:14,750 [Worker-52: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:14,750 [Worker-52: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:47:23,828 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:23,829 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:47:23,830 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:47:23,830 [Worker-50: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 19:48:07,242 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:48:07,247 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 19:48:07,250 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 19:48:07,250 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:12:12,739 [Worker-58: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:12:12,746 [Worker-58: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:12:12,750 [Worker-58: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:12:12,750 [Worker-58: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:13:46,468 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:13:46,470 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:13:46,473 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:13:46,473 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:16:49,881 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:16:49,884 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:16:49,900 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:16:49,901 [Worker-57: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:17:36,719 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:17:36,724 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:17:36,727 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:17:36,728 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:19:03,000 [Worker-61: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:19:03,012 [Worker-61: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:19:03,014 [Worker-61: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:19:03,015 [Worker-61: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:19:29,529 [Worker-64: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:19:29,531 [Worker-64: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:19:29,533 [Worker-64: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:19:29,533 [Worker-64: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:21:50,896 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:21:50,901 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:21:50,909 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:21:50,910 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:22:39,379 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:22:39,380 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:22:39,381 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:22:39,381 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:23:03,340 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:23:03,340 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:23:03,342 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:23:03,342 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:23:38,878 [Worker-68: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:23:38,882 [Worker-68: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:23:38,883 [Worker-68: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:23:38,883 [Worker-68: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:23:58,369 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:23:58,370 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:23:58,373 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:23:58,374 [Worker-65: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:24:21,344 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:24:21,348 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:24:21,351 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:24:21,351 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:24:34,578 [Worker-68: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:24:34,580 [Worker-68: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:24:34,582 [Worker-68: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:24:34,582 [Worker-68: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:25:11,195 [Worker-67: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:25:11,199 [Worker-67: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:25:11,200 [Worker-67: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:25:11,200 [Worker-67: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:25:11,723 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:25:11,724 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:25:11,725 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:25:11,725 [Worker-69: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:26:08,398 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:26:08,402 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:26:08,405 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:26:08,405 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
+2023-03-14 20:26:32,444 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:26:32,445 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/main/resources
+2023-03-14 20:26:32,447 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-14 20:26:32,447 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/GitHub/client-app-desktop/client-app-desktop/src/test/resources
