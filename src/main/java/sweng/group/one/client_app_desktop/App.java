@@ -2,8 +2,9 @@ package sweng.group.one.client_app_desktop;
 
 import javax.swing.JFrame;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +35,10 @@ public class App extends JFrame
 		private static Dimension minSize = new Dimension(400, 600);
 		private ArrayList<Presentation> presentations;
 
+		SidebarScene sidebar = new SidebarScene(null);
+		
 		public App() throws MalformedURLException
-	    {
+	    {	
 			presentations = new ArrayList<Presentation>();
 			for (int i = 0; i < 10; i++) {
 				Slide s = new Slide(300, 300);
@@ -50,9 +53,21 @@ public class App extends JFrame
 				presentations.get(i).add(s);
 				presentations.get(i).nextSlide();
 			}
-	    	setLayout(new BorderLayout());
-	    	SidebarScene sidebar = new SidebarScene(null);
-	    	add(sidebar, BorderLayout.WEST);
+			
+	    	setLayout(new GridBagLayout());
+	    	GridBagConstraints gbc = new GridBagConstraints();
+	    	
+	    	gbc.gridheight = 1;
+	    	gbc.gridwidth = 1;
+	    	gbc.gridx = 0;
+	    	gbc.gridy = 0;
+	    	gbc.weightx = 1;
+	    	gbc.weighty = 1;
+	    	gbc.fill = GridBagConstraints.BOTH;
+	    	gbc.ipadx = 0;
+	    	gbc.ipady = 0;
+	    	
+	    	this.add(sidebar, gbc);
 	    	sidebar.replacePres(presentations);
 	    }
 		
