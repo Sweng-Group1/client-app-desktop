@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.ScrollPaneUI;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 
@@ -444,10 +445,12 @@ public class SidebarScene extends JPanel {
 		presPanel = new JPanel();
 		presPanel.setLayout(new GridBagLayout());
 		presPanel.setName("Presentations");
+		presPanel.setBackground(sideBarBlue);
 				
 		// Scroll Bar
 		presScroll = new JScrollPane(presPanel);
-				
+		presScroll.setBackground(sideBarBlue);
+		
 		//---------------------- LAYOUT --------------------------//
 		gbc = new GridBagConstraints();		
 		
@@ -458,9 +461,11 @@ public class SidebarScene extends JPanel {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-		//sideBar.add(presScroll, gbc);
+		sideBar.setBackground(sideBarBlue);
+		sideBar.add(presScroll, gbc);
 		//sideBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		sideBar.setPreferredSize(new Dimension(350, 100));
+		
 	}
 	
 	// -------------------------------------------------------------- //
