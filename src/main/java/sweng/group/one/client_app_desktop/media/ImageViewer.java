@@ -27,8 +27,8 @@ public class ImageViewer extends MediaElement {
 				super.paint(g);
 				int w = this.getWidth();
 				int h = this.getHeight();
-				int x = (int)((float)pos.x / width * w);
-				int y = (int)((float)pos.y / height * h);
+				int x = (int)((float)pos.x / slide.getPointWidth() * w);
+				int y = (int)((float)pos.y / slide.getPointHeight() * h);
 				g.drawImage(image, x, y, w+x, h+y, null);
 			}
 		};
