@@ -60,7 +60,7 @@ public class OptionsScene extends JPanel {
 		accountButton = new JButton("User");
 		accountButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {    		
-				
+				accountButtonPressed();
 			}
 		});
 		
@@ -71,7 +71,7 @@ public class OptionsScene extends JPanel {
 		addPostButton = new JButton("New Post");
 		addPostButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {    		
-				
+				addPostButtonPressed();
 			}
 		});
 		
@@ -82,7 +82,7 @@ public class OptionsScene extends JPanel {
 		helpButton = new JButton("Help");
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {    		
-				
+				helpButtonPressed();
 			}
 		});
 		
@@ -92,9 +92,9 @@ public class OptionsScene extends JPanel {
 		optionsBox.add(helpButton, gbc);
 		
 		closeButton = new JButton("Exit");
-		helpButton.addActionListener(new ActionListener() {
+		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {    		
-				
+				closeButtonPressed();
 			}
 		});
 		
