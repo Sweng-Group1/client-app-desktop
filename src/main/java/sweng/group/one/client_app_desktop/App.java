@@ -2,6 +2,7 @@ package sweng.group.one.client_app_desktop;
 
 import javax.swing.JFrame;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -40,34 +41,28 @@ public class App extends JFrame
 		
 		public App() throws MalformedURLException
 	    {	
+			int slideX = 50;
+			int slideY = 100;
 			presentations = new ArrayList<Presentation>();
-			for (int i = 0; i < 10; i++) {
-				Slide s = new Slide(300, 300);
-				ArrayList<Slide> slides = new ArrayList<>();
-				slides.add(s);
-				VideoPlayer vp = new VideoPlayer(new Point(0, 0), 
-						300, 300, s, 
-						new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4"), true);
-				s.add(vp);
-				presentations.add(new Presentation(slides));
+			for (int i = 0; i < 3; i++) {
+				//create slide and add to frame
+		    	Slide slide = new Slide(slideX, slideY);
+		    	ArrayList<Slide> slides = new ArrayList<>();
+		    	slides.add(slide);
+		    	
+		    	slide.add(new DemoElement(new Point(0, 0), 1, 1, 0, slide));
+		    	slide.add(new DemoElement(new Point(slideX-1, slideY-1), 1, 1, 0, slide));
+		    	slide.add(new DemoElement(new Point(slideX/2-1, slideY/2-1), 10, 10, 0, slide));
+		    	VideoPlayer vp = new VideoPlayer(new Point(0, 0), slideX, slideY, slide, new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4"), true);
+		    	slide.add(vp);
+		    	
+		    	Presentation pres = new Presentation(slides);
+				presentations.add(pres);
 				presentations.get(i).setVisible(true);
-				presentations.get(i).add(s);
 				presentations.get(i).nextSlide();
 			}
 			
-	    	setLayout(new GridBagLayout());
-	    	GridBagConstraints gbc = new GridBagConstraints();
-	    	
-	    	gbc.gridheight = 1;
-	    	gbc.gridwidth = 1;
-	    	gbc.gridx = 0;
-	    	gbc.gridy = 0;
-	    	gbc.weightx = 1;
-	    	gbc.weighty = 1;
-	    	gbc.fill = GridBagConstraints.VERTICAL;
-	    	gbc.anchor = GridBagConstraints.BASELINE_LEADING;
-	    	
-	    	this.add(sidebar, gbc);
+			this.add(sidebar);
 	    	sidebar.replacePres(presentations);
 	    }
 		
