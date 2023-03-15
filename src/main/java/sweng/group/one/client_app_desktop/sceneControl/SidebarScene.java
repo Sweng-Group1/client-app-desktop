@@ -75,7 +75,6 @@ public class SidebarScene extends JPanel {
 		setUpSearchBar(searchAction);
 		setUpSideBar(searchAction);
 		setUpBackground();
-		
 		isOpen = true;
 	}
 	
@@ -451,6 +450,7 @@ public class SidebarScene extends JPanel {
 		presScroll = new JScrollPane(presPanel);
 		presScroll.setBackground(sideBarBlue);
 		
+		
 		//---------------------- LAYOUT --------------------------//
 		gbc = new GridBagConstraints();		
 		
@@ -465,7 +465,7 @@ public class SidebarScene extends JPanel {
 		sideBar.add(presScroll, gbc);
 		//sideBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		sideBar.setPreferredSize(new Dimension(350, 100));
-		
+		sideBar.validate();
 	}
 	
 	// -------------------------------------------------------------- //
@@ -527,7 +527,16 @@ public class SidebarScene extends JPanel {
 			gbc.gridy = i;
 			presPanel.add(pres, gbc);
 			pres.setEnabled(true);
+			pres.validate();
+			pres.repaint();
+			pres.showCurrentSlide();
 		}
+		presPanel.revalidate();
+		presPanel.repaint();
+		
+		sideBar.revalidate();
+		
+		this.repaint();
 	}
 	
 	// -------------------------------------------------------------- //

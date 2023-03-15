@@ -303,7 +303,7 @@ public class Presentation extends JPanel {
 		newSlide.setVisible(false);
 	}
 	
-	private void showCurrentSlide() {
+	public void showCurrentSlide() {
 		if (slides.isEmpty()) {
 			return;
 		}
@@ -315,6 +315,8 @@ public class Presentation extends JPanel {
 		desiredSlide.displaySlide();
 		resizeCurrentSlide();
 		desiredSlide.validate();
+		this.revalidate();
+		this.repaint();
 	}
 	
 	public void nextSlide() {
@@ -322,7 +324,7 @@ public class Presentation extends JPanel {
 			return;
 		}
 		
-		int maxSlide = slides.size()-1;
+		int maxSlide = slides.size();
 		currentSlideNo++;
 		// Using a modulo here causes a div/0 if slides.size = 1
 		// We're just gonna loop around anyway, so just use a ternary

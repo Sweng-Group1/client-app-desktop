@@ -105,19 +105,20 @@ public class Slide extends JPanel implements LayoutManager {
 	public Dimension preferredLayoutSize(Container parent) {
 		int slideX = getPointWidth();
 		int slideY = getPointHeight();
-		int w = parent.getWidth();
-		int h = parent.getHeight();
+		int w = (int) (parent.getWidth() * 0.9);
+		int h = (int) (parent.getHeight() * 0.9);
 		
 		float slideAspectRatio = (float)slideX/slideY;
 		float presAspectRatio = (float)w/h;
 		
 		Dimension layoutSize = null;
-		if(slideAspectRatio >= presAspectRatio) {
-			layoutSize = new Dimension(w, (int) (w/slideAspectRatio));
-		}
-		else {
-			layoutSize = new Dimension((int) (h*slideAspectRatio), h);
-		}
+//		if(slideAspectRatio >= presAspectRatio) {
+//			layoutSize = new Dimension(w, (int) (w/slideAspectRatio));
+//		}
+//		else {
+//			layoutSize = new Dimension((int) (h*slideAspectRatio), h);
+//		}
+		layoutSize = new Dimension(w, (int) (w/slideAspectRatio));
 		return layoutSize;
 	}
 
