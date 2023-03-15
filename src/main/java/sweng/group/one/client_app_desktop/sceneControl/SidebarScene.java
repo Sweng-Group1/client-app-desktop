@@ -299,6 +299,8 @@ public class SidebarScene extends JPanel {
 				g.fillRoundRect(0,0,recWidth,recHeight,rectCurveRadius,rectCurveRadius);
 			}
 			
+			/*
+			
 			public void maximise(long timeToMaximise) {
 				isMoving=true;
 				long timeIntervals= timeToMaximise/(maximisePos-minimisePos);
@@ -347,6 +349,7 @@ public class SidebarScene extends JPanel {
 				}
 				
 			}
+			*/
 			
 		};
 		
@@ -520,6 +523,7 @@ public class SidebarScene extends JPanel {
 				
 		// Scroll Bar
 		presScroll = new JScrollPane(presPanel);
+		presScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		presScroll.setBackground(sideBarBlue);
 		
 		//---------------------- LAYOUT --------------------------//
@@ -532,12 +536,14 @@ public class SidebarScene extends JPanel {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(10,10,10,10);
+		
 		sideBar.setBackground(sideBarBlue);
 		
 		if (presScrollEnabled) {
 			sideBar.add(presScroll, gbc);
 		}
-		
+	
 		//sideBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		sideBar.setPreferredSize(new Dimension(350, 100));
 		
@@ -602,6 +608,7 @@ public class SidebarScene extends JPanel {
 			gbc.gridy = i;
 			presPanel.add(pres, gbc);
 			pres.setEnabled(true);
+			pres.setBackground(sideBarBlue);
 		}
 	}
 	
