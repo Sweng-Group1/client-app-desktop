@@ -10,7 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -531,6 +532,7 @@ public class SidebarScene extends JPanel {
 			pres.repaint();
 			pres.showCurrentSlide();
 		}
+		presPanel.doLayout();
 		presPanel.revalidate();
 		presPanel.repaint();
 		
