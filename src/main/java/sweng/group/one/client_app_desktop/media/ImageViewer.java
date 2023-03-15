@@ -25,8 +25,11 @@ public class ImageViewer extends MediaElement {
 			@Override
 			public void paint(Graphics g) {
 				super.paint(g);
-				// TODO Auto-generated method stub
-				g.drawImage(image, 0, 0, (int)g.getClipBounds().getWidth(), (int)(g.getClipBounds().getHeight()), null);
+				int w = this.getWidth();
+				int h = this.getHeight();
+				int x = (int)((float)pos.x / width * w);
+				int y = (int)((float)pos.y / height * h);
+				g.drawImage(image, x, y, w+x, h+y, null);
 			}
 		};
 	}
