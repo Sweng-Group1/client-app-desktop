@@ -41,6 +41,7 @@ import org.xml.sax.SAXException;
 @SuppressWarnings("serial")
 public class Presentation extends JPanel {
 	
+
 	private static final String XML_SCHEMA_PATH = "assets/xml/standard.xsd";
 	
 	private ArrayList<Slide> slides;
