@@ -54,6 +54,8 @@ public class SidebarScene extends JPanel {
 	private JButton searchButton;
 	private JScrollPane presScroll;
 	
+	private boolean presScrollEnabled = false;
+	
 	private GridBagConstraints gbc;
 	
 	// ----------- CONSTANTS -------------
@@ -260,6 +262,15 @@ public class SidebarScene extends JPanel {
         // Can be in 'minimised' or 'maximised' mode
 		
 		background = new JPanel() {
+			
+			int sideBarDrawnX; //this is moveable with maximising and minimising 
+			int gapWidth;
+			int maximisePos;
+			int minimisePos;
+			boolean isMoving;
+			boolean isMaximised;
+			int curveRadius;
+			
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -277,6 +288,66 @@ public class SidebarScene extends JPanel {
 				g.setColor(sideBarBlue);
 				g.fillRoundRect(0,0,recWidth,recHeight,rectCurveRadius,rectCurveRadius);
 			}
+			
+			public void repaintComponent(Graphics g, float position) {
+				super.paintComponent(g);
+				
+				int recWidth = (int)(this.getWidth() * position);				
+				int recHeight = this.getHeight();
+					
+				g.setColor(sideBarBlue);
+				g.fillRoundRect(0,0,recWidth,recHeight,rectCurveRadius,rectCurveRadius);
+			}
+			
+			public void maximise(long timeToMaximise) {
+				isMoving=true;
+				long timeIntervals= timeToMaximise/(maximisePos-minimisePos);
+				int timeIncrement=1;
+				Timer timer= new Timer();
+				
+				for(int i=minimisePos;i<maximisePos;i++) {
+					
+					timer.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							sideBarDrawnX= sideBarDrawnX+1;
+							this.repaintComponent(g, position);
+							if(sideBarDrawnX==maximisePos) {
+								isMoving=false;
+								isMaximised=true;
+							}
+						}
+					}, (timeIntervals*timeIncrement));	
+					timeIntervals++;
+				}
+			}
+			
+			public void minimise(int timeToMinimise) {
+				isMoving=true;
+				long timeIntervals= timeToMinimise/(maximisePos-minimisePos);
+				int timeIncrement=1;
+				///int distanceToMove= this.getWidth();
+				Timer timer= new Timer();
+				for(int i=minimisePos;i<maximisePos;i++) {
+					timer.schedule(new TimerTask() {
+
+						@Override
+						public void run() {
+							sideBarDrawnX= sideBarDrawnX-1;
+							repaintThis();
+							if(sideBarDrawnX==minimisePos) {
+								isMoving=false;
+								isMaximised=false;
+							}
+							
+						}
+						
+					}, (timeIntervals*timeIncrement));	
+					timeIntervals++;
+				}
+				
+			}
+			
 		};
 		
         background.setLayout(new GridBagLayout());  
@@ -462,7 +533,11 @@ public class SidebarScene extends JPanel {
 		gbc.weighty = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		sideBar.setBackground(sideBarBlue);
-		sideBar.add(presScroll, gbc);
+		
+		if (presScrollEnabled) {
+			sideBar.add(presScroll, gbc);
+		}
+		
 		//sideBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		sideBar.setPreferredSize(new Dimension(350, 100));
 		
