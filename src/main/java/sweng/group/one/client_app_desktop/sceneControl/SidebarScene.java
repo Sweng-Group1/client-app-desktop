@@ -527,18 +527,41 @@ public class SidebarScene extends JPanel {
 			Presentation pres = p.get(i);
 			gbc.gridy = i;
 			presPanel.add(pres, gbc);
-			pres.setEnabled(true);
-			pres.validate();
-			pres.repaint();
+			pres.setBackground(sideBarBlue);
+//			pres.validate();
+//			pres.repaint();
 			pres.showCurrentSlide();
 		}
-		presPanel.doLayout();
-		presPanel.revalidate();
-		presPanel.repaint();
+//		presScroll.updateUI();
+//		presPanel.validate();
+//		presScroll.validate();
+//		presScroll.revalidate();
+//		presScroll.repaint();
+//		presPanel.doLayout();
+//		presPanel.revalidate();
+//		presPanel.repaint();
+//		
+//		sideBar.revalidate();
+//		this.revalidate();
+//		presScroll.setViewportView(presPanel);
+//		this.repaint();
 		
-		sideBar.revalidate();
-		
-		this.repaint();
+		presScroll.validate();
+	    presPanel.validate();
+	    sideBar.revalidate();
+	    
+	    for (Presentation p1 : presentations) {
+	    	p1.validate();
+	    	p1.repaint();
+	    	p1.revalidate();
+	    }
+	    
+	    background.revalidate();
+	    background.repaint();
+	    
+	    this.revalidate();
+	    presPanel.repaint();
+	    this.repaint();
 	}
 	
 	// -------------------------------------------------------------- //

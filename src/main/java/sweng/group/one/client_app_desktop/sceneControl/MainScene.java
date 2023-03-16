@@ -44,6 +44,7 @@ public class MainScene extends JFrame{
 		
 		sidebarScene = new SidebarScene(null);
 		this.add(sidebarScene, BorderLayout.WEST);
+		sidebarScene.revalidate();
 
 		this.pack();
 		this.setSize(1200, 800);
@@ -63,7 +64,6 @@ public class MainScene extends JFrame{
 	public void addDemoMarkers() throws MalformedURLException {
 		int slideX = 100;
 		int slideY = 50;
-		ArrayList<Presentation> presentations = new ArrayList<>();
 		mapScene.addEventMarker(new LatLong(53.94565858032622, -1.0555302805175937));
 		for (int i = 0; i < 3; i++) {
 			//create slide and add to frame
@@ -71,64 +71,45 @@ public class MainScene extends JFrame{
 	    	ArrayList<Slide> slides = new ArrayList<>();
 	    	slides.add(slide);
 	    	
-	    	slide.add(new DemoElement(new Point(0, 0), 1, 1, 0, slide));
-	    	slide.add(new DemoElement(new Point(slideX-1, slideY-1), 1, 1, 0, slide));
-	    	slide.add(new DemoElement(new Point(slideX/2-1, slideY/2-1), 10, 10, 0, slide));
 	    	VideoPlayer vp = new VideoPlayer(new Point(0, 0), slideX, slideY, slide, new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4"), true);
 	    	slide.add(vp);
 	    	
 	    	Presentation pres = new Presentation(slides);
-			presentations.add(pres);
-			presentations.get(i).setVisible(true);
-			presentations.get(i).nextSlide();
 			mapScene.getMarkers().get(0).addPost(pres);
 		}
 		
 		mapScene.addEventMarker(new LatLong(53.945945888223186, -1.0515230602493442));
-		presentations = new ArrayList<>();
 		for (int i = 0; i < 7; i++) {
 			//create slide and add to frame
 	    	Slide slide = new Slide(slideX, slideY);
 	    	ArrayList<Slide> slides = new ArrayList<>();
 	    	slides.add(slide);
 	    	
-	    	slide.add(new DemoElement(new Point(0, 0), 1, 1, 0, slide));
-	    	slide.add(new DemoElement(new Point(slideX-1, slideY-1), 1, 1, 0, slide));
-	    	slide.add(new DemoElement(new Point(slideX/2-1, slideY/2-1), 10, 10, 0, slide));
 	    	ImageViewer ie = new ImageViewer(new Point(0, 0), slideX, slideY, 0, slide, new URL("https://getsamplefiles.com/download/png/sample-1.png"));
 	    	slide.add(ie);
 	    	
 	    	Presentation pres = new Presentation(slides);
-			presentations.add(pres);
-			presentations.get(i).setVisible(true);
-			presentations.get(i).nextSlide();
 			mapScene.getMarkers().get(1).addPost(pres);
 		}
 		
 		mapScene.addEventMarker(new LatLong(53.94536495592503, -1.0537439293136752));
 		
-		presentations = new ArrayList<>();
+		String[] fontNames = {"Times New Roman", "Calibri", "Comic Sans MS", "Cooper Black", "Complex"};
+		
 		for (int i = 0; i < 5; i++) {
-			slideX = i%2 == 0 ? 50 : 100;
-			slideY = i%2 != 0 ? 50 : 100;
+			slideX = i%2 != 0 ? 9 : 16;
+			slideY = i%2 == 0 ? 9 : 16;
 			
 			//create slide and add to frame
 	    	Slide slide = new Slide(slideX, slideY);
 	    	ArrayList<Slide> slides = new ArrayList<>();
 	    	slides.add(slide);
 	    	
-	    	
-	    	TextElement te = new TextElement("This is demonstration of how text will look", "Times New Roman", 20, new Color(0, 0, 255*i/5), 0, new Point(0, 0), slideX, slideY, slide);
+	    	TextElement te = new TextElement("This is demonstration of how text will look", fontNames[i], 10*i + 1, new Color(0, 0, 255*i/5), 0, new Point(0, 0), slideX, slideY, slide);
 	    	slide.add(te);
-	    	slide.add(new DemoElement(new Point(0, 0), 1, 1, 0, slide));
-	    	slide.add(new DemoElement(new Point(slideX-1, slideY-1), 1, 1, 0, slide));
-	    	slide.add(new DemoElement(new Point(slideX/2-1, slideY/2-1), 10, 10, 0, slide));
-	    	
+	    	slide.add(new DemoElement(new Point(0, 0), slideX, slideY, 0, slide));
 	    	
 	    	Presentation pres = new Presentation(slides);
-			presentations.add(pres);
-			presentations.get(i).setVisible(true);
-			presentations.get(i).nextSlide();
 			mapScene.getMarkers().get(2).addPost(pres);
 		}
 	}

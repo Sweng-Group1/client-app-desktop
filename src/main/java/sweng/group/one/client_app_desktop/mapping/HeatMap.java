@@ -20,7 +20,7 @@ import org.mapsforge.map.layer.Layer;
 public class HeatMap extends Layer {
     private static final String CIRCLEPIC_PATH = "./assets/map/bolilla.png";
     private static final String GRADIENT_PATH = "./assets/map/colors.png";
-    private static final int HEAT_RADIUS_METERS = 100;
+    private static final int HEAT_RADIUS_METERS = 200;
     private MapView mapView;
     private BufferedImage image;
     private BufferedImage gradient;
