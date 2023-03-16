@@ -96,6 +96,7 @@ public class Slide extends JPanel implements LayoutManager {
 
 	/**
 	 *	Finds the preferred layout size for a given parent container (with a fixed aspect ratio)
+	 *	This will make the Slide take up 90% of it's parents container
 	 *
 	 *	@param parent: The parent container for the layout to be relative to
 	 *
@@ -105,20 +106,10 @@ public class Slide extends JPanel implements LayoutManager {
 	public Dimension preferredLayoutSize(Container parent) {
 		int slideX = getPointWidth();
 		int slideY = getPointHeight();
-		int w = parent.getWidth();
-		int h = parent.getHeight();
-		
+		int w = (int) (parent.getWidth()*0.9);
 		float slideAspectRatio = (float)slideX/slideY;
-		float presAspectRatio = (float)w/h;
 		
-		Dimension layoutSize = null;
-		if(slideAspectRatio >= presAspectRatio) {
-			layoutSize = new Dimension(w, (int) (w/slideAspectRatio));
-		}
-		else {
-			layoutSize = new Dimension((int) (h*slideAspectRatio), h);
-		}
-		return layoutSize;
+		return new Dimension(w, (int) (w/slideAspectRatio));
 	}
 
 	@Override
