@@ -147,4 +147,5 @@ public class Slide extends JPanel implements LayoutManager {
 			e.component.setBounds((int)eX, (int)eY, (int)eWidth, (int)eHeight);
 		}
 	}
+
 }

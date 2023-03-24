@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
@@ -32,7 +33,7 @@ import sweng.group.one.client_app_desktop.sceneControl.SidebarScene;
  */
 public class App extends JFrame
 {
-
+		private static Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
 		private static Dimension minSize = new Dimension(400, 600);
 		private static Dimension maxSize = new Dimension(2000, 600);
 		private ArrayList<Presentation> presentations;
@@ -41,10 +42,15 @@ public class App extends JFrame
 		
 		public App() throws MalformedURLException
 	    {	
+			this.setLayout(null);
+			this.setSize(screenSize);
+			this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+			this.setVisible(true);
+			
 			int slideX = 50;
 			int slideY = 100;
 			presentations = new ArrayList<Presentation>();
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 5; i++) {
 				//create slide and add to frame
 		    	Slide slide = new Slide(slideX, slideY);
 		    	ArrayList<Slide> slides = new ArrayList<>();
@@ -63,15 +69,16 @@ public class App extends JFrame
 			}
 			
 			this.add(sidebar);
+			sidebar.setSize(screenSize.width/3,screenSize.height);
+			sidebar.setLocation(0, 0);
 	    	sidebar.replacePres(presentations);
+	    //	sidebar.goTo(presentations.get(3));
+	    	
 	    }
 		
 		public static void main(String[] args) throws MalformedURLException {
 			JFrame frame = new App();
-			frame.setMinimumSize(minSize);
 			frame.validate();
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
 	}
 
