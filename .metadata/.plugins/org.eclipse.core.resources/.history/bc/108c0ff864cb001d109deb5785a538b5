@@ -1,0 +1,167 @@
+package sweng.group.one.client_app_desktop.uiElements;
+
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.JPanel;
+
+import sweng.group.one.client_app_desktop.presentation.Presentation;
+
+	public class PresentationBox extends JPanel{
+		private Presentation presentation;
+		private Canvas canvas;
+		private int xMousePos;
+		private int yMousePos;
+		private Point mouseMovePos;
+		
+		ArrayList<BufferedImage>graphics;
+		
+		private BufferedImage currentLayer;
+		
+		private boolean drawingMode;
+		private boolean clicked;
+		
+		public PresentationBox(Color background) {
+			create(background);
+		}
+		private void create(Color background) {
+			this.setLayout(null);
+			this.setBackground(background);
+			graphics= new ArrayList<BufferedImage>();
+			
+			/*
+			 *  New Presentation
+			 */
+			presentation = new Presentation() {
+				public void paint(Graphics g) {
+					Graphics2D g2= (Graphics2D) g.create();
+					for(int i =0;i<graphics.size();i++) {
+						g2.drawImage(graphics.get(i),0,0,this);
+					}
+					super.paint(g2);
+				}
+			};
+			this.add(presentation);
+			presentation.setBackground(Color.white);
+			drawingMode=false;
+			clicked=false;
+			this.addMouseMotionListener(new MouseMotionListener() {
+
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					
+					
+				}
+
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					mouseMovePos= e.getPoint();
+					
+				}
+				
+			});
+			this.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					clicked=true;
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					clicked=false;
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});			
+		}
+		public void setSize(int width,int height) {
+			
+			//must be 16:9 ratio so
+			int widthFactor= 16;
+			int heightFactor= 9;
+			
+			int newHeight= (width/widthFactor)*heightFactor;
+
+			super.setSize(width, newHeight);
+			presentation.setSize(width,newHeight);
+			presentation.setLocation(0,0);
+			if(currentLayer==null) {
+				newLayer();
+			}
+		}
+		public void paint(Graphics g) {
+			super.paint(g);	
+		}
+		public void paintLayer(Color color, int brushSize) {
+			Graphics2D g2 = (Graphics2D) currentLayer.getGraphics();
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setColor(color);
+			drawingMode=true;
+			
+			while(drawingMode==true) {
+				if(clicked==true) {
+					g2.drawOval((int) mouseMovePos.getX(), (int)mouseMovePos.getY(), brushSize, brushSize);
+					presentation.repaint();
+				}
+			}
+			g2.drawImage(currentLayer, 0,0, this);
+			g2.dispose();
+		}
+		public void goToLayer(int layerNumber) {
+			currentLayer= graphics.get(layerNumber);
+		}
+		public void newLayer() {
+			BufferedImage layer = new BufferedImage(presentation.getWidth(),presentation.getHeight(),BufferedImage.TYPE_INT_ARGB);
+			graphics.add(layer);
+			currentLayer= layer;
+		}
+		public void removeLayer(int layerNumber) {
+			graphics.remove(layerNumber);
+		}
+		public void moveLayerTo(int oldPosition, int newPosition) {
+			BufferedImage layer= graphics.get(oldPosition);
+			graphics.set(newPosition, layer);
+		}
+		public void refreshCanvas() {
+			canvas.validate();
+		}
+		public void turnOffDrawingMode() {
+			drawingMode=false;
+		}
+		public boolean isDrawingMode() {
+			return drawingMode;
+		}
+	}
+

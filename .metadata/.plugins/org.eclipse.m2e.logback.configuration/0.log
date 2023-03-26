@@ -1,0 +1,323 @@
+2023-03-25 21:51:12,510 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2023-03-25 21:54:37,479 [Worker-40: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: sweng.group.one:client-app-desktop:0.0.1-SNAPSHOT @ /Users/sophiemaw/Documents/SideBarScene/pom.xml.
+2023-03-25 21:54:46,412 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 21:54:46,414 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 21:54:46,425 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 21:54:46,425 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 21:58:21,215 [Worker-46: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 21:58:21,217 [Worker-46: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 21:58:21,219 [Worker-46: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 21:58:21,221 [Worker-46: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:01:16,178 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:01:16,179 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:01:16,186 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:01:16,186 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:01:46,934 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:01:46,935 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:01:46,937 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:01:46,937 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:02:42,463 [Worker-42: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:02:42,465 [Worker-42: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:02:42,468 [Worker-42: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:02:42,469 [Worker-42: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:06:54,591 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:06:54,592 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:06:54,594 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:06:54,594 [Worker-49: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:12:52,129 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:12:52,134 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:12:52,138 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:12:52,138 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:12:53,270 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:12:53,272 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:12:53,279 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:12:53,279 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:13:40,927 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:13:40,929 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:13:40,930 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:13:40,930 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:13:47,654 [Worker-59: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:13:47,655 [Worker-59: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:13:47,660 [Worker-59: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:13:47,660 [Worker-59: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:14:01,710 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:14:01,716 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:14:01,720 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:14:01,728 [Worker-54: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:23:43,277 [Worker-63: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:23:43,279 [Worker-63: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:23:43,280 [Worker-63: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:23:43,281 [Worker-63: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:23:53,111 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:23:53,112 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:23:53,114 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:23:53,114 [Worker-55: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:24:04,807 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:24:04,808 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:24:04,813 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:24:04,815 [Worker-58: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:30:22,497 [Worker-66: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:30:22,500 [Worker-66: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:30:22,639 [Worker-66: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:30:22,639 [Worker-66: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 22:30:23,179 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:30:23,180 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 22:30:23,182 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 22:30:23,182 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:14:20,396 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:14:20,413 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:14:20,415 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:14:20,415 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:15:12,090 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:15:12,093 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:15:12,095 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:15:12,095 [Worker-67: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:16:05,673 [Worker-78: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:16:05,675 [Worker-78: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:16:05,686 [Worker-78: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:16:05,686 [Worker-78: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:16:47,752 [Worker-79: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:16:47,755 [Worker-79: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:16:47,757 [Worker-79: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:16:47,757 [Worker-79: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:17:24,131 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:17:24,140 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:17:24,143 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:17:24,144 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:19:02,576 [Worker-78: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:19:02,578 [Worker-78: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:19:02,580 [Worker-78: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:19:02,580 [Worker-78: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:22:32,075 [Worker-9: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2023-03-25 23:30:08,844 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:30:08,851 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:30:08,857 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:30:08,858 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:31:38,592 [Worker-27: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:31:38,593 [Worker-27: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:31:38,594 [Worker-27: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:31:38,594 [Worker-27: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:32:24,743 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:32:24,744 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:32:24,748 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:32:24,748 [Worker-9: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:36:17,326 [Worker-8: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:36:17,328 [Worker-8: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:36:17,329 [Worker-8: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:36:17,330 [Worker-8: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:37:53,247 [Worker-26: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:37:53,248 [Worker-26: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:37:53,250 [Worker-26: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:37:53,250 [Worker-26: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-25 23:40:03,886 [Worker-34: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:40:03,889 [Worker-34: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-25 23:40:03,892 [Worker-34: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-25 23:40:03,892 [Worker-34: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 02:05:10,935 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:05:10,941 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 02:05:10,944 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:05:10,944 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 02:07:21,539 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:07:21,542 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 02:07:21,553 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:07:21,553 [Worker-66: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 02:07:49,717 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:07:49,718 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 02:07:49,720 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:07:49,720 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 02:08:46,119 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:08:46,124 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 02:08:46,128 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:08:46,128 [Worker-62: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 02:09:18,222 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:09:18,224 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 02:09:18,232 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 02:09:18,232 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:29:14,634 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:29:14,638 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:29:14,640 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:29:14,640 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:30:50,373 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:30:50,378 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:30:50,380 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:30:50,380 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:32:11,726 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:32:11,727 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:32:11,742 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:32:11,743 [Worker-89: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:32:52,168 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:32:52,169 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:32:52,186 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:32:52,187 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:33:59,573 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:33:59,574 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:33:59,576 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:33:59,577 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:35:09,115 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:35:09,116 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:35:09,117 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:35:09,117 [Worker-93: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:40:16,503 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:40:16,507 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:40:16,508 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:40:16,508 [Worker-98: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:48:11,084 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:48:11,085 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:48:11,118 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:48:11,118 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:48:55,164 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:48:55,166 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:48:55,170 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:48:55,170 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:53:08,654 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:53:08,661 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:53:08,663 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:53:08,663 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 16:59:12,013 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:59:12,017 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 16:59:12,018 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 16:59:12,018 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 17:02:53,162 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 17:02:53,163 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 17:02:53,165 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 17:02:53,165 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 17:57:53,001 [Worker-113: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 17:57:53,005 [Worker-113: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 17:57:53,007 [Worker-113: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 17:57:53,008 [Worker-113: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 17:59:05,102 [Worker-114: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 17:59:05,109 [Worker-114: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 17:59:05,111 [Worker-114: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 17:59:05,111 [Worker-114: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 18:01:39,049 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:01:39,050 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 18:01:39,051 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:01:39,051 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 18:02:33,853 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:02:33,855 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 18:02:33,858 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:02:33,858 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 18:03:15,931 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:03:15,933 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 18:03:15,941 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:03:15,942 [Worker-117: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 18:04:53,510 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:04:53,511 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 18:04:53,512 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:04:53,512 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 18:09:26,158 [Worker-119: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:09:26,163 [Worker-119: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 18:09:26,165 [Worker-119: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:09:26,165 [Worker-119: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 18:11:33,284 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:11:33,285 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 18:11:33,287 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:11:33,287 [Worker-118: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 18:22:09,623 [Worker-122: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:22:09,624 [Worker-122: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 18:22:09,626 [Worker-122: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 18:22:09,627 [Worker-122: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:02:46,772 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:02:46,775 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:02:46,776 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:02:46,776 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:06:33,915 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:06:33,919 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:06:33,920 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:06:33,920 [Worker-125: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:09:38,361 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:09:38,364 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:09:38,366 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:09:38,366 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:10:44,527 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:10:44,530 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:10:44,531 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:10:44,531 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:16:12,990 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:16:12,991 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:16:12,992 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:16:12,992 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:17:09,201 [Worker-137: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:17:09,206 [Worker-137: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:17:09,207 [Worker-137: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:17:09,207 [Worker-137: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:18:43,373 [Worker-132: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:18:43,376 [Worker-132: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:18:43,377 [Worker-132: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:18:43,377 [Worker-132: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:20:30,100 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:20:30,104 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:20:30,107 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:20:30,107 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:22:35,804 [Worker-136: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:22:35,806 [Worker-136: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:22:35,808 [Worker-136: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:22:35,808 [Worker-136: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:24:40,284 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:24:40,285 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:24:40,293 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:24:40,293 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:24:56,800 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:24:56,801 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:24:56,807 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:24:56,808 [Worker-133: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:27:23,340 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:27:23,341 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:27:23,342 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:27:23,342 [Worker-131: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:35:42,377 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:35:42,378 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:35:42,378 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:35:42,378 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:35:57,627 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:35:57,628 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:35:57,636 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:35:57,636 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:37:15,518 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:37:15,519 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:37:15,520 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:37:15,523 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:39:11,642 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:39:11,644 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:39:11,646 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:39:11,646 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:42:09,996 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:42:09,997 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:42:09,999 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:42:09,999 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:42:54,477 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:42:54,480 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:42:54,481 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:42:54,481 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:44:15,470 [Worker-142: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:44:15,473 [Worker-142: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:44:15,478 [Worker-142: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:44:15,478 [Worker-142: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:44:54,015 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:44:54,018 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:44:54,022 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:44:54,022 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:46:40,273 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:46:40,281 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:46:40,286 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:46:40,286 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:47:17,096 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:47:17,098 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:47:17,099 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:47:17,099 [Worker-141: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:47:38,881 [Worker-142: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:47:38,886 [Worker-142: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:47:38,890 [Worker-142: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:47:38,892 [Worker-142: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:48:15,717 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:48:15,718 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:48:15,720 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:48:15,720 [Worker-138: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:48:27,400 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:48:27,401 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:48:27,402 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:48:27,402 [Worker-130: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources
+2023-03-26 19:49:08,656 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:49:08,657 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/main/resources
+2023-03-26 19:49:08,658 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-03-26 19:49:08,658 [Worker-143: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/sophiemaw/Documents/SideBarScene/src/test/resources

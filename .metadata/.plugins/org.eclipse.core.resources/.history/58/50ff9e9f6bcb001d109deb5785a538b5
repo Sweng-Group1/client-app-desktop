@@ -1,0 +1,83 @@
+package Projects;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.JPanel;
+
+public class BufferedImagePaintTest extends JPanel{
+	JPanel pane;
+	boolean paintMode;
+	boolean isClicked;
+	
+	public BufferedImagePaintTest(){
+		this.setBackground(Color.white);
+		this.setLayout(null);
+		pane= new JPanel();
+		this.add(pane);
+		pane.setLayout(null);
+		isClicked=false;
+		addMouseListeners();
+	}
+	private void addMouseListeners() {
+		pane.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				isClicked=true;	
+				System.out.println("Press true");
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				isClicked=false;
+				System.out.println("Press false");
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		pane.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				if(isClicked==true) {
+					Graphics2D g2= (Graphics2D) pane.getGraphics();
+					g2.setColor(Color.black);
+						g2.fillOval(e.getX(), e.getY(), 10, 10);				
+				
+				}
+			}
+			
+		});
+	}
+	public void setSize(int width, int height) {
+		super.setSize(width, height);
+		pane.setSize(width, height);
+		pane.setLocation(0, 0);
+	}
+}

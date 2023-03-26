@@ -1,0 +1,99 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.IOException;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
+
+import Projects.Project;
+
+
+
+public class Test {
+	Project project;
+	JFrame frame;
+	JPanel background;
+	Dimension screenSize;
+	
+	JPanel view;
+	JScrollPane scrollPane;
+	
+	public Test() {
+		setUpFrame();
+		setUpScrollPane();
+		setUpLayoutOfView();
+		addSlides();
+	}
+	private void setUpFrame() {
+		screenSize= Toolkit.getDefaultToolkit().getScreenSize();
+		frame= new JFrame();
+		frame.setSize(screenSize);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);	
+		background= new JPanel();
+		background.setBackground(Color.black);
+		frame.add(background);
+		background.setLayout(null);
+		frame.validate();	
+	}
+	private void setUpScrollPane() {
+		view= new JPanel();
+		view.setBackground(Color.LIGHT_GRAY);
+		scrollPane = new JScrollPane(view);
+		background.add(scrollPane);
+		scrollPane.setSize(400,800);
+		scrollPane.setLocation(100,50);
+		
+		//TESTINg:
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		JScrollBar scrollBar = scrollPane.createVerticalScrollBar();
+		
+		scrollPane.add(scrollBar);
+	}
+	public void setUpLayoutOfView() {
+		view.setLayout(new BoxLayout(view, BoxLayout.Y_AXIS));
+	}
+	public void addSlides() {
+		JPanel a= new JPanel();
+		a.setBackground(Color.red);
+		JPanel b= new JPanel();
+		b.setBackground(Color.orange);
+		JPanel c= new JPanel();
+		c.setBackground(Color.yellow);
+		JPanel d= new JPanel();
+		d.setBackground(Color.pink);
+		
+		view.add(a);
+		view.add(b);
+		view.add(c);
+		view.add(d);
+		
+		
+		a.setPreferredSize(new Dimension(400,300));
+		b.setPreferredSize(new Dimension(400,300));
+		c.setPreferredSize(new Dimension(400,300));
+		d.setPreferredSize(new Dimension(400,300));
+		
+		//b.setSize(400,300);
+		//c.setSize(400,300);
+		//d.setSize(400,300);
+		
+		//a.setLocation(0, 0);
+		//b.setLocation(0, 300);
+		//c.setLocation(0, 600);
+		//d.setLocation(0, 900);
+	}
+
+
+	public static void main(String[] args) throws IOException {
+		Test test= new Test();
+
+	}
+
+}
