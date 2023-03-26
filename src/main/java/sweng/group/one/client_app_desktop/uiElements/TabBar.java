@@ -1,4 +1,4 @@
-package sweng.group.one.client_app_desktop.sceneControl;
+package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,11 +14,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-
-import sweng.group.one.client_app_desktop.uiElements.CircleButton;
-import sweng.group.one.client_app_desktop.uiElements.CircleTab;
-import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
-import sweng.group.one.client_app_desktop.uiElements.Tab;
 
 public class TabBar extends JPanel{
 	List<CircleTab>tabs;

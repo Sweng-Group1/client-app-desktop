@@ -1,4 +1,4 @@
-package sweng.group.one.client_app_desktop.sceneControl;
+package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -7,10 +7,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import sweng.group.one.client_app_desktop.uiElements.CircleButton;
-import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
 
 public class ToolBar extends JPanel{
 	List<CircleButton>buttonsLtoR;
@@ -54,6 +52,18 @@ public class ToolBar extends JPanel{
 			buttonsRtoL.get(i).setSize(height);
 			buttonsRtoL.get(i).setLocation(this.getWidth()-(i*height)-height,0);
 		}
+	}
+	public JButton getPaintButton() {
+		return buttonsLtoR.get(1);
+	}
+	public JButton getEraserButton() {
+		return buttonsLtoR.get(2);
+	}
+	public JButton getBackButton() {
+		return buttonsRtoL.get(3);
+	}
+	public JButton getForwardButton() {
+		return buttonsRtoL.get(2);
 	}
 
 }

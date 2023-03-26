@@ -3,8 +3,17 @@ package sweng.group.one.client_app_desktop.sceneControl;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import sweng.group.one.client_app_desktop.presentation.Presentation;
+import sweng.group.one.client_app_desktop.uiElements.GraphicsBox;
+import sweng.group.one.client_app_desktop.uiElements.PresentationBox;
+import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
+import sweng.group.one.client_app_desktop.uiElements.TabBar;
+import sweng.group.one.client_app_desktop.uiElements.TextBox;
+import sweng.group.one.client_app_desktop.uiElements.ToolBar;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,6 +45,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	Color colourLight;
 
 
+
 	public UploadScene(Color colourDark, Color colourLight) throws IOException {	
 		create(colourDark,colourLight);
 		createPanels();
@@ -43,7 +53,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		addPresentationBox();
 		addToolBar();
 		addTextBoxes();
-		//createMouseListeners();
+		createMouseListeners();
 	}	
 
 	private void create(Color colourDark, Color colourLight) {
@@ -91,7 +101,6 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		rightPanel.add(boxFour);
 		
 	}
-
 	public void addPresentationBox() {
 		presentation= new PresentationBox(colourLight);
 		middlePanel.add(presentation);
@@ -100,12 +109,14 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		toolBar = new ToolBar(colourLight);
 		middlePanel.add(toolBar);
 		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/cursor.png")));
-		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/text.png")));
 		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/pencil.png")));
+		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/eraser.png")));
+		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/text.png")));
 		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/shapes.png")));
 		
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/tick.png")));
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/cross.png")));
+		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/forward.png")));
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/back.png")));
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/download.png")));
 	}
@@ -118,7 +129,153 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		tabBar.setLocation(0, presentation.getY()-tabBar.getHeight());
 		toolBar.setLocation(0, presentation.getY()+presentation.getHeight()+(gapWidth/2));
 	}
-	private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeight, int gapWidth ) {
+	private void createMouseListeners() {
+		toolBar.getPaintButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(presentation.isPaintMode()==true) {
+					presentation.setPaintMode(false);
+				}else {
+					presentation.setPaintMode(true);
+				}
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		toolBar.getEraserButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+	
+				if(presentation.isEraserMode()==true) {
+					presentation.setEraserMode(false);
+				}else {
+					presentation.setEraserMode(true);
+					presentation.setPaintMode(false);
+				}
+				
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		toolBar.getBackButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				presentation.removeLastGraphicOnCurrentLayer();
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		toolBar.getForwardButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				presentation.replaceLastGraphicsOnCurrentLayer();
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+		});
+	}
+private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeight, int gapWidth ) {
 		boxOne.setSize(leftPanel.getWidth(), leftPanel.getHeight());
 		int rightTextBoxesRatio= (uploadSceneHeight- (4*gapWidth))/7;
 		boxTwo.setSize(textBoxWidth, rightTextBoxesRatio*4);
@@ -157,5 +314,6 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		this.validate();
 		
 	}
+
 }
 

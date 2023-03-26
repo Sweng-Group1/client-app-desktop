@@ -1,4 +1,4 @@
-package sweng.group.one.client_app_desktop.sceneControl;
+package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,8 +13,6 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-
-import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
 
 public class GraphicsBox extends TextBox {
 	List<Graphics2D>graphicsList;
