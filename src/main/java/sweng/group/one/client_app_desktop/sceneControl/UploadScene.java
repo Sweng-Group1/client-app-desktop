@@ -12,6 +12,9 @@ import sweng.group.one.client_app_desktop.uiElements.TextBox;
 import sweng.group.one.client_app_desktop.uiElements.ToolBar;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -43,7 +46,8 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	
 	Color colourDark;
 	Color colourLight;
-
+	
+	JPanel paintPopup;
 
 
 	public UploadScene(Color colourDark, Color colourLight) throws IOException {	
@@ -119,6 +123,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/forward.png")));
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/back.png")));
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/download.png")));
+		
 	}
 	public void addTabBar() throws IOException {
 		tabBar= new TabBar(colourLight);
@@ -142,8 +147,10 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 			public void mousePressed(MouseEvent e) {
 				if(presentation.isPaintMode()==true) {
 					presentation.setPaintMode(false);
+					
 				}else {
 					presentation.setPaintMode(true);
+					
 				}
 				
 			}
@@ -311,7 +318,10 @@ private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeigh
 		toolBar.setSize(middlePanel.getWidth(), toolBarHeight);
 		tabBar.setSize(middlePanel.getWidth(), toolBarHeight);
 		setComponentPositions(width,height,gapWidth);
+		
+		
 		this.validate();
+		
 		
 	}
 
