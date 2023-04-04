@@ -4,10 +4,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
+
+import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;
 import sweng.group.one.client_app_desktop.uiElements.GraphicsBox;
 import sweng.group.one.client_app_desktop.uiElements.PresentationBox;
 import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
-import sweng.group.one.client_app_desktop.uiElements.TabBar;
 import sweng.group.one.client_app_desktop.uiElements.TextBox;
 import sweng.group.one.client_app_desktop.uiElements.ToolBar;
 
@@ -22,6 +23,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
@@ -31,9 +33,10 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	JPanel middlePanel;	
 	JPanel rightPanel;
 	
+	
 	PresentationBox presentation;
 	ToolBar toolBar;
-	TabBar tabBar;
+	CustomTabPanel tabPane;
 	
 	TextBox boxOne;
 	GraphicsBox boxTwo;
@@ -53,8 +56,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 	public UploadScene(Color colourDark, Color colourLight) throws IOException {	
 		create(colourDark,colourLight);
 		createPanels();
-		addTabBar();	
-		addPresentationBox();
+		addTabPane();
 		addToolBar();
 		addTextBoxes();
 		createMouseListeners();
@@ -83,6 +85,11 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		this.add(leftPanel);
 		this.add(middlePanel);
 		this.add(rightPanel);
+	}
+	private void addTabPane() {
+		tabPane= new CustomTabPanel();
+		middlePanel.add(tabPane);
+		tabPane.setBackgroundColors(colourLight, colourDark);
 	}
 	private void addTextBoxes() {
 
@@ -125,15 +132,9 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/download.png")));
 		
 	}
-	public void addTabBar() throws IOException {
-		tabBar= new TabBar(colourLight);
-		middlePanel.add(tabBar);
-	}
-	private void setComponentPositions(int width,int height,int gapWidth) {
-		presentation.setLocation(0,(height/2)-(presentation.getHeight()/2));
-		tabBar.setLocation(0, presentation.getY()-tabBar.getHeight());
-		toolBar.setLocation(0, presentation.getY()+presentation.getHeight()+(gapWidth/2));
-	}
+
+
+
 	private void createMouseListeners() {
 		toolBar.getPaintButton().addMouseListener(new MouseListener() {
 
@@ -282,7 +283,7 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 			
 		});
 	}
-private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeight, int gapWidth ) {
+	private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeight, int gapWidth ) {
 		boxOne.setSize(leftPanel.getWidth(), leftPanel.getHeight());
 		int rightTextBoxesRatio= (uploadSceneHeight- (4*gapWidth))/7;
 		boxTwo.setSize(textBoxWidth, rightTextBoxesRatio*4);
@@ -312,18 +313,27 @@ private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeigh
 		//boxOne.setLocation(0,0);
 		
 		//this method will scale the presentation box to be 16:9 
-		presentation.setSize(middlePanel.getWidth(),height);
+	//	presentation.setSize(middlePanel.getWidth(),height);
 		
-		int toolBarHeight= presentation.getHeight()/10;
+		int toolBarHeight= height/20;
 		toolBar.setSize(middlePanel.getWidth(), toolBarHeight);
-		tabBar.setSize(middlePanel.getWidth(), toolBarHeight);
-		setComponentPositions(width,height,gapWidth);
-		
-		
+		//tabBar.setSize(middlePanel.getWidth(), toolBarHeight);
+		tabPane.setSize(middlePanel.getWidth(),middlePanel.getHeight()-toolBarHeight);
+		//setComponentPositions(width,height,gapWidth);
+		toolBar.setLocation(0, middlePanel.getHeight()-toolBarHeight);
+		tabPane.setLocation(0, 0);
 		this.validate();
 		
 		
 	}
-
+	public JButton getConfirmButton() {
+		return toolBar.getConfirmButton();
+	}
+	public JButton getExitButton() {
+		return toolBar.getExitButton();
+	}
+	public Presentation getPresentation() {
+		return tabPane.getPresentation();
+	}
 }
 

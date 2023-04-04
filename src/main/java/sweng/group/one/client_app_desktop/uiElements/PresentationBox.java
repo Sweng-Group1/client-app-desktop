@@ -302,12 +302,12 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 				public void paint(Graphics g) {
 					Graphics2D g2= (Graphics2D)g.create();
 					g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-					g2.setColor(new Color(0,0,0,100));
+					g2.setColor(new Color(100,100,100));
 					g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 10, 10);
-					int thickness= 4;
-					g2.setColor(Color.white);
-					g2.fillRect((this.getWidth()-thickness)/2, 0, thickness, this.getHeight());
-					g2.fillRect(0, (this.getHeight()-thickness)/2, this.getWidth(), thickness);
+					int thickness= 2;
+					g2.setColor(new Color(200,200,200));
+					g2.fillRect((this.getWidth()-thickness)/2, thickness, thickness, this.getHeight()-(2*thickness));
+					g2.fillRect(thickness, (this.getHeight()-thickness)/2, this.getWidth()-(2*thickness), thickness);
 				}
 			};
 			popupButton.setOpaque(false);

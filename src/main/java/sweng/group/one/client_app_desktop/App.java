@@ -2,6 +2,7 @@ package sweng.group.one.client_app_desktop;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.io.IOException;
 
@@ -10,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import sweng.group.one.client_app_desktop.sceneControl.UploadScene;
+
 
 /**
  * Hello world!
@@ -38,10 +40,12 @@ public class App
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 	private void addUploadScene() throws IOException {
-		UploadScene upload = new UploadScene(Color.DARK_GRAY,Color.LIGHT_GRAY);
+		Color colorLight= new Color(78,106,143);
+		Color colorDark= new Color(46,71,117);
+		UploadScene upload = new UploadScene(colorDark,colorLight);
 		background.add(upload);
-		upload.setSize((screenSize.width/5)*4, (screenSize.height/6)*4);
-		upload.setLocation(screenSize.width/10, screenSize.height/6);
+		upload.setSize((4*screenSize.width/5),(screenSize.height/5)*4);
+		upload.setLocation((screenSize.width-upload.getWidth())/2, (screenSize.height-upload.getHeight())/2);
 		upload.setVisible(true);
 	}
 	
@@ -49,7 +53,6 @@ public class App
     public static void main( String[] args ) throws IOException
     {
     	App app= new App();
-    	
-    	
+    		
     }
 }

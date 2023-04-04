@@ -76,6 +76,12 @@ public class ToolBar extends JPanel{
 	public JButton getForwardButton() {
 		return buttonsRtoL.get(2);
 	}
+	public JButton getConfirmButton() {
+		return buttonsRtoL.get(0);
+	}
+	public JButton getExitButton() {
+		return buttonsRtoL.get(1);
+	}
 	
 
 }
