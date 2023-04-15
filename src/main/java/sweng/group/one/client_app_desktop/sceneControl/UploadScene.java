@@ -1,142 +1,105 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import sweng.group.one.client_app_desktop.presentation.Presentation;
-
-import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;
-import sweng.group.one.client_app_desktop.uiElements.GraphicsBox;
-import sweng.group.one.client_app_desktop.uiElements.PresentationBox;
-import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
-import sweng.group.one.client_app_desktop.uiElements.TextBox;
-import sweng.group.one.client_app_desktop.uiElements.ToolBar;
-
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JLabel;
 
+import sweng.group.one.client_app_desktop.uiElements.CustomGraphicsBox;
+import sweng.group.one.client_app_desktop.uiElements.CustomMediaBox;
+import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;
+import sweng.group.one.client_app_desktop.uiElements.CustomToolBar;
+import sweng.group.one.client_app_desktop.uiElements.UploadSceneComponent;
 
-
-public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.RoundedPanel{
-	JPanel leftPanel;
-	JPanel middlePanel;	
-	JPanel rightPanel;
+public class UploadScene extends UploadSceneComponent{
 	
+	UploadScene uploadScene= this;
+	JButton confirmButton;
+	JButton closeButton;
 	
-	PresentationBox presentation;
-	ToolBar toolBar;
 	CustomTabPanel tabPane;
+	CustomToolBar toolBar;
+	CustomGraphicsBox graphicsBox;
+	CustomMediaBox mediaBox;
 	
-	TextBox boxOne;
-	GraphicsBox boxTwo;
-	TextBox boxThree;
-	TextBox boxFour;
-
+	boolean elementIsBeingMoved;
+	MouseListener movingElementToListener;
 	
-	int curvatureRadius;
-	int gapWidth;
 	
-	Color colourDark;
-	Color colourLight;
-	
-	JPanel paintPopup;
-
-
-	public UploadScene(Color colourDark, Color colourLight) throws IOException {	
-		create(colourDark,colourLight);
-		createPanels();
-		addTabPane();
-		addToolBar();
-		addTextBoxes();
-		createMouseListeners();
-	}	
-
-	private void create(Color colourDark, Color colourLight) {
-		this.colourDark=colourDark;
-		this.colourLight= colourLight;
+	public UploadScene() {
+		super();
 		this.setLayout(null);
-		curvatureRadius=25;
-		setBackground(colourDark);
-	}
-	private void createPanels() {
-		leftPanel = new JPanel();
-		middlePanel= new JPanel();
-		rightPanel= new JPanel();;
 		
-		leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
-		middlePanel.setLayout(null);
-		rightPanel.setLayout(new BoxLayout(rightPanel,BoxLayout.Y_AXIS));
+		//Create graphicsBox
+		graphicsBox= new CustomGraphicsBox();
+		this.add(graphicsBox);
+		//Create mediaBox
+		mediaBox= new CustomMediaBox(graphicsBox);
+		this.add(mediaBox);
+		//Create TabPane
+		tabPane= new CustomTabPanel(graphicsBox);
+		this.add(tabPane);
+		//Create ToolBar
+		toolBar= new CustomToolBar(graphicsBox,tabPane);
+		this.add(toolBar);
 		
-		leftPanel.setOpaque(false);
-		middlePanel.setOpaque(false);
-		rightPanel.setOpaque(false);
-		
-		this.add(leftPanel);
-		this.add(middlePanel);
-		this.add(rightPanel);
-	}
-	private void addTabPane() {
-		tabPane= new CustomTabPanel();
-		middlePanel.add(tabPane);
-		tabPane.setBackgroundColors(colourLight, colourDark);
-	}
-	private void addTextBoxes() {
+		elementIsBeingMoved=false;
+		mediaBox.addMouseListener(new MouseListener() {
 
-		boxOne= new TextBox(colourLight,curvatureRadius);
-		boxOne.setAddMediaIconVisible(true);
-		boxTwo= new GraphicsBox(colourLight,curvatureRadius);
-		boxTwo.setAddMediaElementsToAjustIsVisible(true);
-		//.setBackground(colourLight);
-		boxThree= new TextBox(colourLight,curvatureRadius);
-		boxThree.setAddTagsIconIsVisible(true);
-		boxThree.setSearchLocationHeaderIsVisible(true);
-		
-		boxFour= new TextBox(colourLight,curvatureRadius);
-		boxFour.setAddDescriptionIconIsVisible(true);
-		
-		rightPanel.setLayout(null);
-		leftPanel.add(boxOne);
-		rightPanel.add(boxTwo);
-		rightPanel.add(boxThree);
-		rightPanel.add(boxFour);
-		
-	}
-	public void addPresentationBox() {
-		presentation= new PresentationBox(colourLight);
-		middlePanel.add(presentation);
-	}
-	public void addToolBar() throws IOException {
-		toolBar = new ToolBar(colourLight);
-		middlePanel.add(toolBar);
-		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/cursor.png")));
-		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/pencil.png")));
-		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/eraser.png")));
-		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/text.png")));
-		toolBar.addButtonLtoR(ImageIO.read(new File("./Assets/shapes.png")));
-		
-		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/tick.png")));
-		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/cross.png")));
-		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/forward.png")));
-		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/back.png")));
-		toolBar.addButtonRtoL(ImageIO.read(new File("./Assets/download.png")));
-		
-	}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				
+			}
 
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if((mediaBox.isIconSelected()==true)&&(elementIsBeingMoved==false)) {
+					Image elementIcon= mediaBox.getSelectedIcon();
+					Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(elementIcon , new Point( 
+					           0,0), "img");
+					uploadScene.setCursor (c);
+					elementIsBeingMoved=true;
+					tabPane.getCurrentComponent().addMouseListener(movingElementToListener);
+					tabPane.getCurrentSlide().addMouseListener(movingElementToListener);
+					tabPane.getCurrentSlide().getElements().get(tabPane.getCurrentSlide().getElements().size()-1).getComponent().addMouseListener(movingElementToListener);
+					toolBar.turnOffPaintMode();
+				}else if (elementIsBeingMoved==true) {
+					mediaBox.turnOffMediaSelected();
+					uploadScene.setCursor(Cursor.getDefaultCursor());
+					elementIsBeingMoved=false;
+				}
+			}
 
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 
-	private void createMouseListeners() {
-		toolBar.getPaintButton().addMouseListener(new MouseListener() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		movingElementToListener= new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -146,12 +109,17 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(presentation.isPaintMode()==true) {
-					presentation.setPaintMode(false);
-					
-				}else {
-					presentation.setPaintMode(true);
-					
+				System.out.println("TRYING TO PLACE");
+				if(elementIsBeingMoved==true) {
+					if(mediaBox.getSelectedMediaType()=="IMAGE") {
+						BufferedImage image= mediaBox.getSelectedMediaImage();
+						graphicsBox.addImageLayer(image);
+						
+					}
+					mediaBox.turnOffMediaSelected();
+					uploadScene.setCursor(Cursor.getDefaultCursor());
+					elementIsBeingMoved=false;
+					System.out.println("Element is placed!");
 				}
 				
 			}
@@ -174,166 +142,63 @@ public class UploadScene extends sweng.group.one.client_app_desktop.uiElements.R
 				
 			}
 			
-		});
-		toolBar.getEraserButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+		};
+	}
 	
-				if(presentation.isEraserMode()==true) {
-					presentation.setEraserMode(false);
-				}else {
-					presentation.setEraserMode(true);
-					presentation.setPaintMode(false);
-				}
-				
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		toolBar.getBackButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				presentation.removeLastGraphicOnCurrentLayer();
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		toolBar.getForwardButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				presentation.replaceLastGraphicsOnCurrentLayer();
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			
-		});
+	//SETTERS 
+	public void setBackgroundColours(Color colorLight, Color colorDark) {
+		this.setMainAndSecondaryColor(colorDark, colorLight);
+		tabPane.setMainAndSecondaryColor(colorLight,colorDark);
+		toolBar.setMainAndSecondaryColor(colorLight,colorDark);
+		graphicsBox.setMainAndSecondaryColor(colorLight,colorDark);
+		mediaBox.setMainAndSecondaryColor(colorLight,colorDark);
 	}
-	private void setSizeAndPositionOfTextBoxes(int textBoxWidth,int uploadSceneHeight, int gapWidth ) {
-		boxOne.setSize(leftPanel.getWidth(), leftPanel.getHeight());
-		int rightTextBoxesRatio= (uploadSceneHeight- (4*gapWidth))/7;
-		boxTwo.setSize(textBoxWidth, rightTextBoxesRatio*4);
-		boxThree.setSize(textBoxWidth,rightTextBoxesRatio);
-		boxFour.setSize(textBoxWidth, rightTextBoxesRatio*2);
-		
-		boxTwo.setLocation(0, 0);
-		boxThree.setLocation(0,boxTwo.getHeight()+ gapWidth);
-		boxFour.setLocation(0, boxThree.getHeight()+boxThree.getY()+(gapWidth));
-		
+	public void setCurvatureRadius(int curvatureRadius) {
+		super.setCurvatureRadius(curvatureRadius);
+		tabPane.setCurvatureRadius(curvatureRadius);
+		toolBar.setCurvatureRadius(curvatureRadius);
+		graphicsBox.setCurvatureRadius(curvatureRadius);
+		mediaBox.setCurvatureRadius(curvatureRadius);
 	}
-	public void setSize(int width, int height) {
-		super.setSize(width,height, curvatureRadius);
-		gapWidth= width/100;
-		int spaceRatio= width/6;
-		
-		leftPanel.setSize(spaceRatio-(2*gapWidth),height-(2*gapWidth));
-		rightPanel.setSize(spaceRatio-(2*gapWidth), height-(2*gapWidth));
-		middlePanel.setSize((spaceRatio*4), height-(2*gapWidth));
-		
-		leftPanel.setLocation(gapWidth,gapWidth );
-		middlePanel.setLocation(spaceRatio, gapWidth);
-		rightPanel.setLocation((spaceRatio*5)+gapWidth,gapWidth);
-		
-		setSizeAndPositionOfTextBoxes(leftPanel.getWidth(),height,gapWidth);
-		
-		//boxOne.setLocation(0,0);
-		
-		//this method will scale the presentation box to be 16:9 
-	//	presentation.setSize(middlePanel.getWidth(),height);
-		
-		int toolBarHeight= height/20;
-		toolBar.setSize(middlePanel.getWidth(), toolBarHeight);
-		//tabBar.setSize(middlePanel.getWidth(), toolBarHeight);
-		tabPane.setSize(middlePanel.getWidth(),middlePanel.getHeight()-toolBarHeight);
-		//setComponentPositions(width,height,gapWidth);
-		toolBar.setLocation(0, middlePanel.getHeight()-toolBarHeight);
-		tabPane.setLocation(0, 0);
-		this.validate();
-		
-		
+	//GETTERS 
+	public JButton getCloseButton() {
+		return closeButton;
 	}
 	public JButton getConfirmButton() {
-		return toolBar.getConfirmButton();
+		return confirmButton;
 	}
-	public JButton getExitButton() {
-		return toolBar.getExitButton();
-	}
-	public Presentation getPresentation() {
-		return tabPane.getPresentation();
+	//public Presentation getPresentation() {
+		//return tabPane.getPresentation();
+	//}
+	
+	//OVERIDED METHODS:
+	public void setBounds(int x, int y,int width, int height) {
+		super.setBounds(x,y,width, height);
+		int gridWidth= 6;
+		int gridHeight=16;
+		double cellWidth= width/gridWidth;
+		double cellHeight= height/gridHeight;
+		
+		//GRID BOUNDS:
+		int mb[]= {0,0,1,16};
+		int tab[]= {1,0,5,15};
+		int tool[]= {1,15,5,16};
+		int gb[]= {5,0,6,5};
+		
+		mediaBox.setBounds((int)(mb[0]*cellWidth),(int)(mb[1]*cellHeight),
+				(int)(mb[2]*cellWidth-(mb[0]*cellWidth)),(int)(mb[3]*cellHeight-(mb[1]*cellHeight)));
+		tabPane.setBounds((int)(tab[0]*cellWidth),(int)(tab[1]*cellHeight),
+				(int)(tab[2]*cellWidth-(tab[0]*cellWidth)),(int)(tab[3]*cellHeight-(tab[1]*cellHeight)));
+		toolBar.setBounds((int)(tool[0]*cellWidth),(int)(tool[1]*cellHeight),
+				(int)(tool[2]*cellWidth-(tool[0]*cellWidth)),(int)(tool[3]*cellHeight-(tool[1]*cellHeight)));
+		graphicsBox.setBounds((int)(gb[0]*cellWidth),(int)(gb[1]*cellHeight),
+				(int)(gb[2]*cellWidth-(gb[0]*cellWidth)),(int)(gb[3]*cellHeight-(gb[1]*cellHeight)));
+		
+		//Setting component margins:
+		int gapWidth= 10;
+		mediaBox.setMarginBounds((int)gapWidth,(int) gapWidth, (int)gapWidth/2,(int) gapWidth);
+		tabPane.setMarginBounds((int)gapWidth/2, (int)gapWidth,(int) gapWidth/2, (int)gapWidth/2);
+		toolBar.setMarginBounds((int)gapWidth/2, (int)gapWidth/2, (int)gapWidth/2,(int) gapWidth);
+		graphicsBox.setMarginBounds((int)gapWidth/2, (int)gapWidth,(int) gapWidth, (int)gapWidth/2);
 	}
 }
-

@@ -42,10 +42,15 @@ public class App
 	private void addUploadScene() throws IOException {
 		Color colorLight= new Color(78,106,143);
 		Color colorDark= new Color(46,71,117);
-		UploadScene upload = new UploadScene(colorDark,colorLight);
+		UploadScene upload = new UploadScene();
+		upload.setVisible(false);
 		background.add(upload);
-		upload.setSize((4*screenSize.width/5),(screenSize.height/5)*4);
-		upload.setLocation((screenSize.width-upload.getWidth())/2, (screenSize.height-upload.getHeight())/2);
+		upload.setBackgroundColours(colorLight, colorDark);
+		double ratioGapWidth= 0.1;
+		upload.setCurvatureRadius(10);
+		upload.setBounds((int)(screenSize.width*ratioGapWidth),(int)(screenSize.height*ratioGapWidth),
+				(int)(screenSize.width*(1-(2*ratioGapWidth))),(int)(screenSize.height*(1-(2*ratioGapWidth))));
+		upload.validate();
 		upload.setVisible(true);
 	}
 	

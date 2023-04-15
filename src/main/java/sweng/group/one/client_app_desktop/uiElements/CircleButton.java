@@ -20,6 +20,7 @@ public class CircleButton extends JButton{
 	private Color backgroundColour;
 	private Color backgroundWhenPressed;
 	private Color backgroundWhenHover;
+	private Color normalBackground;
 	
 	private int borderThickness;
 	private Color border;
@@ -121,6 +122,7 @@ public class CircleButton extends JButton{
 		
 		backgroundColour= new Color(colourR,colourG,colourB,alphaNormal);
 		backgroundWhenHover= new Color(colourR,colourG,colourB,alphaHover);
+		normalBackground=backgroundColour;
 		backgroundWhenPressed= new Color(colourR,colourG,colourB,alphaPressed);
 		
 		super.setBackground(backgroundColour);
@@ -146,6 +148,14 @@ public class CircleButton extends JButton{
 
 	public void setImageIcon(Image im) {
 		image=im;
+	}
+	public void setBackgroundToHover() {
+		backgroundColour=backgroundWhenHover;
+		this.repaint();
+	}
+	public void resetBackground() {
+		backgroundColour= normalBackground;
+		this.repaint();
 	}
 	
 }
