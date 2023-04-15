@@ -1,4 +1,4 @@
-package sweng.group.one.client_app_desktop.sceneControl;
+package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,8 +11,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
-import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
 
 public class TextBox extends RoundedPanel{
 	JPanel textPanel;

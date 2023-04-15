@@ -6,7 +6,7 @@ public class Presentation extends JPanel {
 	private Slide[] slides;
 	private int currentSlide;
 	
-	Presentation(){
+	public Presentation(){
 		slides = null;
 		currentSlide = 0;
 	}

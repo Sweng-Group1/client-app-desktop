@@ -87,7 +87,7 @@ public class CircleButton extends JButton{
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			int imageWidth= diameter/2;
 			int imageHeight= diameter/2;
-			g2d.drawImage(image,diameter/4,diameter/4,imageWidth,imageHeight,null);
+			g2d.drawImage(scaledImage,diameter/4,diameter/4,imageWidth,imageHeight,null);
 			g2d.dispose();
 			
 			Icon iconIm= new ImageIcon(masking);

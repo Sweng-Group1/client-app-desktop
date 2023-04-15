@@ -1,25 +1,32 @@
-package sweng.group.one.client_app_desktop.sceneControl;
+package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JPanel;
-
-import sweng.group.one.client_app_desktop.uiElements.CircleButton;
-import sweng.group.one.client_app_desktop.uiElements.RoundedPanel;
+import javax.swing.JSlider;
 
 public class ToolBar extends JPanel{
+	
+	
 	List<CircleButton>buttonsLtoR;
 	List<CircleButton>buttonsRtoL;
 	Color colour1;
 	Color colour2;
 	public ToolBar(Color background) {
 		createBackground();
-		
+	
 		
 	}
 	private void createBackground() {
@@ -42,6 +49,7 @@ public class ToolBar extends JPanel{
 		buttonsRtoL.add(button);
 		this.add(button);
 	}
+	
 	public void setSize(int width, int height) {
 		super.setSize(width, height);
 		
@@ -54,7 +62,27 @@ public class ToolBar extends JPanel{
 			buttonsRtoL.get(i).setSize(height);
 			buttonsRtoL.get(i).setLocation(this.getWidth()-(i*height)-height,0);
 		}
+		
 	}
+	public JButton getPaintButton() {
+		return buttonsLtoR.get(1);
+	}
+	public JButton getEraserButton() {
+		return buttonsLtoR.get(2);
+	}
+	public JButton getBackButton() {
+		return buttonsRtoL.get(3);
+	}
+	public JButton getForwardButton() {
+		return buttonsRtoL.get(2);
+	}
+	public JButton getConfirmButton() {
+		return buttonsRtoL.get(0);
+	}
+	public JButton getExitButton() {
+		return buttonsRtoL.get(1);
+	}
+	
 
 }
 
