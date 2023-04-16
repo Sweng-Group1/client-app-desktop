@@ -4,9 +4,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,13 +31,17 @@ public class CustomToolBar extends UploadSceneComponent{
 			
 		CustomTabPanel tabPane;
 		CustomGraphicsBox graphicsBox;
-		boolean isPainting;
-		boolean isAddingText;
-		boolean isMoving;
 		
-		MouseListener paintButtonListener;
-		MouseMotionListener paintMouseMotionListener;
-		MouseListener paintMouseListener;
+		boolean paintMode;
+		boolean eraseMode;
+		boolean textMode;
+		boolean moveMode;
+		boolean shapeMode;
+		
+		MouseListener slideMouseListener;
+		MouseMotionListener slideMouseMotionListener;
+		
+		
 		
 		int paintSize;
 		Color paintColor;
@@ -124,20 +132,34 @@ public class CustomToolBar extends UploadSceneComponent{
 			buttons.add(downloadButton);
 			this.add(downloadButton);	
 			
-			isPainting=false;
-			isAddingText=false;
-			isMoving=false;
+			resetMode();
+			tabPane.getCurrentSlide().addMouseListener(slideMouseListener);
+			tabPane.getCurrentSlide().addMouseMotionListener(slideMouseMotionListener);
 			
 		}
-		public void turnOffPaintMode() {
-			if(isPainting==true) {
-				isPainting=false;
-				paintButton.resetBackground();
-			}
+		public void resetMode() {
+			paintMode=false;
+			paintButton.resetBackground();
+			paintButton.repaint();
+			eraseMode=false;
+			eraserButton.resetBackground();
+			eraserButton.repaint();
+			textMode=false;
+			textButton.resetBackground();
+			textButton.repaint();
+			moveMode=false;
+			moveButton.resetBackground();
+			moveButton.repaint();
+			shapeMode=false;
+			shapesButton.resetBackground();
+			shapesButton.repaint();
+			
+			this.validate();
+			this.repaint();
 		}
 		
 		private void addMouseListeners() {
-			eraserButton.addMouseListener(new MouseListener() {
+			slideMouseListener = new MouseListener() {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -147,7 +169,112 @@ public class CustomToolBar extends UploadSceneComponent{
 
 				@Override
 				public void mousePressed(MouseEvent e) {
+					if(textMode==true) {
+						float duration=0;
+						int width= tabPane.getCurrentSlide().getPointWidth();
+						int height= tabPane.getCurrentSlide().getPointHeight();
+						
+						graphicsBox.addTextLayer("Text", null, paintSize, paintColor, duration, e.getPoint(), width/6, height/4 ,tabPane.getCurrentSlide());
+						System.out.println("add text");
+					}
+					if(shapeMode==true) {
+						graphicsBox.addShapeLayer("CIRCLE", e.getPoint());
+						System.out.println("add shape");
+					}
+				
+					mousePos= e.getPoint();
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			};
+			slideMouseMotionListener = new MouseMotionListener() {
+
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if(paintMode==true) {
+						if(graphicsBox.getSelectedLayer().getType()=="GRAPHIC") {
+							GraphicsElement el= (GraphicsElement) graphicsBox.getSelectedLayer();
+							if(el.getCurrentImage().getWidth()>0) {
+								BufferedImage im= el.getCurrentImage();	
+								Graphics2D g2= (Graphics2D)im.getGraphics().create();
+								g2.setStroke(paintStroke);
+								g2.setColor(paintColor);
+								g2.drawLine(mousePos.x, mousePos.y, e.getX(), e.getY());
+								el.addBufferedImageToGraphicsList(im);
+								el.getComponent().validate();
+								mousePos= e.getPoint();
+							}
+						}
+					}
+					if(eraseMode==true) {
+						if(graphicsBox.getSelectedLayer().getType()=="GRAPHIC") {	
+							GraphicsElement el= (GraphicsElement)graphicsBox.getSelectedLayer();
+							if(el.getCurrentImage().getWidth()>0) {
+								BufferedImage im= el.getCurrentImage();
+								BufferedImage newIm = new BufferedImage(im.getWidth(),im.getHeight(),BufferedImage.TYPE_INT_ARGB);
+								Graphics2D g2= (Graphics2D)newIm.getGraphics().create();
+								Rectangle entireImage =new Rectangle(im.getWidth(), im.getHeight());
+								Area clip = new Area(entireImage);
+								clip.subtract(new Area(new Ellipse2D.Float(e.getX()-(paintSize/2), e.getY(), paintSize, paintSize)));
+								g2.clip(clip);
+							    g2.drawImage(im, 0, 0, null);
+								g2.dispose();
+							
+								el.addBufferedImageToGraphicsList(newIm);
+								el.getComponent().validate();
+								mousePos= e.getPoint();
+							}
+						}
+					}
+					
+				}
+
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					mousePos= e.getPoint();
+					
+				}
+				
+			};
+			
+			/*
+			 *  Button listeners:
+			 */
+			shapesButton.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					if(shapeMode==false) {
+						resetMode();
+						shapeMode=true;
+						shapesButton.setBackgroundToHover();
+					}else {
+						resetMode();
+					}
 					
 				}
 
@@ -170,7 +297,125 @@ public class CustomToolBar extends UploadSceneComponent{
 				}
 				
 			});
+			backButton.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					resetMode();
+					if(graphicsBox.getSelectedLayer().getType()=="GRAPHIC") {
+						GraphicsElement g= (GraphicsElement) graphicsBox.getSelectedLayer();
+						g.goBackInImageList(2);
+						g.getComponent().validate();
+						g.getComponent().repaint();
+					}
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			textButton.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					if(textMode==false) {
+						resetMode();
+						textMode=true;
+						textButton.setBackgroundToHover();
+					}else {
+						resetMode();
+					}
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			eraserButton.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
 			
+					if(eraseMode==false) {
+						resetMode();
+						eraseMode=true;
+						eraserButton.setBackgroundToHover();
+					}
+					else {
+						resetMode();
+					}
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
 			graphicsBox.getDeleteLayerButton().addMouseListener(new MouseListener() {
 
 				@Override
@@ -181,10 +426,7 @@ public class CustomToolBar extends UploadSceneComponent{
 
 				@Override
 				public void mousePressed(MouseEvent e) {
-					if(isPainting==true) {
-						isPainting=false;
-						paintButton.resetBackground();
-					}
+					resetMode();
 					
 				}
 
@@ -217,10 +459,9 @@ public class CustomToolBar extends UploadSceneComponent{
 
 				@Override
 				public void mousePressed(MouseEvent e) {
-					if(isPainting==true) {
-						isPainting=false;
-						paintButton.resetBackground();
-					}
+					resetMode();	
+					graphicsBox.getSelectedLayer().getComponent().addMouseListener(slideMouseListener);
+					graphicsBox.getSelectedLayer().getComponent().addMouseMotionListener(slideMouseMotionListener);
 					
 				}
 
@@ -242,9 +483,8 @@ public class CustomToolBar extends UploadSceneComponent{
 					
 				}
 				
-			});
-			
-			paintButtonListener= new MouseListener() {
+			});			
+			paintButton.addMouseListener(new MouseListener() {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -254,59 +494,21 @@ public class CustomToolBar extends UploadSceneComponent{
 
 				@Override
 				public void mousePressed(MouseEvent e) {
-					if(isPainting==false) {
+					
+					if(paintMode==false) {
+						resetMode();
+						paintMode=true;
 						paintButton.setBackgroundToHover();
-						isPainting=true;
-						if((tabPane.getCurrentSlide().getElements().size()==0)||(graphicsBox.getSelectedLayer().getType()!="GRAPHIC")) {
-							graphicsBox.addGraphicLayer();
-						}
-						graphicsBox.getSelectedLayer().getComponent().addMouseMotionListener(paintMouseMotionListener);
-						graphicsBox.getSelectedLayer().getComponent().addMouseListener(paintMouseListener);
+						
 					}else {
-						isPainting=false;
-						paintButton.resetBackground();
-						graphicsBox.getSelectedLayer().getComponent().removeMouseMotionListener(paintMouseMotionListener);
-						graphicsBox.getSelectedLayer().getComponent().removeMouseListener(paintMouseListener);
+						resetMode();
 					}
+					
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-			};
-			paintButton.addMouseListener(paintButtonListener);
-			paintMouseListener = new MouseListener() {
-
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					
-					
-				}
-
-				@Override
-				public void mousePressed(MouseEvent e) {
-					isCurrentlyPainting=true;
-					mousePos= e.getPoint();
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					mousePos=null;
-					isCurrentlyPainting=false;
 					
 				}
 
@@ -322,49 +524,18 @@ public class CustomToolBar extends UploadSceneComponent{
 					
 				}
 				
-			};
-			paintMouseMotionListener= new MouseMotionListener() {
-
-				@Override
-				public void mouseDragged(MouseEvent e) {
-					if(isPainting==true) {
-					if(graphicsBox.getSelectedLayer().getType()=="GRAPHIC") {
-						System.out.println("PAINTING");
-						GraphicsElement el= (GraphicsElement)graphicsBox.getSelectedLayer();
-						if(el.getCurrentImage().getWidth()>0) {
-						BufferedImage im= el.getCurrentImage();
-						
-						Graphics2D g2= (Graphics2D)im.getGraphics().create();
-						g2.setStroke(paintStroke);
-						g2.setColor(paintColor);
-						g2.drawLine(mousePos.x, mousePos.y, e.getX(), e.getY());
-						//g2.drawImage(im, 0, 0, null);
-						el.addBufferedImageToGraphicsList(im);
-						el.getComponent().validate();
-						mousePos= e.getPoint();
-						}
-					}
-					}	
-				}
-					
-				@Override
-				public void mouseMoved(MouseEvent e) {
-					
-					
-				}
-			};
+			});			
 			moveButton.addMouseListener(new MouseListener() {
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(isMoving==false) {
-						isMoving=true;
+					if(moveMode==false) {
+						resetMode();
+						moveMode=true;
 						moveButton.setBackgroundToHover();
 						tabPane.setMovingElement(graphicsBox.getSelectedLayer());
 					}else {
-						isMoving=false;
-						moveButton.resetBackground();
-						tabPane.exitMovingElement();
+						resetMode();
 					}
 					
 					
@@ -395,8 +566,42 @@ public class CustomToolBar extends UploadSceneComponent{
 				}
 				
 			});
+			tabPane.getAddTabButton().addMouseListener(new MouseListener() {
+				
 			
-		}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				tabPane.getCurrentSlide().addMouseListener(slideMouseListener);
+				tabPane.getCurrentSlide().addMouseMotionListener(slideMouseMotionListener);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+			
+	}
 		
 		//OVERIDED METHODS:
 		public void setBounds(int x, int y,int width, int height) {

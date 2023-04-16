@@ -18,6 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import graphics.Circle;
+import graphics.Rectangle;
+import graphics.Shape;
 import sweng.group.one.client_app_desktop.media.GraphicsElement;
 import sweng.group.one.client_app_desktop.media.ImageElement;
 import sweng.group.one.client_app_desktop.media.TextElement;
@@ -172,6 +175,39 @@ public class CustomGraphicsBox extends UploadSceneComponent {
 		}
 		//this.repaint();
 	}
+	public void addShapeLayer(String shape, Point pos) {
+		Slide slide= currentSlide;
+		Point wrtToPointWH= new Point(pos.x/(slide.getWidth()/slide.getPointWidth()),(pos.y/(slide.getHeight()/slide.getPointHeight())));
+		Shape s=null;
+		System.out.println("Point slide measurements: ");
+		System.out.println("Point width: "+ slide.getPointWidth());
+		System.out.println("Point height: "+ slide.getPointHeight());
+		System.out.println("Pos wrt to actual: "+ (pos.x/(slide.getWidth()/slide.getPointWidth()))+ ","+(pos.y/(slide.getHeight()/slide.getPointHeight())));
+		System.out.println(" ******** ");
+		System.out.println("Actual slide measurements: ");
+		System.out.println("width: "+ slide.getWidth());
+		System.out.println("height: "+ slide.getHeight());
+		System.out.println("Pos actual: "+ pos.x+ ","+pos.y);
+		
+		
+		float duration =0;
+		int radius= Math.min(slide.getPointHeight(), slide.getPointHeight())/4;
+		switch (shape){
+		case "CIRCLE":
+			s= new Circle(wrtToPointWH, 10, duration, slide, main, null, null);
+			break;
+		case "RECTANGLE":
+			s= new Rectangle(wrtToPointWH, radius,radius, duration, slide, main, null, null);
+			break;
+		}
+		for(int i=0;i<slides.size();i++) {
+			if(slides.get(i).getSlide()==slide) {			
+				slides.get(i).addLayer(s);		
+			}
+		}
+			
+		
+	}
 	public void addImageLayer(BufferedImage image) {
 		Slide slide= currentSlide;
 		Point p=new Point(1,1);
@@ -191,9 +227,12 @@ public class CustomGraphicsBox extends UploadSceneComponent {
 	}
 	public void addTextLayer(String text, String fontName, int fontSizePt, Color colour, float duration, Point pos, int width,
 			int height, Slide slide) {
+		
+		Point wrtToPointWH= new Point(pos.x*(slide.getPointWidth()/slide.getWidth()),pos.y*(slide.getPointHeight()/slide.getHeight()));
 		for(int i=0;i<slides.size();i++) {
 			if(slides.get(i).getSlide()==slide) {
-				slides.get(i).addLayer(new TextElement(text, fontName,fontSizePt,colour,duration, pos,width,height,slide));
+				slides.get(i).addLayer(new TextElement(text, fontName,fontSizePt,colour,duration, wrtToPointWH,40,20,slide));
+				System.out.println("Adding text");
 			}
 		}
 	}

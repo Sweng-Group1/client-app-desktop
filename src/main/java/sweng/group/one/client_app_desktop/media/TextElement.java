@@ -54,7 +54,6 @@ public class TextElement extends PresElement {
 		this.component = new JLabel("<html>" + text + "</html>");
 		this.component.setForeground(Colour);
 		this.component.setFont(validFont);
-		type= "TEXT";
 	}
 
 	public JComponent getComponent() {

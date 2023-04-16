@@ -8,15 +8,13 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 import sweng.group.one.client_app_desktop.uiElements.CustomGraphicsBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomMediaBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;
+import sweng.group.one.client_app_desktop.uiElements.CustomTagBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomToolBar;
 import sweng.group.one.client_app_desktop.uiElements.UploadSceneComponent;
 
@@ -30,6 +28,7 @@ public class UploadScene extends UploadSceneComponent{
 	CustomToolBar toolBar;
 	CustomGraphicsBox graphicsBox;
 	CustomMediaBox mediaBox;
+	CustomTagBox tagBox;
 	
 	boolean elementIsBeingMoved;
 	MouseListener movingElementToListener;
@@ -51,6 +50,9 @@ public class UploadScene extends UploadSceneComponent{
 		//Create ToolBar
 		toolBar= new CustomToolBar(graphicsBox,tabPane);
 		this.add(toolBar);
+		//Create TagBox
+		tagBox= new CustomTagBox();
+		this.add(tagBox);
 		
 		elementIsBeingMoved=false;
 		mediaBox.addMouseListener(new MouseListener() {
@@ -71,8 +73,11 @@ public class UploadScene extends UploadSceneComponent{
 					elementIsBeingMoved=true;
 					tabPane.getCurrentComponent().addMouseListener(movingElementToListener);
 					tabPane.getCurrentSlide().addMouseListener(movingElementToListener);
-					tabPane.getCurrentSlide().getElements().get(tabPane.getCurrentSlide().getElements().size()-1).getComponent().addMouseListener(movingElementToListener);
-					toolBar.turnOffPaintMode();
+					if(tabPane.getCurrentSlide().getElements().size()>0) {
+						tabPane.getCurrentSlide().getElements()
+						.get(tabPane.getCurrentSlide().getElements().size()-1).getComponent().addMouseListener(movingElementToListener);
+					}
+					toolBar.resetMode();
 				}else if (elementIsBeingMoved==true) {
 					mediaBox.turnOffMediaSelected();
 					uploadScene.setCursor(Cursor.getDefaultCursor());
@@ -152,6 +157,7 @@ public class UploadScene extends UploadSceneComponent{
 		toolBar.setMainAndSecondaryColor(colorLight,colorDark);
 		graphicsBox.setMainAndSecondaryColor(colorLight,colorDark);
 		mediaBox.setMainAndSecondaryColor(colorLight,colorDark);
+		tagBox.setMainAndSecondaryColor(colorLight,colorDark);
 	}
 	public void setCurvatureRadius(int curvatureRadius) {
 		super.setCurvatureRadius(curvatureRadius);
@@ -159,6 +165,7 @@ public class UploadScene extends UploadSceneComponent{
 		toolBar.setCurvatureRadius(curvatureRadius);
 		graphicsBox.setCurvatureRadius(curvatureRadius);
 		mediaBox.setCurvatureRadius(curvatureRadius);
+		tagBox.setCurvatureRadius(curvatureRadius);
 	}
 	//GETTERS 
 	public JButton getCloseButton() {
@@ -184,6 +191,7 @@ public class UploadScene extends UploadSceneComponent{
 		int tab[]= {1,0,5,15};
 		int tool[]= {1,15,5,16};
 		int gb[]= {5,0,6,5};
+		int tag[]= {5,10,6,13};
 		
 		mediaBox.setBounds((int)(mb[0]*cellWidth),(int)(mb[1]*cellHeight),
 				(int)(mb[2]*cellWidth-(mb[0]*cellWidth)),(int)(mb[3]*cellHeight-(mb[1]*cellHeight)));
@@ -193,6 +201,8 @@ public class UploadScene extends UploadSceneComponent{
 				(int)(tool[2]*cellWidth-(tool[0]*cellWidth)),(int)(tool[3]*cellHeight-(tool[1]*cellHeight)));
 		graphicsBox.setBounds((int)(gb[0]*cellWidth),(int)(gb[1]*cellHeight),
 				(int)(gb[2]*cellWidth-(gb[0]*cellWidth)),(int)(gb[3]*cellHeight-(gb[1]*cellHeight)));
+		tagBox.setBounds((int)(tag[0]*cellWidth),(int)(tag[1]*cellHeight),
+				(int)(tag[2]*cellWidth-(tag[0]*cellWidth)),(int)(tag[3]*cellHeight-(tag[1]*cellHeight)));
 		
 		//Setting component margins:
 		int gapWidth= 10;
@@ -200,5 +210,6 @@ public class UploadScene extends UploadSceneComponent{
 		tabPane.setMarginBounds((int)gapWidth/2, (int)gapWidth,(int) gapWidth/2, (int)gapWidth/2);
 		toolBar.setMarginBounds((int)gapWidth/2, (int)gapWidth/2, (int)gapWidth/2,(int) gapWidth);
 		graphicsBox.setMarginBounds((int)gapWidth/2, (int)gapWidth,(int) gapWidth, (int)gapWidth/2);
+		tagBox.setMarginBounds((int)gapWidth/2, (int)gapWidth/2,(int) gapWidth, (int)gapWidth/2);
 	}
 }

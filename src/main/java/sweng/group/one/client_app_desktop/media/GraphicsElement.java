@@ -46,22 +46,41 @@ public class GraphicsElement extends PresElement{
 		};
 		component.setOpaque(false);
 	}
+	public void goBackInImageList(int i) {
+		if((backgroundImageList.size()-1)>i) {
+			for(int j=0;j<i;j++) {
+				System.out.println("Total images: "+ (backgroundImageList.size()+backgroundImageListFuture.size()));
+				System.out.println("Current image to draw: "+ (backgroundImageList.size()-1));	
+				BufferedImage imageToMove= backgroundImageList.get(backgroundImageList.size()-1);	
+				backgroundImageList.remove(backgroundImageList.size()-1);
+				backgroundImageListFuture.add(imageToMove);
+				component.repaint();
+				
+			}
+			
+		}
+	}
 	public void moveInImageList(int i) {
-		if(i==1) {
-			if(backgroundImageListFuture.size()>0) {
+		if(i>=1) {
+			if(backgroundImageListFuture.size()>i) {
 				BufferedImage imageToMove= backgroundImageListFuture.get(backgroundImageListFuture.size()-1);	
 				backgroundImageListFuture.remove(imageToMove);
 				backgroundImageList.add(imageToMove);
 				component.repaint();
 				
 			}
-		}else if(i==-1) {
-			if(backgroundImageList.size()>1) {
-				BufferedImage imageToMove= backgroundImageList.get(backgroundImageListFuture.size()-1);	
+		}else if(i<=(-1)) {
+			if(backgroundImageList.size()>(1+i)) {
+				for(int j=0;j<i;j++) {
+					System.out.println("Total images: "+ (backgroundImageList.size()+backgroundImageListFuture.size()));
+					System.out.println("Current image to draw: "+ (backgroundImageList.size()-1));	
+				BufferedImage imageToMove= backgroundImageList.get(backgroundImageList.size()-1);	
 				backgroundImageList.remove(imageToMove);
 				backgroundImageListFuture.add(imageToMove);
+			//	System.out.println("Total images: "+ (backgroundImageList.size()+backgroundImageListFuture.size()));
+				
 				component.repaint();
-			}
+			}}
 		}
 	}
 	public BufferedImage getCurrentImage() {
