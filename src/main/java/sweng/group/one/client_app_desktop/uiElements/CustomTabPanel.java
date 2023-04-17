@@ -765,3 +765,5 @@ class MovingObject extends JPanel{
 		c.repaint();
 	}
 }
+
+

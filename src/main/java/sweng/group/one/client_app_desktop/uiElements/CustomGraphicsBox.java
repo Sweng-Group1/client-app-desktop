@@ -41,10 +41,13 @@ public class CustomGraphicsBox extends UploadSceneComponent {
 	JButton deleteLayer;
 	
 	CustomPropertiesBox propertiesBox;
+	CustomTimeProgressBar timeBar;
 	
-	public CustomGraphicsBox(CustomPropertiesBox propertiesBox) {
+	
+	public CustomGraphicsBox(CustomPropertiesBox propertiesBox, CustomTimeProgressBar timeBar) {
 		this.setLayout(null);
 		this.propertiesBox=propertiesBox;
+		this.timeBar=timeBar;
 		
 		slides= new ArrayList<SlidePresElementsView>();
 		/*
@@ -229,7 +232,7 @@ public class CustomGraphicsBox extends UploadSceneComponent {
 			}
 		}
 	}
-	public void addTextLayer(String text, String fontName, int fontSizePt, Color colour, float duration, Point pos, int width,
+	public void addTextLayer(String text, String fontName, int fontSizePt, Color colour, long duration, Point pos, int width,
 			int height, Slide slide) {
 		
 		Point wrtToPointWH= new Point(pos.x*(slide.getPointWidth()/slide.getWidth()),pos.y*(slide.getPointHeight()/slide.getHeight()));
@@ -259,6 +262,7 @@ public class CustomGraphicsBox extends UploadSceneComponent {
 		for(int i=0;i<slides.size();i++) {
 			if(slides.get(i).getSlide()==slide) {
 				this.currentSlide= slide;
+				timeBar.setTimerFor(slide);
 				scrollPane.setViewportView(slides.get(i));
 				scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 				slides.get(i).setVisible(true);

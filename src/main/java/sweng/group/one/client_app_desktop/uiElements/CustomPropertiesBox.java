@@ -30,19 +30,18 @@ public class CustomPropertiesBox extends UploadSceneComponent {
 	
 	ElementTab elementTab;
 	PresElement element;
-	//ImageTab imageTab;
-	//GraphicTab graphicTab;
-	//TextTab textTab;
+	CustomTimeProgressBar timeBar;
+
 	
-	public CustomPropertiesBox() {
-		
+	public CustomPropertiesBox(CustomTimeProgressBar timeBar) {
+		this.timeBar=timeBar;
 		initialise();
 	}
 	private void initialise() {
 		this.setLayout(null);
 		tabbedPane= new JTabbedPane();
 		this.add(tabbedPane);
-		elementTab= new ElementTab();
+		elementTab= new ElementTab(timeBar);
 	
 	}
 	public void setGraphicsBoxListener(CustomGraphicsBox graphicsBox) {
@@ -126,7 +125,6 @@ public class CustomPropertiesBox extends UploadSceneComponent {
 			elementTab.getHeightText().setText(String.valueOf(element.getHeight()));
 			elementTab.getDurationText().setText(String.valueOf(element.getDuration()));
 			break;
-		
 		}
 	}
 	
@@ -166,7 +164,9 @@ class ElementTab extends JPanel{
 	int curvatureRadius;
 	
 	PresElement element;
-	public ElementTab() {
+	CustomTimeProgressBar timeBar;
+	public ElementTab(CustomTimeProgressBar timeBar) {
+		this.timeBar=timeBar;
 		this.setOpaque(false);
 		this.setLayout(null);
 		
@@ -245,7 +245,7 @@ class ElementTab extends JPanel{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if(element!=null) {
-					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					if(e.getKeyChar()==KeyEvent.VK_ENTER) {
 						element.setY(Integer.valueOf(yPos.getText()));
 						yPos.setText(String.valueOf(element.getPosPoint().y));
 						element.getComponent().setLocation(element.getComponent().getY(),Integer.valueOf(yPos.getText()));
@@ -296,7 +296,7 @@ class ElementTab extends JPanel{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if(element!=null) {
-					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					if(e.getKeyChar()==KeyEvent.VK_ENTER) {
 						element.setWidth(Integer.valueOf(widthPos.getText()));
 						widthPos.setText(String.valueOf(element.getWidth()));
 						element.getComponent().setSize(Integer.valueOf(widthPos.getText()),element.getComponent().getWidth());
@@ -345,7 +345,7 @@ class ElementTab extends JPanel{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if(element!=null) {
-					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					if(e.getKeyChar()==KeyEvent.VK_ENTER) {
 						element.setHeight(Integer.valueOf(heightPos.getText()));
 						heightPos.setText(String.valueOf(element.getHeight()));
 						element.getComponent().setSize(element.getComponent().getWidth(),Integer.valueOf(heightPos.getText()));
@@ -395,11 +395,14 @@ class ElementTab extends JPanel{
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if(element!=null) {
-					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-						element.setDuration(Integer.valueOf(duration.getText()));
+					if(e.getKeyChar()==KeyEvent.VK_ENTER) {
+						element.setDuration(Float.valueOf(duration.getText()));
+						System.out.println(Float.valueOf(duration.getText()));
+						System.out.println(element.getDuration());
 						duration.setText(String.valueOf(element.getDuration()));
 						element.getComponent().validate();
 						element.getComponent().repaint();
+						timeBar.updateDuration();
 					}
 				}
 				

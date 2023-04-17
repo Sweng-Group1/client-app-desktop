@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -52,6 +54,43 @@ public class App
 				(int)(screenSize.width*(1-(2*ratioGapWidth))),(int)(screenSize.height*(1-(2*ratioGapWidth))));
 		upload.validate();
 		upload.setVisible(true);
+		upload.getConfirmButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				upload.setVisible(false);
+				System.out.println("Tags: ");
+				System.out.println(upload.getTags());
+				System.out.println("Description: ");
+				System.out.println(upload.getDescription());
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	
 	

@@ -94,7 +94,7 @@ public class GraphicsElement extends PresElement{
 		component.repaint();
 	}
 	
-	public void setDuration(float duration) {
+	public void setDuration(long duration) {
 		this.duration=duration;
 	}
 }

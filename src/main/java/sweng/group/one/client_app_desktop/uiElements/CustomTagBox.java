@@ -149,6 +149,10 @@ public class CustomTagBox extends UploadSceneComponent{
 	}
 	//SETTERS AND GETTERS
 	public ArrayList<String> getTags(){
+		tags.clear();
+		for(int i=0;i<tagObjects.size();i++) {
+			tags.add(tagObjects.get(i).getTag());
+		}
 		return tags;
 	}
 	public void addTag(String tag) {
