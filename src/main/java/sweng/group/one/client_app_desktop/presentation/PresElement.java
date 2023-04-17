@@ -55,5 +55,32 @@ public abstract class PresElement{
 	public JComponent getComponent() {
 		return component;
 	}
+	public int getWidth() {
+		return width;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public float getDuration() {
+		return duration;
+	}
+	public Point getPosPoint() {
+		return pos;
+	}
+	public void setX(int x) {
+		pos.setLocation(x, pos.y);
+	}
+	public void setY(int y) {
+		pos.setLocation(pos.x, y);
+	}
+	public void setWidth(int width) {
+		this.width=width;
+	}
+	public void setHeight(int height) {
+		this.height=height;
+	}
+	public void setDuration(float duration) {
+		this.duration=duration;
+	}
 	
 }

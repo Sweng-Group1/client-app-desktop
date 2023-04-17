@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -211,7 +210,7 @@ public class CustomToolBar extends UploadSceneComponent{
 				public void mouseDragged(MouseEvent e) {
 					if(paintMode==true) {
 						if(graphicsBox.getSelectedLayer().getType()=="GRAPHIC") {
-							GraphicsElement el= (GraphicsElement) graphicsBox.getSelectedLayer();
+							GraphicsElement el= (GraphicsElement)graphicsBox.getSelectedLayer();
 							if(el.getCurrentImage().getWidth()>0) {
 								BufferedImage im= el.getCurrentImage();	
 								Graphics2D g2= (Graphics2D)im.getGraphics().create();

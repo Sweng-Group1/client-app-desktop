@@ -40,8 +40,12 @@ public class CustomGraphicsBox extends UploadSceneComponent {
 	JButton addLayer;
 	JButton deleteLayer;
 	
-	public CustomGraphicsBox() {
+	CustomPropertiesBox propertiesBox;
+	
+	public CustomGraphicsBox(CustomPropertiesBox propertiesBox) {
 		this.setLayout(null);
+		this.propertiesBox=propertiesBox;
+		
 		slides= new ArrayList<SlidePresElementsView>();
 		/*
 		 *  These panels seperate the scroll view and the buttons
@@ -239,7 +243,7 @@ public class CustomGraphicsBox extends UploadSceneComponent {
 
 	public void addNewSlide(Slide slide, int[] layoutRatio) {
 		if(slide!=null) {
-			SlidePresElementsView newPresView= new SlidePresElementsView(slide, layoutRatio);
+			SlidePresElementsView newPresView= new SlidePresElementsView(propertiesBox,slide, layoutRatio);
 			newPresView.setColours(main,secondary);
 			slides.add(newPresView);
 		}
@@ -350,14 +354,17 @@ class SlidePresElementsView extends JPanel{
 	int[] layoutRatio;
 	JPanel panel= this;
 	ViewRect selectedLayer;
-	public SlidePresElementsView(Slide slide, int[] ratio) {
+	CustomPropertiesBox propertiesBox;
+	public SlidePresElementsView(CustomPropertiesBox propertiesBox,Slide slide, int[] ratio) {
 		this.slide= slide;;
 		layoutRatio= ratio;
+		this.propertiesBox=propertiesBox;
 		viewRects= new ArrayList<ViewRect>();
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 	}
 	public void addLayer(PresElement element) {
 		slide.add(element);
+		propertiesBox.setManipulatorFor(element);
 		ViewRect viewRect= new ViewRect(slide,element);
 		for(int i=0;i<viewRects.size();i++) {
 			viewRects.get(i).setClicked(false);
@@ -390,9 +397,10 @@ class SlidePresElementsView extends JPanel{
 							if(viewRects.get(i).isClicked()==false) {
 								viewRects.get(i).setClicked(true);
 								selectedLayer= viewRects.get(i);
+								
 							}else {
 								viewRects.get(i).setClicked(false);
-								selectedLayer= null;
+								//selectedLayer= null;
 							}
 							
 						}else {
