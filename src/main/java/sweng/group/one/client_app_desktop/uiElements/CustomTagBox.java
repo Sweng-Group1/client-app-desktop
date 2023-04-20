@@ -48,8 +48,8 @@ public class CustomTagBox extends UploadSceneComponent{
 			public void paint(Graphics g) {
 				Graphics2D g2= (Graphics2D)g.create();
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				//g2.setColor(new Color(secondary.getRed(),secondary.getGreen(),secondary.getBlue(),100));
-				g2.setColor(new Color(255,255,255,100));
+				g2.setColor(new Color(secondary.getRed(),secondary.getGreen(),secondary.getBlue(),100));
+				//g2.setColor(new Color(255,255,255,100));
 				g2.fillArc(0,0, curvatureRadius, curvatureRadius, 90, 90);
 				g2.fillArc(this.getWidth()-curvatureRadius, 0, curvatureRadius, curvatureRadius, 0, 90);
 				g2.fillRect(curvatureRadius/2, 0, this.getWidth()-(curvatureRadius),curvatureRadius/2);

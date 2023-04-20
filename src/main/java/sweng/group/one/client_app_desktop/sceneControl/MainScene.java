@@ -119,10 +119,10 @@ public class MainScene extends JFrame{
 		upload= new UploadScene();
 		panel.setLayer(upload, 4);
 		panel.add(upload);
-		upload.setMainAndSecondaryColor(new Color(78,106,143), new Color(46,71,117));
+		upload.setBackgroundColours(colorLight, colorDark);
 		upload.setCurvatureRadius(curvatureRadius);
 		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
-		upload.validate();
+
 		
 		/*
 		 *  Mouse listeners:
@@ -210,8 +210,7 @@ public class MainScene extends JFrame{
 				sidebarScene.setVisible(false);
 				options.setVisible(false);	
 				upload.setVisible(true);
-				upload.repaint();
-				upload.validate();
+		
 			}
 
 			@Override
@@ -270,7 +269,6 @@ public class MainScene extends JFrame{
 		});
 		 
 		this.setVisible(true);
-		upload.setVisible(false);
 		this.validate();
 	}
 	

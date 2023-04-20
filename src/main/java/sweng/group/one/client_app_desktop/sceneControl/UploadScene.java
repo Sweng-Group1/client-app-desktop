@@ -169,6 +169,7 @@ public class UploadScene extends UploadSceneComponent{
 	
 	//SETTERS 
 	public void setBackgroundColours(Color light, Color dark) {
+		System.out.println(light +""+dark);
 		this.setMainAndSecondaryColor(dark, light);
 		tabPane.setMainAndSecondaryColor(light,dark);
 		toolBar.setMainAndSecondaryColor(light,dark);
