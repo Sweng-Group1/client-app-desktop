@@ -1,5 +1,4 @@
 package sweng.group.one.client_app_desktop.media;
-
 import java.awt.Point;
 import java.net.URL;
 
@@ -11,9 +10,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoPlayer extends PlayableMediaElement {
 	
-
 	private final EmbeddedMediaPlayerComponent mediaPlayer;
-
 	private Boolean nativeLib;
 	
 	public VideoPlayer(Point pos, 
@@ -23,7 +20,6 @@ public class VideoPlayer extends PlayableMediaElement {
 						  URL fileURL,
 						  boolean loops) {
 		
-
 		super(pos, pointWidth, pointHeight, 0, slide, fileURL, loops);
 		nativeLib = new NativeDiscovery().discover();
 		this.mediaPlayer = new EmbeddedMediaPlayerComponent();
@@ -32,12 +28,10 @@ public class VideoPlayer extends PlayableMediaElement {
 			this.component = mediaPlayer;
 			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
 			loadFile();
-			mediaPlayer.mediaPlayer().controls().setRepeat(loops);
 		}
 		else {
 			this.component = new JTextArea("VLC is required for media to be used in this application");
 		}
-
 	}
 	
 	@Override
@@ -54,21 +48,11 @@ public class VideoPlayer extends PlayableMediaElement {
 			System.out.println("Not playable");
 		}
 		
-
 	}
 	
 	@Override
 	public boolean getPlaying() {
-
 		return mediaPlayer.mediaPlayer().status().isPlaying();
-	}
-	
-	@Override
-	public void displayElement() {
-		mediaPlayer.mediaPlayer().controls().stop();
-		if(component.isDisplayable()) {
-			mediaPlayer.mediaPlayer().controls().play();
-		}
 	}
 	
 	@Override
@@ -80,5 +64,4 @@ public class VideoPlayer extends PlayableMediaElement {
 	public boolean nativeLibsInstalled() {
 		return nativeLib;
 	}
-
 }

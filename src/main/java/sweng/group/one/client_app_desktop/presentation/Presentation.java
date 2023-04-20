@@ -41,7 +41,6 @@ import org.xml.sax.SAXException;
 @SuppressWarnings("serial")
 public class Presentation extends JPanel {
 	
-
 	private static final String XML_SCHEMA_PATH = "assets/xml/standard.xsd";
 	
 	private ArrayList<Slide> slides;
@@ -303,7 +302,7 @@ public class Presentation extends JPanel {
 		newSlide.setVisible(false);
 	}
 	
-	public void showCurrentSlide() {
+	private void showCurrentSlide() {
 		if (slides.isEmpty()) {
 			return;
 		}
@@ -315,8 +314,6 @@ public class Presentation extends JPanel {
 		desiredSlide.displaySlide();
 		resizeCurrentSlide();
 		desiredSlide.validate();
-		this.revalidate();
-		this.repaint();
 	}
 	
 	public void nextSlide() {
@@ -324,7 +321,7 @@ public class Presentation extends JPanel {
 			return;
 		}
 		
-		int maxSlide = slides.size();
+		int maxSlide = slides.size()-1;
 		currentSlideNo++;
 		// Using a modulo here causes a div/0 if slides.size = 1
 		// We're just gonna loop around anyway, so just use a ternary

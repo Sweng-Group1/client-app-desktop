@@ -1,6 +1,7 @@
 package sweng.group.one.client_app_desktop.presentation;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
@@ -11,6 +12,8 @@ public abstract class PresElement{
 	protected float duration;
 	protected Slide slide;
 	protected JComponent component;
+	protected String type;
+
 	
 	protected PresElement(Point pos, 
 						int width, 
@@ -23,6 +26,7 @@ public abstract class PresElement{
 		this.height = height;
 		this.duration = duration;
 		this.slide = slide;
+		
 	}
 	
 	/**
@@ -45,4 +49,38 @@ public abstract class PresElement{
 			);
 		}
 	}
+	public String getType() {
+		return type;
+	}
+	public JComponent getComponent() {
+		return component;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public float getDuration() {
+		return duration;
+	}
+	public Point getPosPoint() {
+		return pos;
+	}
+	public void setX(int x) {
+		pos.setLocation(x, pos.y);
+	}
+	public void setY(int y) {
+		pos.setLocation(pos.x, y);
+	}
+	public void setWidth(int width) {
+		this.width=width;
+	}
+	public void setHeight(int height) {
+		this.height=height;
+	}
+	public void setDuration(float duration) {
+		this.duration=duration;
+	}
+	
 }
