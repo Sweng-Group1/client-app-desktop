@@ -1,6 +1,5 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
@@ -12,17 +11,18 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
+import sweng.group.one.client_app_desktop.uiElements.ComponentInterface;
 import sweng.group.one.client_app_desktop.uiElements.CustomDescriptionBox;
-import sweng.group.one.client_app_desktop.uiElements.CustomGraphicsBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomMediaBox;
-import sweng.group.one.client_app_desktop.uiElements.CustomPropertiesBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;
 import sweng.group.one.client_app_desktop.uiElements.CustomTagBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomTimeProgressBar;
 import sweng.group.one.client_app_desktop.uiElements.CustomToolBar;
+import sweng.group.one.client_app_desktop.uiElements.ElementPropertiesPanel;
+import sweng.group.one.client_app_desktop.uiElements.ElementsPanel;
 import sweng.group.one.client_app_desktop.uiElements.UploadSceneComponent;
 
-public class UploadScene extends UploadSceneComponent{
+public class UploadScene extends UploadSceneComponent implements ComponentInterface{
 	
 	UploadScene uploadScene= this;
 	JButton confirmButton;
@@ -30,13 +30,14 @@ public class UploadScene extends UploadSceneComponent{
 	
 	CustomTabPanel tabPane;
 	CustomToolBar toolBar;
-	CustomGraphicsBox graphicsBox;
+	ElementsPanel graphicsBox;
 	CustomMediaBox mediaBox;
 	CustomTagBox tagBox;
-	CustomPropertiesBox propertiesBox;
+	ElementPropertiesPanel propertiesBox;
 	CustomDescriptionBox descriptionBox;
 	CustomTimeProgressBar timeBar;
 	
+	ArrayList<UploadSceneComponent>components;
 	boolean elementIsBeingMoved;
 	MouseListener movingElementToListener;
 	
@@ -44,34 +45,48 @@ public class UploadScene extends UploadSceneComponent{
 	public UploadScene() {
 		super();
 		this.setLayout(null);
+		this.main= colorDark;
+		this.secondary= colorLight;
+	
 		
-		//Create time bar
-		timeBar= new CustomTimeProgressBar();
-		this.add(timeBar);
-		//Create properties box
-		propertiesBox= new CustomPropertiesBox(timeBar);
-		this.add(propertiesBox);
-		//Create graphicsBox
-		graphicsBox= new CustomGraphicsBox(propertiesBox,timeBar);
-		this.add(graphicsBox);
-		propertiesBox.setGraphicsBoxListener(graphicsBox);
-		//Create mediaBox
-		mediaBox= new CustomMediaBox(graphicsBox);
-		this.add(mediaBox);
-		//Create TabPane
-		tabPane= new CustomTabPanel(graphicsBox);
-		this.add(tabPane);
-		//Create ToolBar
-		toolBar= new CustomToolBar(graphicsBox,tabPane);
-		this.add(toolBar);
-		//Create TagBox
-		tagBox= new CustomTagBox();
-		this.add(tagBox);
-		//Create descriptionBox
+		/*
+		 *  Initialising components 
+		 */
+		components= new ArrayList<UploadSceneComponent>();
+
+		// Description box
 		descriptionBox= new CustomDescriptionBox();
-		this.add(descriptionBox);
+		components.add(descriptionBox);
+		// Tags box
+		tagBox = new CustomTagBox();
+		components.add(tagBox);
+		// PropertiesBox
+		propertiesBox= new ElementPropertiesPanel();
+		components.add(propertiesBox);
+		// Graphics Box
+		graphicsBox= new ElementsPanel(propertiesBox);
+		components.add(graphicsBox);
+		// Progress time bar
+		timeBar= new CustomTimeProgressBar();
+		components.add(timeBar);
+		// Tab pane
+		tabPane= new CustomTabPanel(graphicsBox,timeBar);
+		components.add(tabPane);
+		// Media box
+		mediaBox= graphicsBox.getMediaBox();
+		components.add(mediaBox);
+		// Tool bar
+		toolBar= graphicsBox.getToolBar();
+		components.add(toolBar);
 		
+		for(UploadSceneComponent c:components) {
+			this.add(c);
+		}
 		
+	
+		/* 
+		 *  Initialising moving media
+		 */
 		elementIsBeingMoved=false;
 		mediaBox.addMouseListener(new MouseListener() {
 
@@ -94,7 +109,7 @@ public class UploadScene extends UploadSceneComponent{
 					if(tabPane.getCurrentSlide().getElements().size()>0) {
 						tabPane.getCurrentSlide().getElements().get(tabPane.getCurrentSlide().getElements().size()-1).getComponent().addMouseListener(movingElementToListener);
 					}
-					toolBar.resetMode();
+					//toolBar.resetMode();
 				}else if (elementIsBeingMoved==true) {
 					mediaBox.turnOffMediaSelected();
 					uploadScene.setCursor(Cursor.getDefaultCursor());
@@ -131,11 +146,15 @@ public class UploadScene extends UploadSceneComponent{
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				/*
+				 *  Call a method in tabPane to get coordinates of mouse realease
+				 *  Then call addImageElement in graphicsBox 
+				 */
 				System.out.println("TRYING TO PLACE");
 				if(elementIsBeingMoved==true) {
 					if(mediaBox.getSelectedMediaType()=="IMAGE") {
 						BufferedImage image= mediaBox.getSelectedMediaImage();
-						graphicsBox.addImageLayer(image);
+						//graphicsBox.addImageElement(e.getPoint(),image.getWidth(),image.getHeight(),);
 						
 					}
 					mediaBox.turnOffMediaSelected();
@@ -167,29 +186,9 @@ public class UploadScene extends UploadSceneComponent{
 		};
 	}
 	
-	//SETTERS 
-	public void setBackgroundColours(Color colorLight, Color colorDark) {
-		this.setMainAndSecondaryColor(colorDark, colorLight);
-		tabPane.setMainAndSecondaryColor(colorLight,colorDark);
-		toolBar.setMainAndSecondaryColor(colorLight,colorDark);
-		graphicsBox.setMainAndSecondaryColor(colorLight,colorDark);
-		mediaBox.setMainAndSecondaryColor(colorLight,colorDark);
-		tagBox.setMainAndSecondaryColor(colorLight,colorDark);
-		propertiesBox.setMainAndSecondaryColor(colorLight,colorDark);
-		descriptionBox.setMainAndSecondaryColor(colorLight,colorDark);
-		timeBar.setMainAndSecondaryColor(colorLight,colorDark);
-	}
-	public void setCurvatureRadius(int curvatureRadius) {
-		super.setCurvatureRadius(curvatureRadius);
-		tabPane.setCurvatureRadius(curvatureRadius);
-		toolBar.setCurvatureRadius(curvatureRadius);
-		graphicsBox.setCurvatureRadius(curvatureRadius);
-		mediaBox.setCurvatureRadius(curvatureRadius);
-		tagBox.setCurvatureRadius(curvatureRadius);
-		propertiesBox.setCurvatureRadius(curvatureRadius);
-		descriptionBox.setCurvatureRadius(curvatureRadius);
-		timeBar.setCurvatureRadius(curvatureRadius);
-	}
+
+
+	
 	//GETTERS 
 	public JButton getCloseButton() {
 		return toolBar.getExitButton();

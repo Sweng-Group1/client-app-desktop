@@ -8,30 +8,22 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-public class UploadSceneComponent extends JPanel{
-	 Color main;
-	 Color secondary;
-	 int curvatureRadius;
+public class UploadSceneComponent extends JPanel implements ComponentInterface{
+	 protected Color main;
+	 protected Color secondary;
+	 
 	 
 	 Rectangle r;
 	 
 	 public UploadSceneComponent() {
 		 this.setOpaque(false);
 		 r= new Rectangle();
+		
 	 }
-	 
 	
-	 //SETTERS:
-	public void setMainAndSecondaryColor(Color main, Color secondary) {
-		this.main= main;
-		this.secondary= secondary;
-	}
-	
-	public void setCurvatureRadius(int curvatureRadius) {
-		this.curvatureRadius=curvatureRadius;
-	}
 	public void setMarginBounds(int left, int top, int right,int bottom) {
 		r.setBounds(left, top, right,bottom);
+	
 	}
 	
 	//OVERIDED METHODS:

@@ -22,7 +22,12 @@ import javax.swing.event.ChangeListener;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
-public class CustomTimeProgressBar extends UploadSceneComponent{
+/**
+ * @author sophiemaw
+ * This class 'plays' the slide by displaying the presElements contained in it
+ *
+ */
+public class CustomTimeProgressBar extends UploadSceneComponent implements ComponentInterface{
 	CustomProgressBar bar;
 	Slide currentPlayingSlide;
 
@@ -41,7 +46,8 @@ public class CustomTimeProgressBar extends UploadSceneComponent{
 	public CustomTimeProgressBar() {
 		this.setLayout(null);
 		bar = new CustomProgressBar();
-		
+		this.main= colorLight;
+		this.secondary= colorDark;
 
 		
 		this.add(bar);
@@ -174,9 +180,7 @@ public class CustomTimeProgressBar extends UploadSceneComponent{
 	}
 	
 	//OVERIDED:
-	public void setMainaAndSecondaryColours(Color main, Color secondary) {
-		super.setMainAndSecondaryColor(main, secondary);
-	}
+
 	public void setMarginBounds(int r, int t, int l, int b){
 		super.setMarginBounds(r, t, l, b);
 		int height= this.getHeight()- curvatureRadius- t - b;

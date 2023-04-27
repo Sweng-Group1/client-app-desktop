@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -24,6 +26,8 @@ public class App
 	private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private JFrame frame;
 	private JPanel background;
+	private UploadScene upload;
+	double ratioGapWidth;
 	public App() throws IOException {
 		setUpBackground();
 		addUploadScene();
@@ -40,16 +44,44 @@ public class App
 		background.setBackground(Color.black);
 		background.setLayout(null);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				background.setSize(frame.getSize());
+				upload.setBounds((int)(frame.getWidth()*ratioGapWidth),(int)(frame.getHeight()*ratioGapWidth),
+						(int)(frame.getWidth()*(1-(2*ratioGapWidth))),(int)(frame.getHeight()*(1-(2*ratioGapWidth))));
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	private void addUploadScene() throws IOException {
 		Color colorLight= new Color(78,106,143);
 		Color colorDark= new Color(46,71,117);
-		UploadScene upload = new UploadScene();
+		upload = new UploadScene();
 		upload.setVisible(false);
 		background.add(upload);
-		upload.setBackgroundColours(colorLight, colorDark);
-		double ratioGapWidth= 0.1;
-		upload.setCurvatureRadius(10);
+	
+		ratioGapWidth= 0.1;
+
 		upload.setBounds((int)(screenSize.width*ratioGapWidth),(int)(screenSize.height*ratioGapWidth),
 				(int)(screenSize.width*(1-(2*ratioGapWidth))),(int)(screenSize.height*(1-(2*ratioGapWidth))));
 		upload.validate();

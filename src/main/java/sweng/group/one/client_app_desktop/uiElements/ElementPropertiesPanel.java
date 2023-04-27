@@ -1,83 +1,39 @@
 package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JColorChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 
-
-
-public class CustomPropertiesBox extends UploadSceneComponent {
-	CustomGraphicsBox graphicsBox;
-	
+/**
+ * @author sophiemaw
+ *Panel that displays and allows user to manipulate, properties 
+ *of a presElement that is selected within the 
+ *ElementsPanel
+ */
+public class ElementPropertiesPanel extends UploadSceneComponent {
+	private ElementTab elementTab;
+	private PresElement element;
 	JTabbedPane tabbedPane;
-	
-	ElementTab elementTab;
-	PresElement element;
-	CustomTimeProgressBar timeBar;
-
-	
-	public CustomPropertiesBox(CustomTimeProgressBar timeBar) {
-		this.timeBar=timeBar;
+	public ElementPropertiesPanel() {
 		initialise();
 	}
 	private void initialise() {
 		this.setLayout(null);
 		tabbedPane= new JTabbedPane();
 		this.add(tabbedPane);
-		elementTab= new ElementTab(timeBar);
-	
-	}
-	public void setGraphicsBoxListener(CustomGraphicsBox graphicsBox) {
-		graphicsBox.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				setManipulatorFor(graphicsBox.getSelectedLayer());
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		this.main= colorLight;
+		this.secondary= colorDark;
 	}
 	public void setManipulatorFor(PresElement element) {
 		this.element=element;
@@ -127,22 +83,25 @@ public class CustomPropertiesBox extends UploadSceneComponent {
 			break;
 		}
 	}
-	
-	//OVERIDED METHODS
-	public void setMarginBounds(int r,int t,int l,int b) {
-		super.setMarginBounds(r, t, l, b);
-		tabbedPane.setBounds(r,t, this.getWidth()-r-l, this.getHeight()-(curvatureRadius/2));
-		elementTab.setCurvatureRadius(curvatureRadius);
-	}
-	public void paint(Graphics g) {
-		Graphics2D g2= (Graphics2D)g.create();
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(main);
-		g2.fillRect(r.x, r.y, this.getWidth()-r.x-r.width, (curvatureRadius*2)-r.y);
-		g2.dispose();
-		super.paint(g);
+	public void setMainAndSecondaryColor(Color main, Color secondary) {
+		this.main= secondary;
+		this.secondary=main;
+		
 	}
 }
+
+
+
+
+
+
+
+
+	
+/**
+ * @author sophiemaw
+ * 
+ */
 class ElementTab extends JPanel{
 	Color transparent= new Color(255,255,255,0);
 	JPanel xPosPane;
@@ -164,9 +123,9 @@ class ElementTab extends JPanel{
 	int curvatureRadius;
 	
 	PresElement element;
-	CustomTimeProgressBar timeBar;
-	public ElementTab(CustomTimeProgressBar timeBar) {
-		this.timeBar=timeBar;
+
+	public ElementTab() {
+
 		this.setOpaque(false);
 		this.setLayout(null);
 		
@@ -402,7 +361,7 @@ class ElementTab extends JPanel{
 						duration.setText(String.valueOf(element.getDuration()));
 						element.getComponent().validate();
 						element.getComponent().repaint();
-						timeBar.updateDuration();
+						
 					}
 				}
 				
@@ -471,6 +430,10 @@ class ElementTab extends JPanel{
 	}
 	
 }
+/**
+ * @author sophiemaw
+ *
+ */
 class ElementColorManipulator extends JPanel{
 	JColorChooser colorChooser;
 	public ElementColorManipulator() {
@@ -479,6 +442,7 @@ class ElementColorManipulator extends JPanel{
 		this.add(colorChooser);
 	}
 }
+
 
 
 

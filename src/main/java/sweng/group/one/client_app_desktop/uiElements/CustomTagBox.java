@@ -25,9 +25,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class CustomTagBox extends UploadSceneComponent{
+/**
+ * @author Created by: sophiemaw
+ * This class creates a panel with a textField for user to add tags to 
+ * presentation. Tags apear in bubbles under text field. There are getters 
+ * to get a list of the tags. 
+ *
+ **/
+public class CustomTagBox extends UploadSceneComponent implements ComponentInterface{
 	JPanel upperPanel;
 	JPanel lowerPanel;
+	
 	
 	JTextField tagInput;
 	JScrollPane tagCollection;
@@ -39,7 +47,8 @@ public class CustomTagBox extends UploadSceneComponent{
 	}
 	private void initialise() {
 		this.setLayout(null);
-		
+		main= colorLight;
+		secondary= colorDark;
 		tags= new ArrayList<String>();
 		tagObjects= new ArrayList<Tag>();
 		
@@ -143,9 +152,9 @@ public class CustomTagBox extends UploadSceneComponent{
 	//OVERIDED METHODS
 	public void setMarginBounds(int r, int t, int l, int b) {
 		super.setMarginBounds(r,t,l,b);
-		upperPanel.setBounds(r, t, this.getWidth()-l-r, curvatureRadius*3);
-		tagInput.setBounds(curvatureRadius/2,curvatureRadius/2,upperPanel.getWidth()-(curvatureRadius), curvatureRadius+(curvatureRadius/2));
-		lowerPanel.setBounds(r, t+(curvatureRadius*3), this.getWidth()-l-r, this.getHeight()-(t+(curvatureRadius*3)));
+		upperPanel.setBounds(r, t, this.getWidth()-l-r, curvatureRadius);
+		tagInput.setBounds(curvatureRadius/2,curvatureRadius/4,upperPanel.getWidth()-(curvatureRadius),(curvatureRadius/2));
+		lowerPanel.setBounds(r, t+(curvatureRadius), this.getWidth()-l-r, this.getHeight()-(t+(curvatureRadius)));
 	}
 	//SETTERS AND GETTERS
 	public ArrayList<String> getTags(){
@@ -160,6 +169,11 @@ public class CustomTagBox extends UploadSceneComponent{
 	}
 }
 
+/**
+ * @author sophiemaw
+ * Tag components, displays user input in a bubble with a hashtag
+ *
+ */
 class Tag extends JPanel{
 	String tagName;
 	CircleButton deleteTagButton;

@@ -11,8 +11,13 @@ import java.awt.event.MouseListener;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class CustomDescriptionBox extends UploadSceneComponent{
-	Color transparent= new Color(255,255,255,0);
+/**
+ * @author sophiemaw
+ * Panel that contains a textField for user to write a description that is added to the
+ * presentation
+ *
+ */
+public class CustomDescriptionBox extends UploadSceneComponent implements ComponentInterface{
 	JTextArea descriptionTextField;
 	String placeHolder;
 	String description;
@@ -23,7 +28,10 @@ public class CustomDescriptionBox extends UploadSceneComponent{
 	private void initialise() {
 		descriptionTextField= new JTextArea();
 		this.setLayout(null);
+		this.main= colorLight;
+		this.secondary= colorDark;
 		this.add(descriptionTextField);
+		
 		descriptionTextField.setBackground(transparent);
 		descriptionTextField.setForeground(Color.white);
 		descriptionTextField.setCaretColor(Color.white);
@@ -85,7 +93,7 @@ public class CustomDescriptionBox extends UploadSceneComponent{
 	}
 	public void setMarginBounds(int r,int t, int l, int b) {
 		super.setMarginBounds(r, t, l, b);
-		descriptionTextField.setBounds(r+curvatureRadius,t+curvatureRadius,this.getWidth()-(2*curvatureRadius)-l-r,this.getHeight()-t-b-(2*curvatureRadius));
+		descriptionTextField.setBounds(r+curvatureRadius/2,t+curvatureRadius/4,this.getWidth()-(curvatureRadius)-l-r,this.getHeight()-t-b-(curvatureRadius/2));
 		descriptionTextField.setLineWrap(true);
 	}
 	public String getDescription() {

@@ -31,36 +31,61 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
 
 
 
+/**
+ * @author sophiemaw
+ *	This class stores all information about the slides within the presentation
+ *	being made. It tells all other components within the upload scene which 
+ *	slide is visible at any time, so as to know which slide to add presElements to
+ */
 public class CustomTabPanel extends UploadSceneComponent{
 	int[] landscape= {191,100};
 	int[] portrait= {400,500};
 	int[] sqaure= {500,500};
-
+ 
 	CustomTabbedPane tabPane;
-	Presentation presentation;
 	CircleButton addTabButton;
 	CircleButton removeTabButton;
 	
 	boolean paintMode;
 	boolean eraserMode;
 	
-	CustomGraphicsBox graphicsBox;
+	ElementsPanel graphicsBox;
+	CustomTimeProgressBar timeBar;
 	MovingObject movingObject;
+	
+	
 		
-	public CustomTabPanel(CustomGraphicsBox graphicsBox) {
+	/**
+	 * @param graphicsBox      ElementsPanel
+	 * @param timeBar			CustomTimeProgressBar
+	 * ElementsPanel is a panel with a list of all components within a slide
+	 * this class tells the elementsPanel what slide is visible so it knows what components 
+	 * to display 
+	 * CustomTimeProgressBar is a panel containing a progress bar which, when pressed, will 
+	 * 'play' the slide, displaying the presElements, while progress bar is incrementing. 
+	 * This class tells the CustomProgressBar what slide is currently visible, so it can 
+	 * play that slide and set its time to the maximum time of a presElement on that slide
+	 */
+	public CustomTabPanel(ElementsPanel graphicsBox, CustomTimeProgressBar timeBar) {
 		this.graphicsBox= graphicsBox;
+		this.timeBar=timeBar;
 		initialise();
 		
 	}
+	/*
+	 *  Initialise components
+	 */
 	
 	private void initialise() {
-		presentation= new Presentation();
+
 		this.setLayout(null);
 		paintMode=false;
 		eraserMode=false;
 		
 		tabPane= new CustomTabbedPane();
 		this.add(tabPane);
+		this.main= transparent;
+		this.secondary= colorDark;
 		
 		//BUTTONS:
 		addTabButton= new CircleButton();
@@ -163,7 +188,7 @@ public class CustomTabPanel extends UploadSceneComponent{
 			@Override
 			public void mousePressed(MouseEvent e) {
 			
-				graphicsBox.setCurrentSlide(tabPane.getSlides().get(tabPane.getSelectedIndex()));
+				//graphicsBox.setCurrentSlide(tabPane.getSlides().get(tabPane.getSelectedIndex()));
 				
 			}
 
@@ -192,6 +217,11 @@ public class CustomTabPanel extends UploadSceneComponent{
 		
 		initialStartUp();
 	}
+	
+	/**
+	 * @param p  presElement that movingObject is added to
+	 *
+	 */
 	public void setMovingElement(PresElement p) {
 		movingObject.attatchToPresElement(p);
 		tabPane.getSlides().get(tabPane.getSelectedIndex()).add(movingObject);
@@ -199,19 +229,31 @@ public class CustomTabPanel extends UploadSceneComponent{
 		tabPane.getSlides().get(tabPane.getSelectedIndex()).setComponentZOrder(movingObject, 0);
 		movingObject.repaint();
 	}
+	
+	/**
+	 *  Removes moving object to whichever pres element it is added to
+	 */
 	public void exitMovingElement() {
 		movingObject.setVisible(false);
 		tabPane.getSlides().get(tabPane.getSelectedIndex()).remove(movingObject);
 	}
 
 	
+	/**
+	 * @param int[]     slide layout orientation list of point dimensions
+	 * @return Slide   
+	 * Creates a new slide
+	 * @author sophiemaw
+	 * When slide error has been fixed, then i can implement the above params
+	 */
 	public Slide createNewSlide() {
 		Slide slide=null;
 		if((tabPane.getUI().getTabBounds(tabPane, tabPane.getTabCount()-1).x
 				+(2*tabPane.getUI().getTabBounds(tabPane, tabPane.getTabCount()-1).width))<tabPane.getWidth()) {
 	
 			slide =tabPane.addNewSlide();
-			graphicsBox.addNewSlide(slide, portrait);
+			
+			
 			
 			setSizeOfSlide(slide);
 			setAddTabButtonLocation();
@@ -220,7 +262,8 @@ public class CustomTabPanel extends UploadSceneComponent{
 				addTabButton.setVisible(false);
 			}
 			tabPane.setSelectedIndex(tabPane.getSlides().size()-1);
-			graphicsBox.setCurrentSlide(slide);
+			graphicsBox.addPanelForSlide(slide);
+			graphicsBox.setElementPanelFor(slide, tabPane.getSlides().size()-1);
 		}else {
 			addTabButton.setVisible(false);
 		}
@@ -228,7 +271,11 @@ public class CustomTabPanel extends UploadSceneComponent{
 	}
 	
 
-	//BUTTONS:
+	
+	/**
+	 * @author sophiemaw
+	 * This method changes the location of the addTab button to right side of last tab
+	 */
 	private void setAddTabButtonLocation() {
 		if(tabPane.getTabCount()>0) {
 		Rectangle lastTab= tabPane.getUI().getTabBounds(tabPane, tabPane.getTabCount()-1);
@@ -236,39 +283,63 @@ public class CustomTabPanel extends UploadSceneComponent{
 		addTabButton.setLocation(lastTab.x+ lastTab.width+ r.x, lastTab.y+ r.x);
 		}
 	}
+	
+	/**
+	 * @author sophiemaw
+	 * Method to change removeTabButton size
+	 */
 	private void setRemoveTabButtonSize() {
 		if(tabPane.getTabCount()>0) {
 		Rectangle tabBounds= tabPane.getUI().getTabBounds(tabPane, 0);
 		removeTabButton.setSize(tabBounds.height/2);
 		}
 	}
-	private void addNewSlideTo() {
-		
-	}
+	
 
+	/**
+	 * @author sophiemaw
+	 * This method ensures on start up that a tab and slide object is pre loaded  
+	 */
 	private void initialStartUp() {
-		presentation=new Presentation();
-		graphicsBox.addNewSlide(tabPane.addNewSlide(),landscape);
+		Slide slide = tabPane.addNewSlide();
+		setSizeOfSlide(slide);
+		slide.paint(slide.getGraphics());
+		graphicsBox.addPanelForSlide(slide);
 		tabPane.setSelectedIndex(tabPane.getSlides().size()-1);
-		graphicsBox.setCurrentSlide(tabPane.getSlides().get(tabPane.getSlides().size()-1));
+		graphicsBox.setElementPanelFor(getCurrentSlide(), tabPane.getSlides().size()-1);
 		setAddTabButtonLocation();
 		this.repaint();
 	}
+	
+	/**
+	 * @param slide
+	 * Method to change bounds of slide to fill tabPane viewPort
+	 * NOTE: slides are not loading, error may be occuring within this method
+	 */
 	private void setSizeOfSlide(Slide slide) {
+		slide.setPointWidth(landscape[0]);
+		slide.setPointHeight(landscape[1]);
 		
-		
-		slide.setPointWidth(graphicsBox.getSlideLayout(slide)[0]);
-		slide.setPointHeight(graphicsBox.getSlideLayout(slide)[1]);
-		
-		slide.setSize(slide.preferredLayoutSize(tabPane));
-		
+		slide.setSize(slide.preferredLayoutSize(slide.getParent()));
+		slide.setVisible(true);
 		int w= tabPane.getWidth();
 		int h= tabPane.getHeight();
-		slide.setLocation((w-slide.getWidth())/2, (h-slide.getHeight())/2);
+		slide.setLocation(0, 0);
+		slide.paint(slide.getGraphics());
+		
+		
+		slide.setBounds(0, 0, w, h);
+		System.out.println(slide.getWidth());
+		System.out.println(slide.getHeight());
+		slide.repaint();
 	}
 	
 
-	//OVERIDED METHODS:
+	
+	/**
+	 *@author sophiemaw
+	 * @Overided UploadSceneComponent.setMarginMethods() 
+	 */
 	public void setMarginBounds(int left, int top, int right ,int bottom) {
 		super.setMarginBounds(left, top, right, bottom);
 		tabPane.setBounds(r.x,r.y,this.getWidth()-(r.x+r.width),this.getHeight()-(r.y+r.height));
@@ -285,46 +356,48 @@ public class CustomTabPanel extends UploadSceneComponent{
 		}
 		
 	}
-	public void setMainAndSecondaryColor(Color mainC, Color secondaryC) {
-		super.setMainAndSecondaryColor(new Color(255,255,255,0),secondaryC);
-		tabPane.setMainAndBackgroundColor(mainC,secondaryC);
-		movingObject.setBackground(secondaryC);
-		
-	}
-	public Presentation getPresentation() {
-		return presentation;
-	}
-	public void removeLastGraphicsOnCurrentSlide() {
-		//tabPane.removeLastGraphicOnCurrentLayer();
-		//tabPane.slides.get(tabPane.getSelectedIndex()).removeLastGraphicOnCurrentLayer();
-		
-	}
-	public void replaceLastGraphicsOnCurrentSlide() {
-		//tabPane.slides.get(tabPane.getSelectedIndex()).replaceLastGraphicsOnCurrentLayer();	
-	}
 	
-	//GETTERS AND SETTERS:
+	
+	
+	/*
+	 *  Setters and getters:
+	 */
 	public JButton getAddTabButton() {
 		return addTabButton;
 	}
 	public JButton getRemoveTabButton() {
 		return removeTabButton;
 	}	
+	
+	/**
+	 * @return current visible slide in tabPane 
+	 * Note: Once everything is refactored, this method shouldn't be needed
+	 * 		 as all components needing to know this are either created or passed into this 
+	 * 		 class when it's instantiated
+	 */
 	public Slide getCurrentSlide() {
 		return tabPane.getSlides().get(tabPane.getSelectedIndex());
 	}
+	
+	/**
+	 * @return
+	 * Note: Again, will not be necessary when refactored.
+	 */
 	public Component getCurrentComponent() {
 		return tabPane.getSelectedComponent();
 	}
-	/*
-	public void paint(Graphics g) {
-		tabPane.repaint();
-		
-	}*/
+	
+	
 	
 
 }
-class CustomTabbedPane extends JTabbedPane{
+/**
+ * @author Class created by: sophiemaw
+ * Notes: 
+ * 	Class contains list of slides, provides information on where location of deleteTabButon 
+ * 	should be and paints custom graphics by installing a customTabbedPaneUI 
+ */
+class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 	Color mainColor;
 	Color secondaryColor;
 	
@@ -341,11 +414,13 @@ class CustomTabbedPane extends JTabbedPane{
 	
 	
 	CustomTabbedPane(){
+		mainColor= colorLight;
+		secondaryColor= transparent;
 		ui= new CustomTabUI();
 		this.setUI(ui);
 		this.setBorder(null);
 		//this.setOpaque(false);
-		//slides= new ArrayList<Slide>();
+
 		slides= new ArrayList<Slide>();
 		editingBackgroundLabels= new ArrayList<JLabel>();
 		removeButtonIndex=0;
@@ -394,31 +469,73 @@ class CustomTabbedPane extends JTabbedPane{
 	
 	}
 	
+	/**
+	 * @author sophiemaw
+	 * @return Slide   			new slide
+	 * Notes: 
+	 * 	There is an error as slide is not appearing in tabPane viewPort 
+	 * 
+	 * This method: 
+	 * 1. Creates a container JPanel,'backPanel', which is passed into the tabbedPane's 'addTab()' method
+	 * 		adding it to the tabbedPane
+	 * 2. Creates a JLabel for the editing background to be added to
+	 * 3. Creates a NEW slide (values are random at the moment (100,200), but will be using the above 
+	 * 		layout orientation int[] point params to instatiate it with correct point size
+	 * 4. Adds both components to the backPanel and sets Z order so slide is on top: label(1) 
+	 * 		slide(0)
+	 */
 	protected Slide addNewSlide() {
-			Slide p= new Slide(this.getWidth(),this.getHeight());
-			slides.add(p);
-			JPanel pane= new JPanel();
+			JPanel backPanel= new JPanel();
+			this.addTab(" Slide "+slides.size()+" ", backPanel);
+			
 			JLabel label= new JLabel();
 			editingBackgroundLabels.add(label);
-			label.setIcon(editingIcon);
-			
+			label.setIcon(editingIcon);		
 			label.setLocation(0, 0);
 			label.setSize(this.getWidth(),this.getHeight());
-			pane.add(label);
-			pane.setBackground(mainColor);
-			pane.setLayout(null);
-			pane.add(p);
-			this.addTab(" Slide "+slides.size()+" ", pane);
-			pane.setComponentZOrder(p, 0);
-			pane.setComponentZOrder(label, 1);
+			backPanel.add(label);
+			backPanel.setBackground(mainColor);
+			backPanel.setLayout(null);
 			
-			return p;
+			Slide slide= new Slide(100,200);
+			slides.add(slide);
+			backPanel.add(slide);
+
+			backPanel.setComponentZOrder(slide, 0);
+			backPanel.setComponentZOrder(label, 1);
+			/* 
+			 *  I dont think the following methods are necessary but trying everything 
+			 *  to debug
+			 */
+			slide.setVisible(true);
+			slide.setOpaque(true);
+			slide.displaySlide();
+			return slide;
 	}
+	
+	/**
+	 * @author sophiemaw
+	 * When a tab is deleted, this method changes tab titles to be sequencial 
+	 * example. 4 tabs
+	 * Slide 1, Slide 2, Slide 4, Slide 5 --> Slide 1, Slide 2, Slide 3, Slide 4
+	 */
 	private void resetTabTitles(){
 		for(int i=0;i<getTabCount();i++) {
 			this.setTitleAt(i, " Slide "+(i+1)+" ");
 		}
 	}
+	
+	/**
+	 * @param removeTabButton 	  button that is created in CustomTabPanel class
+	 * 
+	 * Adds a listener to the removeTabButton, so when clicked, the tab that matches 
+	 * the removeTabButton index is deleted, and tab titles are reset 
+	 * Adds a mouse motion listener to this, when a tab contains the mouse position
+	 * then the removeTabButton's index is set to that tab, and button becomes visible
+	 * - when mouse position isnt within the bounds of a tab, index is set to 0 and 
+	 * button's visibility is set to false
+	 * 
+	 */
 	protected void addRemoveTabButton(CircleButton removeTabButton) {
 		removeTabButton.addMouseListener(new MouseListener() {
 
@@ -498,13 +615,19 @@ class CustomTabbedPane extends JTabbedPane{
 				}
 		});
 	}
-	public void setMainAndBackgroundColor(Color mainColor, Color secondaryColor) {
-		this.mainColor= mainColor;
-		this.secondaryColor= secondaryColor;
-		this.repaint();
-	}
+	
 	
 
+	/**
+	 *@author sophiemaw
+	 *Method overides this.paint()
+	 *Note: slide is not being drawn, this method could be another reason for the error
+	 *This method cycles through the tabs
+	 *1. If tab is the one currently selected, tab is drawn with an additional rect below it,
+	 *		the tabPane's current selected component is repainted and slide with an index in slides 
+	 *		of i is painted (although it isnt right now)
+	 *2. If tab is not selected, tab is drawn without rect 
+	 */
 	public void paint(Graphics g) {
 		Graphics2D g2= (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -522,6 +645,7 @@ class CustomTabbedPane extends JTabbedPane{
 				g2.drawString(this.getTitleAt(i),rt.x+padding/2, rt.height);
 				if(slides.size()>0) {
 					this.getSelectedComponent().repaint();
+					//g2.setColor(slides.get(i).getBackground());
 					slides.get(i).repaint();
 				}
 			
@@ -536,9 +660,21 @@ class CustomTabbedPane extends JTabbedPane{
 		}}
 		g2.dispose();
 	}
+	
+	/**
+	 * @author sophiemaw
+	 * @return a list of all slides held within tabPane 
+	 */
 	public ArrayList<Slide> getSlides(){
 		return slides;
 	}
+	
+	/**
+	 * @param width
+	 * @param height
+	 * This method makes sure when CustomTabPanel is resized, editingBackground is not 
+	 * stretched as it scaled properly
+	 */
 	public void changeBackgroundSize(int width, int height) {
 		editingIcon= new ImageIcon(editingBackground.getSubimage(0, 0, width, height));
 		for(int i=0;i<editingBackgroundLabels.size();i++) {
@@ -555,6 +691,13 @@ class CustomTabbedPane extends JTabbedPane{
 
 
 
+/**
+ * @author sophiemaw
+ * BasicTabbedPaneUi which sets all default colours to transparent
+ * Makes sure tabs are not drawn automatically, as they are drawn in 
+ * CustomTabbedPane class
+ *
+ */
 class CustomTabUI extends BasicTabbedPaneUI{
 	Color transparent= new Color(255,255,255,255);
 	CustomTabUI(){
@@ -577,7 +720,12 @@ class CustomTabUI extends BasicTabbedPaneUI{
 }
 
 
-class MovingObject extends JPanel{
+/**
+ * @author sophiemaw
+ * MovingObject is a panel which is layered on top of a presElement
+ * It contains buttons to resize and move the presElement it is added to 
+ */
+class MovingObject extends JPanel implements ComponentInterface{
 	Color main;
 	Color secondary;
 	JButton top,left,bottom,right;
@@ -585,6 +733,7 @@ class MovingObject extends JPanel{
 	PresElement presElement;
 	Point mousePos;
 	MovingObject(){
+		main= colorDark;
 		this.setOpaque(false);
 		this.setLayout(null);
 		top= new JButton() {

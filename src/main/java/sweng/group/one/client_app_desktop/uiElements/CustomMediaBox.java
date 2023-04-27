@@ -19,8 +19,19 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 
+/**
+ * @author sophiemaw
+ * The mediaPanel allows users to add media to the presentation
+ * When clicking on the panel, fileChooser will open 
+ * Note: currently this only allows for 'jpeg' and 'png' images
+ * 			need to implement alowing videos files as well
+ * When media is selected, an icon of it appears
+ * A mouse listener is implemented so as when an icon is pressed, 'selectedIcon'
+ * is set to that icon, and uploadScene can get this icon if user then releases mouse
+ * in the tabPane (dragging icon onto the slide)
+ */
 public class CustomMediaBox extends UploadSceneComponent{
-	CustomGraphicsBox graphicsBox;
+
 	boolean addMediaIconIsVisible;	
 	CustomMediaBox mediaBox= this;
 	JPopupMenu popup;
@@ -32,8 +43,9 @@ public class CustomMediaBox extends UploadSceneComponent{
 	MediaElementIcon selectedMediaElement;
 	URL selectedMediaURL;
 	
-	public CustomMediaBox(CustomGraphicsBox graphicsBox) {
-		this.graphicsBox= graphicsBox;
+	public CustomMediaBox() {
+		this.main= colorLight;
+		this.secondary=colorDark;
 		this.setLayout(null);
 		addMediaIconIsVisible=true;
 		icons= new ArrayList<MediaElementIcon>();
@@ -42,7 +54,7 @@ public class CustomMediaBox extends UploadSceneComponent{
 		popup.add(fileExplorer);
 		popup.setVisible(false);
 		isElementSelected=false;
-		//fileExplorer.showOpenDialog(popup);
+		
 		
 		
 		this.addMouseListener(new MouseListener() {
@@ -176,6 +188,7 @@ public class CustomMediaBox extends UploadSceneComponent{
 	public boolean isIconSelected() {
 		return isElementSelected;
 	}
+	
 	public Image getSelectedIcon() {
 		return selectedMediaElement.getImageIcon();
 	}
