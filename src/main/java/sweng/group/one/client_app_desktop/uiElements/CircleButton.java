@@ -14,6 +14,10 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * @author sophiemaw
+ *
+ */
 public class CircleButton extends JButton{
 	private Image image;
 	private Image scaledImage;

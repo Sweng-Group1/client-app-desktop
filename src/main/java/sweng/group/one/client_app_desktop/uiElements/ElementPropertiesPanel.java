@@ -34,6 +34,7 @@ public class ElementPropertiesPanel extends UploadSceneComponent {
 		this.add(tabbedPane);
 		this.main= colorLight;
 		this.secondary= colorDark;
+		elementTab= new ElementTab();
 	}
 	public void setManipulatorFor(PresElement element) {
 		this.element=element;
@@ -53,7 +54,7 @@ public class ElementPropertiesPanel extends UploadSceneComponent {
 		case "IMAGE":
 			tabbedPane.removeAll();
 			tabbedPane.addTab("Element",elementTab);
-			elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
+			//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
 			elementTab.getXPosText().setText(String.valueOf(element.getPosPoint().y));
 			elementTab.getYPosText().setText(String.valueOf(element.getPosPoint().x));
 			elementTab.getWidthText().setText(String.valueOf(element.getWidth()));
@@ -64,7 +65,7 @@ public class ElementPropertiesPanel extends UploadSceneComponent {
 		case "CIRCLE":
 			tabbedPane.removeAll();
 			tabbedPane.addTab("Element",elementTab);
-			elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
+			//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
 			elementTab.getXPosText().setText(String.valueOf(element.getPosPoint().y));
 			elementTab.getYPosText().setText(String.valueOf(element.getPosPoint().x));
 			elementTab.getWidthText().setText(String.valueOf(element.getWidth()));
@@ -74,7 +75,7 @@ public class ElementPropertiesPanel extends UploadSceneComponent {
 		case "RECTANGLE":
 			tabbedPane.removeAll();
 			tabbedPane.addTab("Element",elementTab);
-			elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
+			//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
 			elementTab.getXPosText().setText(String.valueOf(element.getPosPoint().y));
 			elementTab.getYPosText().setText(String.valueOf(element.getPosPoint().x));
 			elementTab.getWidthText().setText(String.valueOf(element.getWidth()));
@@ -83,17 +84,15 @@ public class ElementPropertiesPanel extends UploadSceneComponent {
 			break;
 		}
 	}
-	public void setMainAndSecondaryColor(Color main, Color secondary) {
-		this.main= secondary;
-		this.secondary=main;
+	
 		
+	public void setMarginBounds(int r,int t, int l, int b) {
+		super.setMarginBounds(r, t, l, b);
+		tabbedPane.setBounds(r, t+curvatureRadius/2, this.getWidth()-(r+l),this.getHeight()-(curvatureRadius)-t-b );
+		//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
 	}
+	
 }
-
-
-
-
-
 
 
 

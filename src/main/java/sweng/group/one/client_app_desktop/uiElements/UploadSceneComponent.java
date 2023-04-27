@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 
 import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
+/**
+ * @author sophiemaw
+ *
+ */
 public class UploadSceneComponent extends JPanel implements ComponentInterface{
 	 protected Color main;
 	 protected Color secondary;

@@ -16,7 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
+/**
+ *@author sophiemaw
+ */
 public class Header extends JPanel{
 	//variables
 	int curveRadius;

@@ -17,7 +17,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ *@author sophiemaw
+ */
 public class SearchBar extends JPanel {	
 	/*
 		int curveRadius;

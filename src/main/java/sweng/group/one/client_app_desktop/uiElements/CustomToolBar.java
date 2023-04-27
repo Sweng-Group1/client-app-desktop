@@ -21,6 +21,7 @@ import javax.swing.JButton;
 
 import sweng.group.one.client_app_desktop.media.GraphicsElement;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
+import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 
@@ -40,12 +41,16 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 	Stroke paintStroke;
 	Color paintColor;
 	Point mousePos;
+	
+	PresElement selectedElement;
+	
 	public CustomToolBar() {
 		this.setOpaque(false);	
 		this.setLayout(null);
 		this.main= colorLight;
 		this.secondary= colorDark;
 		buttons= Collections.synchronizedList(new ArrayList<>());
+		selectedElementType=new String();
 				
 		//Create buttons
 		moveButton = new CircleButton();
@@ -114,7 +119,7 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				selectedElementType= "GRAPHIC";
-				
+				System.out.println(selectedElementType);
 			}
 			
 		});
@@ -122,7 +127,7 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				selectedElementType="SHAPE";
 				
 			}
 			
@@ -136,21 +141,27 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 			}
 			
 		});
-	
+		selectedElement= null;
 	}
+	
 	
 	/**
 	 * @param presElement 
 	 * This method adds a listener to add graphics to the current Image of a 
 	 * GraphicsElement
 	 */
-	public void addGraphicsListener(PresElement presElement) {
-		if(presElement.getType()=="GRAPHIC") {
-			presElement.getComponent().addMouseListener(new MouseListener() {
+	public void setSelectedElement(PresElement presElement) {
+		selectedElement= presElement;
+	}
+	public void setToolBarListenersForSlide(ElementsPanel elementPanel,Slide slide) {
+		
+			slide.addMouseListener(new MouseListener() {
 	
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
+					if(selectedElement.getType()=="CIRCLE") {
+						
+					}
 					
 				}
 	
@@ -179,17 +190,19 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 				}
 				
 			});
-			presElement.getComponent().addMouseMotionListener(new MouseMotionListener() {
+			slide.addMouseMotionListener(new MouseMotionListener() {
 	
 				@Override
 				public void mouseDragged(MouseEvent e) {
-					BufferedImage im= ((GraphicsElement)presElement).getCurrentImage();
-					Graphics2D g2= (Graphics2D)im.getGraphics().create();
-					g2.setStroke(paintStroke);
-					g2.setColor(paintColor);
-					g2.drawLine(mousePos.x, mousePos.y, e.getX(), e.getY());
-					((GraphicsElement)presElement).addBufferedImageToGraphicsList(im);
-					presElement.getComponent().validate();
+					if(selectedElement.getType()=="GRAPHIC") {
+						BufferedImage im= ((GraphicsElement)selectedElement).getCurrentImage();
+						Graphics2D g2= (Graphics2D)im.getGraphics().create();
+						g2.setStroke(paintStroke);
+						g2.setColor(paintColor);
+						g2.drawLine(mousePos.x, mousePos.y, e.getX(), e.getY());
+						((GraphicsElement)selectedElement).addBufferedImageToGraphicsList(im);
+						selectedElement.getComponent().validate();
+					}
 					mousePos= e.getPoint();
 					
 				}
@@ -202,7 +215,7 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 				
 			});
 		}
-	}
+	
 	/*
 	 * Overided methods:
 	 */

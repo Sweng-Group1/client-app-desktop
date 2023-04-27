@@ -39,7 +39,7 @@ public class TextElement extends PresElement {
 	public TextElement(String text, String fontName, int fontSizePt, Color Colour, float duration, Point pos, int width,
 			int height, Slide slide) {
 		super(pos, width, height, duration, slide);
-
+		type= "TEXT";
 		// Load system fonts
 		Font[] t = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 

@@ -49,7 +49,7 @@ public class MainScene extends JFrame{
 	
 	public MainScene() {
 		super();
-		this.setVisible(false); // Wait for fully loaded to become visible
+		this.setVisible(true); // Wait for fully loaded to become visible
 		
 		this.setSize(screenSize);
 		this.setLayout(null);
@@ -57,6 +57,8 @@ public class MainScene extends JFrame{
 		gapWidth= screenSize.height/48;
 		curvatureRadius= 20;
 		panel= this.getLayeredPane();
+	
+	};
 		
 		
 		/*
@@ -85,8 +87,6 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
-		
 		sidebarScene = new SidebarScene(null);
 		panel.setLayer(sidebarScene, 0);
 		panel.add(sidebarScene);
@@ -116,18 +116,6 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		upload= new UploadScene();
-		panel.setLayer(upload, 3);
-		panel.add(upload);
-
-		
-		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
-		upload.setVisible(false);
-		
-		/*
-		 *  Mouse listeners:
-		 */
 		options.getAccountButton().addMouseListener(new MouseListener() {
 
 			@Override
@@ -272,6 +260,23 @@ public class MainScene extends JFrame{
 		this.setVisible(true);
 		this.validate();
 	}
+		*/
+		public void setUpUpload() {
+		
+		upload= new UploadScene();
+		panel.setLayer(upload, 0);
+		panel.add(upload);
+
+		
+		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
+		upload.setVisible(true);
+		upload.validate();
+		upload.repaint();
+		}
+		/*
+		 *  Mouse listeners:
+		 */
+		
 	
 	public void addDemoMarkers() throws MalformedURLException {
 		int slideX = 100;
@@ -328,7 +333,8 @@ public class MainScene extends JFrame{
 
 	public static void main(String[] args) {
 		MainScene ms = new MainScene();
-	}
+		ms.setUpUpload();
+		}
 	
 	
 

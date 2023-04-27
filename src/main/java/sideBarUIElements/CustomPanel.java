@@ -16,6 +16,11 @@ import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 
 
+/**
+ * @author joncooke
+ * editted sophiemaw
+ *
+ */
 public class CustomPanel extends JPanel implements ComponentInterface{
 	private int gapWidth;
 	private Rectangle r;
@@ -41,6 +46,9 @@ public class CustomPanel extends JPanel implements ComponentInterface{
 		this.setSize(r.width, r.height);
 		maxWidth= r.width;
 	}
+	/**
+	 *@author sophiemaw
+	 */
 	public void paint(Graphics g) {
 		Graphics2D g2= (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -48,6 +56,9 @@ public class CustomPanel extends JPanel implements ComponentInterface{
 		 g2.fillRoundRect(0,0,r.width,r.height, curvatureRadius, curvatureRadius);
 		super.paint(g2);
 	}
+	/**
+	 *@author sophiemaw
+	 */
 	public void minimise(long timeToMinimise) {
 		int timeInterval= (int) (timeToMinimise/maxWidth);
 		for(int i=0; i<maxWidth;i++) {
@@ -66,6 +77,9 @@ public class CustomPanel extends JPanel implements ComponentInterface{
 			}, timeInterval*i);
 		}
 	}
+	/**
+	 *@author sophiemaw
+	 */
 	public void maximise(long timeToMaximise) {
 		int timeInterval= (int) (timeToMaximise/maxWidth);
 		for(int i=0; i<maxWidth;i++) {

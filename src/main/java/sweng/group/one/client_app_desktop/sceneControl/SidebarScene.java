@@ -32,6 +32,11 @@ import sideBarUIElements.SearchBar;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
+/**
+ * @author joncooke
+ * Refactored sophiemaw
+ *
+ */
 public class SidebarScene extends JPanel implements ComponentInterface{
 	
 	private static final long serialVersionUID = 1L;
