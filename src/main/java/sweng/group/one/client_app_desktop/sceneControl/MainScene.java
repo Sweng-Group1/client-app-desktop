@@ -1,0 +1,334 @@
+package sweng.group.one.client_app_desktop.sceneControl;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
+import org.mapsforge.core.model.LatLong;
+
+import sweng.group.one.client_app_desktop.mapping.EventMarker;
+import sweng.group.one.client_app_desktop.media.ImageViewer;
+import sweng.group.one.client_app_desktop.media.VideoPlayer;
+import sweng.group.one.client_app_desktop.presentation.DemoElement;
+import sweng.group.one.client_app_desktop.presentation.Presentation;
+import sweng.group.one.client_app_desktop.presentation.Slide;
+import sweng.group.one.client_app_desktop.text.TextElement;
+
+public class MainScene extends JFrame{
+
+	private JLayeredPane panel;
+	private MapScene mapScene;
+	private SidebarScene sidebarScene;
+	private LoginScene login;
+	private UploadScene upload;
+	private OptionsScene options;
+	
+	private static final Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
+	
+	private static final Color colorLight= new Color(78,106,143);
+	private static final Color colorDark= new Color(46,71,117);
+	
+	private int gapWidth;
+	private int curvatureRadius;
+	
+	public MainScene() {
+		super();
+		this.setVisible(false); // Wait for fully loaded to become visible
+		
+		this.setSize(screenSize);
+		this.setLayout(null);
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		gapWidth= screenSize.height/48;
+		curvatureRadius= 20;
+		panel= this.getLayeredPane();
+		
+		
+		/*
+		 *  Initialise components:
+		 */
+		
+		mapScene = new MapScene() {
+			@Override
+			public void selectMarker(EventMarker selected) {
+				super.selectMarker(selected);
+				
+				if (selected != null) {
+					sidebarScene.replacePres(selected.getPosts());
+				}
+			}
+		};
+		
+		panel.setLayout(null);
+		panel.setLayer(mapScene,0);
+		panel.add(mapScene);
+		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
+		mapScene.loadMapFile(new File("./assets/map/york.map"));
+		try {
+			addDemoMarkers();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		sidebarScene = new SidebarScene(null);
+		panel.setLayer(sidebarScene, 1);
+		panel.add(sidebarScene);
+		sidebarScene.setSize(screenSize.width/3,screenSize.height);
+		sidebarScene.setLocation(0,0);
+		
+		
+		try {
+			options = new OptionsScene();
+			panel.setLayer(options, 2);
+			panel.add(options);
+			options.setSize(screenSize.height/4, screenSize.height/4);
+			options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			login= new LoginScene();
+			panel.setLayer(login, 3);
+			panel.add(login);
+			login.setSize(screenSize.width/4, screenSize.height/2);
+			login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
+			login.setVisible(false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		upload= new UploadScene();
+		panel.setLayer(upload, 4);
+		panel.add(upload);
+		upload.setBackgroundColours(colorLight, colorDark);
+		upload.setCurvatureRadius(curvatureRadius);
+		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
+
+		
+		/*
+		 *  Mouse listeners:
+		 */
+		options.getAccountButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				sidebarScene.setVisible(false);
+				options.setVisible(false);
+				login.setVisible(true);
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		login.getContinueButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				login.setVisible(false);
+				sidebarScene.setVisible(true);
+				options.setVisible(true);		
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		options.getAddPostButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			
+				sidebarScene.setVisible(false);
+				options.setVisible(false);	
+				upload.setVisible(true);
+		
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		upload.getConfirmButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				upload.setVisible(false);
+				sidebarScene.setVisible(true);
+				options.setVisible(true);	
+			
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		 
+		this.setVisible(true);
+		this.validate();
+	}
+	
+	public void addDemoMarkers() throws MalformedURLException {
+		int slideX = 100;
+		int slideY = 50;
+		mapScene.addEventMarker(new LatLong(53.94565858032622, -1.0555302805175937));
+		for (int i = 0; i < 3; i++) {
+			//create slide and add to frame
+	    	Slide slide = new Slide(slideX, slideY);
+	    	ArrayList<Slide> slides = new ArrayList<>();
+	    	slides.add(slide);
+	    	
+	    	VideoPlayer vp = new VideoPlayer(new Point(0, 0), slideX, slideY, slide, new URL("https://getsamplefiles.com/download/mp4/sample-5.mp4"), true);
+	    	slide.add(vp);
+	    	
+	    	Presentation pres = new Presentation(slides);
+			mapScene.getMarkers().get(0).addPost(pres);
+		}
+		
+		mapScene.addEventMarker(new LatLong(53.945945888223186, -1.0515230602493442));
+		for (int i = 0; i < 7; i++) {
+			//create slide and add to frame
+	    	Slide slide = new Slide(slideX, slideY);
+	    	ArrayList<Slide> slides = new ArrayList<>();
+	    	slides.add(slide);
+	    	
+	    	ImageViewer ie = new ImageViewer(new Point(0, 0), slideX, slideY, 0, slide, new URL("https://getsamplefiles.com/download/png/sample-1.png"));
+	    	slide.add(ie);
+	    	
+	    	Presentation pres = new Presentation(slides);
+			mapScene.getMarkers().get(1).addPost(pres);
+		}
+		
+		mapScene.addEventMarker(new LatLong(53.94536495592503, -1.0537439293136752));
+		
+		String[] fontNames = {"Times New Roman", "Calibri", "Comic Sans MS", "Cooper Black", "Complex"};
+		
+		for (int i = 0; i < 5; i++) {
+			slideX = i%2 != 0 ? 9 : 16;
+			slideY = i%2 == 0 ? 9 : 16;
+			
+			//create slide and add to frame
+	    	Slide slide = new Slide(slideX, slideY);
+	    	ArrayList<Slide> slides = new ArrayList<>();
+	    	slides.add(slide);
+	    	
+	    	TextElement te = new TextElement("This is demonstration of how text will look", fontNames[i], 10*i + 1, new Color(0, 0, 255*i/5), 0, new Point(0, 0), slideX, slideY, slide);
+	    	slide.add(te);
+	    	slide.add(new DemoElement(new Point(0, 0), slideX, slideY, 0, slide));
+	    	
+	    	Presentation pres = new Presentation(slides);
+			mapScene.getMarkers().get(2).addPost(pres);
+		}
+	}
+
+	public static void main(String[] args) {
+		MainScene ms = new MainScene();
+	}
+	
+	
+
+}
