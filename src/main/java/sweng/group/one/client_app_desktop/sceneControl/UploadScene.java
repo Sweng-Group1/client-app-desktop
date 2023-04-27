@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import sweng.group.one.client_app_desktop.uiElements.ComponentInterface;
 import sweng.group.one.client_app_desktop.uiElements.CustomDescriptionBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomMediaBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;

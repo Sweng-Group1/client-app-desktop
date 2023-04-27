@@ -11,6 +11,8 @@ import java.awt.event.MouseListener;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
+
 /**
  * @author sophiemaw
  * Panel that contains a textField for user to write a description that is added to the

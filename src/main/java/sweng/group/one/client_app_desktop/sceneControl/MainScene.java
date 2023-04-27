@@ -62,7 +62,7 @@ public class MainScene extends JFrame{
 		/*
 		 *  Initialise components:
 		 */
-		
+		/*
 		mapScene = new MapScene() {
 			@Override
 			public void selectMarker(EventMarker selected) {
@@ -85,9 +85,10 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		
 		sidebarScene = new SidebarScene(null);
-		panel.setLayer(sidebarScene, 1);
+		panel.setLayer(sidebarScene, 0);
 		panel.add(sidebarScene);
 		sidebarScene.setSize(screenSize.width/3,screenSize.height);
 		sidebarScene.setLocation(0,0);
@@ -95,7 +96,7 @@ public class MainScene extends JFrame{
 		
 		try {
 			options = new OptionsScene();
-			panel.setLayer(options, 2);
+			panel.setLayer(options, 1);
 			panel.add(options);
 			options.setSize(screenSize.height/4, screenSize.height/4);
 			options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
@@ -106,7 +107,7 @@ public class MainScene extends JFrame{
 		
 		try {
 			login= new LoginScene();
-			panel.setLayer(login, 3);
+			panel.setLayer(login, 2);
 			panel.add(login);
 			login.setSize(screenSize.width/4, screenSize.height/2);
 			login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
@@ -117,12 +118,12 @@ public class MainScene extends JFrame{
 		}
 		
 		upload= new UploadScene();
-		panel.setLayer(upload, 4);
+		panel.setLayer(upload, 3);
 		panel.add(upload);
-		upload.setBackgroundColours(colorLight, colorDark);
-		upload.setCurvatureRadius(curvatureRadius);
-		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
 
+		
+		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
+		upload.setVisible(false);
 		
 		/*
 		 *  Mouse listeners:

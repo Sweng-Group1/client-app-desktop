@@ -28,6 +28,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 
 
@@ -37,7 +38,7 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
  *	being made. It tells all other components within the upload scene which 
  *	slide is visible at any time, so as to know which slide to add presElements to
  */
-public class CustomTabPanel extends UploadSceneComponent{
+public class CustomTabPanel extends UploadSceneComponent implements ComponentInterface{
 	int[] landscape= {191,100};
 	int[] portrait= {400,500};
 	int[] sqaure= {500,500};

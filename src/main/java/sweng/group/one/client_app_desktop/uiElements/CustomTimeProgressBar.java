@@ -21,6 +21,7 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeListener;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 /**
  * @author sophiemaw

@@ -1,4 +1,4 @@
-package sweng.group.one.client_app_desktop.uiElements;
+package sweng.group.one.client_app_desktop.sceneControl;
 
 import java.awt.Color;
 import java.awt.Font;

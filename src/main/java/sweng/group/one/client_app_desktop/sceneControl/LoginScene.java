@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginScene extends JPanel {
+public class LoginScene extends JPanel implements ComponentInterface{
 	/**
 	 * 
 	 */
@@ -53,9 +53,9 @@ public class LoginScene extends JPanel {
 	private void createUserNameInput() {
 		usernamePanel= new JPanel() {
 			public void paint(Graphics g) {
-				g.setColor(new Color(160,203,213));
+				g.setColor(colorDark);
 				//g.setColor(Color.white);
-				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 30, 30);
+				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 				super.paint(g);
 			}
 		};
@@ -64,7 +64,7 @@ public class LoginScene extends JPanel {
 		usernamePanel.setLayout(null);
 		usernamePanel.setOpaque(false);
 		usernameField.setOpaque(false);
-		usernameField.setBackground(new Color(0,0,0,0));
+		usernameField.setBackground(transparent);
 		usernameField.setBorder(null);
 		usernameField.setCaretColor(Color.white);
 		usernameField.setSelectedTextColor(Color.white);
@@ -77,9 +77,9 @@ public class LoginScene extends JPanel {
 	private void createPasswordField() {
 		passwordPanel= new JPanel() {
 			public void paint(Graphics g) {
-				g.setColor(new Color(160,203,213));
+				g.setColor(colorLight);
 				//g.setColor(Color.white);
-				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 35, 35);
+				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 				super.paint(g);
 			}
 		};
@@ -88,7 +88,7 @@ public class LoginScene extends JPanel {
 		passwordPanel.setLayout(null);
 		passwordPanel.setOpaque(false);
 		passwordField.setOpaque(false);
-		passwordField.setBackground(new Color(0,0,0,0));
+		passwordField.setBackground(transparent);
 		passwordField.setBorder(null);
 		passwordField.setCaretColor(Color.white);
 		passwordField.setSelectedTextColor(Color.white);
@@ -101,8 +101,8 @@ public class LoginScene extends JPanel {
 	private void createButtons() {
 		loginButton= new JButton() {	
 			public void paint(Graphics g) {
-				g.setColor(new Color(160,203,213));
-				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 30, 30);
+				g.setColor(colorLight);
+				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 				g.setColor(Color.white);
 				g.drawString("Login",(this.getWidth()/2)-(g.getFontMetrics().
 						stringWidth("Login")/2),(this.getHeight()/2)+(g.getFontMetrics().getHeight()/4));
@@ -110,15 +110,15 @@ public class LoginScene extends JPanel {
 			}
 		};	
 		loginButton.setOpaque(false);
-		loginButton.setBackground(new Color(0,0,0,0));
+		loginButton.setBackground(transparent);
 		loginButton.setBorderPainted(false);
 		loginButton.setBorder(null);	
 		this.add(loginButton);
 		
 		continueButton= new JButton(){	
 			public void paint(Graphics g) {
-				g.setColor(new Color(160,203,213));
-				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 30, 30);
+				g.setColor(colorLight);
+				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 				g.setColor(Color.white);
 				g.drawString("Continue",(this.getWidth()/2)-(g.getFontMetrics().
 						stringWidth("Continue")/2),(this.getHeight()/2)+(g.getFontMetrics().getHeight()/4));
@@ -126,14 +126,14 @@ public class LoginScene extends JPanel {
 			}
 		};	
 		continueButton.setOpaque(false);
-		continueButton.setBackground(new Color(0,0,0,0));
+		continueButton.setBackground(transparent);
 		continueButton.setBorderPainted(false);
 		continueButton.setBorder(null);	
 		this.add(continueButton);
 		
 		createAccountButton= new JButton(){	
 			public void paint(Graphics g) {
-				g.setColor(new Color(160,203,213));
+				g.setColor(colorLight);
 				//g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 50, 50);
 				//g.setColor(Color.white);
 				g.drawString("Create Account",(this.getWidth()/2)-(g.getFontMetrics().
@@ -142,7 +142,7 @@ public class LoginScene extends JPanel {
 			}
 		};	
 		createAccountButton.setOpaque(false);
-		createAccountButton.setBackground(new Color(0,0,0,0));
+		createAccountButton.setBackground(transparent);
 		createAccountButton.setBorderPainted(false);
 		createAccountButton.setBorder(null);	
 		this.add(createAccountButton);
@@ -164,7 +164,7 @@ public class LoginScene extends JPanel {
 		passwordPanel.setSize((width/6)*4, height/16);
 		passwordPanel.setLocation((width-((width/6)*4))/2, (height/2)+(height/16));
 		passwordField.setSize(usernamePanel.getWidth()-20, usernamePanel.getHeight());
-		passwordField.setLocation(10, 0);
+		passwordField.setLocation(curvatureRadius/2, 0);
 		
 		continueButton.setSize((passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
 		continueButton.setLocation(passwordPanel.getX(), (height/2)+(3*(height/16)));
@@ -196,9 +196,9 @@ public class LoginScene extends JPanel {
 		return isOpen;
 	}
 	public void paint(Graphics g) {
-		g.setColor(new Color(46,71,118));
+		g.setColor(colorDark);
 		//g.setColor(Color.white);
-		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 100, 100);
+		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 		super.paint(g);
 	}
 	public JButton getLoginButton() {

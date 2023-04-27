@@ -12,13 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 
-public class CustomPanel extends JPanel{
+
+public class CustomPanel extends JPanel implements ComponentInterface{
 	private int gapWidth;
-	private int curveRadius;
-	private Color dark;
-	private Color light;
 	private Rectangle r;
 	private int rMax;
 	private int minPosition;
@@ -31,9 +30,6 @@ public class CustomPanel extends JPanel{
 	
 	public CustomPanel() {
 		gapWidth=0;
-		curveRadius=0;
-		dark= Color.black;
-		light= Color.white;
 		isMoving= false;
 		timer= new Timer();
 		this.setOpaque(false);
@@ -43,14 +39,13 @@ public class CustomPanel extends JPanel{
 		this.r = new Rectangle(0,0,r.width,r.height);
 		this.setLocation(r.x, r.y);
 		this.setSize(r.width, r.height);
-		this.curveRadius= curveRadius;
 		maxWidth= r.width;
 	}
 	public void paint(Graphics g) {
 		Graphics2D g2= (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(dark);
-		 g2.fillRoundRect(0,0,r.width,r.height, curveRadius, curveRadius);
+		g2.setColor(colorDark);
+		 g2.fillRoundRect(0,0,r.width,r.height, curvatureRadius, curvatureRadius);
 		super.paint(g2);
 	}
 	public void minimise(long timeToMinimise) {
@@ -93,12 +88,11 @@ public class CustomPanel extends JPanel{
 	}
 
 	public void setBackground(Color light, Color dark) {
-		this.light= light;
-		this.dark=dark;
+		
 		
 	}
 	public void setCurveRadius(int curveRadius) {
-		this.curveRadius=curveRadius;
+		
 	}
 	public void setGapWidth(int gapWidth) {
 		this.gapWidth=gapWidth;

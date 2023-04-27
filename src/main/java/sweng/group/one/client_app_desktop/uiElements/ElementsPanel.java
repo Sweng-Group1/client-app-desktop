@@ -36,6 +36,7 @@ import sweng.group.one.client_app_desktop.media.TextElement;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 public class ElementsPanel extends UploadSceneComponent implements ComponentInterface{
 	Slide currentSlide;
@@ -173,6 +174,8 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 				case "CIRCLE":
 					break;
 				case "RECTANGLE":
+					break;
+				default:
 					break;
 				}
 				

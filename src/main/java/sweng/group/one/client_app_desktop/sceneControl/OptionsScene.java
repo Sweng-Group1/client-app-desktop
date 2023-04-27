@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 
 
 
-	public class OptionsScene extends JPanel {
+	public class OptionsScene extends JPanel implements ComponentInterface{
 		
 		private Boolean isOpen;
 		private CircularButton accountButton, addPostButton, helpButton, closeButton,optionsButton;
@@ -101,9 +101,8 @@ import javax.swing.JPanel;
 			multipleOptionsPanel= new JPanel() {
 				
 				public void paint(Graphics g) {
-					int curveRadius= this.getWidth()/2;
 					g.setColor(Color.white);
-					g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius,curveRadius);
+					g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius,curvatureRadius);
 					super.paint(g);
 				}
 				
@@ -191,8 +190,8 @@ import javax.swing.JPanel;
 			optionsButtonPanel.setSize(optionPanelWidth, optionPanelWidth);
 			optionsButtonPanel.setLocation(optionsPanelX, 0);
 			
-			int curveRaduisA= optionsButtonPanel.getWidth()/2;
-			optionsButton.setSize(optionPanelWidth, optionPanelWidth,curveRaduisA);
+		
+			optionsButton.setSize(optionPanelWidth, optionPanelWidth,curvatureRadius);
 			optionsButton.setLocation(0, 0);
 		
 			
@@ -206,18 +205,17 @@ import javax.swing.JPanel;
 			int buttonPosOne= gapWidth;
 			int buttonPosTwo= (multipleOptionsPanel.getWidth()- gapWidth)- buttonWidth;
 			
-			int curveRadiusB= buttonWidth/2;
 			
-			accountButton.setSize(buttonWidth,buttonWidth,curveRadiusB);
+			accountButton.setSize(buttonWidth,buttonWidth,curvatureRadius);
 			accountButton.setLocation(buttonPosOne,buttonPosOne);
 			
-			helpButton.setSize(buttonWidth,buttonWidth,curveRadiusB);
+			helpButton.setSize(buttonWidth,buttonWidth,curvatureRadius);
 			helpButton.setLocation(buttonPosOne,buttonPosTwo);
 			
-			addPostButton.setSize(buttonWidth,buttonWidth,curveRadiusB);
+			addPostButton.setSize(buttonWidth,buttonWidth,curvatureRadius);
 			addPostButton.setLocation(buttonPosTwo,buttonPosOne);
 			
-			closeButton.setSize(buttonWidth,buttonWidth,curveRadiusB);
+			closeButton.setSize(buttonWidth,buttonWidth,curvatureRadius);
 			closeButton.setLocation(buttonPosTwo,buttonPosTwo);
 			
 			

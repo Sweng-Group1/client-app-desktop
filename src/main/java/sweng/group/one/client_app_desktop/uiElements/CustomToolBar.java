@@ -21,6 +21,7 @@ import javax.swing.JButton;
 
 import sweng.group.one.client_app_desktop.media.GraphicsElement;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 
 

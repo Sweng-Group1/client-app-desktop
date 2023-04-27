@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
+
 /**
  * @author Created by: sophiemaw
  * This class creates a panel with a textField for user to add tags to 
@@ -174,7 +176,7 @@ public class CustomTagBox extends UploadSceneComponent implements ComponentInter
  * Tag components, displays user input in a bubble with a hashtag
  *
  */
-class Tag extends JPanel{
+class Tag extends JPanel implements ComponentInterface{
 	String tagName;
 	CircleButton deleteTagButton;
 	Color background;

@@ -32,7 +32,7 @@ import sideBarUIElements.SearchBar;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
-public class SidebarScene extends JPanel {
+public class SidebarScene extends JPanel implements ComponentInterface{
 	
 	private static final long serialVersionUID = 1L;
 	private boolean isOpen;
@@ -59,7 +59,7 @@ public class SidebarScene extends JPanel {
 	private final static int searchBarInset = 10;
 	private final static int rectCurveRadius = 20;
 	
-	private final static Color sideBarBlue = new Color(32,41,57);
+
 
 	/*
 	 * 	Sophie: I've put in another way the presentations can appear on the scrollView
@@ -102,16 +102,16 @@ public class SidebarScene extends JPanel {
 		scrollBar= scrollPane.getVerticalScrollBar();
 		scrollBar.setUI(new CustomScrollBarUI());
 		scrollBar.setOpaque(false);
-		scrollBar.setBackground(new Color(255,255,255,255));
+		
 		this.add(scrollBar);
 	
 		
 	}
 	private void configureComponents() {
-		header.setColours(sideBarBlue, sideBarBlue);
-		panel.setBackground(sideBarBlue, sideBarBlue);
-		scrollPane.setBackground(sideBarBlue);
-		scrollView.setBackground(sideBarBlue);
+		header.setColours(colorDark, colorDark);
+		panel.setBackground(colorDark, colorLight);
+		scrollPane.setBackground(colorDark);
+		scrollView.setBackground(colorDark);
 		scrollPane.setBorder(null);
 		
 		panel.setScrollBar(scrollBar);
