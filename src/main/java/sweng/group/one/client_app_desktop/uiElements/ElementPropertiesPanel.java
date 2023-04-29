@@ -1,30 +1,63 @@
 package sweng.group.one.client_app_desktop.uiElements;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.awt.Scrollbar;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import sweng.group.one.client_app_desktop.presentation.PresElement;
+import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 /**
  * @author sophiemaw
  *Panel that displays and allows user to manipulate, properties 
  *of a presElement that is selected within the 
  *ElementsPanel
+ *
+ *This Panel contains a tabbedPane, and  'tabs' are added when a new element is selected 
+ *in the elementsPanel. 
+ *
+ *Implemented: 
+ *	The two tabs currently implemented are elementTab and colourTab()
+ *	These two tabs are added when a new element is selected
+ *
+ *Not Implemented:
+ *	elementTab does not display the correct selected PresElement properties. This is because 
+ *	im using the component's properties within the elemebt and not the stored fields within it
+ *	colorTab does not change the toolBar paintColour- unfortunately I havn't had time to work out why this is 
+ *
+ *Notes: Need to include new slide method pxToPt() to achieve correct positioning of elements
+ *		  user input needs to be in pixels 
  */
-public class ElementPropertiesPanel extends UploadSceneComponent {
+public class ElementPropertiesPanel extends UploadSceneComponent implements ComponentInterface {
 	private ElementTab elementTab;
+	private ElementColorManipulator colorTab;
 	private PresElement element;
 	JTabbedPane tabbedPane;
+	
 	public ElementPropertiesPanel() {
 		initialise();
 	}
@@ -36,60 +69,71 @@ public class ElementPropertiesPanel extends UploadSceneComponent {
 		this.secondary= colorDark;
 		elementTab= new ElementTab();
 	}
+	
+	/**
+	 * @param toolBar
+	 * Not the cleanest way to get toolBar in this scene but I've realised 
+	 *  it's needed to implement the colorChooser, due to hierarchy this 
+	 *  cannot be passed through the constructor. 
+	 */
+	public void setToolBarColorChanger(CustomToolBar toolBar) {
+		colorTab= new ElementColorManipulator(toolBar);
+	}
+	
+	/**
+	 * @param element
+	 * Method thats called within elementsPanel to change tabs to 
+	 * specific presElement tabs
+	 * 
+	 * Notes: 
+	 * Reason for removing tabs instead of updating values, is I want to implement properties
+	 * specific tabs, i.e 'circleTab': lets you change radius, fill colour, shadow ect. which is 
+	 * obviously different to what you can do to an image element. 
+	 */
 	public void setManipulatorFor(PresElement element) {
 		this.element=element;
 		String type= element.getType();
 		switch(type){
 		case "GRAPHIC":
 			tabbedPane.removeAll();
-			tabbedPane.addTab("Element",elementTab);
-			elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
-			elementTab.getXPosText().setText(String.valueOf(element.getPosPoint().y));
-			elementTab.getYPosText().setText(String.valueOf(element.getPosPoint().x));
-			elementTab.getWidthText().setText(String.valueOf(element.getWidth()));
-			elementTab.getHeightText().setText(String.valueOf(element.getHeight()));
-			elementTab.getDurationText().setText(String.valueOf(element.getDuration()));
-			elementTab.setElementToChange(element);
+			elementTab.setValuesForElement(element);
+			tabbedPane.addTab(" Element ",elementTab);
+			colorTab.setColorManipulatorFor(element);
+			tabbedPane.addTab(" Colour ",colorTab);
 			break;
 		case "IMAGE":
 			tabbedPane.removeAll();
-			tabbedPane.addTab("Element",elementTab);
-			//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
-			elementTab.getXPosText().setText(String.valueOf(element.getPosPoint().y));
-			elementTab.getYPosText().setText(String.valueOf(element.getPosPoint().x));
-			elementTab.getWidthText().setText(String.valueOf(element.getWidth()));
-			elementTab.getHeightText().setText(String.valueOf(element.getHeight()));
-			elementTab.getDurationText().setText(String.valueOf(element.getDuration()));
-			System.out.println("ABC");
+			elementTab.setValuesForElement(element);
+			tabbedPane.addTab(" Element ",elementTab);
+			colorTab.setColorManipulatorFor(element);
+			tabbedPane.addTab(" Colour ",colorTab);
 			break;
 		case "CIRCLE":
 			tabbedPane.removeAll();
-			tabbedPane.addTab("Element",elementTab);
-			//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
-			elementTab.getXPosText().setText(String.valueOf(element.getPosPoint().y));
-			elementTab.getYPosText().setText(String.valueOf(element.getPosPoint().x));
-			elementTab.getWidthText().setText(String.valueOf(element.getWidth()));
-			elementTab.getHeightText().setText(String.valueOf(element.getHeight()));
-			elementTab.getDurationText().setText(String.valueOf(element.getDuration()));
+			elementTab.setValuesForElement(element);
+			tabbedPane.addTab(" Element ",elementTab);
+			colorTab.setColorManipulatorFor(element);
+			tabbedPane.addTab(" Colour ",colorTab);
 			break;
 		case "RECTANGLE":
 			tabbedPane.removeAll();
-			tabbedPane.addTab("Element",elementTab);
-			//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
-			elementTab.getXPosText().setText(String.valueOf(element.getPosPoint().y));
-			elementTab.getYPosText().setText(String.valueOf(element.getPosPoint().x));
-			elementTab.getWidthText().setText(String.valueOf(element.getWidth()));
-			elementTab.getHeightText().setText(String.valueOf(element.getHeight()));
-			elementTab.getDurationText().setText(String.valueOf(element.getDuration()));
+			elementTab.setValuesForElement(element);
+			tabbedPane.addTab(" Element ",elementTab);
+			colorTab.setColorManipulatorFor(element);
+			tabbedPane.addTab(" Colour ",colorTab);
 			break;
 		}
 	}
 	
 		
+	/**
+	 * Explained in setMarginBounds() diagram
+	 */
 	public void setMarginBounds(int r,int t, int l, int b) {
 		super.setMarginBounds(r, t, l, b);
 		tabbedPane.setBounds(r, t+curvatureRadius/2, this.getWidth()-(r+l),this.getHeight()-(curvatureRadius)-t-b );
-		//elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
+		elementTab.setSize(tabbedPane.getWidth(), tabbedPane.getHeight());
+		colorTab.getColorChooser().setPreferredSize(elementTab.getSize());
 	}
 	
 }
@@ -99,9 +143,15 @@ public class ElementPropertiesPanel extends UploadSceneComponent {
 	
 /**
  * @author sophiemaw
- * 
+ * Element tab: contains 5 panels with titles to the textFields, and 5 textFields
+ * Implemented:
+ *  Font height changes to fit these components within this panel  
+ *  Enter key listeners are implemented to listen for user input to update presElement
+ * Not Implemented:
+ *  Font width does not change to fit within panel
+ *  Values are not updated to presElement
  */
-class ElementTab extends JPanel{
+class ElementTab extends JPanel implements ComponentInterface{
 	Color transparent= new Color(255,255,255,0);
 	JPanel xPosPane;
 	JTextField xPos;
@@ -126,7 +176,7 @@ class ElementTab extends JPanel{
 	public ElementTab() {
 
 		this.setOpaque(false);
-		this.setLayout(null);
+		this.setLayout(new GridLayout());
 		
 		this.curvatureRadius=curvatureRadius;
 		xPosPane= new JPanel() {
@@ -247,8 +297,8 @@ class ElementTab extends JPanel{
 		widthPos.setBackground(transparent);
 		widthPos.setForeground(Color.white);
 		widthPos.setCaretColor(Color.white);
-		this.add(widthPos);
 		this.add(widthPane);
+		this.add(widthPos);
 		widthPos.addKeyListener(new KeyListener() {
 
 			@Override
@@ -296,8 +346,8 @@ class ElementTab extends JPanel{
 		heightPos.setBackground(transparent);
 		heightPos.setForeground(Color.white);
 		heightPos.setCaretColor(Color.white);
-		this.add(heightPos);
 		this.add(heightPane);
+		this.add(heightPos);
 		heightPos.addKeyListener(new KeyListener() {
 
 			@Override
@@ -381,64 +431,131 @@ class ElementTab extends JPanel{
 		});
 		
 	}
-	public JTextField getXPosText() {
-		return xPos;
-	}
-	public JTextField getYPosText() {
-		return yPos;
-	}
-	public JTextField getWidthText() {
-		return widthPos;
-	}
-	public JTextField getHeightText() {
-		return heightPos;
-	}
-	public JTextField getDurationText() {
-		return duration;
-	}
-	public void setCurvatureRadius(int curvatureRadius) {
-		this.curvatureRadius=curvatureRadius;
-	}
-	public void setElementToChange(PresElement element) {
+	public void setValuesForElement(PresElement element) {
 		this.element=element;
+		xPos.setText(String.valueOf(element.getComponent().getX()));
+		yPos.setText(String.valueOf(element.getComponent().getY()));
+		widthPos.setText(String.valueOf(element.getComponent().getWidth()));
+		heightPos.setText(String.valueOf(element.getComponent().getHeight()));
+		duration.setText(String.valueOf(element.getDuration()));
 	}
+	/*
+	 *  This will probably need to be changed to a standard layout 
+	 *  and then font changed to fit within newly sized components
+	 */
 	public void setSize(int width, int height) {
 		super.setSize(width,height);
-		System.out.println("AAAAA");
-		int w= this.getWidth();
-		int h= this.getHeight();
-		font= new Font("",Font.PLAIN,curvatureRadius);
-		int row= (h-(curvatureRadius*10))/6;
+		int row= height/11;
+		this.setLayout(new FlowLayout());
+		//this.setLayout(new BoxLayout(this,BoxLayout.));
+		font= new Font("",Font.PLAIN,height/11);
+		int w= width;
+		Dimension componentLeftSize= new Dimension(width/2,height/8);
+		Dimension componentRightSize= new Dimension(width/4,height/8);
+		xPosPane.setPreferredSize(componentLeftSize);
+		xPos.setPreferredSize(componentRightSize);
+		yPosPane.setPreferredSize(componentLeftSize);
+		yPos.setPreferredSize(componentRightSize);
+		widthPane.setPreferredSize(componentLeftSize);
+		widthPos.setPreferredSize(componentRightSize);
+		heightPane.setPreferredSize(componentLeftSize);
+		heightPos.setPreferredSize(componentRightSize);
+		durationPane.setPreferredSize(componentLeftSize);
+		duration.setPreferredSize(componentRightSize);
 		
-		xPosPane.setBounds(0,0,w/2,curvatureRadius*2);
-		xPos.setBounds(w/2,0,w/2,curvatureRadius*2);
-		
-		yPosPane.setBounds(0,row,w/2,curvatureRadius*2);
-		yPos.setBounds(w/2,row,w/2,curvatureRadius*2);
 		
 		
-		widthPane.setBounds(0,row*2,w/2,curvatureRadius*2);
-		widthPos.setBounds(w/2,row*2,w/2,curvatureRadius*2);
-		
-		heightPane.setBounds(0,row*3,w/2,curvatureRadius*2);
-		heightPos.setBounds(w/2,row*3,w/2,curvatureRadius*2);
-		
-		durationPane.setBounds(0,row*4,w/2,curvatureRadius*2);
-		duration.setBounds(w/2,row*4,w/2,curvatureRadius*2);
 		this.validate();
 	}
 	
 }
 /**
  * @author sophiemaw
- *
+ * ColourTab contains a colourChooser, which needs to change the paintColour field within 
+ * toolBar- 
+ * Notes: when shape elements are implemented, to get fillColour they need to pull whatever c
+ * colour is stored in the paintColor field in toolBar
+ * 
+ * Implemented: 
+ * 	colourChooser is placed in a scrollPane (because it has a minimum size, and any smaller wont 
+ * 	show the full colourchooser)
+ * Not implemented:
+ *  the listeners to change the toolBar paint field don't work, not sure at to why
+ * 
  */
-class ElementColorManipulator extends JPanel{
+class ElementColorManipulator extends JPanel implements ComponentInterface{
+	PresElement element;
 	JColorChooser colorChooser;
-	public ElementColorManipulator() {
-		this.setOpaque(false);
+	CustomToolBar toolBar;
+	public ElementColorManipulator(CustomToolBar toolBar) {
+	
+		this.setBackground(colorLight);
+		this.setLayout(new GridLayout());
+		JPanel pane= new JPanel();
+		pane.setBackground(colorLight);
+		JScrollPane scrollPane= new JScrollPane(pane);
+		this.add(scrollPane);
+		scrollPane.setBackground(colorLight);
 		colorChooser= new JColorChooser();
-		this.add(colorChooser);
+		pane.add(colorChooser);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		colorChooser.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(element!=null) {
+					switch(element.getType()){
+					case "GRAPHIC":
+							toolBar.setPaintColor(colorChooser.getColor());
+						break;
+					case "CIRCLE":
+						break;
+					case "RECTANGLE":
+						break;
+					case "TEXT":
+							toolBar.setTextColor(colorChooser.getColor());
+						break;
+					}
+				}
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+	
+	}
+	public void setColorManipulatorFor(PresElement element) {
+		this.element= element;
+	}
+	/*
+	 *  Called within setBounds in elementsPropertiesPanel to resize
+	 *  colour chooser.
+	 */
+	public JColorChooser getColorChooser() {
+		return colorChooser;
 	}
 }
 

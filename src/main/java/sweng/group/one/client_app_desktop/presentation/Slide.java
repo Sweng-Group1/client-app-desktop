@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
-
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -48,6 +48,11 @@ public class Slide extends JPanel implements LayoutManager {
 		this.add(element.component);
 		this.getElements().add(element);
 		element.component.validate();
+	}
+	public Point pxToPt(Point pixel) {
+		int ptX = (int)((float)pixel.x/this.getWidth() * this.pointWidth);
+		int ptY = (int)((float)pixel.y/this.getHeight() * this.pointHeight);
+		return new Point(ptX, ptY);
 	}
 	
 	public void displaySlide() {

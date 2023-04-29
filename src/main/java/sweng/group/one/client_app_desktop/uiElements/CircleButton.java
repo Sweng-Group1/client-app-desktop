@@ -1,6 +1,7 @@
 package sweng.group.one.client_app_desktop.uiElements;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -77,8 +78,8 @@ public class CircleButton extends JButton{
 	
 		Graphics2D g2= (Graphics2D) g;
 		
-		
-		g2.setColor(this.getBackground());
+		GradientPaint gp = new GradientPaint(0, 0, this.getBackground(), diameter, diameter, new Color(0,0,0,0));
+	    g2.setPaint(gp);
 		g2.fillOval(0,0,diameter-1,diameter-1);
 		
 		if(image!=null) {
@@ -99,10 +100,10 @@ public class CircleButton extends JButton{
 			Image imageIcon= ((ImageIcon)iconIm).getImage();
 			
 			g2.drawImage(imageIcon, 0, 0, null);
-			g2.dispose();
+			
 		}	
-		
-		if(borderThickness>0) {
+		if(this.isBorderPainted()==true) {
+			
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setColor(border);
 			g2.setStroke(new BasicStroke(borderThickness));
@@ -110,6 +111,7 @@ public class CircleButton extends JButton{
 			//g2.drawOval(0,0,diameter-1,diameter-1);
 			
 		}
+		g2.dispose();
 		validate();	
 		super.paint(g);
 	}

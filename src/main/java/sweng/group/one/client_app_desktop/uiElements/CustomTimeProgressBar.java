@@ -26,6 +26,22 @@ import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 /**
  * @author sophiemaw
  * This class 'plays' the slide by displaying the presElements contained in it
+ * Notes fir Fraser: After refactoring, I havent had a chance to fix this class
+ * 					  if you have time it'd be super to have this fixed
+ * Implemented:
+ * This class gets updated when a new element is added to a slide, or current visible slide changes
+ * It takes the maximum duration of all elements on the slide, and the progress bar
+ * is set to that as it's maximum
+ * When the playButton is pressed and there are elements on slide with non-zero durations, max duration 
+ * 	mX, playButton icon is set to it's pauseIcon- progress bar will increase to a maximum in time
+ * 	mX, - if button is pressed before progress bar is at a maximum, timeBar "pauses"- pressed agaiin 
+ * 	and timeBar is reset and plays from beginning 
+ * When audioButton is pressed audioButton icon is set to audioOFF
+ * When audioButton is Pressed again audioButton icon is set to audioON 
+ * 
+ * Not Implemented:
+ * 	When audioButton is pressed audio of all slides is turned on
+ *  When audioButton is Pressed again audio of all slide elements is turned Off 
  *
  */
 public class CustomTimeProgressBar extends UploadSceneComponent implements ComponentInterface{
@@ -180,8 +196,10 @@ public class CustomTimeProgressBar extends UploadSceneComponent implements Compo
 		}
 	}
 	
-	//OVERIDED:
 
+	/**
+	 * Explained in setMarginBounds() diagram
+	 */
 	public void setMarginBounds(int r, int t, int l, int b){
 		super.setMarginBounds(r, t, l, b);
 		int height= this.getHeight()- curvatureRadius- t - b;
@@ -215,7 +233,15 @@ public class CustomTimeProgressBar extends UploadSceneComponent implements Compo
 	}
 
 }
-
+/*
+ * Implemented:
+ *  This class creates a timer of maxDuration of slide elements, and increases steadily 
+ *  in that time. 
+ *  
+ * Not Implemented:
+ *  From what I can remember there is a bug with this, where elements with a tiny duration
+ *  don't work, I think it's to do with variable types and rounding errors 
+ */
 class CustomProgressBar extends JProgressBar{
 	Thread progressing;
 	int incrState;

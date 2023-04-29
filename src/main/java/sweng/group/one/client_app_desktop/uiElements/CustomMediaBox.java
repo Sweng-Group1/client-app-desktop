@@ -29,6 +29,12 @@ import javax.swing.JPopupMenu;
  * A mouse listener is implemented so as when an icon is pressed, 'selectedIcon'
  * is set to that icon, and uploadScene can get this icon if user then releases mouse
  * in the tabPane (dragging icon onto the slide)
+ * 
+ * Implemented:
+ *  imageIcon 
+ * Not implemenyed:
+ *  videoIcon
+ *  audioIcon 
  */
 public class CustomMediaBox extends UploadSceneComponent{
 
@@ -42,6 +48,7 @@ public class CustomMediaBox extends UploadSceneComponent{
 	boolean isElementSelected;
 	MediaElementIcon selectedMediaElement;
 	URL selectedMediaURL;
+	File selectedFile;
 	
 	public CustomMediaBox() {
 		this.main= colorLight;
@@ -70,7 +77,7 @@ public class CustomMediaBox extends UploadSceneComponent{
 				if(icons.size()==0) {
 					int returnVal= fileExplorer.showOpenDialog(popup);
 					if(returnVal==JFileChooser.APPROVE_OPTION) {
-						File selectedFile= fileExplorer.getSelectedFile();
+						selectedFile= fileExplorer.getSelectedFile();
 						if(selectedFile.getAbsolutePath().endsWith(".png")||
 								(selectedFile.getAbsolutePath().endsWith(".jpeg"))) {
 							System.out.println("File selected");
@@ -78,6 +85,7 @@ public class CustomMediaBox extends UploadSceneComponent{
 								System.out.println("File A");
 								icons.add(new ImageElementIcon(selectedFile.toURI().toURL(),ImageIO.read(selectedFile)));
 								System.out.println("File B");
+								
 								setSizeOfIcons(r.x+curvatureRadius,r.y+curvatureRadius,
 										mediaBox.getWidth()-r.x-r.width-(2*curvatureRadius),
 										mediaBox.getHeight()-r.y-r.height-(2*curvatureRadius));
@@ -203,6 +211,13 @@ public class CustomMediaBox extends UploadSceneComponent{
 		isElementSelected=false;
 	}
 	
+	/**
+	 * @param xContainer
+	 * @param yContainer
+	 * @param widthOfContainer
+	 * @param heightOfContainer
+	 * This sets the icons bounds
+	 */
 	private void setSizeOfIcons(int xContainer, int yContainer, int widthOfContainer, int heightOfContainer) {
 		this.removeAll();
 		
@@ -249,10 +264,17 @@ public class CustomMediaBox extends UploadSceneComponent{
 		}
 		g2.dispose();
 	}
+	public File getSelectedFile() {
+		return selectedFile;
+	}
 	
 
 }
 
+/**
+ * @author sophiemaw
+ * I created this with the previous image viewer element
+ */
 class MediaElementIcon extends JLabel{
 	Image scaledImage;
 	String type;
@@ -269,6 +291,12 @@ class MediaElementIcon extends JLabel{
 	}
 	
 }
+/**
+ * @author sophiemaw
+ * This class is the Image icon, it contains the rawImage 
+ * Not implemented:
+ *  this should contain the File 
+ */
 class ImageElementIcon extends MediaElementIcon{
 	BufferedImage rawImage;
 	Image image;
@@ -307,5 +335,6 @@ class ImageElementIcon extends MediaElementIcon{
 		g2.drawImage(scaledImage, 0, 0, null);
 		g2.dispose();
 	}
+	
 	
 }

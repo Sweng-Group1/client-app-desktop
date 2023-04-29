@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
+import sweng.group.one.client_app_desktop.presentation.Presentation;
+import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.uiElements.CustomDescriptionBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomMediaBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;
@@ -21,6 +23,27 @@ import sweng.group.one.client_app_desktop.uiElements.ElementPropertiesPanel;
 import sweng.group.one.client_app_desktop.uiElements.ElementsPanel;
 import sweng.group.one.client_app_desktop.uiElements.UploadSceneComponent;
 
+/**
+ * @author sophiemaw
+ *Main Upload scene:
+ *Methods on set up:
+ * 	1. setBounds()
+ * Methods on close:
+ *  1. getPresentation()
+ *  2. getTags()
+ *  2. getDescription()
+ *  
+ *  Implemented:
+ *   allows images To be dropped onto slide, and creates ImageElement
+ *   Not implemented:
+ *    videos+audio 
+ *    
+ *  Notes: I havn't implemented a layout, so ive created a UploadSceneComponent method
+ *  		setMarginBounds that is called when you setBounds, which sets bounds of children 
+ *  		components and then changes their gapWidths
+ *  *I will add a detailed layout diagram of upload scene so marginBounds is easier to understand 
+ *  and easier to change to layout manager*
+ */
 public class UploadScene extends UploadSceneComponent implements ComponentInterface{
 	
 	UploadScene uploadScene= this;
@@ -65,18 +88,20 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 		// Graphics Box
 		graphicsBox= new ElementsPanel(propertiesBox);
 		components.add(graphicsBox);
-		// Progress time bar
-		timeBar= new CustomTimeProgressBar();
-		components.add(timeBar);
-		// Tab pane
-		tabPane= new CustomTabPanel(graphicsBox,timeBar);
-		components.add(tabPane);
 		// Media box
 		mediaBox= graphicsBox.getMediaBox();
 		components.add(mediaBox);
 		// Tool bar
 		toolBar= graphicsBox.getToolBar();
 		components.add(toolBar);
+		// Progress time bar
+		timeBar= new CustomTimeProgressBar();
+		components.add(timeBar);
+		// Tab pane
+		tabPane= new CustomTabPanel(graphicsBox,timeBar,toolBar);
+		components.add(tabPane);
+		
+		
 		
 		for(UploadSceneComponent c:components) {
 			this.add(c);
@@ -153,7 +178,7 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 				if(elementIsBeingMoved==true) {
 					if(mediaBox.getSelectedMediaType()=="IMAGE") {
 						BufferedImage image= mediaBox.getSelectedMediaImage();
-						//graphicsBox.addImageElement(e.getPoint(),image.getWidth(),image.getHeight(),);
+						graphicsBox.addImageElement(mediaBox.getSelectedFile(),image,e.getPoint(),image.getWidth(),image.getHeight(),null,0);
 						
 					}
 					mediaBox.turnOffMediaSelected();
@@ -184,28 +209,52 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 			
 		};
 	}
-	
-
 
 	
 	//GETTERS 
+	/*
+	 *  So the mouseListeners for these could be created in this scene, so when 
+	 *  confirm is pressed, presentation, description and tags are sent to server 
+	 *  via code in this scene and then turns this scene invisible
+	 *  To make then scene visible when postButton is pressed, there may still need
+	 *  to be a mouseListener in mainScene or you pass a listener into this scene from mainScene
+	 *  
+	 */
+
+	/**
+	 * @return exitButton to be to added to a mouseListener in mainScene
+	 */
 	public JButton getCloseButton() {
 		return toolBar.getExitButton();
 	}
+	/**
+	 * @return confirmButton to be added to a mouseListener in mainScene
+	 */
 	public JButton getConfirmButton() {
 		return toolBar.getConfirmButton();
 	}
+	/*
+	 *  Server getters:
+	 */
 	public ArrayList<String> getTags(){
 		return tagBox.getTags();
 	}
 	public String getDescription() {
 		return descriptionBox.getDescription();
 	}
-	//public Presentation getPresentation() {
-		//return tabPane.getPresentation();
-	//}
+	public Presentation getPresentation() {
+		return graphicsBox.getPresentation();
+	}
 	
-	//OVERIDED METHODS:
+	
+
+	/**
+	 * So this is the method that will have to be turned into a layoutManager
+	 * I've essentially created a null layout gridLayout so components can be placed in a grid 
+	 * of 6 by 16.
+	 * GapWidth is set to 10, but it would be great if this value could be value 
+	 * associated with its width and height. 
+	 */
 	public void setBounds(int x, int y,int width, int height) {
 		super.setBounds(x,y,width, height);
 		int gridWidth= 6;
@@ -222,8 +271,6 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 		int tag[]= {5,10,6,13};
 		int pb[]= {5,5,6,10};
 		int db[]= {5,13,6,16};
-	
-		
 		
 		mediaBox.setBounds((int)(mb[0]*cellWidth),(int)(mb[1]*cellHeight),
 				(int)(mb[2]*cellWidth-(mb[0]*cellWidth)),(int)(mb[3]*cellHeight-(mb[1]*cellHeight)));

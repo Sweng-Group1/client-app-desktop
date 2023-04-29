@@ -32,7 +32,10 @@ import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
  * This class creates a panel with a textField for user to add tags to 
  * presentation. Tags apear in bubbles under text field. There are getters 
  * to get a list of the tags. 
- *
+ * UPDATE: after talking to Sid, there needs to be a differentiation between verified event 
+ * tags and normal tags OR only allowing user to add one tag which is a verified event 
+ * tag- if the latter, then this component can be massively descreased in size and a location
+ * box can be added above it (I dont mind creating that)
  **/
 public class CustomTagBox extends UploadSceneComponent implements ComponentInterface{
 	JPanel upperPanel;
@@ -47,6 +50,14 @@ public class CustomTagBox extends UploadSceneComponent implements ComponentInter
 	public CustomTagBox() {
 		initialise();
 	}
+	/**
+	 * Component is split into two panels (upper and lower) more description on this in 
+	 * marginBounds diagram
+	 * When textField does not have focus, placeholder is set to it's text: "Add tags..."
+	 * When textField does have focus, placeHolder is text to empty string 
+	 * When textField is not empty and does not contain placeHolder text, if enter key is pressed
+	 * a bubble tag in added to the lower Panel as: "*hashtag*" + textField.getText()
+	 */
 	private void initialise() {
 		this.setLayout(null);
 		main= colorLight;
@@ -132,6 +143,11 @@ public class CustomTagBox extends UploadSceneComponent implements ComponentInter
 		});
 		
 	}
+	/**
+	 * Because this follows a null layout, tags need to be resized and placed
+	 * Since we're only going to be implementing 1 tag per post, this needs to be 
+	 * changed and probably implementing some sort of flow layout 
+	 */
 	private void resizeTags() {
 		int rowHeight= this.getHeight()/6;
 		int row=0;
@@ -151,7 +167,10 @@ public class CustomTagBox extends UploadSceneComponent implements ComponentInter
 	}
 	
 	
-	//OVERIDED METHODS
+	
+	/**
+	 * Explained in setMarginBounds() diagram 
+	 */
 	public void setMarginBounds(int r, int t, int l, int b) {
 		super.setMarginBounds(r,t,l,b);
 		upperPanel.setBounds(r, t, this.getWidth()-l-r, curvatureRadius);
@@ -166,6 +185,11 @@ public class CustomTagBox extends UploadSceneComponent implements ComponentInter
 		}
 		return tags;
 	}
+	
+	/*
+	 *  I've added this because potentially posts could be created by selecting an event first 
+	 *  then this needs to be called in mainScene to add that event tag on instantiation
+	 */
 	public void addTag(String tag) {
 		tags.add(tag);
 	}
@@ -174,6 +198,8 @@ public class CustomTagBox extends UploadSceneComponent implements ComponentInter
 /**
  * @author sophiemaw
  * Tag components, displays user input in a bubble with a hashtag
+ * Notes: deleteTagButton is not implemented yet, this needs to be added to this panel component
+ * and visible only when mouse enters the component (similiar to the tab components)
  *
  */
 class Tag extends JPanel implements ComponentInterface{

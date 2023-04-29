@@ -59,12 +59,8 @@ public class MainScene extends JFrame{
 		panel= this.getLayeredPane();
 	
 	};
-		
-		
-		/*
-		 *  Initialise components:
-		 */
-		/*
+	public void testWholeScene() {
+		this.setVisible(false);
 		mapScene = new MapScene() {
 			@Override
 			public void selectMarker(EventMarker selected) {
@@ -75,8 +71,7 @@ public class MainScene extends JFrame{
 				}
 			}
 		};
-		
-		panel.setLayout(null);
+	
 		panel.setLayer(mapScene,0);
 		panel.add(mapScene);
 		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
@@ -87,16 +82,20 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		testWholeSceneWithoutMap(1);
+		this.setVisible(true);
+		this.validate();	
+	}
+	public void testWholeSceneWithoutMap(int i) {
 		sidebarScene = new SidebarScene(null);
-		panel.setLayer(sidebarScene, 0);
+		panel.setLayer(sidebarScene, i);
 		panel.add(sidebarScene);
 		sidebarScene.setSize(screenSize.width/3,screenSize.height);
 		sidebarScene.setLocation(0,0);
 		
-		
 		try {
 			options = new OptionsScene();
-			panel.setLayer(options, 1);
+			panel.setLayer(options, i+1);
 			panel.add(options);
 			options.setSize(screenSize.height/4, screenSize.height/4);
 			options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
@@ -107,7 +106,7 @@ public class MainScene extends JFrame{
 		
 		try {
 			login= new LoginScene();
-			panel.setLayer(login, 2);
+			panel.setLayer(login, i+2);
 			panel.add(login);
 			login.setSize(screenSize.width/4, screenSize.height/2);
 			login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
@@ -116,6 +115,15 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		upload= new UploadScene();
+		panel.setLayer(upload, i+3);
+		panel.add(upload);
+
+		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
+		upload.validate();
+		upload.repaint();
+		upload.setVisible(false);
+		
 		options.getAccountButton().addMouseListener(new MouseListener() {
 
 			@Override
@@ -256,27 +264,19 @@ public class MainScene extends JFrame{
 			}
 			
 		});
-		 
-		this.setVisible(true);
-		this.validate();
-	}
-		*/
-		public void setUpUpload() {
 		
+	}
+	public void testOnlyUpload() {
 		upload= new UploadScene();
+		upload.setVisible(false);
 		panel.setLayer(upload, 0);
 		panel.add(upload);
 
-		
 		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
-		upload.setVisible(true);
 		upload.validate();
 		upload.repaint();
-		}
-		/*
-		 *  Mouse listeners:
-		 */
-		
+		upload.setVisible(true);
+	}
 	
 	public void addDemoMarkers() throws MalformedURLException {
 		int slideX = 100;
@@ -333,8 +333,10 @@ public class MainScene extends JFrame{
 
 	public static void main(String[] args) {
 		MainScene ms = new MainScene();
-		ms.setUpUpload();
-		}
+		//ms.testWholeScene();
+		//ms.testWholeSceneWithoutMap(0);
+		ms.testOnlyUpload();
+	}
 	
 	
 

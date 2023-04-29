@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -17,6 +19,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.font.FontRenderContext;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -55,6 +58,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	CustomTabbedPane tabPane;
 	CircleButton addTabButton;
 	CircleButton removeTabButton;
+	CustomToolBar toolBar;
 	
 	boolean paintMode;
 	boolean eraserMode;
@@ -76,9 +80,10 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	 * This class tells the CustomProgressBar what slide is currently visible, so it can 
 	 * play that slide and set its time to the maximum time of a presElement on that slide
 	 */
-	public CustomTabPanel(ElementsPanel graphicsBox, CustomTimeProgressBar timeBar) {
+	public CustomTabPanel(ElementsPanel graphicsBox, CustomTimeProgressBar timeBar,CustomToolBar toolBar) {
 		this.graphicsBox= graphicsBox;
 		this.timeBar=timeBar;
+		this.toolBar=toolBar;
 		initialise();	
 	}
 	/*
@@ -127,7 +132,6 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 			@Override
 			public void mousePressed(MouseEvent e) {
 				createNewSlide();
-				//initialStartUp();
 			}
 
 			@Override
@@ -260,7 +264,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		graphicsBox.addNewPanelForSlide(slide);
 		graphicsBox.setVisibleElementPanelFor(slide);
 		setAddTabButtonLocation();
-		
+		toolBar.setGeneralToolBarListenersForSlide(graphicsBox, getCurrentSlide());
 	}
 	
 
@@ -502,7 +506,10 @@ class CustomTabPaneUI extends BasicTabbedPaneUI implements ComponentInterface{
 		}
 		g2.setColor(Color.white);
 		g2.setFont(getFont(rects[tabIndex].height/2));
-		g2.drawString(" Slide "+(tabIndex+1)+" ", xPos,rects[tabIndex].y+(3*rects[tabIndex].height/4)
+	
+		String title=" Slide "+(tabIndex+1)+" ";
+		int xPosText=rects[tabIndex].x + ((rects[tabIndex].width - g2.getFontMetrics().stringWidth(title))/2);
+		g2.drawString(title, xPosText,rects[tabIndex].y+(3*rects[tabIndex].height/4)
 				);
 		g2.dispose();
 	

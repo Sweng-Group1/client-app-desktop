@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.uiElements;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -28,7 +29,16 @@ import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 /**
  * @author sophiemaw
- * Class thats instatiates all the buttons 
+ * This class creates a panel with toolBar buttons
+ * When a button is clicked, the selectedElementTyoe gets updated to that type
+ * i.e "MOVE","GRAPHIC","ERASE","CIRCLE","RECTANGLE" and the button thats pressed's border 
+ * is painted
+ * When clicked, all other buttons are reset (borders set to false)
+ * TabPane will tell this class what slide is visible, and then this class will add a mouseListener 
+ * and mouseMotionListener to that slide. These listeners allow elements to be placed and 
+ * graphicsElements to be manipulated.
+ * The elementsPanel will tell this class what element is selected and then if it's type 
+ * is "GRAPHIC" and the selectedElementType is "GRAPHIC" that user can paint onto element
  * 
  *
  */
@@ -40,9 +50,11 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 	
 	Stroke paintStroke;
 	Color paintColor;
+	Color textElementColor;
 	Point mousePos;
-	
+
 	PresElement selectedElement;
+	
 	
 	public CustomToolBar() {
 		this.setOpaque(false);	
@@ -51,6 +63,7 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 		this.secondary= colorDark;
 		buttons= Collections.synchronizedList(new ArrayList<>());
 		selectedElementType=new String();
+		paintColor=Color.black;
 				
 		//Create buttons
 		moveButton = new CircleButton();
@@ -82,10 +95,10 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 			eraserButton.setImageIcon(ImageIO.read(new File("./Assets/eraser.png")));
 			textButton.setImageIcon(ImageIO.read(new File("./Assets/text.png")));
 			shapesButton.setImageIcon(ImageIO.read(new File("./Assets/shapes.png")));
-			confirmButton.setImageIcon(ImageIO.read(new File("./Assets/shapes.png")));
-			exitButton.setImageIcon(ImageIO.read(new File("./Assets/tick.png")));
-			forwardButton.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
-			backButton.setImageIcon(ImageIO.read(new File("./Assets/forward.png")));
+			confirmButton.setImageIcon(ImageIO.read(new File("./Assets/tick.png")));
+			exitButton.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
+			forwardButton.setImageIcon(ImageIO.read(new File("./Assets/forward.png")));
+			backButton.setImageIcon(ImageIO.read(new File("./Assets/back.png")));
 			downloadButton.setImageIcon(ImageIO.read(new File("./Assets/download.png")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -118,8 +131,31 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectedElementType= "GRAPHIC";
-				System.out.println(selectedElementType);
+				
+				if(paintButton.isBorderPainted()==false) {
+					resetButtonPresses();
+					selectedElementType= "GRAPHIC";
+					paintButton.setBorderPainted(true);
+				}else {
+					selectedElementType= "";
+					paintButton.setBorderPainted(false);
+				}
+				
+			}
+			
+		});
+		eraserButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(eraserButton.isBorderPainted()==false) {
+					resetButtonPresses();
+					selectedElementType= "ERASER";
+					eraserButton.setBorderPainted(true);
+				}else {
+					selectedElementType= "";
+					eraserButton.setBorderPainted(false);
+				}			
 			}
 			
 		});
@@ -127,8 +163,14 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectedElementType="SHAPE";
-				
+				if(shapesButton.isBorderPainted()==false) {
+					resetButtonPresses();
+					selectedElementType= "CIRCLE";
+					shapesButton.setBorderPainted(true);
+				}else {
+					selectedElementType= "";
+					shapesButton.setBorderPainted(false);
+				}			
 			}
 			
 		});
@@ -136,39 +178,82 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				selectedElementType= "TEXT";
+				if(textButton.isBorderPainted()==false) {
+					resetButtonPresses();
+					selectedElementType= "TEXT";
+					textButton.setBorderPainted(true);
+				}else {
+					selectedElementType= "";
+					textButton.setBorderPainted(false);
+				}	
 				
 			}
 			
 		});
+		moveButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(moveButton.isBorderPainted()==false) {
+					resetButtonPresses();
+					selectedElementType= "MOVE";
+					moveButton.setBorderPainted(true);
+				}else {
+					selectedElementType= "";
+					moveButton.setBorderPainted(false);
+				}	
+				
+			}
+			
+		});
+	
+		
 		selectedElement= null;
+		setPaintThickness(10);
+	}
+	private void resetButtonPresses() {
+		paintButton.setBorderPainted(false);
+		textButton.setBorderPainted(false);
+		shapesButton.setBorderPainted(false);
+		eraserButton.setBorderPainted(false);
+		moveButton.setBorderPainted(false);
 	}
 	
 	
 	/**
 	 * @param presElement 
-	 * This method adds a listener to add graphics to the current Image of a 
-	 * GraphicsElement
+	 * Called within the elementsPanel to set the selectedElement to specific element
 	 */
 	public void setSelectedElement(PresElement presElement) {
 		selectedElement= presElement;
 	}
-	public void setToolBarListenersForSlide(ElementsPanel elementPanel,Slide slide) {
+
+	/**
+	 * @param elementPanel - when slide is clicked, whichever selectedElement from the buttons 
+	 * 							is selected, a new Element is created within elementsPanel 
+	 * @param slide - adds a listener to slide
+	 * Called within tabPane 
+	 */
+	public void setGeneralToolBarListenersForSlide(ElementsPanel elementPanel,Slide slide) {
 		
 			slide.addMouseListener(new MouseListener() {
 	
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if(selectedElement.getType()=="CIRCLE") {
-						
-					}
+					mousePos= e.getPoint();
 					
 				}
 	
 				@Override
 				public void mousePressed(MouseEvent e) {
 					mousePos= e.getPoint();
-					
+					if(selectedElementType=="CIRCLE") {
+						System.out.println("pixel point: "+e.getX()+","+e.getY());
+						elementPanel.addShapeElement("CIRCLE",e.getPoint(),100,100,null,0);
+					}else if(selectedElementType=="TEXT") {
+						elementPanel.addTextElement("Text", e.getPoint(), 100, 100, null, 0);
+					}
+					slide.repaint();
 				}
 	
 				@Override
@@ -194,17 +279,24 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 	
 				@Override
 				public void mouseDragged(MouseEvent e) {
-					if(selectedElement.getType()=="GRAPHIC") {
-						BufferedImage im= ((GraphicsElement)selectedElement).getCurrentImage();
-						Graphics2D g2= (Graphics2D)im.getGraphics().create();
-						g2.setStroke(paintStroke);
-						g2.setColor(paintColor);
-						g2.drawLine(mousePos.x, mousePos.y, e.getX(), e.getY());
-						((GraphicsElement)selectedElement).addBufferedImageToGraphicsList(im);
-						selectedElement.getComponent().validate();
+					if(selectedElement!=null) {
+						if(selectedElement.getType()=="GRAPHIC"){
+							if(selectedElementType=="GRAPHIC") {
+								System.out.println("PAINTING");
+								BufferedImage im= ((GraphicsElement)selectedElement).getCurrentImage();
+								Graphics2D g2= (Graphics2D)im.getGraphics().create();
+								g2.setStroke(paintStroke);
+								g2.setColor(paintColor);
+								g2.drawLine(mousePos.x, mousePos.y, e.getX(), e.getY());
+								((GraphicsElement)selectedElement).addBufferedImageToGraphicsList(im);
+								selectedElement.getComponent().validate();
+							}
+							else if(selectedElementType=="ERASER"){
+				
+							}		
+						}	
+						mousePos= e.getPoint();	
 					}
-					mousePos= e.getPoint();
-					
 				}
 	
 				@Override
@@ -216,10 +308,10 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 			});
 		}
 	
-	/*
-	 * Overided methods:
+
+	/**
+	 * Explained in setMarginBounds() diagram
 	 */
-	
 	public void setMarginBounds(int x,int y, int wi, int he) {
 		super.setMarginBounds(x, y, wi, he);
 		
@@ -243,6 +335,7 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 		for(int i=0;i<buttons.size();i++) {
 			buttons.get(i).setSize(w);
 			buttons.get(i).setLocation(x+gw+(i*(widthOfSections)), y+gh);
+			((CircleButton)buttons.get(i)).setBorder(Color.white,w/10);
 		}
 	
 	}
@@ -250,6 +343,15 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 	/*
 	 * Setters and getters
 	 */
+	public void setPaintThickness(int thickness) {
+		paintStroke= new BasicStroke(thickness);
+	}
+	public void setTextColor(Color textElementColor) {
+		this.textElementColor= textElementColor;
+	}
+	public void setPaintColor(Color paintColor) {
+		this.paintColor= paintColor;
+	}
 	public String getSelectedElementType() {
 		return selectedElementType;
 	}

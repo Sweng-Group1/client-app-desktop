@@ -17,6 +17,11 @@ import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
  * @author sophiemaw
  * Panel that contains a textField for user to write a description that is added to the
  * presentation
+ * When not interacted with, textField displays a placeholder text: "Add a description...";
+ * When interacted with, and placeHolder is changed, description is set to the user input 
+ * and is the set as the textFields text
+ * When placeHolder has not been changed, getDescription returns an empty string
+ * When placeHolder has been changed, getDescription returns description field
  *
  */
 public class CustomDescriptionBox extends UploadSceneComponent implements ComponentInterface{
@@ -93,11 +98,15 @@ public class CustomDescriptionBox extends UploadSceneComponent implements Compon
 		
 		
 	}
+	/*
+	 *  This method is described in more detail in the setMarginBounds diagram
+	 */
 	public void setMarginBounds(int r,int t, int l, int b) {
 		super.setMarginBounds(r, t, l, b);
 		descriptionTextField.setBounds(r+curvatureRadius/2,t+curvatureRadius/4,this.getWidth()-(curvatureRadius)-l-r,this.getHeight()-t-b-(curvatureRadius/2));
 		descriptionTextField.setLineWrap(true);
 	}
+	
 	public String getDescription() {
 		if(descriptionTextField.getText().equalsIgnoreCase(description)) {
 			return description;
