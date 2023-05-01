@@ -289,6 +289,7 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 
 	public void goTo(Presentation p) {
 		if(sophiesLayout==true) {
+		
 			for(int i=0;i<presentationPanels.size();i++) {
 				if(presentationPanels.get(i).getPresentation()==p) {
 					int y= presentationPanels.get(i).getY();
@@ -316,6 +317,7 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 	public void replacePres(List<Presentation> p) {
 
 		if(sophiesLayout==true) {
+			scrollView.removeAll();
 			presentationPanels= new ArrayList<PresentationPanel>();
 			scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS));
 			for(int i=0;i<p.size();i++) {
@@ -343,7 +345,7 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 				gbc.gridy = i;
 				scrollView.add(pres, gbc);
 				pres.setEnabled(true);
-				pres.setBackground(sideBarBlue);
+				pres.setBackground(colorLight);
 				pres.setVisible(true);
 			}	
 		}

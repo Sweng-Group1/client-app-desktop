@@ -22,6 +22,7 @@ import javax.swing.WindowConstants;
 
 import org.mapsforge.core.model.LatLong;
 
+import graphics.Circle;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.media.ImageViewer;
 import sweng.group.one.client_app_desktop.media.VideoPlayer;
@@ -49,7 +50,7 @@ public class MainScene extends JFrame{
 	
 	public MainScene() {
 		super();
-		this.setVisible(true); // Wait for fully loaded to become visible
+		this.setVisible(true); 
 		
 		this.setSize(screenSize);
 		this.setLayout(null);
@@ -60,7 +61,7 @@ public class MainScene extends JFrame{
 	
 	};
 	public void testWholeScene() {
-		this.setVisible(false);
+		this.setVisible(true); // Wait for fully loaded to become visible
 		mapScene = new MapScene() {
 			@Override
 			public void selectMarker(EventMarker selected) {
@@ -304,6 +305,14 @@ public class MainScene extends JFrame{
 	    	
 	    	ImageViewer ie = new ImageViewer(new Point(0, 0), slideX, slideY, 0, slide, new URL("https://getsamplefiles.com/download/png/sample-1.png"));
 	    	slide.add(ie);
+	    	/*
+	    	 *  Testing sideBar prevslide/ next slide 
+	    	 *  
+	    	 */
+	    	Slide slideB = new Slide(slideX, slideY);
+	    	slides.add(slideB);
+	    	slideB.setBackground(Color.green);
+	    	//slideB.add(new Circle(new Point(1, 1), slideY/2, 0, slideB,Color.black,null,null));
 	    	
 	    	Presentation pres = new Presentation(slides);
 			mapScene.getMarkers().get(1).addPost(pres);
@@ -318,13 +327,22 @@ public class MainScene extends JFrame{
 			slideY = i%2 == 0 ? 9 : 16;
 			
 			//create slide and add to frame
-	    	Slide slide = new Slide(slideX, slideY);
+	    	Slide slideA = new Slide(slideX, slideY);
 	    	ArrayList<Slide> slides = new ArrayList<>();
-	    	slides.add(slide);
+	    	slides.add(slideA);
 	    	
-	    	TextElement te = new TextElement("This is demonstration of how text will look", fontNames[i], 10*i + 1, new Color(0, 0, 255*i/5), 0, new Point(0, 0), slideX, slideY, slide);
-	    	slide.add(te);
-	    	slide.add(new DemoElement(new Point(0, 0), slideX, slideY, 0, slide));
+	    	TextElement te = new TextElement("This is demonstration of how text will look", fontNames[i], 10*i + 1, new Color(0, 0, 255*i/5), 0, new Point(0, 0), slideX, slideY, slideA);
+	    	slideA.add(te);
+	    	slideA.add(new DemoElement(new Point(0, 0), slideX, slideY, 0, slideA));
+	    	
+	    	/*
+	    	 *  Testing sideBar prevslide/ next slide 
+	    	 *  
+	    	 */
+	    	Slide slideB = new Slide(slideX, slideY);
+	    	slides.add(slideB);
+	    	slideB.setBackground(colorDark.MAGENTA);
+	    	//slideB.add(new Circle(new Point(0, 0), slideY/2, 0, slideB,Color.black,null,null));
 	    	
 	    	Presentation pres = new Presentation(slides);
 			mapScene.getMarkers().get(2).addPost(pres);
@@ -333,9 +351,9 @@ public class MainScene extends JFrame{
 
 	public static void main(String[] args) {
 		MainScene ms = new MainScene();
-		//ms.testWholeScene();
+		ms.testWholeScene();
 		//ms.testWholeSceneWithoutMap(0);
-		ms.testOnlyUpload();
+		//ms.testOnlyUpload();
 	}
 	
 	
