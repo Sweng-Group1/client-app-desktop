@@ -35,7 +35,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import sweng.group.one.client_app_desktop.graphics.Border;
+import sweng.group.one.client_app_desktop.graphics.Circle;
+import sweng.group.one.client_app_desktop.graphics.Line;
+import sweng.group.one.client_app_desktop.graphics.Rectangle;
+import sweng.group.one.client_app_desktop.graphics.Shadow;
+import sweng.group.one.client_app_desktop.media.AudioPlayer;
+import sweng.group.one.client_app_desktop.media.ImageViewer;
 import sweng.group.one.client_app_desktop.media.VideoPlayer;
+import sweng.group.one.client_app_desktop.text.TextElement;
 
 /**
  * @author flt515
@@ -243,34 +251,30 @@ public class Presentation extends JPanel {
 					}
 					
 					
-					
+					Point pos;
+					boolean loops = false;
+					Border border;
+					Shadow shadow;
 					
 					switch (slideItemName) {
 					case "image":
-						System.out.println(varDict.get("url") + " " + 
-											varDict.get("width") + " " +
-											varDict.get("height") + " " +
-											varDict.get("rotation") + " " +
-											varDict.get("delay") + " " +
-											varDict.get("xCoordinate") + " " +
-											varDict.get("yCoordinate") + " " +
-											varDict.get("timeOnScreen"));
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						ImageViewer imageViewer = new ImageViewer(pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								(float) varDict.get("timeOnScreen"),
+								getCurrentSlide(),
+								(URL) varDict.get("url"));
+						getCurrentSlide().add(imageViewer);
 						break;
 					case "video":
-//						System.out.println(varDict.get("url") + " " + 
-//											varDict.get("width") + " " +
-//											varDict.get("height") + " " +
-//											varDict.get("xCoordinate") + " " +
-//											varDict.get("yCoordinate") + " " +
-//											varDict.get("loops"));
-						Point pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
-						boolean loops = false;
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
 						if (varDict.get("loops") != null) {
 							loops = (boolean) varDict.get("loops");
 						}
 						VideoPlayer videoPlayer = new VideoPlayer(pos,
 								(Integer) varDict.get("width"),
-								(Integer)varDict.get("height"),
+								(Integer) varDict.get("height"),
 								getCurrentSlide(),
 								(URL) varDict.get("url"),
 								loops);
@@ -278,32 +282,73 @@ public class Presentation extends JPanel {
 						videoPlayer.displayElement();
 						break; 
 					case "audio":
-						System.out.println(varDict.get("url") + " " + 
-								varDict.get("width") + " " +
-								varDict.get("height") + " " +
-								varDict.get("xCoordinate") + " " +
-								varDict.get("yCoordinate") + " " +
-								varDict.get("loops"));
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						if (varDict.get("loops") != null) {
+							loops = (boolean) varDict.get("loops");
+						}
+						AudioPlayer audioPlayer = new AudioPlayer(pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								(float) varDict.get("timeOnScreen"),
+								getCurrentSlide(),
+								(URL) varDict.get("url"),
+								loops);
+						getCurrentSlide().add(audioPlayer);
 						break;
 					case "rectangle":
-						System.out.println(varDict.get("borderColour") + " " +
-											varDict.get("borderWidth"));
-						System.out.println(varDict.get("shadowColour") + " " +
-											varDict.get("shadowDx") + " " +
-											varDict.get("shadowDy") + " " +
-											varDict.get("shadowRadius"));
-						System.out.println(varDict.get("width") + " " +
-										varDict.get("height") + " " +
-										varDict.get("xCoordinate") + " " +
-										varDict.get("yCoordinate") + " " +
-										varDict.get("colour") + " " +
-										varDict.get("timeOnScreen"));
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						border = new Border((Color) varDict.get("borderColour"), (Integer) varDict.get("borderWidth"));
+						shadow = new Shadow((Color) varDict.get("shadowColour"), (Integer) varDict.get("shadowDx"), (Integer) varDict.get("shadowDy"), (Integer) varDict.get("shadowRadius"));
+						Rectangle rectangle = new Rectangle(pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								(float) varDict.get("timeOnScreen"),
+								getCurrentSlide(),
+								(Color) varDict.get("colour"),
+								border,
+								shadow);
+						getCurrentSlide().add(rectangle);
 						break;
 					case "circle":
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						border = new Border((Color) varDict.get("borderColour"), (Integer) varDict.get("borderWidth"));
+						shadow = new Shadow((Color) varDict.get("shadowColour"), (Integer) varDict.get("shadowDx"), (Integer) varDict.get("shadowDy"), (Integer) varDict.get("shadowRadius"));
+						Circle circle = new Circle(pos,
+								(Integer) varDict.get("radius"),
+								(float) varDict.get("timeOnScreen"),
+								getCurrentSlide(),
+								(Color) varDict.get("colour"),
+								border,
+								shadow);
+						getCurrentSlide().add(circle);
 						break;
 					case "line":
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						Point from = new Point((Integer) varDict.get("fromX"), (Integer) varDict.get("fromY"));
+						Point to = new Point((Integer) varDict.get("toX"), (Integer) varDict.get("toY"));
+						Line line = new Line(pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								(float) varDict.get("timeOnScreen"),
+								getCurrentSlide(),
+								(Integer) varDict.get("thickness"),
+								from,
+								to,
+								(Color) varDict.get("colour"));
+						getCurrentSlide().add(line);
 						break;
 					case "text":
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer) varDict.get("yCoordinate"));				
+						TextElement text = new TextElement(slideItem.getTextContent(),
+								(String) varDict.get("fontName"),
+								(Integer) varDict.get("fontSize"),
+								(Color) varDict.get("colour"),
+								(float) varDict.get("timeOnScreen"),
+								pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								getCurrentSlide());
+						getCurrentSlide().add(text);
 						break;
 					}
 				}
