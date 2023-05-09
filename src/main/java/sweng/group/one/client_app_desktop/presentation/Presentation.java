@@ -2,6 +2,7 @@ package sweng.group.one.client_app_desktop.presentation;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
@@ -33,6 +34,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import sweng.group.one.client_app_desktop.media.VideoPlayer;
 
 /**
  * @author flt515
@@ -254,12 +257,25 @@ public class Presentation extends JPanel {
 											varDict.get("timeOnScreen"));
 						break;
 					case "video":
-						System.out.println(varDict.get("url") + " " + 
-											varDict.get("width") + " " +
-											varDict.get("height") + " " +
-											varDict.get("xCoordinate") + " " +
-											varDict.get("yCoordinate") + " " +
-											varDict.get("loops"));
+//						System.out.println(varDict.get("url") + " " + 
+//											varDict.get("width") + " " +
+//											varDict.get("height") + " " +
+//											varDict.get("xCoordinate") + " " +
+//											varDict.get("yCoordinate") + " " +
+//											varDict.get("loops"));
+						Point pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						boolean loops = false;
+						if (varDict.get("loops") != null) {
+							loops = (boolean) varDict.get("loops");
+						}
+						VideoPlayer videoPlayer = new VideoPlayer(pos,
+								(Integer) varDict.get("width"),
+								(Integer)varDict.get("height"),
+								getCurrentSlide(),
+								(URL) varDict.get("url"),
+								loops);
+						getCurrentSlide().add(videoPlayer);
+						videoPlayer.displayElement();
 						break; 
 					case "audio":
 						System.out.println(varDict.get("url") + " " + 

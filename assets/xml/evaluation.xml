@@ -19,7 +19,7 @@
             yCoordinate="120" timeOnScreen="00:00:20" />
     </slide>
     <slide width="900" height="1000" title="2">
-        <video url="" loop="true" width="300" height="200"
+        <video url="https://getsamplefiles.com/download/mp4/sample-5.mp4" loop="true" width="300" height="200"
             xCoordinate="150" yCoordinate="0" />
         <rectangle width="800" height="600" xCoordinate="50" yCoordinate="350" colour="#00FFFFFF"
             borderColour="#FF0000FF" borderWidth="5" shadowRadius="5" shadowDx="5" shadowDy="7"
