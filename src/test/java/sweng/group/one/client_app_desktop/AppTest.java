@@ -35,13 +35,4 @@ public class AppTest
     {
         assertTrue( true );
     }
-    
-    // junit.framework doesn't contain @Test need to use @org.junit.Test
-    // This isn't the method we were originally instructed to use i.e. 
-    // importing junit.framework.Test. Is there an appropriate advantage
-    // to having constructed the file in this manner?
-    @org.junit.Test
-    public void startUpWindowSize() {
-    	
-    }
 }

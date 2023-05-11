@@ -79,7 +79,6 @@ public class MapScene extends MapView{
 				@Override //print co-ords when map is clicked
 	            public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
 	                addEventMarker(tapLatLong);
-	                System.out.println(tapLatLong);
 	                return true;
 	            }
 	        };

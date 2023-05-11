@@ -1,4 +1,5 @@
 package sweng.group.one.client_app_desktop.media;
+
 import java.awt.Point;
 import java.net.URL;
 
