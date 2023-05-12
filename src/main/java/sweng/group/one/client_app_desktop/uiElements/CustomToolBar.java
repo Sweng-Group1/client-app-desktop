@@ -3,6 +3,7 @@ package sweng.group.one.client_app_desktop.uiElements;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 	CircleButton moveButton,paintButton,eraserButton, textButton, shapesButton, confirmButton,
 					exitButton,forwardButton,backButton, downloadButton;
 	
+	int strokeThickness;
 	Stroke paintStroke;
 	Color paintColor;
 	Color textElementColor;
@@ -292,7 +295,26 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 								selectedElement.getComponent().validate();
 							}
 							else if(selectedElementType=="ERASER"){
-				
+								System.out.println("erasing");
+								BufferedImage im= ((GraphicsElement)selectedElement).getCurrentImage();
+								int width= im.getWidth();
+								int height = im.getHeight();
+							    int[] pixels = new int[strokeThickness * strokeThickness];
+							    for (int i = 0; i < pixels.length; i++) {
+							    	pixels[i] = 0x00ffffff;				        
+							    }
+							    im.setRGB(e.getX()-strokeThickness/2, e.getY()-strokeThickness/2, strokeThickness, strokeThickness, pixels, 0, 0);
+
+							    for (int i = 0; i < pixels.length; i++) {
+							        // I used capital F's to indicate that it's the alpha value.
+							        if (pixels[i] == 0xFFffffff) {
+							            // We'll set the alpha value to 0 for to make it fully transparent.
+							            pixels[i] = 0x00ffffff;
+							        }
+							    }
+						
+								((GraphicsElement)selectedElement).addBufferedImageToGraphicsList(im);
+								selectedElement.getComponent().validate();
 							}		
 						}	
 						mousePos= e.getPoint();	
@@ -345,6 +367,7 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 	 */
 	public void setPaintThickness(int thickness) {
 		paintStroke= new BasicStroke(thickness);
+		strokeThickness= thickness;
 	}
 	public void setTextColor(Color textElementColor) {
 		this.textElementColor= textElementColor;

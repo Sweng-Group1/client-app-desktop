@@ -351,9 +351,9 @@ public class MainScene extends JFrame{
 
 	public static void main(String[] args) {
 		MainScene ms = new MainScene();
-		ms.testWholeScene();
+		//ms.testWholeScene();
 		//ms.testWholeSceneWithoutMap(0);
-		//ms.testOnlyUpload();
+		ms.testOnlyUpload();
 	}
 	
 	
