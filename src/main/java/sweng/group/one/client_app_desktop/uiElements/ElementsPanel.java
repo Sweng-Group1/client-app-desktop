@@ -26,8 +26,8 @@ import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-import graphics.Circle;
-import graphics.Rectangle;
+import sweng.group.one.client_app_desktop.graphics.Circle;
+import sweng.group.one.client_app_desktop.graphics.Rectangle;
 import sweng.group.one.client_app_desktop.media.GraphicsElement;
 import sweng.group.one.client_app_desktop.media.ImageElement;
 import sweng.group.one.client_app_desktop.media.TextElement;
@@ -170,7 +170,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			public JButton createIncreaseButton(int o) {				
 				CircleButton b= new CircleButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./Assets/down.png")));
+					b.setImageIcon(ImageIO.read(new File("./assets/down.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -182,7 +182,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			public JButton createDecreaseButton(int o) {				
 				CircleButton b= new CircleButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./Assets/up.png")));
+					b.setImageIcon(ImageIO.read(new File("./assets/up.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -203,7 +203,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		 */
 		
 		addElement= new CircleButton();
-		addElement.setImageIcon(ImageIO.read(new File("./Assets/plus-small.png")));
+		addElement.setImageIcon(ImageIO.read(new File("./assets/plus-small.png")));
 		lowerPanel.add(addElement);
 		addElement.addMouseListener(new MouseListener() {
 
@@ -278,7 +278,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			
 		});
 		deleteElement=new CircleButton();
-		deleteElement.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
+		deleteElement.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
 		lowerPanel.add(deleteElement);	
 		deleteElement.addMouseListener(new MouseListener() {
 

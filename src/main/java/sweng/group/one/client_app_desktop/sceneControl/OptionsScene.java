@@ -1,25 +1,13 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.Border;
-
-import optionsSceneUIElements.CircularButton;
-import sweng.group.one.client_app_desktop.uiElements.CircleButton;
-
-
-
-import javax.swing.ImageIcon;
+import sweng.group.one.client_app_desktop.optionsSceneUIElements.CircularButton;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
@@ -48,19 +36,19 @@ import javax.swing.JPanel;
 			multipleOptionsPanel.setLayout(null);
 			
 			accountButton= new CircularButton();
-			accountButton.setImageIcon(ImageIO.read(new File("./Assets/user.png")));
+			accountButton.setImageIcon(ImageIO.read(new File("./assets/user.png")));
 			accountButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 			
 			addPostButton= new CircularButton();
-			addPostButton.setImageIcon(ImageIO.read(new File("./Assets/plus.png")));
+			addPostButton.setImageIcon(ImageIO.read(new File("./assets/plus.png")));
 			addPostButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 			
 			helpButton= new CircularButton();
-			helpButton.setImageIcon(ImageIO.read(new File("./Assets/question.png")));
+			helpButton.setImageIcon(ImageIO.read(new File("./assets/question.png")));
 			helpButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 		
 			closeButton= new CircularButton();
-			closeButton.setImageIcon(ImageIO.read(new File("./Assets/crossBlack.png")));
+			closeButton.setImageIcon(ImageIO.read(new File("./assets/crossBlack.png")));
 			closeButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 		
 			multipleOptionsPanel.add(accountButton);

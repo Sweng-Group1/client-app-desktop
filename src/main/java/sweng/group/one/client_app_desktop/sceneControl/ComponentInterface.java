@@ -7,7 +7,7 @@ import java.awt.Point;
 
 import javax.swing.JComponent;
 
-import graphics.Rectangle;
+import sweng.group.one.client_app_desktop.graphics.Rectangle;
 
 /**
  * @author sophiemaw
