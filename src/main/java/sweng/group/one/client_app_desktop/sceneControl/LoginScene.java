@@ -151,7 +151,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	}
 	private void createLogo() throws IOException {
 		logoPanel= new JLabel();
-		logo= ImageIO.read(new File("./assers/Yusu Logo 14.png"));
+		logo= ImageIO.read(new File("./assets/Yusu Logo 14.png"));
 		this.add(logoPanel);
 	}
 	public void setSize(int width, int height) {

@@ -170,7 +170,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			public JButton createIncreaseButton(int o) {				
 				CircleButton b= new CircleButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./assers/down.png")));
+					b.setImageIcon(ImageIO.read(new File("./assets/down.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -182,7 +182,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			public JButton createDecreaseButton(int o) {				
 				CircleButton b= new CircleButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./assers/up.png")));
+					b.setImageIcon(ImageIO.read(new File("./assets/up.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -203,7 +203,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		 */
 		
 		addElement= new CircleButton();
-		addElement.setImageIcon(ImageIO.read(new File("./assers/plus-small.png")));
+		addElement.setImageIcon(ImageIO.read(new File("./assets/plus-small.png")));
 		lowerPanel.add(addElement);
 		addElement.addMouseListener(new MouseListener() {
 
@@ -278,7 +278,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			
 		});
 		deleteElement=new CircleButton();
-		deleteElement.setImageIcon(ImageIO.read(new File("./assers/cross.png")));
+		deleteElement.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
 		lowerPanel.add(deleteElement);	
 		deleteElement.addMouseListener(new MouseListener() {
 

@@ -93,16 +93,16 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 		
 		
 		try {
-			moveButton.setImageIcon(ImageIO.read(new File("./assers/cursor.png")));
-			paintButton.setImageIcon(ImageIO.read(new File("./assers/pencil.png")));
-			eraserButton.setImageIcon(ImageIO.read(new File("./assers/eraser.png")));
-			textButton.setImageIcon(ImageIO.read(new File("./assers/text.png")));
-			shapesButton.setImageIcon(ImageIO.read(new File("./assers/shapes.png")));
-			confirmButton.setImageIcon(ImageIO.read(new File("./assers/tick.png")));
-			exitButton.setImageIcon(ImageIO.read(new File("./assers/cross.png")));
-			forwardButton.setImageIcon(ImageIO.read(new File("./assers/forward.png")));
-			backButton.setImageIcon(ImageIO.read(new File("./assers/back.png")));
-			downloadButton.setImageIcon(ImageIO.read(new File("./assers/download.png")));
+			moveButton.setImageIcon(ImageIO.read(new File("./assets/cursor.png")));
+			paintButton.setImageIcon(ImageIO.read(new File("./assets/pencil.png")));
+			eraserButton.setImageIcon(ImageIO.read(new File("./assets/eraser.png")));
+			textButton.setImageIcon(ImageIO.read(new File("./assets/text.png")));
+			shapesButton.setImageIcon(ImageIO.read(new File("./assets/shapes.png")));
+			confirmButton.setImageIcon(ImageIO.read(new File("./assets/tick.png")));
+			exitButton.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
+			forwardButton.setImageIcon(ImageIO.read(new File("./assets/forward.png")));
+			backButton.setImageIcon(ImageIO.read(new File("./assets/back.png")));
+			downloadButton.setImageIcon(ImageIO.read(new File("./assets/download.png")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
