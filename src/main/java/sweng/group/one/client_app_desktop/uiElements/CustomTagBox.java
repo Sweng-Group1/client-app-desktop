@@ -213,7 +213,7 @@ class Tag extends JPanel implements ComponentInterface{
 		this.setOpaque(false);
 		deleteTagButton= new CircleButton();
 		try {
-			deleteTagButton.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
+			deleteTagButton.setImageIcon(ImageIO.read(new File("./assers/cross.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

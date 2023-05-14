@@ -65,7 +65,7 @@ public class Header extends JPanel{
 				Image im;
 				
 					try {
-						im = ImageIO.read(new File("./Assets/backBlack.png")).getScaledInstance(this.getWidth()/2, this.getHeight()/2, java.awt.Image.SCALE_SMOOTH);
+						im = ImageIO.read(new File("./assers/backBlack.png")).getScaledInstance(this.getWidth()/2, this.getHeight()/2, java.awt.Image.SCALE_SMOOTH);
 						g2.drawImage(im, this.getWidth()/4, this.getWidth()/4, null);
 					} catch (IOException e) {
 						e.printStackTrace();

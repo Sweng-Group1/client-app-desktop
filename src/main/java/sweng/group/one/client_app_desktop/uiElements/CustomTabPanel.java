@@ -102,7 +102,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		//BUTTONS:
 		addTabButton= new CircleButton();
 		try {
-			addTabButton.setImageIcon(ImageIO.read(new File("./Assets/plus-small.png")));
+			addTabButton.setImageIcon(ImageIO.read(new File("./assers/plus-small.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,7 +111,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		removeTabButton= new CircleButton();
 		this.add(addTabButton);
 		try {
-			removeTabButton.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
+			removeTabButton.setImageIcon(ImageIO.read(new File("./assers/cross.png")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -361,7 +361,7 @@ class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 
 		removeButtonIndex=0;
 		try {
-			editingBackground= ImageIO.read(new File("./Assets/editingBackground.png"));
+			editingBackground= ImageIO.read(new File("./assers/editingBackground.png"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

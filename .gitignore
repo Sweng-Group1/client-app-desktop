@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 .metadata
 bin/
 tmp/
+target/
 *.tmp
 *.bak
 *.swp

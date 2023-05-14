@@ -36,19 +36,19 @@ import javax.swing.JPanel;
 			multipleOptionsPanel.setLayout(null);
 			
 			accountButton= new CircularButton();
-			accountButton.setImageIcon(ImageIO.read(new File("./Assets/user.png")));
+			accountButton.setImageIcon(ImageIO.read(new File("./assers/user.png")));
 			accountButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 			
 			addPostButton= new CircularButton();
-			addPostButton.setImageIcon(ImageIO.read(new File("./Assets/plus.png")));
+			addPostButton.setImageIcon(ImageIO.read(new File("./assers/plus.png")));
 			addPostButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 			
 			helpButton= new CircularButton();
-			helpButton.setImageIcon(ImageIO.read(new File("./Assets/question.png")));
+			helpButton.setImageIcon(ImageIO.read(new File("./assers/question.png")));
 			helpButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 		
 			closeButton= new CircularButton();
-			closeButton.setImageIcon(ImageIO.read(new File("./Assets/crossBlack.png")));
+			closeButton.setImageIcon(ImageIO.read(new File("./assers/crossBlack.png")));
 			closeButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
 		
 			multipleOptionsPanel.add(accountButton);

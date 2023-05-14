@@ -209,10 +209,10 @@ public class CustomTimeProgressBar extends UploadSceneComponent implements Compo
 		bar.setBounds(audioButton.getX()+height+r+r, t+ curvatureRadius/2, this.getWidth()-r-r-l-(curvatureRadius)-(audioButton.getX()+height+r), height);
 		
 		try {
-			playIcon= ImageIO.read(new File("./Assets/play.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);
-			pauseIcon= ImageIO.read(new File("./Assets/pause.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);;
-			audioOnIcon= ImageIO.read(new File("./Assets/audioON.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);;
-			audioOffIcon= ImageIO.read(new File("./Assets/audioOFF.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);;
+			playIcon= ImageIO.read(new File("./assers/play.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);
+			pauseIcon= ImageIO.read(new File("./assers/pause.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);;
+			audioOnIcon= ImageIO.read(new File("./assers/audioON.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);;
+			audioOffIcon= ImageIO.read(new File("./assers/audioOFF.png")).getScaledInstance(height, height, java.awt.Image.SCALE_SMOOTH);;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

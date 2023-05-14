@@ -174,7 +174,7 @@ public class SearchBar extends JPanel {
 				
 					try {
 				
-						im = ImageIO.read(new File("./Assets/searchBlack.png")).getScaledInstance(this.getWidth()/2,this.getHeight()/2, java.awt.Image.SCALE_SMOOTH);
+						im = ImageIO.read(new File("./assers/searchBlack.png")).getScaledInstance(this.getWidth()/2,this.getHeight()/2, java.awt.Image.SCALE_SMOOTH);
 						g2.drawImage(im,this.getWidth()/4,this.getWidth()/4, null);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
