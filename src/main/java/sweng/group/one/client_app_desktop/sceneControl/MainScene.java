@@ -7,6 +7,8 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -55,11 +57,35 @@ public class MainScene extends JFrame{
 		this.setSize(screenSize);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resizeFrame();
+			}
+		});
 		gapWidth= screenSize.height/48;
 		curvatureRadius= 20;
 		panel= this.getLayeredPane();
 	
 	};
+	
+	private void resizeFrame() {
+		Dimension d = this.getSize();
+		
+		sidebarScene.setSize(d.width/3,d.height);
+		sidebarScene.setLocation(0,0);
+		
+		mapScene.setSize(d);
+		
+		login.setSize(d.width/4, d.height/2);
+		login.setLocation((d.width - d.width/4)/2, d.height/4);
+		
+		upload.setSize(d);
+		upload.setBounds(d.width/10, d.height/10, 4*(d.width/5), 4*(d.height/5));
+		
+		options.setSize(d);
+	}
+	
 	public void testWholeScene() {
 		this.setVisible(true); // Wait for fully loaded to become visible
 		mapScene = new MapScene() {
@@ -91,15 +117,11 @@ public class MainScene extends JFrame{
 		sidebarScene = new SidebarScene(null);
 		panel.setLayer(sidebarScene, i);
 		panel.add(sidebarScene);
-		sidebarScene.setSize(screenSize.width/3,screenSize.height);
-		sidebarScene.setLocation(0,0);
 		
 		try {
 			options = new OptionsScene();
 			panel.setLayer(options, i+1);
 			panel.add(options);
-			options.setSize(screenSize.height/4, screenSize.height/4);
-			options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,8 +131,6 @@ public class MainScene extends JFrame{
 			login= new LoginScene();
 			panel.setLayer(login, i+2);
 			panel.add(login);
-			login.setSize(screenSize.width/4, screenSize.height/2);
-			login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
 			login.setVisible(false);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -120,7 +140,6 @@ public class MainScene extends JFrame{
 		panel.setLayer(upload, i+3);
 		panel.add(upload);
 
-		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
 		upload.validate();
 		upload.repaint();
 		upload.setVisible(false);
@@ -351,8 +370,8 @@ public class MainScene extends JFrame{
 
 	public static void main(String[] args) {
 		MainScene ms = new MainScene();
-		//ms.testWholeScene();
-		ms.testWholeSceneWithoutMap(0);
+		ms.testWholeScene();
+		//ms.testWholeSceneWithoutMap(0);
 		//ms.testOnlyUpload();
 	}
 	
