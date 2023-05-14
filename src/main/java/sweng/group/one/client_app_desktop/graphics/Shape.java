@@ -1,4 +1,4 @@
-package graphics;
+package sweng.group.one.client_app_desktop.graphics;
 
 import java.awt.Color;
 import java.awt.Point;

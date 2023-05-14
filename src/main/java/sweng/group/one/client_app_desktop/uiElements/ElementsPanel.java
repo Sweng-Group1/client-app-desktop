@@ -26,8 +26,8 @@ import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-import graphics.Circle;
-import graphics.Rectangle;
+import sweng.group.one.client_app_desktop.graphics.Circle;
+import sweng.group.one.client_app_desktop.graphics.Rectangle;
 import sweng.group.one.client_app_desktop.media.GraphicsElement;
 import sweng.group.one.client_app_desktop.media.ImageElement;
 import sweng.group.one.client_app_desktop.media.TextElement;

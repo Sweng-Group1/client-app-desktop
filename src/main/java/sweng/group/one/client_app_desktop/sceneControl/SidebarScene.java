@@ -24,13 +24,13 @@ import javax.swing.ScrollPaneConstants;
 
 import org.assertj.core.error.ShouldBeUpperCase;
 
-import sideBarUIElements.CustomPanel;
-import sideBarUIElements.CustomScrollBarUI;
-import sideBarUIElements.Header;
-import sideBarUIElements.PresentationPanel;
-import sideBarUIElements.SearchBar;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
+import sweng.group.one.client_app_desktop.sideBarUIElements.CustomPanel;
+import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
+import sweng.group.one.client_app_desktop.sideBarUIElements.Header;
+import sweng.group.one.client_app_desktop.sideBarUIElements.PresentationPanel;
+import sweng.group.one.client_app_desktop.sideBarUIElements.SearchBar;
 
 /**
  * @author joncooke

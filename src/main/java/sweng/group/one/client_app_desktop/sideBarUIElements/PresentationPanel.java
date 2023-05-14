@@ -1,4 +1,4 @@
-package sideBarUIElements;
+package sweng.group.one.client_app_desktop.sideBarUIElements;
 
 
 

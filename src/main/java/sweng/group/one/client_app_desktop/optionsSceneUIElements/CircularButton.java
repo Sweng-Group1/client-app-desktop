@@ -1,4 +1,4 @@
-package optionsSceneUIElements;
+package sweng.group.one.client_app_desktop.optionsSceneUIElements;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

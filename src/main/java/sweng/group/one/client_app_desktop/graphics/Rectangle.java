@@ -1,4 +1,4 @@
-package graphics;
+package sweng.group.one.client_app_desktop.graphics;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -8,45 +8,44 @@ import java.awt.MultipleGradientPaint.CycleMethod;
 import java.awt.Paint;
 import java.awt.Point;
 import java.awt.RadialGradientPaint;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Stroke;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
 /**
- * The “Circle” class draws a circle of a given radius and colour at a given
- * position on a “Slide” object.
+ * The “Rectangle” class draws a rectangle of given dimensions on a “Slide”
+ * object, with the possibility of a border and shadow.
  * 
  * @author joe2k01
  *
  */
-public class Circle extends Shape {
+public class Rectangle extends Shape {
+
 	// Shadow parameters to be accessed in CanvasOperation
-	private final int radius, shadowDx, shadowDy, shadowBlurRadius;
+	private final int shadowDx, shadowDy, shadowBlurRadius;
 	private final Color shadowColour;
 
 	// Border Parameters to be accessed in CanvasOperation
-	private final Color borderColour;
 	private final int borderWidth;
-	
+	private final Color borderColour;
+
+	// Rect Parameters to be accessed in CanvasOperation
+	private final int rectWidth, rectHeight;
+
 	// Access to gradient paint for testing
 	private Paint gradient;
 
 	/**
-	 * Draws the circle.
+	 * Draws the rectangle.
 	 * 
-	 * @param g2d Graphics2D object to draw the circle with.
+	 * @param g2d Graphics2D object to draw the rectangle with.
 	 */
-	
-	public void drawCircle(Graphics2D g2d) {
+	public void drawRect(Graphics2D g2d) {
 		Stroke previousStroke = g2d.getStroke();
 		Paint previousPaint = g2d.getPaint();
 
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 		// Get bounding box
-		Rectangle r = g2d.getClip().getBounds();
+		java.awt.Rectangle r = g2d.getClip().getBounds();
 
 		// Map width/height
 		int mWidth = relativeToSlide(width);
@@ -58,9 +57,9 @@ public class Circle extends Shape {
 		int x = 0;
 		int y = 0;
 
-		// Map radius
-		int mRadius = relativeToSlide(radius);
-		int mDiameter = 2 * mRadius;
+		// Map rectangle width/height
+		int mRectWidth = relativeToSlide(rectWidth);
+		int mRectHeight = relativeToSlide(rectHeight);
 
 		// Draw shadow
 		if (shadow != null) {
@@ -69,7 +68,7 @@ public class Circle extends Shape {
 			int mShadowDy = relativeToSlide(shadowDy);
 			int mShadowBlurRadius = relativeToSlide(shadowBlurRadius);
 
-			// Pad circle to shadow
+			// Pad rectangle to shadow
 			x += Math.abs(Math.min(0, mShadowDx));
 			y += Math.abs(Math.min(0, mShadowDy));
 
@@ -98,34 +97,23 @@ public class Circle extends Shape {
 
 				g2d.fillOval(0, 0, mWidth, mHeight);
 			} else { // Linear gradient
-				// Work out shadow start position
-				int shadowX, shadowY;
-				if (mShadowDx < 0)
-					shadowX = mWidth - (-mShadowDx + mDiameter + mShadowBlurRadius);
-				else
-					shadowX = mShadowDx;
-
-				if (mShadowDy < 0)
-					shadowY = mHeight - (-mShadowDy + mDiameter + mShadowBlurRadius);
-				else
-					shadowY = mShadowDy;
+				int shadowXStart, shadowYStart, shadowXEnd, shadowYEnd;
 
 				// Work out gradient start and end
-				int shadowXStart, shadowYStart, shadowXEnd, shadowYEnd;
 				if (mShadowDx >= 0) { // Left to right
-					shadowXStart = shadowX;
-					shadowXEnd = shadowX + mDiameter + mShadowBlurRadius;
+					shadowXStart = 0;
+					shadowXEnd = mWidth;
 				} else { // Right to left
-					shadowXStart = shadowX + mDiameter + mShadowBlurRadius;
-					shadowXEnd = shadowX;
+					shadowXStart = mWidth;
+					shadowXEnd = 0;
 				}
 
 				if (mShadowDy >= 0) { // Top to bottom
-					shadowYStart = shadowY;
-					shadowYEnd = shadowY + mDiameter + mShadowBlurRadius;
+					shadowYStart = 0;
+					shadowYEnd = mHeight;
 				} else { // Bottom to top
-					shadowYStart = shadowY + mDiameter + mShadowBlurRadius;
-					shadowYEnd = shadowY;
+					shadowYStart = mHeight;
+					shadowYEnd = 0;
 				}
 
 				gradient = new GradientPaint(shadowXStart, shadowYStart, shadowColour, shadowXEnd, shadowYEnd,
@@ -133,8 +121,8 @@ public class Circle extends Shape {
 
 				g2d.setPaint(gradient);
 
-				g2d.fillOval(shadowX, shadowY, mDiameter + mShadowBlurRadius, mDiameter + mShadowBlurRadius);
-
+				g2d.fillRect((mShadowDx > 0) ? mShadowDx : 0, (mShadowDy > 0) ? mShadowDy : 0,
+						mWidth + ((mShadowDx > 0) ? 0 : mShadowDx), mHeight + ((mShadowDy > 0) ? 0 : mShadowDy));
 			}
 		}
 
@@ -143,19 +131,19 @@ public class Circle extends Shape {
 			// Map border
 			int mBorderWidth = relativeToSlide(borderWidth);
 
-			// Pad circle to border
+			// Pad rectangle to border
 			x += mBorderWidth;
 			y += mBorderWidth;
 
 			g2d.setStroke(new BasicStroke(mBorderWidth));
 			g2d.setPaint(borderColour);
-			g2d.fillOval(x - mBorderWidth, y - mBorderWidth, mDiameter + 2 * mBorderWidth,
-					mDiameter + 2 * mBorderWidth);
+			g2d.fillRect(x - mBorderWidth, y - mBorderWidth, mRectWidth + 2 * mBorderWidth,
+					mRectHeight + 2 * mBorderWidth);
 		}
 
-		// Draw circle
+		// Draw rect
 		g2d.setPaint(fillColour);
-		g2d.fillOval(x, y, 2 * mRadius, 2 * mRadius);
+		g2d.fillRect(x, y, mRectWidth, mRectHeight);
 
 		// Reset paint
 		g2d.setPaint(previousPaint);
@@ -166,14 +154,13 @@ public class Circle extends Shape {
 	/**
 	 * Calculates the element's position to accommodate shadow and border
 	 * 
-	 * @param oldPos The circls'e centre position
-	 * @param radius The circle's radius
+	 * @param oldPos The rectangle's body position
 	 * @param border The border
 	 * @param shadow The shadow
 	 * @return The element's position
 	 */
-	private static Point getPos(Point oldPos, int radius, Border border, Shadow shadow) {
-		Point pos = new Point(oldPos.x - radius, oldPos.y - radius);
+	private static Point getPos(Point oldPos, Border border, Shadow shadow) {
+		Point pos = new Point(oldPos.x, oldPos.y);
 
 		if (border != null)
 			pos.setLocation(pos.x - border.getBorderWidth(), pos.y - border.getBorderWidth());
@@ -197,13 +184,13 @@ public class Circle extends Shape {
 	/**
 	 * Calculates the element's width to accommodate shadow and border
 	 * 
-	 * @param radius The circle's radius
-	 * @param border The border
-	 * @param shadow The shadow
+	 * @param rectWidth The rectangle's width
+	 * @param border    The border
+	 * @param shadow    The shadow
 	 * @return The element's width
 	 */
-	private static int getWidth(int radius, Border border, Shadow shadow) {
-		int width = 2 * radius;
+	private static int getWidth(int rectWidth, Border border, Shadow shadow) {
+		int width = rectWidth;
 
 		if (border != null)
 			width += border.getBorderWidth() * 2;
@@ -211,7 +198,7 @@ public class Circle extends Shape {
 		if (shadow != null) {
 			boolean centerShadow = (shadow.getShadowDx() == 0 && shadow.getShadowDy() == 0);
 
-			width += Math.abs((int) shadow.getShadowDx())
+			width += Math.abs(shadow.getShadowDx())
 					+ (centerShadow ? 2 * shadow.getShadowBlurRadius() : shadow.getShadowBlurRadius());
 		}
 
@@ -221,13 +208,13 @@ public class Circle extends Shape {
 	/**
 	 * Calculates the element's height to accommodate shadow and border
 	 * 
-	 * @param radius The circle's radius
-	 * @param border The border
-	 * @param shadow The shadow
+	 * @param rectHeight The rectangle's height
+	 * @param border     The border
+	 * @param shadow     The shadow
 	 * @return The element's height
 	 */
-	private static int getHeight(int radius, Border border, Shadow shadow) {
-		int height = 2 * radius;
+	private static int getHeight(int rectHeight, Border border, Shadow shadow) {
+		int height = rectHeight;
 
 		if (border != null)
 			height += border.getBorderWidth() * 2;
@@ -235,7 +222,7 @@ public class Circle extends Shape {
 		if (shadow != null) {
 			boolean centerShadow = (shadow.getShadowDx() == 0 && shadow.getShadowDy() == 0);
 
-			height += Math.abs((int) shadow.getShadowDy())
+			height += Math.abs(shadow.getShadowDy())
 					+ (centerShadow ? 2 * shadow.getShadowBlurRadius() : shadow.getShadowBlurRadius());
 		}
 
@@ -243,23 +230,24 @@ public class Circle extends Shape {
 	}
 
 	/**
-	 * Circle constructor.
+	 * Rectangle constructor.
 	 * 
-	 * @param pos        Coordinate of the centre of the circle on the parent
-	 *                   “Slide” class.
-	 * @param radius     Radius of the circle, relative to the centre of the circle.
+	 * @param pos        Coordinate of the top left of the body of the rectangle.
+	 * @param rectWidth  Width (relative to the parent Slide class) of the body of
+	 *                   the rectangle.
+	 * @param rectHeight Height (relative to the parent Slide class) of the body of
+	 *                   the rectangle.
 	 * @param duration   Duration.
-	 * @param slide      Slide owning the circle.
+	 * @param slide      Slide owning the rectangle.
 	 * @param fillColour Colour of the fill of the shape.
-	 * @param border     Circle's border.
-	 * @param shadow     Circle's shadow.
+	 * @param border     Rectangle's border.
+	 * @param shadow     Rectangle's shadow.
 	 */
-	public Circle(Point pos, int radius, float duration, Slide slide, Color fillColour, Border border, Shadow shadow) {
-		super(getPos(pos, radius, border, shadow), getWidth(radius, border, shadow), getHeight(radius, border, shadow),
+	public Rectangle(Point pos, int rectWidth, int rectHeight, float duration, Slide slide, Color fillColour,
+			Border border, Shadow shadow) {
+		super(getPos(pos, border, shadow), getWidth(rectWidth, border, shadow), getHeight(rectHeight, border, shadow),
 				duration, slide, fillColour, border, shadow);
 
-		this.radius = radius;
-		this.type= "CIRCLE";
 		if (shadow != null) {
 			// Shadow parameters
 			this.shadowDx = (int) shadow.getShadowDx();
@@ -276,18 +264,21 @@ public class Circle extends Shape {
 
 		// Border parameters
 		if (border != null) {
-			this.borderColour = border.getBorderColour();
 			this.borderWidth = border.getBorderWidth();
+			this.borderColour = border.getBorderColour();
 		} else { // Defaults
-			this.borderColour = new Color(0, 0, 0, 0);
 			this.borderWidth = 0;
+			this.borderColour = new Color(0, 0, 0, 0);
 		}
+
+		this.rectWidth = rectWidth;
+		this.rectHeight = rectHeight;
 
 		// Draw shape
 		CanvasOperation canvasOperation = g -> {
 			Graphics2D g2d = (Graphics2D) g;
 
-			drawCircle(g2d);
+			drawRect(g2d);
 		};
 
 		JCanvas canvas = new JCanvas(canvasOperation);

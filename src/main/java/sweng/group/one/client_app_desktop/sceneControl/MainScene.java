@@ -22,7 +22,7 @@ import javax.swing.WindowConstants;
 
 import org.mapsforge.core.model.LatLong;
 
-import graphics.Circle;
+import sweng.group.one.client_app_desktop.graphics.Circle;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.media.ImageViewer;
 import sweng.group.one.client_app_desktop.media.VideoPlayer;
