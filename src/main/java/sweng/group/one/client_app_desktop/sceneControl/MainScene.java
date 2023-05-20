@@ -57,12 +57,6 @@ public class MainScene extends JFrame{
 		this.setSize(screenSize);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		this.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				resizeFrame();
-			}
-		});
 		gapWidth= screenSize.height/48;
 		curvatureRadius= 20;
 		panel= this.getLayeredPane();
@@ -83,7 +77,8 @@ public class MainScene extends JFrame{
 		upload.setSize(d);
 		upload.setBounds(d.width/10, d.height/10, 4*(d.width/5), 4*(d.height/5));
 		
-		options.setSize(d);
+		options.setSize(screenSize.height/4, screenSize.height/4);
+		//options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
 	}
 	
 	public void testWholeScene() {
@@ -285,6 +280,12 @@ public class MainScene extends JFrame{
 			
 		});
 		
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resizeFrame();
+			}
+		});
 	}
 	public void testOnlyUpload() {
 		upload= new UploadScene();
@@ -373,6 +374,7 @@ public class MainScene extends JFrame{
 		ms.testWholeScene();
 		//ms.testWholeSceneWithoutMap(0);
 		//ms.testOnlyUpload();
+		
 	}
 	
 	
