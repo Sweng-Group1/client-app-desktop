@@ -109,7 +109,7 @@ public class SidebarSceneTest  {
 	
 	@Test
 	public void maximise() {
-		GuiActionRunner.execute(() -> sidebar.close());
+		GuiActionRunner.execute(() -> sidebar.close(100L));
 		
 		maximise.click();
 		sidebarFixture.requireVisible();

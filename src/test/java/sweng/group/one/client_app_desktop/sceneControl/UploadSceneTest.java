@@ -43,7 +43,7 @@ public class UploadSceneTest {
 		
 		
 		//Upload Scene TEST
-		UploadScene upload = new UploadScene(colourD,colourL);
+		UploadScene upload = new UploadScene();
 		background.add(upload);
 		upload.setSize(1000,600);
 		upload.setLocation(100,100);
