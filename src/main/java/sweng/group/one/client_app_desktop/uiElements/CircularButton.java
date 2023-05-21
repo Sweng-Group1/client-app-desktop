@@ -1,12 +1,11 @@
 package sweng.group.one.client_app_desktop.uiElements;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -15,28 +14,25 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-/**
- * @author sophiemaw
- *
- */
-public class CircleButton extends JButton{
+public class CircularButton extends JButton{
 	private Image image;
 	private Image scaledImage;
 	private Color backgroundColour;
 	private Color backgroundWhenPressed;
 	private Color backgroundWhenHover;
-	private Color normalBackground;
 	
 	private int borderThickness;
 	private Color border;
 	private boolean pressed;
 	
-	public CircleButton() {	
+	private int curveRadius;
+	
+	public CircularButton() {	
 
 		setOpaque(false);
 		setBorderPainted(false);
 		setFocusPainted(false);	
-		setMainBackground(getBackground());
+		//setMainBackgroundColor(getBackground());
 		borderThickness=0;
 		pressed=false;
 		
@@ -66,8 +62,12 @@ public class CircleButton extends JButton{
 	
 		
 	}
-	public void setSize(int diameter) {
-		super.setSize(diameter,diameter);	
+	public void setSize(int width, int height, int curveRadius) {
+		super.setSize(width,height);	
+		if(image!=null) {
+			scaledImage= image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+		}
+		this.curveRadius=curveRadius;
 		
 		
 	}
@@ -78,13 +78,17 @@ public class CircleButton extends JButton{
 	
 		Graphics2D g2= (Graphics2D) g;
 		
-		GradientPaint gp = new GradientPaint(0, 0, this.getBackground(), diameter, diameter, new Color(0,0,0,0));
-	    g2.setPaint(gp);
-		g2.fillOval(0,0,diameter-1,diameter-1);
+		if(this.isSelected()==true) {
+			g2.setColor(backgroundWhenHover);
+		}else {
+			g2.setColor(this.getBackground());
+		}
+		g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
+		//g2.fillOval(0,0,diameter-1,diameter-1);
 		
 		if(image!=null) {
 			
-			scaledImage= image.getScaledInstance(diameter/2, diameter/2, java.awt.Image.SCALE_SMOOTH);
+			//scaledImage= image.getScaledInstance(diameter/2, diameter/2, java.awt.Image.SCALE_SMOOTH);
 		
 			BufferedImage masking;
 			Graphics2D g2d;
@@ -100,20 +104,31 @@ public class CircleButton extends JButton{
 			Image imageIcon= ((ImageIcon)iconIm).getImage();
 			
 			g2.drawImage(imageIcon, 0, 0, null);
-			
+			g2.dispose();
 		}	
-		if(this.isBorderPainted()==true) {
-			
+		
+		if(borderThickness>0) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setColor(border);
 			g2.setStroke(new BasicStroke(borderThickness));
-			g2.drawOval(borderThickness/2, borderThickness/2, diameter-(borderThickness), diameter-(borderThickness));
+			g2.drawRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
 			//g2.drawOval(0,0,diameter-1,diameter-1);
 			
 		}
-		g2.dispose();
 		validate();	
 		super.paint(g);
+	}
+	public void setMainBackgroundColor(Color normal, Color hover, Color click) {
+		
+		//Button will have 33% opaque normally, 66% when hovered, 100% when pressed
+	
+		
+		backgroundColour= normal;
+		backgroundWhenHover= hover;
+		backgroundWhenPressed= click;
+		
+		super.setBackground(backgroundColour);
+	
 	}
 	public void setMainBackground(Color colour) {
 		
@@ -128,7 +143,6 @@ public class CircleButton extends JButton{
 		
 		backgroundColour= new Color(colourR,colourG,colourB,alphaNormal);
 		backgroundWhenHover= new Color(colourR,colourG,colourB,alphaHover);
-		normalBackground=backgroundColour;
 		backgroundWhenPressed= new Color(colourR,colourG,colourB,alphaPressed);
 		
 		super.setBackground(backgroundColour);
@@ -155,14 +169,5 @@ public class CircleButton extends JButton{
 	public void setImageIcon(Image im) {
 		image=im;
 	}
-	public void setBackgroundToHover() {
-		backgroundColour=backgroundWhenHover;
-		this.repaint();
-	}
-	public void resetBackground() {
-		backgroundColour= normalBackground;
-		this.repaint();
-	}
 	
 }
-

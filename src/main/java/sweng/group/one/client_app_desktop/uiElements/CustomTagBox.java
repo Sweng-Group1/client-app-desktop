@@ -204,14 +204,14 @@ public class CustomTagBox extends UploadSceneComponent implements ComponentInter
  */
 class Tag extends JPanel implements ComponentInterface{
 	String tagName;
-	CircleButton deleteTagButton;
+	CircularButton deleteTagButton;
 	Color background;
 	Font font;
 	public Tag(Color background,String tagName) {
 		this.tagName=tagName;
 		this.background=background;
 		this.setOpaque(false);
-		deleteTagButton= new CircleButton();
+		deleteTagButton= new CircularButton();
 		try {
 			deleteTagButton.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
 		} catch (IOException e) {

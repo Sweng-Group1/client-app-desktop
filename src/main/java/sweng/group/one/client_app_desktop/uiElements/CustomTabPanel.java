@@ -1,25 +1,16 @@
 package sweng.group.one.client_app_desktop.uiElements;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.font.FontRenderContext;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,13 +23,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
+import sweng.group.one.client_app_desktop.graphics.Circle;
+import sweng.group.one.client_app_desktop.media.TextElement;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
-import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
@@ -56,8 +47,8 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	int[] sqaure= {500,500};
  
 	CustomTabbedPane tabPane;
-	CircleButton addTabButton;
-	CircleButton removeTabButton;
+	CircularButton addTabButton;
+	CircularButton removeTabButton;
 	CustomToolBar toolBar;
 	
 	boolean paintMode;
@@ -67,6 +58,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	CustomTimeProgressBar timeBar;
 	MovingObject movingObject;
 	
+	Slide currentSlide;
 	
 		
 	/**
@@ -84,6 +76,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		this.graphicsBox= graphicsBox;
 		this.timeBar=timeBar;
 		this.toolBar=toolBar;
+		toolBar.setTabPane(this);
 		initialise();	
 	}
 	/*
@@ -100,15 +93,15 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		this.secondary= colorDark;
 		
 		//BUTTONS:
-		addTabButton= new CircleButton();
+		addTabButton= new CircularButton();
 		try {
 			addTabButton.setImageIcon(ImageIO.read(new File("./assets/plus-small.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		removeTabButton= new CircleButton();
+		addTabButton.setMainBackground(Color.white);
+		removeTabButton= new CircularButton();
 		this.add(addTabButton);
 		try {
 			removeTabButton.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
@@ -116,7 +109,8 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		tabPane= new CustomTabbedPane(removeTabButton);
+		removeTabButton.setMainBackground(Color.white);
+		tabPane= new CustomTabbedPane(graphicsBox,removeTabButton);
 		this.add(tabPane);
 		this.add(removeTabButton);
 		this.setComponentZOrder(removeTabButton, 0);
@@ -164,6 +158,9 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				if(tabPane.getTabCount()>1) {
+					tabPane.remove(tabPane.removeButtonIndex);
+				}
 				setAddTabButtonLocation();
 				addTabButton.setVisible(true);
 			}
@@ -191,14 +188,14 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+				graphicsBox.setVisibleElementPanelFor(tabPane.getSlides().get(tabPane.getSelectedIndex()));
 				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				
-				//graphicsBox.setCurrentSlide(tabPane.getSlides().get(tabPane.getSelectedIndex()));
+				graphicsBox.setVisibleElementPanelFor(tabPane.getSlides().get(tabPane.getSelectedIndex()));
 				
 			}
 
@@ -224,7 +221,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		
 		movingObject= new MovingObject();
 		
-		
+	
 
 	}
 	
@@ -234,8 +231,9 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	 */
 	
 	public void setMovingElement(PresElement p) {
-		movingObject.attatchToPresElement(p);
-		tabPane.getSlides().get(tabPane.getSelectedIndex()).add(movingObject);
+		Slide slide= tabPane.getSlides().get(tabPane.getSelectedIndex());
+		movingObject.attatchToPresElement(slide,p);
+		slide.add(movingObject);
 		movingObject.setVisible(true);
 		tabPane.getSlides().get(tabPane.getSelectedIndex()).setComponentZOrder(movingObject, 0);
 		movingObject.repaint();
@@ -261,11 +259,16 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	public void createNewSlide() {
 		Slide slide= new Slide(landscape[0],landscape[1]);
 		tabPane.addNewSlide(slide);
+		tabPane.setSelectedIndex(tabPane.getTabCount()-1);
 		graphicsBox.addNewPanelForSlide(slide);
 		graphicsBox.setVisibleElementPanelFor(slide);
 		setAddTabButtonLocation();
+		/*
+		 *  Remove tools listener from current slide, adds to new slide
+		 */
 		toolBar.setGeneralToolBarListenersForSlide(graphicsBox, getCurrentSlide());
 	}
+	
 	
 
 	
@@ -276,7 +279,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	private void setAddTabButtonLocation() {
 		if(tabPane.getTabCount()>0) {
 		Rectangle lastTab= tabPane.getUI().getTabBounds(tabPane, tabPane.getTabCount()-1);
-		addTabButton.setSize(lastTab.height);
+		addTabButton.setSize(lastTab.height,lastTab.height,lastTab.height);
 		addTabButton.setLocation(lastTab.x+ lastTab.width+ r.x, lastTab.y+ r.x);
 		}
 	}
@@ -288,7 +291,7 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	private void setRemoveTabButtonSize() {
 		if(tabPane.getTabCount()>0) {
 		Rectangle tabBounds= tabPane.getUI().getTabBounds(tabPane, 0);
-		removeTabButton.setSize(tabBounds.height/2);
+		removeTabButton.setSize(tabBounds.height/2,tabBounds.height/2,tabBounds.height/2);
 		}
 	}
 	
@@ -352,10 +355,10 @@ class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 	
 	
 	
-	CustomTabbedPane(CircleButton removeTabButton){
+	CustomTabbedPane(ElementsPanel elementsPanel,CircularButton removeTabButton){
 		mainColor= colorLight;
 		secondaryColor= colorDark;
-		this.setUI(new CustomTabPaneUI(this,removeTabButton));
+		this.setUI(new CustomTabPaneUI(this,elementsPanel,removeTabButton));
 		this.setBorder(null);
 		slides= new ArrayList<Slide>();
 
@@ -429,8 +432,9 @@ class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 }
 
 class CustomTabPaneUI extends BasicTabbedPaneUI implements ComponentInterface{
-		JTabbedPane tb;
-		CircleButton removeTabButton;
+		CustomTabbedPane tb;
+		CircularButton removeTabButton;
+		ElementsPanel elementsPanel;
 	/**
 	 * @param tabPane
 	 * @param removeTabButton 	  button that is created in CustomTabPanel class
@@ -443,9 +447,11 @@ class CustomTabPaneUI extends BasicTabbedPaneUI implements ComponentInterface{
 	 * button's visibility is set to false
 	 * 
 	 */
-	CustomTabPaneUI(JTabbedPane tabPane,CircleButton removeTabButton){
+	CustomTabPaneUI(CustomTabbedPane tabPane,ElementsPanel elementsPanel,CircularButton removeTabButton){
 		this.removeTabButton=removeTabButton;
 		this.tb=tabPane;
+		this.elementsPanel=elementsPanel;
+		
 	}
 	public void installDefaults() {
 		super.installDefaults();
@@ -454,6 +460,41 @@ class CustomTabPaneUI extends BasicTabbedPaneUI implements ComponentInterface{
 		this.shadow=colorDark;
 		this.focus=colorLight;
 		this.textIconGap=10;
+		tb.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				/*
+				 *  Method to change slide
+				 */
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 		
 		tb.addMouseMotionListener(new MouseMotionListener() {
@@ -475,7 +516,7 @@ class CustomTabPaneUI extends BasicTabbedPaneUI implements ComponentInterface{
 						int yPos= (int)getTabBounds(tabPane,i).getY();
 						int width= (int)getTabBounds(tabPane,i).getWidth();
 						int height= (int)getTabBounds(tabPane,i).getHeight();
-						removeTabButton.setSize(height);
+						removeTabButton.setSize(height,height,height/2);
 						removeTabButton.setLocation(xPos+width-textIconGap/2-height/2,yPos);
 						removeTabButton.setVisible(true);
 						System.out.println("AA");
@@ -490,6 +531,13 @@ class CustomTabPaneUI extends BasicTabbedPaneUI implements ComponentInterface{
 			
 		});
 		
+	}
+	
+	private void changeSlide() {
+		/*
+		 *  Slide change is done automatically 
+		 */
+		elementsPanel.setVisibleElementPanelFor(((CustomTabbedPane) tabPane).getSlides().get(tabPane.getSelectedIndex()));
 	}
 	
 	public void paintTab(Graphics g,int tabPlacement, Rectangle[] rects,int tabIndex,Rectangle iconRect,Rectangle textRect) {
@@ -521,7 +569,7 @@ class CustomTabPaneUI extends BasicTabbedPaneUI implements ComponentInterface{
 	public void paintFocusIndicator(Graphics g,int tabPlacement, Rectangle[] rects,int tabIndex,Rectangle iconRect,Rectangle textRect,boolean isSelected) {			
 	}
 	
-	public void setRemoveTabButton(CircleButton removeTabButton) {
+	public void setRemoveTabButton(CircularButton removeTabButton) {
 		this.removeTabButton=removeTabButton;
 	}
 
@@ -541,7 +589,9 @@ class MovingObject extends JPanel implements ComponentInterface{
 	JButton top,left,bottom,right;
 	JButton topLeft, bottomLeft,topRight,bottomRight;
 	PresElement presElement;
+	Slide slide;
 	Point mousePos;
+	boolean isTextEditing;
 	MovingObject(){
 		main= colorDark;
 		this.setOpaque(false);
@@ -667,13 +717,57 @@ class MovingObject extends JPanel implements ComponentInterface{
 			}
 		};
 		this.add(topLeft);
-		bottomRight.addMouseMotionListener(new MouseMotionListener() {
+		topLeft.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+
+				if(presElement!=null) {
+					int deltaX=e.getX()-mousePos.x;
+					int deltaY= e.getY()-mousePos.y;
+					
+					changeBounds(deltaX,deltaY,-deltaX,-deltaY);
+				}
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				mousePos=e.getPoint();
+				
+			}
+			
+		});
+		bottomLeft.addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+
+				if(presElement!=null) {
+					int deltaX=e.getX()-mousePos.x;
+					int deltaY= e.getY()-mousePos.y;
+					
+					changeBounds(deltaX,0,-deltaX,deltaY);
+				}
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				mousePos=e.getPoint();
+				
+			}
+			
+		});
+		topRight.addMouseMotionListener(new MouseMotionListener() {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				
 					if(presElement!=null) {
-						changeSize(0,0,e.getX()-mousePos.x,e.getY()-mousePos.y);
+						int deltaX=e.getX()-mousePos.x;
+						int deltaY= e.getY()-mousePos.y;
+						
+						changeBounds(0,deltaY,deltaX,-deltaY);
 					}
 				
 			}
@@ -685,7 +779,82 @@ class MovingObject extends JPanel implements ComponentInterface{
 			}
 			
 		});
-		
+		bottomRight.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if(presElement!=null) {
+					int deltaX=e.getX()-mousePos.x;
+					int deltaY= e.getY()-mousePos.y;
+					
+					changeBounds(0,0,deltaX,deltaY);
+				}
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				mousePos=e.getPoint();
+				
+			}
+			
+		});
+		this.addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if(presElement!=null) {
+					changeBounds(e.getX()-mousePos.x,e.getY()-mousePos.y,0,0);
+					//changeSize(0,0,e.getX()-mousePos.x,e.getY()-mousePos.y);
+				}
+				
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				mousePos=e.getPoint();
+				
+			}
+			
+		});
+		isTextEditing=false;
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(presElement.getType()=="TEXT") {
+					((TextElement)presElement).setTextEditing(true);
+				}else {
+					((TextElement)presElement).setTextEditing(false);
+				}
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		
 	}
 	public void paint(Graphics g) {
@@ -698,10 +867,11 @@ class MovingObject extends JPanel implements ComponentInterface{
 		g2.dispose();
 		super.paint(g);
 	}
-	public void attatchToPresElement(PresElement presElement) {
+	public void attatchToPresElement(Slide slide,PresElement presElement) {
 		this.setSize(presElement.getComponent().getWidth()+30, presElement.getComponent().getHeight()+30);
 		this.setLocation(presElement.getComponent().getX()-15, presElement.getComponent().getY()-15);
 		this.presElement=presElement;
+		this.slide= slide;
 		topRight.setBounds(this.getWidth()-10,0,10,10);
 		topLeft.setBounds(0,0,10,10);
 		bottomRight.setBounds(this.getWidth()-10, this.getHeight()-10, 10, 10);
@@ -711,6 +881,55 @@ class MovingObject extends JPanel implements ComponentInterface{
 	public void setBackground(Color color) {
 		super.setBackground(color);
 		main= color;
+	}
+	private void changeBounds(int deltaX, int deltaY,int deltaWidth, int deltaHeight) {
+		Point oldPixelPoint= presElement.getComponent().getLocation();
+		Point newPixelPoint= new Point(oldPixelPoint.x+deltaX,oldPixelPoint.y+deltaY);
+		Point ptPos= slide.pxToPt(newPixelPoint);
+		
+		
+		Point changeInWHPt= slide.pxToPt(new Point(deltaWidth, deltaHeight));
+		
+		
+		if(presElement.getType()=="CIRCLE") {
+			int radiusInPxW= presElement.getComponent().getWidth()+deltaWidth;
+			int radiusInPxH= presElement.getComponent().getHeight()+deltaHeight;
+			int radiusPx;
+			if(radiusInPxW>radiusInPxH) {
+				radiusPx= radiusInPxH/2;
+			}else {
+				radiusPx= radiusInPxW/2;
+			}
+			int radiusPt= slide.pxToPt(new Point(radiusPx,radiusPx)).x;
+			Circle element= (Circle)presElement;
+			element.setRadius(radiusPt);
+			element.setWidth(2*radiusPt);
+			element.setHeight(2*radiusPt);
+			
+		
+			element.getComponent().setBounds(newPixelPoint.x, newPixelPoint.y, radiusPx*2,radiusPx*2);
+			this.setBounds(newPixelPoint.x-15, newPixelPoint.y-15, (radiusPx*2)+30, (radiusPx*2)+30);
+			
+		}else {
+			presElement.setWidth(presElement.getWidth()+changeInWHPt.x);
+			presElement.setHeight(presElement.getHeight()+changeInWHPt.y);
+			presElement.getComponent().setBounds(newPixelPoint.x, newPixelPoint.y, presElement.getWidth()+changeInWHPt.x, presElement.getHeight()+changeInWHPt.y);
+			this.setBounds(newPixelPoint.x-15, newPixelPoint.y-15, presElement.getComponent().getWidth()+changeInWHPt.x+30, presElement.getComponent().getHeight()+changeInWHPt.y+30);
+		}
+		presElement.setX(ptPos.x);
+		presElement.setY(ptPos.y);
+
+		
+		//this.setBounds(this.getX()+deltaX, this.getY()+deltaY, this.getWidth()+deltaWidth,this.getHeight()+deltaHeight);
+		topRight.setBounds(this.getWidth()-10,0,10,10);
+		topLeft.setBounds(0,0,10,10);
+		bottomRight.setBounds(this.getWidth()-10, this.getHeight()-10, 10, 10);
+		bottomLeft.setBounds(0, this.getHeight()-10, 10, 10);
+		this.repaint();
+		presElement.getComponent().validate();
+		presElement.getComponent().repaint();
+		
+		
 	}
 	private void changeSize(int deltaX, int deltaY, int deltaWidth, int deltaHeight ) {
 		JComponent c= presElement.getComponent();

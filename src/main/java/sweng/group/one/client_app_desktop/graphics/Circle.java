@@ -23,7 +23,7 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
  */
 public class Circle extends Shape {
 	// Shadow parameters to be accessed in CanvasOperation
-	private final int radius, shadowDx, shadowDy, shadowBlurRadius;
+	private int radius, shadowDx, shadowDy, shadowBlurRadius;
 	private final Color shadowColour;
 
 	// Border Parameters to be accessed in CanvasOperation
@@ -298,5 +298,13 @@ public class Circle extends Shape {
 
 	public Paint getGradient() {
 		return gradient;
+	}
+	public int getRadius() {
+		return radius;
+	}
+	public void setRadius(int r) {
+		this.radius=r;
+		
+		
 	}
 }

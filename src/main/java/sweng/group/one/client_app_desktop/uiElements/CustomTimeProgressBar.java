@@ -1,6 +1,5 @@
 package sweng.group.one.client_app_desktop.uiElements;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -12,13 +11,8 @@ import java.io.IOException;
 import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoundedRangeModel;
-import javax.swing.DefaultBoundedRangeModel;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
-import javax.swing.Timer;
-import javax.swing.event.ChangeListener;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;

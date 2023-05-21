@@ -1,13 +1,20 @@
 package sweng.group.one.client_app_desktop.media;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Arrays;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Slide;
@@ -21,7 +28,8 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
  *
  */
 public class TextElement extends PresElement {
-
+	String text;
+	JTextArea textEditer;
 	/**
 	 * TextElement constructor.
 	 * 
@@ -40,6 +48,7 @@ public class TextElement extends PresElement {
 			int height, Slide slide) {
 		super(pos, width, height, duration, slide);
 		type= "TEXT";
+		this.text= text;
 		// Load system fonts
 		Font[] t = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 
@@ -51,13 +60,59 @@ public class TextElement extends PresElement {
 				: new Font("Arial", Font.PLAIN, fontSizePt);
 
 		// Wrap in html for automatic line wrap
+	
 		this.component = new JLabel("<html>" + text + "</html>");
 		this.component.setForeground(Colour);
 		this.component.setFont(validFont);
+		
+		this.component.setLayout(new GridLayout());
+		textEditer= new JTextArea();
+	
+		textEditer.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(e.getKeyChar()==KeyEvent.VK_ENTER) {
+					setText("<html>" + textEditer.getText() + "</html>");
+					component.remove(textEditer);
+				}
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+			
+		
 	}
 
 	public JComponent getComponent() {
 		return this.component;
 	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		((JLabel)this.getComponent()).setText("<html>" + text + "</html>");
+	}
+	public void setTextEditing(boolean bool) {
+		if(bool==true) {
+			this.component.add(textEditer);
+		}else {
+			this.component.remove(textEditer);
+		}
+			
+		textEditer.setVisible(bool);
+	
 
-}
+}}

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -51,7 +50,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 	JPanel upperPanel;
 	JPanel lowerPanel;
 	
-	CircleButton addElement, deleteElement;
+	CircularButton addElement, deleteElement;
 	
 	JScrollPane scrollPane;
 	JPanel scrollView;
@@ -60,6 +59,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 	GridBagLayout gridBagLayout;
 	
 	Presentation presentation;
+
 	
 	int currentSlideIndex; // Indicates what rect is selected
 	MouseListener elementRectMouseListener;
@@ -116,20 +116,9 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		this.main=colorLight;
 		this.secondary=colorDark;
 		
-		toolBar= new CustomToolBar() {
-			public void setMainAndSecondaryColor(Color main, Color secondary) {
-				this.main= secondary;
-				this.secondary=main;
-			}
-		};
+		toolBar= new CustomToolBar();
 		propertiesPanel.setToolBarColorChanger(toolBar);
-		mediaPanel= new CustomMediaBox() {
-			public void setMainAndSecondaryColor(Color main, Color secondary) {
-			this.main= secondary;
-			this.secondary=main;
-			
-			}
-		};
+		mediaPanel= new CustomMediaBox();
 		
 		upperPanel = new JPanel();
 		upperPanel.setOpaque(false);
@@ -168,9 +157,9 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			
 			
 			public JButton createIncreaseButton(int o) {				
-				CircleButton b= new CircleButton();
+				CircularButton b= new CircularButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./assets/down.png")));
+					b.setImageIcon(ImageIO.read(new File("./Assets/down.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -180,9 +169,9 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 				return b;
 			}
 			public JButton createDecreaseButton(int o) {				
-				CircleButton b= new CircleButton();
+				CircularButton b= new CircularButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./assets/up.png")));
+					b.setImageIcon(ImageIO.read(new File("./Assets/up.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -202,8 +191,9 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		 *  
 		 */
 		
-		addElement= new CircleButton();
-		addElement.setImageIcon(ImageIO.read(new File("./assets/plus-small.png")));
+		addElement= new CircularButton();
+		addElement.setImageIcon(ImageIO.read(new File("./Assets/plus-small.png")));
+		addElement.setMainBackground(Color.white);
 		lowerPanel.add(addElement);
 		addElement.addMouseListener(new MouseListener() {
 
@@ -277,9 +267,10 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			}
 			
 		});
-		deleteElement=new CircleButton();
-		deleteElement.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
+		deleteElement=new CircularButton();
+		deleteElement.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
 		lowerPanel.add(deleteElement);	
+		deleteElement.setMainBackground(Color.white);
 		deleteElement.addMouseListener(new MouseListener() {
 
 			@Override
@@ -335,7 +326,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 	 * Called within tabPane to create a slide specific SlideElementRectsPanel 
 	 */
 	public void addNewPanelForSlide(Slide slide) {
-		SlideElementRectsPanel elementRectPanel= new SlideElementRectsPanel(slide,toolBar);
+		SlideElementRectsPanel elementRectPanel= new SlideElementRectsPanel(slide,toolBar,propertiesPanel);
 		slides.add(elementRectPanel);
 		//presentation.addSlide(slide);
 	}
@@ -363,12 +354,20 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		boolean slideIsFound=false;
 		for(SlideElementRectsPanel e:slides) {
 			if(e.getSlide()==slide) {
+				/*
+				 *  Set selected viewRect to 0
+				 */
+				if(currentSlide!=slide) {
+					e.setAllViewRectUnselected();
+				}
+			
 				scrollView.removeAll();
 				scrollView.setLayout(new GridLayout());
 				scrollView.add(e);
 				
 				slideIsFound=true;
 				currentSlide=slide;
+				scrollView.repaint();
 			}
 		}
 		if(slideIsFound==false) {
@@ -461,36 +460,30 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 				}
 			}
 		}
-		java.awt.Rectangle pixelBounds=getMaxBoundsForObjectSizetWithinContainer(
-				new Dimension(pixelWidth,pixelHeight),slide,pixelPos);
-		if(pixelBounds.x==0) {
-			pixelBounds.setBounds(1, pixelBounds.y, pixelBounds.width, pixelBounds.height);
+		Point shapeWHpt;
+		if(pixelWidth==0 || pixelHeight==0) {
+			int defaultHeight= currentSlide.getPointHeight()/10;
+			int defaultWidth= currentSlide.getPointWidth()/10;
+			shapeWHpt= new Point(defaultWidth,defaultHeight);
+		}else {
+			shapeWHpt= new Point(new Point(pixelWidth,pixelHeight));
 		}
-		if(pixelBounds.width+pixelBounds.x==slide.getWidth()){
-			pixelBounds.setBounds(pixelBounds.x, pixelBounds.y, pixelBounds.width, pixelBounds.height-1);
-		}
-		if(pixelBounds.y==0) {
-			pixelBounds.setBounds(pixelBounds.x, 1, pixelBounds.width, pixelBounds.height);
-		}
-		if(pixelBounds.height+pixelBounds.y==slide.getHeight()){
-			pixelBounds.setBounds(pixelBounds.x, pixelBounds.y, pixelBounds.width, pixelBounds.height-1);
-		}
-		Point shapeWH= slide.pxToPt(new Point(pixelBounds.width,pixelBounds.height));
-		float shapePointWidth=(int) shapeWH.getX();
-		float shapePointHeight=(int) shapeWH.getY();
-		Point shapePointPos= slide.pxToPt(new Point(pixelBounds.x,pixelBounds.y));
 		
+		Point shapePosPt= currentSlide.pxToPt(pixelPos);
+		
+		System.out.println("Pt point: "+shapePosPt.x+ ","+shapePosPt.y);
+		System.out.println("Pt size: "+shapeWHpt.x+ ","+shapeWHpt.y);
 		for(SlideElementRectsPanel e:slides) {
 			if(e.getSlide()==slide) {
 				switch(shapeType) {
 				case "CIRCLE":
-					PresElement c= new Circle(shapePointPos, (int)Math.min(shapePointWidth, shapePointHeight), 0, slide, Color.black, null, null);
+					PresElement c= new Circle(shapePosPt, (int)Math.min(shapeWHpt.x, shapeWHpt.y), 0, slide, Color.black, null, null);
 					e.addElement(c);
 					toolBar.setSelectedElement(c);	
 					propertiesPanel.setManipulatorFor(c);
 					break;
 				case "RECTANGLE":
-					PresElement r= new Rectangle(shapePointPos,(int) shapePointWidth,(int) shapePointHeight, 0, slide, Color.black, null, null);
+					PresElement r= new Rectangle(shapePosPt,(int) shapeWHpt.x,(int) shapeWHpt.y, 0, slide, Color.black, null, null);
 					e.addElement(r);
 					toolBar.setSelectedElement(r);
 					propertiesPanel.setManipulatorFor(r);
@@ -558,6 +551,9 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 	public Presentation getPresentation() {
 		return presentation;
 	}
+	public Slide getCurrentSlide() {
+		return currentSlide;
+	}
 	/*
 	 * Explained is setMarginBounds() diagram  
 	 */
@@ -571,8 +567,8 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		lowerPanel.setBounds(xPos, (height+yPos)-curvatureRadius, width, (curvatureRadius));
 
 		int buttonSize= lowerPanel.getHeight()/2;
-		addElement.setSize(buttonSize);
-		deleteElement.setSize(buttonSize);
+		addElement.setSize(buttonSize,buttonSize,buttonSize);
+		deleteElement.setSize(buttonSize,buttonSize,buttonSize);
 		addElement.setLocation((width/4)-(buttonSize/2),buttonSize/2);
 		deleteElement.setLocation(((3*width)/4)-(buttonSize/2),buttonSize/2);
 		scrollPane.setBounds(curvatureRadius/2, 0, upperPanel.getWidth()-curvatureRadius/2, upperPanel.getHeight());
@@ -594,16 +590,25 @@ class SlideElementRectsPanel extends JPanel implements ComponentInterface{
 	JPanel panel= this;
 	ViewRect selectedLayer;
 	CustomToolBar toolBar;
+	ElementPropertiesPanel propertiesBox;
 	/**
 	 * @param slide - to add elements to slide
 	 * @param toolBar - to set selected element field
 	 */
-	public SlideElementRectsPanel(Slide slide, CustomToolBar toolBar) {
+	public SlideElementRectsPanel(Slide slide, CustomToolBar toolBar, ElementPropertiesPanel propertiesBox) {
 		this.slide= slide;
 		this.toolBar=toolBar;
+		this.propertiesBox=propertiesBox;
 		viewRects= new ArrayList<ViewRect>();
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 	}
+	
+	public void setAllViewRectUnselected() {
+		for(ViewRect w:viewRects) {
+			w.setClicked(false);
+		}
+	}
+	
 	/**
 	 * @param element - new presElement 
 	 * This adds the element onto the slide stored within this class 
@@ -647,6 +652,7 @@ class SlideElementRectsPanel extends JPanel implements ComponentInterface{
 								viewRects.get(i).setClicked(true);
 								selectedLayer= viewRects.get(i);
 								toolBar.setSelectedElement(selectedLayer.presElement);
+								propertiesBox.setManipulatorFor(selectedLayer.presElement);
 								bool=true;
 								
 							}else {

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
-import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.uiElements.CustomDescriptionBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomMediaBox;
 import sweng.group.one.client_app_desktop.uiElements.CustomTabPanel;
@@ -220,6 +219,30 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 	 *  to be a mouseListener in mainScene or you pass a listener into this scene from mainScene
 	 *  
 	 */
+	public CustomToolBar getToolBar() {
+		return toolBar;
+	}
+	public ElementsPanel getElementPanel() {
+		return graphicsBox;
+	}
+	public ElementPropertiesPanel getElementPropertiesPanel() {
+		return propertiesBox;
+	}
+	public CustomTimeProgressBar getTimeBar() {
+		return timeBar;
+	}
+	public CustomTagBox getTagsBox() {
+		return tagBox;
+	}
+	public CustomTabPanel getTabPanel() {
+		return tabPane;
+	}
+	public CustomDescriptionBox getDescriptionBox() {
+		return descriptionBox;
+	}
+	public CustomMediaBox getMediaBox() {
+		return mediaBox;
+	}
 
 	/**
 	 * @return exitButton to be to added to a mouseListener in mainScene
