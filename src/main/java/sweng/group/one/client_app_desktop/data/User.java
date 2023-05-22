@@ -84,8 +84,9 @@ public class User {
 		Path filepath = Paths.get("temp/refresh_token.txt");
 		return Files.readString(filepath);
 	}
+	
 
-	public void refreshAccessToken() {
+	public int refreshAccessToken() {
 		
 		String refreshToken = new String();
 		try {
@@ -93,36 +94,52 @@ public class User {
 		} catch (IOException e) {
 			System.err.println("Error reading refresh token");
 			e.printStackTrace();
-			return;
+			return 0;
 		}
 		
 		HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("http://localhost:8080/api/v1/login"))
+				.uri(URI.create("http://localhost:8080/api/v1/token/refresh"))
 				.header("Authorization", "Bearer " + refreshToken)
 				.GET()
 				.build();
-		
 		
 		 try {
 	            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
 	            // Save the status code
 	            int statusCode = response.statusCode();
-
-	            // Save the response body as a String
-	            String responseBody = response.body();
 	            
-	            // Print the status code and response body
-	            System.out.println("Status code: " + statusCode);
-	            System.out.println("Response body: " + responseBody);
+	         // Save the response body as a JSON for easier parsing
+	            JSONObject json = new JSONObject(response.body());
+	            
+	            // Print the status code
+	            System.out.println("Refresh access token request finished. Status code: " + statusCode);
+	            
+	            
+	            if (statusCode == 200) {
+	            	saveAccessToken(json.getString("access_token"));
+	            	return statusCode;
+	            }
+	            
+	            else if (statusCode == 403) {
+	            	System.out.println("Error: server returned 403 forbidden. Try logging in again");
+	            	return statusCode;
+	            }
+	            
+	            else {
+	            	return 0;
+	            }
+	                      
 	            
 	        } catch (IOException e) {
 	            // Handle IOException (e.g., network error)
 	            e.printStackTrace();
+	            return 0;
 	        } catch (InterruptedException e) {
 	            // Handle InterruptedException (e.g., the request was cancelled)
 	            e.printStackTrace();
+	            return 0;
 	        }
 
 	}
@@ -165,6 +182,7 @@ public int login(String password) {
 	            statusCode = response.statusCode();
 	            
 	            if (statusCode == 403) {
+	            	System.out.println("Error: Server returned 403 forbidden");
 	            	return statusCode;
 	            }
 	            // Save the response body as a JSON for easier parsing

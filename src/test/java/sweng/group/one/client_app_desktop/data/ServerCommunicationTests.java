@@ -6,36 +6,34 @@ import java.io.IOException;
 import java.time.Duration;
 
 import org.junit.Test;
+import org.junit.runner.OrderWith;
 
-public class UserTests {
+// These are integration tests that will communicate with the actual server software. 
+// As such they require the server to be running. 
+
+public class ServerCommunicationTests {
 	
 	private String defaultAdminUsername = "sid";
 	private String defaultAdminPass = "password123";
 	private User userTest = new User(defaultAdminUsername);
 	
-	
-	//@Test
-	public void testHttpHelloWorld() {
-		try {
-			userTest.saveAccessToken("helloworld");
-			userTest.saveRefreshToken("helloworld2");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		userTest.refreshAccessToken();
-		
-		//TODO: Change after this test is finished. 
-		assertThat(false).isTrue();
-		
-	}
-	
 	@Test
-	public void testLoginUsingDefaultAdminCredentials() {
+	public void testLoginUsingDefaultAdminCredentialsReturns200OkCode() {
 		System.out.println("Running login test for correct credentials: ");
 		int statusCode = userTest.login(defaultAdminPass);
 		System.out.println("Status Code: " + statusCode);
 		assertThat(statusCode).isEqualTo(200);
 	}
+	
+	@Test
+	public void CanRefreshAccessToken() {
+		System.out.println("Running login test for correct credentials: ");
+		userTest.login(defaultAdminPass); // Ensure refresh token is valid. 
+		int statusCode = userTest.refreshAccessToken();
+		System.out.println("Status Code: " + statusCode);
+		assertThat(statusCode).isEqualTo(200);
+	}
+	
 	
 	@Test
 	public void LoggingInWithIncorrectPasswordReturns403Forbidden() {
@@ -45,14 +43,13 @@ public class UserTests {
 		assertThat(statusCode).isEqualTo(403);
 	}
 	
-	// Valid tokens will a long seemingly random set of characters. 
+	// Valid tokens will consist of a long seemingly random set of characters. 
 	// Failure to save these strings will likely result in an empty file.
-	// Checking length is reasonably big should reliably check the tokens exist.
+	// Checking length of line in file is reasonably big should reliably check the tokens exist.
 	// TODO: Use mocking to eliminate actual server from this interaction.
 	@Test
 	public void tokensAreSavedAndAreRetrieveableFromFile() {
 		System.out.println("Running test to ensure tokens are saved correctly:  ");
-
 		
 		userTest.login(defaultAdminPass);
 		String accessToken = new String();
