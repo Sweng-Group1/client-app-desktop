@@ -1,7 +1,12 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageFilter;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -10,6 +15,7 @@ import java.util.prefs.Preferences;
 import javax.imageio.ImageIO;
 
 import org.mapsforge.core.graphics.Bitmap;
+import org.mapsforge.core.graphics.GraphicContext;
 import org.mapsforge.core.graphics.GraphicFactory;
 import org.mapsforge.core.model.BoundingBox;
 import org.mapsforge.core.model.LatLong;
@@ -21,6 +27,7 @@ import org.mapsforge.map.awt.graphics.AwtGraphicFactory;
 import org.mapsforge.map.awt.util.AwtUtil;
 import org.mapsforge.map.awt.util.JavaPreferences;
 import org.mapsforge.map.awt.view.MapView;
+import org.mapsforge.map.controller.FrameBufferController;
 import org.mapsforge.map.datastore.MultiMapDataStore;
 import org.mapsforge.map.layer.Layers;
 import org.mapsforge.map.layer.cache.TileCache;
@@ -49,6 +56,8 @@ public class MapScene extends MapView{
 		preferencesFacade = new JavaPreferences(Preferences.userNodeForPackage(MapScene.class));
 		markers = new ArrayList<>();
 		heatmap = new HeatMap(markers, this);
+		
+		
 	}
 	
 	public void loadMapFile(File mapFile) {
@@ -62,10 +71,13 @@ public class MapScene extends MapView{
 				this.getModel().frameBufferModel.getOverdrawFactor(), 
 				1024, 
 				new File(System.getProperty("java.io.tmpdir") + "/WhatsOn/map", UUID.randomUUID().toString()));
+				//UUID.randomUUID().toString()));
 		
 		MultiMapDataStore mapDataStore = new MultiMapDataStore(MultiMapDataStore.DataPolicy.RETURN_ALL);
 		mapDataStore.addMapDataStore(new MapFile(mapFile), false, false);
 		
+		
+
 		TileRendererLayer tileRendererLayer = new TileRendererLayer(
 				tileCache, 
 				mapDataStore, 
@@ -130,7 +142,30 @@ public class MapScene extends MapView{
 		}
 	}
 	
+	
 	public ArrayList<EventMarker> getMarkers() {
 		return markers;
+	}
+
+	public void paint(Graphics g) {
+		Graphics2D g2= (Graphics2D)g.create();
+		BufferedImage buffer= new BufferedImage(this.getWidth(),this.getHeight(),BufferedImage.BITMASK);
+		g.drawImage(buffer, 0, 0, null);
+		
+		if(buffer.getRaster().getDataBuffer().getSize()==(this.getWidth()*this.getHeight())) {
+			//
+			
+			super.paint(g);
+			
+		}
+	
+		 /* GraphicContext graphicContext = AwtGraphicFactory.createGraphicContext(g);
+		 
+		  this.getFrameBuffer().draw(graphicContext);
+		  if (this.getMapScaleBar() != null) {
+		    this.getMapScaleBar().draw(graphicContext);
+		  }
+		  this.getFpsCounter().draw(graphicContext);
+		  this.getFrameBuffer().destroy();*/
 	}
 }

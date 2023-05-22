@@ -309,8 +309,10 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		this.setComponentZOrder(removeTabButton, 1);
 		this.setComponentZOrder(tabPane, 2);
 		
-	
-		createNewSlide();
+		if(tabPane.getSlides().size()==0) {
+			createNewSlide();
+		}
+		tabPane.resizeSlides();
 	}
 	
 	
@@ -347,6 +349,7 @@ class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 	
 	JButton addTabButton;
 	protected ArrayList<Slide>slides;
+	protected ArrayList<JLabel>labels;
 	JTabbedPane tp= this;
 	int removeButtonIndex;
 	BufferedImage editingBackground;
@@ -361,6 +364,7 @@ class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 		this.setUI(new CustomTabPaneUI(this,elementsPanel,removeTabButton));
 		this.setBorder(null);
 		slides= new ArrayList<Slide>();
+		labels= new ArrayList<JLabel>();
 
 		removeButtonIndex=0;
 		try {
@@ -387,6 +391,16 @@ class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 	 * 4. Adds both components to the backPanel and sets Z order so slide is on top: label(1) 
 	 * 		slide(0)
 	 */
+	public void resizeSlides() {
+		for(int i=0;i<slides.size();i++) {
+			Slide slide= slides.get(i);
+			slide.setSize(slide.preferredLayoutSize(this));
+			slide.setLocation((this.getWidth()-slide.getWidth())/2, (this.getHeight()-slide.getHeight())/2);
+			JLabel label= labels.get(i);
+			label.setSize(this.getWidth(), this.getHeight());
+			label.setLocation(0, 0);
+		}
+	}
 	protected void addNewSlide(Slide slide) {
 		
 		JPanel background= new JPanel();
@@ -394,6 +408,7 @@ class CustomTabbedPane extends JTabbedPane implements ComponentInterface{
 		this.addTab(" Slide "+(slides.size()+1), background);
 		
 		JLabel label= new JLabel();
+		labels.add(label);
 		label.setIcon(new ImageIcon(editingBackground));
 		background.add(label);
 		label.setSize(this.getWidth(), this.getHeight());

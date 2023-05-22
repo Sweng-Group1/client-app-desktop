@@ -1,12 +1,17 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -21,6 +26,10 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.controller.FrameBufferController;
+import org.mapsforge.map.layer.Layer;
+import org.mapsforge.map.layer.TileLayer;
+import org.mapsforge.map.layer.renderer.TileRendererLayer;
 
 import sweng.group.one.client_app_desktop.graphics.Circle;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
@@ -40,28 +49,32 @@ public class MainScene extends JFrame{
 	private UploadScene upload;
 	private OptionsScene options;
 	
-	private static final Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
+	private Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
 	
 	private static final Color colorLight= new Color(78,106,143);
 	private static final Color colorDark= new Color(46,71,117);
 	
+	JPanel waitingScreen;
 	private int gapWidth;
 	private int curvatureRadius;
 	
 	public MainScene() {
 		super();
-		this.setVisible(true); 
+		
 		
 		this.setSize(screenSize);
-		this.setLayout(null);
+		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		gapWidth= screenSize.height/48;
 		curvatureRadius= 20;
-		panel= this.getLayeredPane();
-	
-	};
-	public void testWholeScene() {
-		this.setVisible(true); // Wait for fully loaded to become visible
+		this.setVisible(true); 
+		waitingScreen= new JPanel();
+		waitingScreen.setBackground(Color.yellow);
+		this.getLayeredPane().add(waitingScreen, 5);
+		
+		
+		sidebarScene = new SidebarScene(null);
+		
 		mapScene = new MapScene() {
 			@Override
 			public void selectMarker(EventMarker selected) {
@@ -72,59 +85,14 @@ public class MainScene extends JFrame{
 				}
 			}
 		};
-	
-		panel.setLayer(mapScene,0);
-		panel.add(mapScene);
-		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
-		mapScene.loadMapFile(new File("./assets/map/york.map"));
-		try {
-			addDemoMarkers();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		testWholeSceneWithoutMap(1);
-		this.setVisible(true);
-		this.validate();	
-	}
-	public void testWholeSceneWithoutMap(int i) {
-		sidebarScene = new SidebarScene(null);
-		panel.setLayer(sidebarScene, i);
-		panel.add(sidebarScene);
-		sidebarScene.setSize(screenSize.width/3,screenSize.height);
-		sidebarScene.setLocation(0,0);
-		
 		try {
 			options = new OptionsScene();
-			panel.setLayer(options, i+1);
-			panel.add(options);
-			options.setSize(screenSize.height/4, screenSize.height/4);
-			options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
 			login= new LoginScene();
-			panel.setLayer(login, i+2);
-			panel.add(login);
-			login.setSize(screenSize.width/4, screenSize.height/2);
-			login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
-			login.setVisible(false);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		upload= new UploadScene();
-		panel.setLayer(upload, i+3);
-		panel.add(upload);
-
-		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
-		upload.validate();
-		upload.repaint();
-		upload.setVisible(false);
-		
 		options.getAccountButton().addMouseListener(new MouseListener() {
 
 			@Override
@@ -265,19 +233,91 @@ public class MainScene extends JFrame{
 			}
 			
 		});
+		this.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resizeComponents();
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		
+		
+		resizeComponents();
+		setZOrder();
+		
+		mapScene.setVisible(true);
+		options.setVisible(true);
+		sidebarScene.setVisible(true);
+		upload.setVisible(false);
+		login.setVisible(false);
+		
+		this.remove(waitingScreen);
+	
+	};
+	public void setZOrder() {
+		panel= this.getLayeredPane();
+		panel.setLayer(mapScene,0);
+		panel.add(mapScene);
+		
+		mapScene.loadMapFile(new File("./assets/map/york.map"));
+	
+		/*
+		try {
+			addDemoMarkers();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mapScene.repaint();
+		*/
+		
+	
+		panel.setLayer(sidebarScene, 1);
+		panel.add(sidebarScene);
+		panel.setLayer(options, 2);
+		panel.add(options);
+		panel.setLayer(login, 3);
+		panel.add(login);
+		panel.setLayer(upload, 4);
+		panel.add(upload);
+		
 		
 	}
-	public void testOnlyUpload() {
-		upload= new UploadScene();
-		upload.setVisible(false);
-		panel.setLayer(upload, 0);
-		panel.add(upload);
-
+	public void resizeComponents() {
+		screenSize= this.getSize();
+		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
+		
+		
+		sidebarScene.setSize(screenSize.width/3,screenSize.height);
+		sidebarScene.setLocation(0,0);
+		options.setSize(screenSize.height/4, screenSize.height/4);
+		options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
+		login.setSize(screenSize.width/4, screenSize.height/2);
+		login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
 		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
-		upload.validate();
-		upload.repaint();
-		upload.setVisible(true);
 	}
+	
 	
 	public void addDemoMarkers() throws MalformedURLException {
 		int slideX = 100;
@@ -347,13 +387,13 @@ public class MainScene extends JFrame{
 	    	Presentation pres = new Presentation(slides);
 			mapScene.getMarkers().get(2).addPost(pres);
 		}
+		
 	}
+	
 
 	public static void main(String[] args) {
 		MainScene ms = new MainScene();
-		ms.testWholeScene();
-		//ms.testWholeSceneWithoutMap(0);
-		//ms.testOnlyUpload();
+		
 	}
 	
 	
