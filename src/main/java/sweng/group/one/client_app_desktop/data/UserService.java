@@ -1,6 +1,7 @@
 package sweng.group.one.client_app_desktop.data;
 
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -19,6 +20,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import sweng.group.one.client_app_desktop.data.User;
+
+// TODO: Add method for creating a new user on the server. 
 
 public class UserService {
 	
@@ -130,9 +133,6 @@ public class UserService {
 	        return 0;
 	    }
 	}
-
-
-
 
 	public void saveAccessToken(String token) throws IOException {
 		
