@@ -18,6 +18,9 @@ import org.json.JSONObject;
  * storing them, and storing the user's username. 
  * @author Paul Pickering
 */
+
+
+//TODO: Refactor to have constructor retrieve access and refresh tokens? Decide if we need access and refresh token fields. 
 public class User {
 	
 	
@@ -63,24 +66,14 @@ public class User {
 		Files.write(filepath, token.getBytes());
 	}
 		
-	public String readAccessToken() throws IOException {
+	private String readAccessToken() throws IOException {
 		Path filepath = Paths.get("temp/access_token.txt");
 		return Files.readString(filepath);
 	}
 	
-	public void saveRefreshToken(String token) throws IOException {
-		Path directoryPath = Paths.get("temp");
-		Path filepath = Paths.get("temp/refresh_token.txt");
-		// Checking if temp folder already exists, if not create one. 
-		if(!Files.exists(directoryPath)) {
-			Files.createDirectory(directoryPath, null);
-			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
-		}
 
-		Files.write(filepath, token.getBytes());
-	}
 		
-	public String readRefreshToken() throws IOException {
+	private String readRefreshToken() throws IOException {
 		Path filepath = Paths.get("temp/refresh_token.txt");
 		return Files.readString(filepath);
 	}
@@ -141,71 +134,6 @@ public class User {
 	            e.printStackTrace();
 	            return 0;
 	        }
-
-	}
-	
-	
-	//TODO: TBD where this functionality will go.
-	// E.g., a "loginScreen" class with a login method may make more sense?
-	// Code can be easily moved if needed.
-public int login(String password) {
-		
-		int statusCode = 0;
-
-		// Username and password encoded for transfer. 
-        String key1 = "username";
-        String value1 = getUsername();
-        String key2 = "password";
-        String value2 = password;
-        
-        // Ensures non-alphanumeric characters are handled properly. 
-        String encodedValue1 = URLEncoder.encode(value1, StandardCharsets.UTF_8);
-        String encodedValue2 = URLEncoder.encode(value2, StandardCharsets.UTF_8);
-
-        String requestBody = key1 + "=" + encodedValue1 + "&" + key2 + "=" + encodedValue2;
-		
-		
-		HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("http://localhost:8080/api/v1/login"))
-				.header("Content-Type", "application/x-www-form-urlencoded")
-				.header("Cache-Control", "no-cache")
-				.POST(HttpRequest.BodyPublishers.ofString(requestBody))
-				.build();
-		System.out.println(request.toString());
-		
-		
-		 try {
-	            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-	            // Handling the response.
-	            statusCode = response.statusCode();
-	            
-	            if (statusCode == 403) {
-	            	System.out.println("Error: Server returned 403 forbidden");
-	            	return statusCode;
-	            }
-	            // Save the response body as a JSON for easier parsing
-	            JSONObject json = new JSONObject(response.body());
-	            
-	            // Print the status code and response body
-	            System.out.println("Status code: " + statusCode);
-	            System.out.println("Response body: " + json.toString());
-	            
-	            
-	            saveAccessToken(json.getString("access_token"));
-	            saveRefreshToken(json.getString("refresh_token"));
-	            
-	            
-	        } catch (IOException e) {
-	            // Handle IOException (e.g., network error)
-	            e.printStackTrace();
-	        } catch (InterruptedException e) {
-	            // Handle InterruptedException (e.g., the request was cancelled)
-	            e.printStackTrace();
-	        }
-		 
-		 return statusCode;
 
 	}
 	
