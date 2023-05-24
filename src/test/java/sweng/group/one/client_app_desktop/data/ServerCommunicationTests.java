@@ -34,7 +34,7 @@ public class ServerCommunicationTests {
 	public void CanRefreshAccessToken() {
 		System.out.println("Running login test for correct credentials: ");
 		int statusCode = serviceTest.login(userTest, defaultAdminPass); // Ensure refresh token is valid. 
-		statusCode = serviceTest.refreshAccessToken();
+		statusCode = serviceTest.refreshAccessToken(userTest);
 		System.out.println("Status Code: " + statusCode);
 		assertThat(statusCode).isEqualTo(200);
 	}
@@ -53,6 +53,7 @@ public class ServerCommunicationTests {
 	// Failure to save these strings will likely result in an empty file.
 	// Checking length of line in file is reasonably big should reliably check the tokens exist.
 	// TODO: Use mocking to eliminate actual server from this interaction.
+	// TODO: These are unit tests for the User class now, move to another file.  
 	@Test
 	public void tokensAreSavedAndAreRetrieveableFromFile() {
 		System.out.println("Running test to ensure tokens are saved correctly:  ");
@@ -61,13 +62,13 @@ public class ServerCommunicationTests {
 		String accessToken = new String();
 		String refreshToken = new String();
 		try {
-			accessToken = serviceTest.readAccessToken();
+			accessToken = userTest.readAccessToken();
 		} catch (IOException e) {
 			System.out.println("Error reading file");
 			assert(false);
 		}
 		try {
-			refreshToken = serviceTest.readRefreshToken();
+			refreshToken = userTest.readRefreshToken();
 		} catch (IOException e) {
 			System.out.println("Error reading file");
 			assert(false);
