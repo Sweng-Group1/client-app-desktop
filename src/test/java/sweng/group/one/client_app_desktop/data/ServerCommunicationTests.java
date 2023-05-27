@@ -12,7 +12,7 @@ import sweng.group.one.client_app_desktop.data.UserService;
 
 // These are integration tests that will communicate with the actual server software. 
 // As such they require the server to be running. 
-// TODO: While these essentially also cover unit testing, unit tests should be added with mocked server interactions. 
+// TODO: While these essentially also cover unit testing, they are integration tests. unit tests should be added with mocked server interactions. 
 public class ServerCommunicationTests {
 	
 	private String defaultAdminUsername = "sid";
@@ -77,6 +77,7 @@ public class ServerCommunicationTests {
 		assertThat(accessToken.length()).isGreaterThan(100);
 		assertThat(refreshToken.length()).isGreaterThan(100);
 	}
+
 	
 
 }

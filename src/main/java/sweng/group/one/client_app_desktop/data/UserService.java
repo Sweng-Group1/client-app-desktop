@@ -1,16 +1,14 @@
 package sweng.group.one.client_app_desktop.data;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.net.URI;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import java.util.Properties;
 
 import org.json.JSONObject;
 
@@ -19,16 +17,52 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import sweng.group.one.client_app_desktop.data.User;
+
+/**
+ * @author Paul Pickering
+ * 
+ * Service class for interfacing with the "User" entity endpoints on the server. 
+ */
 
 // TODO: Add method for creating a new user on the server. 
 
 public class UserService {
-	
+    private String loginURL;
+    private String refreshURL;
+    
+    
+    // The constructors combined with the loadProperties method allow us to store 
+    // the URLs in an external file. 
+    public UserService() {
+        this("server-urls.properties");
+    }
+
+    public UserService(String urlsPath) {
+        loadProperties(urlsPath);
+    }
+
+    private void loadProperties(String urlsPath) {
+        Properties urlProps = new Properties();
+        try {
+            urlProps.load(new FileInputStream(urlsPath));
+        } catch (FileNotFoundException e) {
+            System.out.println("Error - server url properties file not found.");
+            e.printStackTrace();
+            // TODO: Is this how we want exceptions handled? Or propogate up?
+        } catch (IOException e) {
+            System.out.println("Error - server url properties can't be read.");
+            e.printStackTrace();
+            // TODO: Is this how we want exceptions handled? Or propogate up?
+        }
+        
+        this.loginURL = urlProps.getProperty("loginURL");
+        this.refreshURL = urlProps.getProperty("refreshURL");
+    }
+
+
 	public int login(User user, String password) {
 		
 		int statusCode = 0;
-			
 		OkHttpClient client = new OkHttpClient();
 	
 		// Username and password encoded for transfer.
@@ -44,7 +78,7 @@ public class UserService {
 		String requestBody = key1 + "=" + encodedValue1 + "&" + key2 + "=" + encodedValue2;
 	
 		Request request = new Request.Builder()
-		        .url("http://localhost:8080/api/v1/login")
+				.url(loginURL)
 		        .header("Content-Type", "application/x-www-form-urlencoded")
 		        .header("Cache-Control", "no-cache")
 		        .post(RequestBody.create(requestBody, MediaType.parse("application/x-www-form-urlencoded")))
@@ -84,6 +118,8 @@ public class UserService {
 		}
 
 	public int refreshAccessToken(User user) {
+		
+		
 	    String refreshToken;
 	    try {
 	        refreshToken = user.readRefreshToken();
@@ -94,9 +130,8 @@ public class UserService {
 	    }
 	
 	    OkHttpClient client = new OkHttpClient();
-	
 	    Request request = new Request.Builder()
-	            .url("http://localhost:8080/api/v1/token/refresh")
+	            .url(refreshURL)
 	            .header("Authorization", "Bearer " + refreshToken)
 	            .build();
 	
