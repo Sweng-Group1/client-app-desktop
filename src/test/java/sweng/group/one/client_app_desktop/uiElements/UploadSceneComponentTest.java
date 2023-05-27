@@ -31,8 +31,4 @@ public class UploadSceneComponentTest {
 		assertEquals(usc.getBounds().y, DIM);
 	}
 	
-	
-	public void paintTest() {
-		
-	}
 }

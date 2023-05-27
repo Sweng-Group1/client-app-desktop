@@ -21,7 +21,6 @@ public class UploadSceneComponent extends JPanel implements ComponentInterface{
 
 	protected Rectangle r;
 
-	
 	public UploadSceneComponent() {
 		this.setOpaque(false);
 		r= new Rectangle();
