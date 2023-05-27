@@ -21,36 +21,7 @@ import javax.swing.JTextField;
  *@author sophiemaw
  */
 public class SearchBar extends JPanel {	
-	/*
-		int curveRadius;
-		
-		public SearchBar() {
-			this.setOpaque(false);
-			this.setLayout(null);
-			;
-		}
-		
-		public void paint(Graphics g) {
-			Graphics2D g2= (Graphics2D) g.create();
-			g2.setColor(Color.white);
-			g2.fillRoundRect(0,0, this.getWidth(), this.getHeight(), curveRadius,curveRadius);
-		}
-		
-		public void minimise(long timeToMinimise) {
-			System.out.println("Search bar minimise");
-		}
-		
-		public void maximise(long timeToMaximise) {
-			System.out.println("Search bar");
-		}
-		
-		// ---------------- SETTERS AND GETTERS -----------
-		
-		public void setSize(int width, int height, int curveRadius) {
-			super.setSize(width, height);
-			this.curveRadius= curveRadius;
-		}
-};*/
+
 	public boolean isMoving;
 	public boolean isMaxState;
 	JButton searchButton;

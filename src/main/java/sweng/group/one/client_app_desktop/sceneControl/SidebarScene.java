@@ -114,7 +114,6 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 	}
 	private void configureComponents() {
 		header.setColours(colorDark, colorDark);
-		panel.setBackground(colorDark, colorLight);
 		scrollPane.setBackground(colorDark);
 		scrollView.setBackground(colorDark);
 		scrollPane.setBorder(null);

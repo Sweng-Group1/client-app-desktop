@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 
 /**
  *@author sophiemaw
+ * edited skjapps
  */
 public class Header extends JPanel{
 	//variables
@@ -38,9 +39,6 @@ public class Header extends JPanel{
 	boolean isMinimised;
 	
 	public Header() {
-		create();
-	}
-	private void create() {
 		this.setLayout(null);
 		this.setOpaque(false);
 		opacityValue= 100;
@@ -77,10 +75,9 @@ public class Header extends JPanel{
 		this.add(minimiseButton);
 		minimiseButton.setOpaque(false);
 		minimiseButton.addMouseListener(new MouseListener() {
-
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-			
 				
 			}
 
@@ -120,20 +117,19 @@ public class Header extends JPanel{
 		this.add(filterList);
 		
 	}
+
 	public void setColours(Color light, Color dark) {
 		this.light=light;
 		this.dark=dark;
 	}
+	
+	
 	public void paint(Graphics g) {
 		Graphics2D g2= (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		if(isMinimised==false) {	
 			g2.setColor(new Color(light.getRed(),light.getGreen(),light.getBlue(),opacityValue));
 			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
-		//	g2.fillArc(0, 0, curveRadius, curveRadius, 90, 90);
-		//	g2.fillArc(this.getWidth()-curveRadius,0, curveRadius, curveRadius, 0, 90);
-		//	g2.fillRect((curveRadius/2), 0, this.getWidth()-curveRadius, curveRadius/2);
-		//	g2.fillRect(0, (curveRadius/2), this.getWidth(), this.getHeight()-(curveRadius)/2);
 		}
 		super.paint(g2);
 	}
