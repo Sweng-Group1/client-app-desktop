@@ -52,7 +52,6 @@ public class ServerCommunicationTests {
 	// Valid tokens will consist of a long seemingly random set of characters. 
 	// Failure to save these strings will likely result in an empty file.
 	// Checking length of line in file is reasonably big should reliably check the tokens exist.
-	// TODO: Use mocking to eliminate actual server from this interaction.
 	// TODO: These are unit tests for the User class now, move to another file.  
 	@Test
 	public void tokensAreSavedAndAreRetrieveableFromFile() {

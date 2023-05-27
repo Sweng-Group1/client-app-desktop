@@ -68,6 +68,7 @@ public void saveAccessToken(String token) throws IOException {
 			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
 		}
 		
+		this.accessToken = token;
 		Files.write(filepath, token.getBytes());
 	}
 		
@@ -81,7 +82,8 @@ public void saveAccessToken(String token) throws IOException {
 			Files.createDirectory(directoryPath, null);
 			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
 		}
-
+		
+	this.refreshToken = token;
 	Files.write(filepath, token.getBytes());
 }
 	
