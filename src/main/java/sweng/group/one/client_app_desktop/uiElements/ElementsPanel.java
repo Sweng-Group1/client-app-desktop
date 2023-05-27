@@ -159,24 +159,24 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			public JButton createIncreaseButton(int o) {				
 				CircularButton b= new CircularButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./Assets/down.png")));
+					b.setIconImage(ImageIO.read(new File("./Assets/down.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				b.setMainBackground(transparent);
+				b.setMainBackgroundColour(transparent);
 						
 				return b;
 			}
 			public JButton createDecreaseButton(int o) {				
 				CircularButton b= new CircularButton();
 				try {
-					b.setImageIcon(ImageIO.read(new File("./Assets/up.png")));
+					b.setIconImage(ImageIO.read(new File("./Assets/up.png")));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				b.setMainBackground(transparent);
+				b.setMainBackgroundColour(transparent);
 				
 				return b;
 			}
@@ -192,8 +192,8 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		 */
 		
 		addElement= new CircularButton();
-		addElement.setImageIcon(ImageIO.read(new File("./Assets/plus-small.png")));
-		addElement.setMainBackground(Color.white);
+		addElement.setIconImage(ImageIO.read(new File("./Assets/plus-small.png")));
+		addElement.setMainBackgroundColour(Color.white);
 		lowerPanel.add(addElement);
 		addElement.addMouseListener(new MouseListener() {
 
@@ -268,9 +268,9 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 			
 		});
 		deleteElement=new CircularButton();
-		deleteElement.setImageIcon(ImageIO.read(new File("./Assets/cross.png")));
+		deleteElement.setIconImage(ImageIO.read(new File("./Assets/cross.png")));
 		lowerPanel.add(deleteElement);	
-		deleteElement.setMainBackground(Color.white);
+		deleteElement.setMainBackgroundColour(Color.white);
 		deleteElement.addMouseListener(new MouseListener() {
 
 			@Override

@@ -83,29 +83,29 @@ public class CustomToolBar extends UploadSceneComponent implements ComponentInte
 		backButton = new CircularButton();
 		downloadButton = new CircularButton();
 		
-		moveButton.setMainBackground(Color.white);
-		paintButton.setMainBackground(Color.white);
-		eraserButton.setMainBackground(Color.white);
-		textButton.setMainBackground(Color.white);
-		shapesButton.setMainBackground(Color.white);
-		confirmButton.setMainBackground(Color.white);
-		exitButton.setMainBackground(Color.white);
-		forwardButton.setMainBackground(Color.white);
-		backButton.setMainBackground(Color.white);
-		downloadButton.setMainBackground(Color.white);
+		moveButton.setMainBackgroundColour(Color.white);
+		paintButton.setMainBackgroundColour(Color.white);
+		eraserButton.setMainBackgroundColour(Color.white);
+		textButton.setMainBackgroundColour(Color.white);
+		shapesButton.setMainBackgroundColour(Color.white);
+		confirmButton.setMainBackgroundColour(Color.white);
+		exitButton.setMainBackgroundColour(Color.white);
+		forwardButton.setMainBackgroundColour(Color.white);
+		backButton.setMainBackgroundColour(Color.white);
+		downloadButton.setMainBackgroundColour(Color.white);
 		
 		
 		try {
-			moveButton.setImageIcon(ImageIO.read(new File("./assets/cursor.png")));
-			paintButton.setImageIcon(ImageIO.read(new File("./assets/pencil.png")));
-			eraserButton.setImageIcon(ImageIO.read(new File("./assets/eraser.png")));
-			textButton.setImageIcon(ImageIO.read(new File("./assets/text.png")));
-			shapesButton.setImageIcon(ImageIO.read(new File("./assets/shapes.png")));
-			confirmButton.setImageIcon(ImageIO.read(new File("./assets/tick.png")));
-			exitButton.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
-			forwardButton.setImageIcon(ImageIO.read(new File("./assets/forward.png")));
-			backButton.setImageIcon(ImageIO.read(new File("./assets/back.png")));
-			downloadButton.setImageIcon(ImageIO.read(new File("./assets/download.png")));
+			moveButton.setIconImage(ImageIO.read(new File("./assets/cursor.png")));
+			paintButton.setIconImage(ImageIO.read(new File("./assets/pencil.png")));
+			eraserButton.setIconImage(ImageIO.read(new File("./assets/eraser.png")));
+			textButton.setIconImage(ImageIO.read(new File("./assets/text.png")));
+			shapesButton.setIconImage(ImageIO.read(new File("./assets/shapes.png")));
+			confirmButton.setIconImage(ImageIO.read(new File("./assets/tick.png")));
+			exitButton.setIconImage(ImageIO.read(new File("./assets/cross.png")));
+			forwardButton.setIconImage(ImageIO.read(new File("./assets/forward.png")));
+			backButton.setIconImage(ImageIO.read(new File("./assets/back.png")));
+			downloadButton.setIconImage(ImageIO.read(new File("./assets/download.png")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

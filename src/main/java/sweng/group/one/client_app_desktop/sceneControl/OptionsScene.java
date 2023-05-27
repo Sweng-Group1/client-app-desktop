@@ -38,20 +38,20 @@ import sweng.group.one.client_app_desktop.uiElements.CircularButton;
 			multipleOptionsPanel.setLayout(null);
 			
 			accountButton= new CircularButton();
-			accountButton.setImageIcon(ImageIO.read(new File("./assets/user.png")));
-			accountButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
+			accountButton.setIconImage(ImageIO.read(new File("./assets/user.png")));
+			accountButton.setMainBackgroundColour(Color.white,new Color(239,238,238),new Color(203,203,203));
 			
 			addPostButton= new CircularButton();
-			addPostButton.setImageIcon(ImageIO.read(new File("./assets/plus.png")));
-			addPostButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
+			addPostButton.setIconImage(ImageIO.read(new File("./assets/plus.png")));
+			addPostButton.setMainBackgroundColour(Color.white,new Color(239,238,238),new Color(203,203,203));
 			
 			helpButton= new CircularButton();
-			helpButton.setImageIcon(ImageIO.read(new File("./assets/question.png")));
-			helpButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
+			helpButton.setIconImage(ImageIO.read(new File("./assets/question.png")));
+			helpButton.setMainBackgroundColour(Color.white,new Color(239,238,238),new Color(203,203,203));
 		
 			closeButton= new CircularButton();
-			closeButton.setImageIcon(ImageIO.read(new File("./assets/crossBlack.png")));
-			closeButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
+			closeButton.setIconImage(ImageIO.read(new File("./assets/crossBlack.png")));
+			closeButton.setMainBackgroundColour(Color.white,new Color(239,238,238),new Color(203,203,203));
 		
 			multipleOptionsPanel.add(accountButton);
 			multipleOptionsPanel.add(addPostButton);
@@ -78,14 +78,12 @@ import sweng.group.one.client_app_desktop.uiElements.CircularButton;
 					g.fillRect(posTwo, posTwo, buttonWidth, buttonWidth);
 				}
 			};
-			optionsButton.setMainBackgroundColor(Color.white,new Color(239,238,238),new Color(203,203,203));
+			optionsButton.setMainBackgroundColour(Color.white,new Color(239,238,238),new Color(203,203,203));
 			optionsButtonPanel.add(optionsButton);
 			optionsButtonPanel.setOpaque(false);
 			optionsButtonPanel.setLayout(null);
 			this.add(optionsButtonPanel);
-			optionsButton.setBorder(null);
-			
-		
+			optionsButton.setBorder(null);		
 		}
 		private void setupMultipleOptionsPanel() {
 			multipleOptionsPanel= new JPanel() {
@@ -95,18 +93,12 @@ import sweng.group.one.client_app_desktop.uiElements.CircularButton;
 					g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius,curvatureRadius);
 					super.paint(g);
 				}
-				
-				
 			};
 			this.add(multipleOptionsPanel);
 			multipleOptionsPanel.setOpaque(false);
 			multipleOptionsPanel.setVisible(false);
 			isOpen=false;
 		}
-			
-		
-		
-		
 		
 		public JButton getAccountButton() {
 			return accountButton;
@@ -207,7 +199,6 @@ import sweng.group.one.client_app_desktop.uiElements.CircularButton;
 			
 			closeButton.setSize(buttonWidth,buttonWidth,curvatureRadius);
 			closeButton.setLocation(buttonPosTwo,buttonPosTwo);
-			
-			
 		}
+		
 	}

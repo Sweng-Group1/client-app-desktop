@@ -95,21 +95,21 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 		//BUTTONS:
 		addTabButton= new CircularButton();
 		try {
-			addTabButton.setImageIcon(ImageIO.read(new File("./assets/plus-small.png")));
+			addTabButton.setIconImage(ImageIO.read(new File("./assets/plus-small.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		addTabButton.setMainBackground(Color.white);
+		addTabButton.setMainBackgroundColour(Color.white);
 		removeTabButton= new CircularButton();
 		this.add(addTabButton);
 		try {
-			removeTabButton.setImageIcon(ImageIO.read(new File("./assets/cross.png")));
+			removeTabButton.setIconImage(ImageIO.read(new File("./assets/cross.png")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		removeTabButton.setMainBackground(Color.white);
+		removeTabButton.setMainBackgroundColour(Color.white);
 		tabPane= new CustomTabbedPane(graphicsBox,removeTabButton);
 		this.add(tabPane);
 		this.add(removeTabButton);

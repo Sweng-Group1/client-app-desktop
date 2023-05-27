@@ -1,3 +1,4 @@
+package sweng.group.one.client_app_desktop;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;

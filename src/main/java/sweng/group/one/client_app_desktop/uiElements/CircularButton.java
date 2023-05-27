@@ -14,38 +14,42 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * 
+ * Refactored lukeg
+ *
+ */
 public class CircularButton extends JButton{
 	private Image image;
 	private Image scaledImage;
 	private Color backgroundColour;
 	private Color backgroundWhenPressed;
 	private Color backgroundWhenHover;
-	
+	private Color borderColour;
 	private int borderThickness;
-	private Color border;
-	private boolean pressed;
-	
 	private int curveRadius;
+	private boolean pressed;
 	
 	public CircularButton() {	
 
 		setOpaque(false);
 		setBorderPainted(false);
 		setFocusPainted(false);	
-		//setMainBackgroundColor(getBackground());
 		borderThickness=0;
 		pressed=false;
 		
-		MouseAdapter mouseListener= new MouseAdapter () {
+		MouseAdapter mouseListener = new MouseAdapter () {
 		
+			/*
+			 * Alter button appearance based on mouse input
+			 */
 			public void mousePressed(MouseEvent me) {
 				setBackground(backgroundWhenPressed);
 				if(pressed==true) {
-					pressed= false;
-				}else {
-					pressed=true;
+					pressed = false;
+				} else {
+					pressed = true;
 				}
-				
 			}
 			public void mouseReleased(MouseEvent me) {
 				setBackground(backgroundColour);
@@ -57,26 +61,23 @@ public class CircularButton extends JButton{
 				setBackground(backgroundWhenHover);
 			}
 		};
+		
 		addMouseListener(mouseListener);
 		addMouseMotionListener(mouseListener);
-	
-		
 	}
+	
 	public void setSize(int width, int height, int curveRadius) {
 		super.setSize(width,height);	
 		if(image!=null) {
-			scaledImage= image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+			scaledImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 		}
 		this.curveRadius=curveRadius;
-		
-		
 	}
 	
 	public void paint(Graphics g) {
-		int diameter=Math.min(getWidth(), getHeight());
+		int diameter = Math.min(getWidth(), getHeight());
 	
-	
-		Graphics2D g2= (Graphics2D) g;
+		Graphics2D g2 = (Graphics2D) g;
 		
 		if(this.isSelected()==true) {
 			g2.setColor(backgroundWhenHover);
@@ -84,90 +85,87 @@ public class CircularButton extends JButton{
 			g2.setColor(this.getBackground());
 		}
 		g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
-		//g2.fillOval(0,0,diameter-1,diameter-1);
 		
-		if(image!=null) {
-			
-			//scaledImage= image.getScaledInstance(diameter/2, diameter/2, java.awt.Image.SCALE_SMOOTH);
-		
+		if(image!=null) {	
 			BufferedImage masking;
 			Graphics2D g2d;
-			masking= new BufferedImage(diameter,diameter,BufferedImage.TYPE_INT_ARGB);
-			g2d= masking.createGraphics();
+			
+			masking = new BufferedImage(diameter,diameter,BufferedImage.TYPE_INT_ARGB);
+			g2d = masking.createGraphics();
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			int imageWidth= diameter/2;
-			int imageHeight= diameter/2;
+			int imageWidth = diameter/2;
+			int imageHeight = diameter/2;
 			g2d.drawImage(scaledImage,diameter/4,diameter/4,imageWidth,imageHeight,null);
 			g2d.dispose();
 			
-			Icon iconIm= new ImageIcon(masking);
-			Image imageIcon= ((ImageIcon)iconIm).getImage();
+			Icon icon = new ImageIcon(masking);
+			Image iconImage = ((ImageIcon)icon).getImage();
 			
-			g2.drawImage(imageIcon, 0, 0, null);
+			g2.drawImage(iconImage, 0, 0, null);
 			g2.dispose();
 		}	
 		
 		if(borderThickness>0) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setColor(border);
+			g2.setColor(borderColour);
 			g2.setStroke(new BasicStroke(borderThickness));
 			g2.drawRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
-			//g2.drawOval(0,0,diameter-1,diameter-1);
-			
 		}
 		validate();	
 		super.paint(g);
 	}
-	public void setMainBackgroundColor(Color normal, Color hover, Color click) {
-		
-		//Button will have 33% opaque normally, 66% when hovered, 100% when pressed
 	
+	public void setMainBackgroundColour(Color colour) {
+		int colourR = colour.getRed();
+		int colourG = colour.getGreen();
+		int colourB = colour.getBlue();
+	
+		// Set opacity to 33% normally, 66% when hovered, and 100% when pressed
+		int alphaNormal = 255/3;
+		int alphaHover = 2*255/3;
+		int alphaPressed = 255;
 		
-		backgroundColour= normal;
-		backgroundWhenHover= hover;
-		backgroundWhenPressed= click;
+		backgroundColour = new Color(colourR,colourG,colourB,alphaNormal);
+		backgroundWhenHover = new Color(colourR,colourG,colourB,alphaHover);
+		backgroundWhenPressed = new Color(colourR,colourG,colourB,alphaPressed);
 		
 		super.setBackground(backgroundColour);
-	
 	}
-	public void setMainBackground(Color colour) {
-		
-		//Button will have 33% opaque normally, 66% when hovered, 100% when pressed
-		int colourR= colour.getRed();
-		int colourG= colour.getGreen();
-		int colourB= colour.getBlue();
 	
-		int alphaNormal= 0;
-		int alphaHover= 255/6;
-		int alphaPressed= alphaHover*2;
-		
-		backgroundColour= new Color(colourR,colourG,colourB,alphaNormal);
-		backgroundWhenHover= new Color(colourR,colourG,colourB,alphaHover);
-		backgroundWhenPressed= new Color(colourR,colourG,colourB,alphaPressed);
+	/*
+	 * This version of the function only seems to be used for the buttons in OptionsScene
+	 */
+	public void setMainBackgroundColour(Color normalColour, Color hoverColour, Color pressedColour) {	
+		backgroundColour = normalColour;
+		backgroundWhenHover = hoverColour;
+		backgroundWhenPressed = pressedColour;
 		
 		super.setBackground(backgroundColour);
-	
 	}
+	
 	public void setBorder(Color colour, int thickness) {
-		border= colour;
-		borderThickness= thickness;
-		
+		borderColour = colour;
+		borderThickness = thickness;
 	}
+	
 	public int getBorderThickness() {
 		return borderThickness;
 	}
+	
 	public Color getBorderColour() {
-		return border;
+		return borderColour;
 	}
-	public void setPressed(boolean trueFalse) {
-		pressed= trueFalse;
+	
+	public void setPressed(boolean pressedStatus) {
+		pressed = pressedStatus;
 	}
+	
 	public boolean checkIfPressed() {
 		return pressed;
 	}
-
-	public void setImageIcon(Image im) {
-		image=im;
+	
+	public void setIconImage(Image newImage) {
+		image = newImage;
 	}
 	
 }
