@@ -60,6 +60,14 @@ public class UserService {
     }
 
 
+	/**
+     * Logs the user in to the application. If successful, 
+     * will save the access and refresh tokens for the user locally (per-user files). 
+     * @param user The user you are attempting to login as. 
+     * @param password User's password.
+     * @return Returns the status code (standard HTTP codes, e.g. 200 success, 403 incorrect credentials),
+     *  or 0 if an error occurs. 
+     */
 	public int login(User user, String password) {
 		
 		int statusCode = 0;
@@ -116,7 +124,16 @@ public class UserService {
 			 return statusCode;
 	
 		}
-
+	
+	
+	/**
+     * Refreshes the access token for the user. 
+     * Intended to be ran when an access token is expired, but will still refresh if the token is in-date.
+     * Will update the saved access 
+     * @param user The user whose access token is to be refreshed. 
+     * @return Returns the status code (standard HTTP codes, e.g. 200 success, 403 incorrect credentials),
+     *  or 0 if an error occurs. 
+     */
 	public int refreshAccessToken(User user) {
 		
 		
