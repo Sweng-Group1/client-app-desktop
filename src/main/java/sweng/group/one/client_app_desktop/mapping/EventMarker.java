@@ -1,20 +1,24 @@
 package sweng.group.one.client_app_desktop.mapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.LatLong;
 import org.mapsforge.core.model.Point;
 import org.mapsforge.map.layer.overlay.Marker;
 import org.mapsforge.map.model.Model;
 
+import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.sceneControl.MapScene;
 
 public class EventMarker extends Marker{
 	
 	private final int tapRadius;
 	private MapScene mapView;
-	private int numPosts;
 	private boolean selected;
-	//TODO: Add posts
+	private String tag;
+	private ArrayList<Presentation> posts;
 
 	public EventMarker(MapScene mapView, LatLong latLong, Bitmap bitmap) {
 		super(latLong, bitmap, 0, -bitmap.getHeight()/2);
@@ -22,9 +26,9 @@ public class EventMarker extends Marker{
 		int width = bitmap.getWidth();
 		this.tapRadius = height >= width ? height : width; //make whole image clickable
 		this.mapView = mapView;
+		this.posts = new ArrayList<>();
 		this.setSelected(false);
-		//TODO: Sort this out when posts are added
-		numPosts = (int)(Math.random() * 15);
+		this.tag = ""; //TODO: add tag to constructor
 	}
 	
 	@Override
@@ -41,8 +45,16 @@ public class EventMarker extends Marker{
 		}
 	}
 	
+	public void addPost(Presentation post) {
+		posts.add(post);
+	}
+	
+	public List<Presentation> getPosts(){
+		return posts;
+	}
+	
 	public int getNumPosts() {
-		return numPosts;
+		return posts.size();
 		
 	}
 
@@ -53,6 +65,14 @@ public class EventMarker extends Marker{
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 		this.requestRedraw();
+	}
+
+	public String getName() {
+		return tag;
+	}
+
+	public void setName(String name) {
+		this.tag = name;
 	}
 
 }
