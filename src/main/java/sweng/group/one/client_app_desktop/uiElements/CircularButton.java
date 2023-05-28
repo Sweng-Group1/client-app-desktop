@@ -95,9 +95,9 @@ public class CircularButton extends JButton{
 	 * Sets the size of the button in terms of its width and height
 	 * Sets the radius of the buttons curves (how rounded the edges are)
 	 * 
-	 * @param width
-	 * @param height
-	 * @param curveRadius
+	 * @param width Buttons width in pixels
+	 * @param height Buttons height in pixels
+	 * @param curveRadius Buttons curve radius in pixels
 	 */
 	public void setSize(int width, int height, int curveRadius) {
 		super.setSize(width,height);	
@@ -111,7 +111,7 @@ public class CircularButton extends JButton{
 	 * Sets the main colour of the buttons background
 	 * Adjusts the buttons opacity when the user interacts with it
 	 * 
-	 * @param colour
+	 * @param colour Background colour of the button
 	 */
 	public void setMainBackgroundColour(Color colour) {
 		int colourR = colour.getRed();
@@ -134,9 +134,9 @@ public class CircularButton extends JButton{
 	 * Sets the main colour of the buttons background
 	 * Adjusts the buttons opacity when the user interacts with it
 	 * 
-	 * @param normalColour
-	 * @param hoverColour
-	 * @param pressedColour
+	 * @param normalColour Standard background colour of the button
+	 * @param hoverColour Background colour of the button when hovered over
+	 * @param pressedColour Background colour of the button when pressed
 	 */
 	public void setMainBackgroundColour(Color normalColour, Color hoverColour, Color pressedColour) {	
 		backgroundColour = normalColour;
@@ -148,7 +148,7 @@ public class CircularButton extends JButton{
 	
 	/**
 	 * 
-	 * @param newImage
+	 * @param newImage Image to be set
 	 */
 	public void setIconImage(Image newImage) {
 		image = newImage;
@@ -156,8 +156,8 @@ public class CircularButton extends JButton{
 	
 	/**
 	 * 
-	 * @param colour
-	 * @param thickness
+	 * @param colour Colour of the border
+	 * @param thickness Thickness the border in pixels
 	 */
 	public void setBorder(Color colour, int thickness) {
 		borderColour = colour;
@@ -224,7 +224,7 @@ public class CircularButton extends JButton{
 	/**
 	 * Sets the status of the button to either true (pressed) or false (not pressed)
 	 * 
-	 * @param pressedStatus
+	 * @param pressedStatus Is the button currently pressed or not?
 	 */
 	public void setPressed(boolean pressedStatus) {
 		pressed = pressedStatus;
