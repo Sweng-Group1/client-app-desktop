@@ -56,8 +56,6 @@ public class MapScene extends MapView{
 		preferencesFacade = new JavaPreferences(Preferences.userNodeForPackage(MapScene.class));
 		markers = new ArrayList<>();
 		heatmap = new HeatMap(markers, this);
-		
-		
 	}
 	
 	public void loadMapFile(File mapFile) {
@@ -147,25 +145,4 @@ public class MapScene extends MapView{
 		return markers;
 	}
 
-	public void paint(Graphics g) {
-		Graphics2D g2= (Graphics2D)g.create();
-		BufferedImage buffer= new BufferedImage(this.getWidth(),this.getHeight(),BufferedImage.BITMASK);
-		g.drawImage(buffer, 0, 0, null);
-		
-		if(buffer.getRaster().getDataBuffer().getSize()==(this.getWidth()*this.getHeight())) {
-			//
-			
-			super.paint(g);
-			
-		}
-	
-		 /* GraphicContext graphicContext = AwtGraphicFactory.createGraphicContext(g);
-		 
-		  this.getFrameBuffer().draw(graphicContext);
-		  if (this.getMapScaleBar() != null) {
-		    this.getMapScaleBar().draw(graphicContext);
-		  }
-		  this.getFpsCounter().draw(graphicContext);
-		  this.getFrameBuffer().destroy();*/
-	}
 }

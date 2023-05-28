@@ -14,10 +14,12 @@ import javax.swing.JScrollPane;
 import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
 /**
- * Custom Panel to do ...
+ * Custom JPanel to allow themed ui elements and animations
  * 
- * @author joncooke edited sophiemaw/skjapps
- * 
+ * @author Jonathan Cooke, Sophie Maw and Srikanth Jakka
+ * @since 24/05/2023
+ * @version 0.3
+ *
  */
 public class CustomPanel extends JPanel implements ComponentInterface {
 
@@ -63,7 +65,9 @@ public class CustomPanel extends JPanel implements ComponentInterface {
 				public void run() {
 					r.setBounds(r.x, r.y, r.width - 1, r.height);
 					repaint();
-					isMoving = false;
+					if(r.x+r.width==0) {
+						isMoving=false;
+					}
 				}
 
 			}, timeInterval * i);

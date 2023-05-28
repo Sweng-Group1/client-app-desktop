@@ -282,7 +282,6 @@ public class MainScene extends JFrame{
 		
 		mapScene.loadMapFile(new File("./assets/map/york.map"));
 	
-		/*
 		try {
 			addDemoMarkers();
 		} catch (MalformedURLException e) {
@@ -290,7 +289,6 @@ public class MainScene extends JFrame{
 			e.printStackTrace();
 		}
 		mapScene.repaint();
-		*/
 		
 	
 		panel.setLayer(sidebarScene, 1);

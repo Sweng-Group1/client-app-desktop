@@ -17,11 +17,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- *@author sophiemaw
- * edited skjapps
+ * Header panel to hold the search bar in the sidebar
+ * 
+ * @author Sophie Maw and Srikanth Jakka
+ * @since 24/05/2023
+ * @version 0.2
+ *
  */
 public class Header extends JPanel{
-	//variables
+	
+	// Variables
 	int curveRadius;
 	Color light;
 	Color dark;
@@ -39,20 +44,19 @@ public class Header extends JPanel{
 	boolean isMinimised;
 	
 	public Header() {
+		
 		this.setLayout(null);
 		this.setOpaque(false);
 		opacityValue= 100;
 		isMinimised=false;
-		/*
-		 *  Search bar: get maximiseButton
-		 */
+
+		// Search bar: get maximiseButton
 		searchBar= new SearchBar();
 		this.add(searchBar);
 		searchBar.setOpaque(false);
 		maximiseButton= searchBar.getMaximiseButton();
-		/*
-		 *  Minimise button 
-		 */
+
+		// 
 		minimiseButton= new JButton() {
 			public void paint(Graphics g) {
 				Graphics2D g2= (Graphics2D) g.create();
@@ -68,9 +72,9 @@ public class Header extends JPanel{
 					} catch (IOException e) {
 						e.printStackTrace();
 					}		
-					//super.paint(g)
 			}}
 		};
+		
 		minimiseButton.setBackground(Color.white);
 		this.add(minimiseButton);
 		minimiseButton.setOpaque(false);
@@ -123,16 +127,6 @@ public class Header extends JPanel{
 		this.dark=dark;
 	}
 	
-	
-	public void paint(Graphics g) {
-		Graphics2D g2= (Graphics2D) g.create();
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		if(isMinimised==false) {	
-			g2.setColor(new Color(light.getRed(),light.getGreen(),light.getBlue(),opacityValue));
-			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
-		}
-		super.paint(g2);
-	}
 	public void setBounds(Rectangle bounds, int curveRadius) {
 		this.setLocation(bounds.x, bounds.y);
 		this.setSize(bounds.width, bounds.height);
@@ -149,11 +143,7 @@ public class Header extends JPanel{
 		filterList.setLocation(bounds.width-gapWidth-filterList.getWidth(), gapWidth);
 		minimiseButton.setLocation(bounds.width-gapWidth- filterList.getWidth()-gapWidth-minimiseButton.getWidth(), bounds.height/4);
 		
-		/*
-		 *  Search bar: search bar gapWidth = this.height/4
-		 */
-		
-	
+		// Search bar: search bar gapWidth = this.height/4		
 		searchBar.setMinimumStateSize(rSearchBarMin.width,rSearchBarMin.height);
 		searchBar.setMaximumStateSize(rSearchBarMax.width, rSearchBarMax.height);
 		searchBar.setLocation(gapWidth, gapWidth);
@@ -164,6 +154,7 @@ public class Header extends JPanel{
 	public JButton getMinimiseButton() {
 		return minimiseButton;
 	}
+	
 	public void setMinimise(long timeToMinimise) {
 		isMinimised=false;
 		searchBar.minimise(timeToMinimise);
@@ -173,6 +164,7 @@ public class Header extends JPanel{
 		filterList.setVisible(true);
 		repaint();
 	}
+	
 	public void setMaximise(long timeToMaximise) {
 		isMinimised=true;
 		searchBar.maximise(timeToMaximise);
@@ -183,6 +175,7 @@ public class Header extends JPanel{
 		filterList.setVisible(false);
 		repaint();
 	}
+	
 	public JButton getSearchButton() {
 		return searchBar.getSearchButton();
 	}
