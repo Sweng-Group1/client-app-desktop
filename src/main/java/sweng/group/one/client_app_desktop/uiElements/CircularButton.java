@@ -15,11 +15,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
+ * Modified JButton with custom graphics
  * 
- * Refactored lukeg
- *
+ * @author Sophie Maw & Luke George 
+ * @since 28/05/2023
+ * 
  */
 public class CircularButton extends JButton{
+	
+	// -------------------------------------------------------------- //
+	// --------------------- INITIALISATIONS ------------------------ //
+	// -------------------------------------------------------------- //
+	
 	private Image image;
 	private Image scaledImage;
 	private Color backgroundColour;
@@ -30,18 +37,24 @@ public class CircularButton extends JButton{
 	private int curveRadius;
 	private boolean pressed;
 	
+	private int defaultBorderThickness = 0;
+	
+	// -------------------------------------------------------------- //
+	// ----------------------- CONSTRUCTOR -------------------------- //
+	// -------------------------------------------------------------- //
+	
 	public CircularButton() {	
-
+		// Initialise
 		setOpaque(false);
 		setBorderPainted(false);
 		setFocusPainted(false);	
-		borderThickness=0;
-		pressed=false;
+		borderThickness = defaultBorderThickness;
+		pressed = false;
 		
 		MouseAdapter mouseListener = new MouseAdapter () {
-		
-			/*
-			 * Alter button appearance based on mouse input
+			/**
+			 * Sets the status of the button to if it is currently pressed or not
+			 * Changes the background colour whilst the button is held down
 			 */
 			public void mousePressed(MouseEvent me) {
 				setBackground(backgroundWhenPressed);
@@ -51,21 +64,41 @@ public class CircularButton extends JButton{
 					pressed = true;
 				}
 			}
+			/**
+			 * Changes the background colour when the button is released
+			 */
 			public void mouseReleased(MouseEvent me) {
 				setBackground(backgroundColour);
 			}
+			/**
+			 * Changes the background colour when the button is exited
+			 */
 			public void mouseExited(MouseEvent me) {
 				setBackground(backgroundColour);
 			}
+			/**
+			 * Changes the background colour when the button is hovered over
+			 */
 			public void mouseMoved(MouseEvent me) {
 				setBackground(backgroundWhenHover);
 			}
 		};
-		
 		addMouseListener(mouseListener);
 		addMouseMotionListener(mouseListener);
 	}
 	
+	// -------------------------------------------------------------- //
+	// ----------------------- APPEARANCE --------------------------- //
+	// -------------------------------------------------------------- //
+	
+	/**
+	 * Sets the size of the button in terms of its width and height
+	 * Sets the radius of the buttons curves (how rounded the edges are)
+	 * 
+	 * @param width
+	 * @param height
+	 * @param curveRadius
+	 */
 	public void setSize(int width, int height, int curveRadius) {
 		super.setSize(width,height);	
 		if(image!=null) {
@@ -73,6 +106,75 @@ public class CircularButton extends JButton{
 		}
 		this.curveRadius=curveRadius;
 	}
+	
+	/**
+	 * Sets the main colour of the buttons background
+	 * Adjusts the buttons opacity when the user interacts with it
+	 * 
+	 * @param colour
+	 */
+	public void setMainBackgroundColour(Color colour) {
+		int colourR = colour.getRed();
+		int colourG = colour.getGreen();
+		int colourB = colour.getBlue();
+	
+		int alphaPressed = 255;
+		int alphaNormal = alphaPressed/3;
+		int alphaHover = 2*alphaNormal;
+		
+		backgroundColour = new Color(colourR,colourG,colourB,alphaNormal);
+		backgroundWhenHover = new Color(colourR,colourG,colourB,alphaHover);
+		backgroundWhenPressed = new Color(colourR,colourG,colourB,alphaPressed);
+		
+		super.setBackground(backgroundColour);
+	}
+	
+	/**
+	 * This version of the function only seems to be used for the buttons in OptionsScene
+	 * Sets the main colour of the buttons background
+	 * Adjusts the buttons opacity when the user interacts with it
+	 * 
+	 * @param normalColour
+	 * @param hoverColour
+	 * @param pressedColour
+	 */
+	public void setMainBackgroundColour(Color normalColour, Color hoverColour, Color pressedColour) {	
+		backgroundColour = normalColour;
+		backgroundWhenHover = hoverColour;
+		backgroundWhenPressed = pressedColour;
+		
+		super.setBackground(backgroundColour);
+	}
+	
+	/**
+	 * 
+	 * @param newImage
+	 */
+	public void setIconImage(Image newImage) {
+		image = newImage;
+	}
+	
+	/**
+	 * 
+	 * @param colour
+	 * @param thickness
+	 */
+	public void setBorder(Color colour, int thickness) {
+		borderColour = colour;
+		borderThickness = thickness;
+	}
+	
+	public int getBorderThickness() {
+		return borderThickness;
+	}
+	
+	public Color getBorderColour() {
+		return borderColour;
+	}
+	
+	// -------------------------------------------------------------- //
+	// --------------------- UPDATE GRAPHICS ------------------------ //
+	// -------------------------------------------------------------- //
 	
 	public void paint(Graphics g) {
 		int diameter = Math.min(getWidth(), getHeight());
@@ -115,57 +217,21 @@ public class CircularButton extends JButton{
 		super.paint(g);
 	}
 	
-	public void setMainBackgroundColour(Color colour) {
-		int colourR = colour.getRed();
-		int colourG = colour.getGreen();
-		int colourB = colour.getBlue();
+	// -------------------------------------------------------------- //
+	// -------------------------- STATUS ---------------------------- //
+	// -------------------------------------------------------------- //
 	
-		// Set opacity to 33% normally, 66% when hovered, and 100% when pressed
-		int alphaNormal = 255/3;
-		int alphaHover = 2*255/3;
-		int alphaPressed = 255;
-		
-		backgroundColour = new Color(colourR,colourG,colourB,alphaNormal);
-		backgroundWhenHover = new Color(colourR,colourG,colourB,alphaHover);
-		backgroundWhenPressed = new Color(colourR,colourG,colourB,alphaPressed);
-		
-		super.setBackground(backgroundColour);
-	}
-	
-	/*
-	 * This version of the function only seems to be used for the buttons in OptionsScene
+	/**
+	 * Sets the status of the button to either true (pressed) or false (not pressed)
+	 * 
+	 * @param pressedStatus
 	 */
-	public void setMainBackgroundColour(Color normalColour, Color hoverColour, Color pressedColour) {	
-		backgroundColour = normalColour;
-		backgroundWhenHover = hoverColour;
-		backgroundWhenPressed = pressedColour;
-		
-		super.setBackground(backgroundColour);
-	}
-	
-	public void setBorder(Color colour, int thickness) {
-		borderColour = colour;
-		borderThickness = thickness;
-	}
-	
-	public int getBorderThickness() {
-		return borderThickness;
-	}
-	
-	public Color getBorderColour() {
-		return borderColour;
-	}
-	
 	public void setPressed(boolean pressedStatus) {
 		pressed = pressedStatus;
 	}
 	
 	public boolean checkIfPressed() {
 		return pressed;
-	}
-	
-	public void setIconImage(Image newImage) {
-		image = newImage;
 	}
 	
 }
