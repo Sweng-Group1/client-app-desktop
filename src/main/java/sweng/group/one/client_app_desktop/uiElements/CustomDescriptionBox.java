@@ -32,11 +32,12 @@ public class CustomDescriptionBox extends UploadSceneComponent implements Compon
 	public CustomDescriptionBox() {
 		initialise();
 	}
+	
 	private void initialise() {
-		descriptionTextField= new JTextArea();
+		descriptionTextField = new JTextArea();
 		this.setLayout(null);
-		this.main= colorLight;
-		this.secondary= colorDark;
+		this.main = colorLight;
+		this.secondary = colorDark;
 		this.add(descriptionTextField);
 		
 		descriptionTextField.setBackground(transparent);
@@ -44,7 +45,7 @@ public class CustomDescriptionBox extends UploadSceneComponent implements Compon
 		descriptionTextField.setCaretColor(Color.white);
 		descriptionTextField.setBorder(null);
 		descriptionTextField.setOpaque(false);
-		placeHolder= "Add a description...";
+		placeHolder = "Add a description...";
 		descriptionTextField.setText(placeHolder);
 		
 		descriptionTextField.addFocusListener(new FocusListener() {
@@ -56,7 +57,6 @@ public class CustomDescriptionBox extends UploadSceneComponent implements Compon
 					descriptionTextField.removeAll();
 					descriptionTextField.setText("");
 				}
-				
 			}
 
 			@Override
@@ -64,9 +64,7 @@ public class CustomDescriptionBox extends UploadSceneComponent implements Compon
 				if(descriptionTextField.getText()=="") {
 					descriptionTextField.setText(placeHolder);
 				}
-				
 			}
-			
 		});
 		
 		descriptionTextField.addKeyListener(new KeyListener() {
@@ -75,17 +73,16 @@ public class CustomDescriptionBox extends UploadSceneComponent implements Compon
 			public void keyTyped(KeyEvent e) {
 				if(e.getKeyChar()==KeyEvent.VK_ENTER) {
 					if(descriptionTextField.getText()!=placeHolder) {
-						 description=descriptionTextField.getText();				
+						 description = descriptionTextField.getText();				
 						descriptionTextField.setText(description);
 					}
 				}
-				
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// TODO Auto-generated method stub
-				
+		
 			}
 
 			@Override
@@ -95,8 +92,7 @@ public class CustomDescriptionBox extends UploadSceneComponent implements Compon
 			}
 			
 		});
-		
-		
+
 	}
 	/*
 	 *  This method is described in more detail in the setMarginBounds diagram
