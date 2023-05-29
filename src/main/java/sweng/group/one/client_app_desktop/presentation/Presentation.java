@@ -2,6 +2,7 @@ package sweng.group.one.client_app_desktop.presentation;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
@@ -33,6 +34,16 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import sweng.group.one.client_app_desktop.graphics.Border;
+import sweng.group.one.client_app_desktop.graphics.Circle;
+import sweng.group.one.client_app_desktop.graphics.Line;
+import sweng.group.one.client_app_desktop.graphics.Rectangle;
+import sweng.group.one.client_app_desktop.graphics.Shadow;
+import sweng.group.one.client_app_desktop.media.AudioPlayer;
+import sweng.group.one.client_app_desktop.media.ImageViewer;
+import sweng.group.one.client_app_desktop.media.VideoPlayer;
+import sweng.group.one.client_app_desktop.text.TextElement;
 
 /**
  * @author flt515
@@ -130,7 +141,6 @@ public class Presentation extends JPanel {
 				
 				Slide newSlide = new Slide(width, height);
 				this.addSlide(newSlide);
-				System.out.println("New Slide");
 				
 				for(int s = 0; s < slideXML.getLength(); s++) {
 					final String[] varNames = {"width", 
@@ -159,6 +169,11 @@ public class Presentation extends JPanel {
 												"toY"};
 					
 					Map<String, Object> varDict = new HashMap<String, Object>();
+					
+					//set float values to 0 as floats cannot be null
+					varDict.put("delay", 0.0f);
+					varDict.put("timeOnScreen", 0.0f);
+					varDict.put("rotation", 0.0f);
 					
 					Node slideItem = slideXML.item(s);
 					String slideItemName = slideItem.getNodeName();
@@ -192,11 +207,17 @@ public class Presentation extends JPanel {
 							case "xCoordinate":
 							case "yCoordinate":
 							case "borderWidth":
+							case "thickness":
 							case "shadowRadius":
 							case "shadowDx":
 							case "shadowDy":
 							case "fontSize":
 							case "radius":
+							case "fromX":
+							case "fromY":
+							case "toX":
+							case "toY":
+							case "rotation":
 								value = Integer.parseInt((String) value);
 								break;
 							
@@ -240,60 +261,111 @@ public class Presentation extends JPanel {
 					}
 					
 					
-					
+					Point pos;
+					boolean loops = false;
+					Border border;
+					Shadow shadow;
 					
 					switch (slideItemName) {
 					case "image":
-						System.out.println(varDict.get("url") + " " + 
-											varDict.get("width") + " " +
-											varDict.get("height") + " " +
-											varDict.get("rotation") + " " +
-											varDict.get("delay") + " " +
-											varDict.get("xCoordinate") + " " +
-											varDict.get("yCoordinate") + " " +
-											varDict.get("timeOnScreen"));
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						ImageViewer imageViewer = new ImageViewer(pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								(float) varDict.get("timeOnScreen"),
+								(Integer) varDict.get("rotation"),
+								(float) varDict.get("delay"),
+								newSlide,
+								(URL) varDict.get("url"));
+						newSlide.add(imageViewer);
 						break;
 					case "video":
-						System.out.println(varDict.get("url") + " " + 
-											varDict.get("width") + " " +
-											varDict.get("height") + " " +
-											varDict.get("xCoordinate") + " " +
-											varDict.get("yCoordinate") + " " +
-											varDict.get("loops"));
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						if (varDict.get("loops") != null) {
+							loops = (boolean) varDict.get("loops");
+						}
+						VideoPlayer videoPlayer = new VideoPlayer(pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								newSlide,
+								(URL) varDict.get("url"),
+								loops);
+						newSlide.add(videoPlayer);
 						break; 
 					case "audio":
-						System.out.println(varDict.get("url") + " " + 
-								varDict.get("width") + " " +
-								varDict.get("height") + " " +
-								varDict.get("xCoordinate") + " " +
-								varDict.get("yCoordinate") + " " +
-								varDict.get("loops"));
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						if (varDict.get("loops") != null) {
+							loops = (boolean) varDict.get("loops");
+						}
+						AudioPlayer audioPlayer = new AudioPlayer(pos,
+								50,
+								50,
+								(float) varDict.get("timeOnScreen"),
+								newSlide,
+								(URL) varDict.get("url"),
+								loops);
+						newSlide.add(audioPlayer);
 						break;
 					case "rectangle":
-						System.out.println(varDict.get("borderColour") + " " +
-											varDict.get("borderWidth"));
-						System.out.println(varDict.get("shadowColour") + " " +
-											varDict.get("shadowDx") + " " +
-											varDict.get("shadowDy") + " " +
-											varDict.get("shadowRadius"));
-						System.out.println(varDict.get("width") + " " +
-										varDict.get("height") + " " +
-										varDict.get("xCoordinate") + " " +
-										varDict.get("yCoordinate") + " " +
-										varDict.get("colour") + " " +
-										varDict.get("timeOnScreen"));
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						border = new Border((Color) varDict.get("borderColour"), (Integer) varDict.get("borderWidth"));
+						shadow = new Shadow((Color) varDict.get("shadowColour"), (Integer) varDict.get("shadowDx"), (Integer) varDict.get("shadowDy"), (Integer) varDict.get("shadowRadius"));
+						Rectangle rectangle = new Rectangle(pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								(float) varDict.get("timeOnScreen"),
+								newSlide,
+								(Color) varDict.get("colour"),
+								border,
+								shadow);
+						newSlide.add(rectangle);
 						break;
 					case "circle":
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
+						border = new Border((Color) varDict.get("borderColour"), (Integer) varDict.get("borderWidth"));
+						shadow = new Shadow((Color) varDict.get("shadowColour"), (Integer) varDict.get("shadowDx"), (Integer) varDict.get("shadowDy"), (Integer) varDict.get("shadowRadius"));
+						Circle circle = new Circle(pos,
+								(Integer) varDict.get("radius"),
+								(float) varDict.get("timeOnScreen"),
+								newSlide,
+								(Color) varDict.get("colour"),
+								border,
+								shadow);
+						newSlide.add(circle);
 						break;
 					case "line":
+						Point from = new Point((Integer) varDict.get("fromX"), (Integer) varDict.get("fromY"));
+						Point to = new Point((Integer) varDict.get("toX"), (Integer) varDict.get("toY"));
+						pos = new Point(Math.min(from.x, to.x), Math.min(from.y, to.y));
+						Line line = new Line(pos,
+								to.x - from.x,
+								to.y - from.y,
+								(float) varDict.get("timeOnScreen"),
+								newSlide,
+								(Integer) varDict.get("thickness"),
+								from,
+								to,
+								(Color) varDict.get("colour"));
+						newSlide.add(line);
 						break;
 					case "text":
+						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer) varDict.get("yCoordinate"));				
+						TextElement text = new TextElement(slideItem.getTextContent(),
+								(String) varDict.get("fontName"),
+								(Integer) varDict.get("fontSize"),
+								(Color) varDict.get("colour"),
+								(float) varDict.get("timeOnScreen"),
+								pos,
+								(Integer) varDict.get("width"),
+								(Integer) varDict.get("height"),
+								newSlide);
+						newSlide.add(text);
 						break;
 					}
 				}
 			}
-			
         }
+        showCurrentSlide();
 	}
 	
 	public void addSlide(Slide newSlide) {
