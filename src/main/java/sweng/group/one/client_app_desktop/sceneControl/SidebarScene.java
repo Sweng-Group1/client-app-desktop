@@ -130,71 +130,6 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		this.setComponentZOrder(scrollPane, 2);
 		this.setComponentZOrder(panel, 3);
 	}
-	
-	/**
-	 * Overrides the mouse listeners used for interacting with the sidebar
-	 */
-	private void setMouseListeners() {
-		minimiseButton.addMouseListener(new MouseListener() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				close(500L);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {	
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-		});
-		maximiseButton.addMouseListener(new MouseListener() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				open(500L);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-		});
-		searchButton.addMouseListener(new MouseListener() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if(isOpen==false) {
-					open(500L);
-				}
-				String inputText= header.getSearchBarTextField().getText();
-				String newText= inputText.replace(inputText.charAt(0), Character.toUpperCase(inputText.charAt(0)));
-				header.getSearchBarTextField().setText(newText);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-		});
-	}
 
 	/**
 	 * Resizes the sidebar and its components
@@ -285,6 +220,71 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 			scrollView.add(presentationPanel);
 			presentationPanels.add(presentationPanel);
 		}
+	}
+	
+	/**
+	 * Overrides the mouse listeners used for interacting with the sidebar
+	 */
+	private void setMouseListeners() {
+		minimiseButton.addMouseListener(new MouseListener() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				close(500L);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {	
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+		maximiseButton.addMouseListener(new MouseListener() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				open(500L);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+		searchButton.addMouseListener(new MouseListener() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(isOpen==false) {
+					open(500L);
+				}
+				String inputText= header.getSearchBarTextField().getText();
+				String newText= inputText.replace(inputText.charAt(0), Character.toUpperCase(inputText.charAt(0)));
+				header.getSearchBarTextField().setText(newText);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
 	}
 	
 	// -------------------------------------------------------------- //
