@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,8 @@ import org.junit.Test;
 
 public class MapServerIntegrationTests {
 	
-	private Map testMap = new Map("York");
+	private String testMapName = "York";
+	private Map testMap = new Map(testMapName);
 	private MapService testMapService = new MapService();
 	
 	// Need these for authorisation as uploading maps is restricted to Admins. 
@@ -23,15 +25,15 @@ public class MapServerIntegrationTests {
 	private User userTest = new User(defaultAdminUsername);
 	private UserService userService = new UserService();
 
-@Before
+	
+	@Before
 	public void setup() throws IOException {
-	File tempFile = File.createTempFile("map", ".txt");
+	File tempFile = File.createTempFile("york", ".map");
 	
     // Write some test data
 	String testData = "some test data";
 	Files.write(tempFile.toPath(), testData.getBytes());
 	testMap.setFile(tempFile);
-	
 	
 	// Ensure we have a valid access token for the tests. 
 	int statusCode = userService.login(userTest, defaultAdminPass);
@@ -39,16 +41,17 @@ public class MapServerIntegrationTests {
 	System.out.println("Setup for map integration tests: Login status code is " + statusCode);
 	}
 
-
 	@Test
 	public void testUploadingMap() {
-
 	int statusCode = testMapService.uploadMap(testMap, userTest.getAccessToken());
-	
 	assertThat(statusCode).isEqualTo(200);
-	
 	}
 
+	@Test
+	public void canDownloadMap() {
+	Path mapPath = testMapService.retrieveMap(testMapName);
+	assertThat(mapPath).isNotEmptyFile();
+	}
 
 
 }
