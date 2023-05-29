@@ -64,7 +64,7 @@ public void saveAccessToken(String token) throws IOException {
 		
 		if(!Files.exists(directoryPath)) {
 			//TODO: Fix this warning. 
-			Files.createDirectory(directoryPath, null);
+			Files.createDirectory(directoryPath);
 			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
 		}
 		
@@ -79,7 +79,7 @@ public void saveAccessToken(String token) throws IOException {
 		Path filepath = Paths.get("temp/" + username + "-refresh_token.txt");
 		// Checking if temp folder already exists, if not create one. 
 		if(!Files.exists(directoryPath)) {
-			Files.createDirectory(directoryPath, null);
+			Files.createDirectory(directoryPath);
 			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
 		}
 		

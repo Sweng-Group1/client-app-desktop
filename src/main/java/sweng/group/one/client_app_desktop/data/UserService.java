@@ -38,10 +38,10 @@ public class UserService {
     }
 
     public UserService(String urlsPath) {
-        loadProperties(urlsPath);
+        loadURLs(urlsPath);
     }
 
-    private void loadProperties(String urlsPath) {
+    private void loadURLs(String urlsPath) {
         Properties urlProps = new Properties();
         try {
             urlProps.load(new FileInputStream(urlsPath));
