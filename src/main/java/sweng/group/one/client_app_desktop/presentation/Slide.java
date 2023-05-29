@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -38,27 +39,28 @@ public class Slide extends JPanel implements LayoutManager {
 	 */
 	public void add(PresElement element) throws IllegalArgumentException{
 		
-		if (element.pos.x + element.width > pointWidth ||
-			element.pos.y + element.height > pointHeight ||
-			element.pos.x < 0 ||
-			element.pos.y < 0){
-			throw new IllegalArgumentException("Element does not fit this slide");
+		Rectangle slideRect = new Rectangle(0, 0, pointWidth, pointHeight);
+		Rectangle elementRect = new Rectangle(element.pos.x, element.pos.y, element.width, element.height);
+		
+		if (!elementRect.intersects(slideRect)){
+			throw new IllegalArgumentException("Element does not appear on the slide");
 		}
 		
 		this.add(element.component);
 		this.getElements().add(element);
 		element.component.validate();
 	}
-	public Point pxToPt(Point pixel) {
-		int ptX = (int)((float)pixel.x/this.getWidth() * this.pointWidth);
-		int ptY = (int)((float)pixel.y/this.getHeight() * this.pointHeight);
-		return new Point(ptX, ptY);
-	}
 	
 	public void displaySlide() {
 		for (PresElement e:getElements()) {
 			e.displayElement();
 		}
+	}
+	
+	public Point pxToPt(Point pixel) {
+		int ptX = (int)((float)pixel.x/this.getWidth() * this.pointWidth);
+		int ptY = (int)((float)pixel.y/this.getHeight() * this.pointHeight);
+		return new Point(ptX, ptY);
 	}
 
 	public int getPointWidth() {
@@ -111,19 +113,10 @@ public class Slide extends JPanel implements LayoutManager {
 		int slideX = getPointWidth();
 		int slideY = getPointHeight();
 		int w = parent.getWidth();
-		int h = parent.getHeight();
 		
 		float slideAspectRatio = (float)slideX/slideY;
-		float presAspectRatio = (float)w/h;
 		
-		Dimension layoutSize = null;
-		if(slideAspectRatio >= presAspectRatio) {
-			layoutSize = new Dimension(w, (int) (w/slideAspectRatio));
-		}
-		else {
-			layoutSize = new Dimension((int) (h*slideAspectRatio), h);
-		}
-		return layoutSize;
+		return new Dimension(w, (int) (w/slideAspectRatio));
 	}
 
 	@Override
