@@ -27,7 +27,7 @@ import sweng.group.one.client_app_desktop.sideBarUIElements.PresentationPanel;
  * Modified JPanel sliding viewer to hold presentation slides which can overlay other JPanels
  * 
  * @author Will Hinton, Jonathan Cooke, Sophie Maw & Luke George
- * @since 28/05/2023
+ * @since 29/05/2023
  *
  */
 public class SidebarScene extends JPanel implements ComponentInterface{
