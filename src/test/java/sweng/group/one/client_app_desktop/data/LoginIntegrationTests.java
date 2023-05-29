@@ -13,7 +13,7 @@ import sweng.group.one.client_app_desktop.data.UserService;
 // These are integration tests that will communicate with the actual server software. 
 // As such they require the server to be running. 
 // TODO: While these essentially also cover unit testing, they are integration tests. unit tests should be added with mocked server interactions. 
-public class ServerCommunicationTests {
+public class LoginIntegrationTests {
 	
 	private String defaultAdminUsername = "sid";
 	private String defaultAdminPass = "password123";
