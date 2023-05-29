@@ -217,6 +217,7 @@ public class Presentation extends JPanel {
 							case "fromY":
 							case "toX":
 							case "toY":
+							case "rotation":
 								value = Integer.parseInt((String) value);
 								break;
 							
@@ -272,6 +273,8 @@ public class Presentation extends JPanel {
 								(Integer) varDict.get("width"),
 								(Integer) varDict.get("height"),
 								(float) varDict.get("timeOnScreen"),
+								(Integer) varDict.get("rotation"),
+								(float) varDict.get("delay"),
 								newSlide,
 								(URL) varDict.get("url"));
 						newSlide.add(imageViewer);
@@ -288,7 +291,6 @@ public class Presentation extends JPanel {
 								(URL) varDict.get("url"),
 								loops);
 						newSlide.add(videoPlayer);
-						System.out.println("video");
 						break; 
 					case "audio":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
@@ -303,7 +305,6 @@ public class Presentation extends JPanel {
 								(URL) varDict.get("url"),
 								loops);
 						newSlide.add(audioPlayer);
-						System.out.println("Audio");
 						break;
 					case "rectangle":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
@@ -364,7 +365,7 @@ public class Presentation extends JPanel {
 				}
 			}
         }
-        System.out.println(slides.get(1).getElements().size());
+        showCurrentSlide();
 	}
 	
 	public void addSlide(Slide newSlide) {

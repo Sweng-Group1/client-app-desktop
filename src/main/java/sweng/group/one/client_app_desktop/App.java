@@ -33,13 +33,13 @@ public class App
     	
     	frame.validate();
     	pFile.validate();
+    	pFile.nextSlide();
     	
     	frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
             	pFile.validate();
             	frame.validate();
-            	
             }
     	});
     }
