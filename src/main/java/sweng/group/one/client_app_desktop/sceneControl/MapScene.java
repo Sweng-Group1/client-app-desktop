@@ -85,7 +85,7 @@ public class MapScene extends MapView{
 		
 		//create space for map to be cached
 		int cacheSize = AwtUtil.getMinimumCacheSize(TILE_SIZE, overdrawFactor);
-		File tileCacheStore = new File(System.getProperty("java.io.tmpdir") + "/WhatsOn/map", mapFile.getName());
+		File tileCacheStore = new File(System.getProperty("java.io.tmpdir") + "/WhatsOn/map", mapFile.getName() + "-cache");
 		tileCacheStore.deleteOnExit();
 		TileCache tileCache = AwtUtil.createTileCache(
 				TILE_SIZE, 
