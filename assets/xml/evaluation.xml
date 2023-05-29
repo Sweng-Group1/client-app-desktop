@@ -12,9 +12,9 @@
         <text fontName="mono" fontSize="32" colour="#7D13CFFF" xCoordinate="45" yCoordinate="45"
             width="200" height="50">This
             is a big text!</text>
-        <audio url="" loop="true" xCoordinate="250" yCoordinate="100" />
+        <audio url="https://getsamplefiles.com/download/wav/sample-1.wav" loop="true" xCoordinate="250" yCoordinate="100" />
         <line thickness="5" fromX="100" fromY="110" toX="400" toY="130" colour="#FF000069" />
-        <image url="" width="300" height="300"
+        <image url="https://getsamplefiles.com/download/png/sample-2.png" width="300" height="300"
             rotation="69" delay="3" xCoordinate="100"
             yCoordinate="120" timeOnScreen="00:00:20" />
     </slide>

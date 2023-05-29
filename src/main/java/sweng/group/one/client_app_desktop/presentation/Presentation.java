@@ -141,7 +141,7 @@ public class Presentation extends JPanel {
 				
 				Slide newSlide = new Slide(width, height);
 				this.addSlide(newSlide);
-				System.out.println("New Slide");
+  
 				
 				for(int s = 0; s < slideXML.getLength(); s++) {
 					final String[] varNames = {"width", 
@@ -170,6 +170,11 @@ public class Presentation extends JPanel {
 												"toY"};
 					
 					Map<String, Object> varDict = new HashMap<String, Object>();
+					
+					//set float values to 0 as floats cannot be null
+					varDict.put("delay", 0.0f);
+					varDict.put("timeOnScreen", 0.0f);
+					varDict.put("rotation", 0.0f);
 					
 					Node slideItem = slideXML.item(s);
 					String slideItemName = slideItem.getNodeName();
@@ -203,11 +208,16 @@ public class Presentation extends JPanel {
 							case "xCoordinate":
 							case "yCoordinate":
 							case "borderWidth":
+							case "thickness":
 							case "shadowRadius":
 							case "shadowDx":
 							case "shadowDy":
 							case "fontSize":
 							case "radius":
+							case "fromX":
+							case "fromY":
+							case "toX":
+							case "toY":
 								value = Integer.parseInt((String) value);
 								break;
 							
@@ -263,9 +273,9 @@ public class Presentation extends JPanel {
 								(Integer) varDict.get("width"),
 								(Integer) varDict.get("height"),
 								(float) varDict.get("timeOnScreen"),
-								getCurrentSlide(),
+								newSlide,
 								(URL) varDict.get("url"));
-						getCurrentSlide().add(imageViewer);
+						newSlide.add(imageViewer);
 						break;
 					case "video":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
@@ -275,10 +285,10 @@ public class Presentation extends JPanel {
 						VideoPlayer videoPlayer = new VideoPlayer(pos,
 								(Integer) varDict.get("width"),
 								(Integer) varDict.get("height"),
-								getCurrentSlide(),
+								newSlide,
 								(URL) varDict.get("url"),
 								loops);
-						getCurrentSlide().add(videoPlayer);
+						newSlide.add(videoPlayer);
 						videoPlayer.displayElement();
 						break; 
 					case "audio":
@@ -287,13 +297,13 @@ public class Presentation extends JPanel {
 							loops = (boolean) varDict.get("loops");
 						}
 						AudioPlayer audioPlayer = new AudioPlayer(pos,
-								(Integer) varDict.get("width"),
-								(Integer) varDict.get("height"),
+								50,
+								50,
 								(float) varDict.get("timeOnScreen"),
-								getCurrentSlide(),
+								newSlide,
 								(URL) varDict.get("url"),
 								loops);
-						getCurrentSlide().add(audioPlayer);
+						newSlide.add(audioPlayer);
 						break;
 					case "rectangle":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
@@ -303,11 +313,11 @@ public class Presentation extends JPanel {
 								(Integer) varDict.get("width"),
 								(Integer) varDict.get("height"),
 								(float) varDict.get("timeOnScreen"),
-								getCurrentSlide(),
+								newSlide,
 								(Color) varDict.get("colour"),
 								border,
 								shadow);
-						getCurrentSlide().add(rectangle);
+						newSlide.add(rectangle);
 						break;
 					case "circle":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
@@ -316,26 +326,26 @@ public class Presentation extends JPanel {
 						Circle circle = new Circle(pos,
 								(Integer) varDict.get("radius"),
 								(float) varDict.get("timeOnScreen"),
-								getCurrentSlide(),
+								newSlide,
 								(Color) varDict.get("colour"),
 								border,
 								shadow);
-						getCurrentSlide().add(circle);
+						newSlide.add(circle);
 						break;
 					case "line":
-						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
 						Point from = new Point((Integer) varDict.get("fromX"), (Integer) varDict.get("fromY"));
 						Point to = new Point((Integer) varDict.get("toX"), (Integer) varDict.get("toY"));
+						pos = new Point(Math.min(from.x, to.x), Math.min(from.y, to.y));
 						Line line = new Line(pos,
-								(Integer) varDict.get("width"),
-								(Integer) varDict.get("height"),
+								to.x - from.x,
+								to.y - from.y,
 								(float) varDict.get("timeOnScreen"),
-								getCurrentSlide(),
+								newSlide,
 								(Integer) varDict.get("thickness"),
 								from,
 								to,
 								(Color) varDict.get("colour"));
-						getCurrentSlide().add(line);
+						newSlide.add(line);
 						break;
 					case "text":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer) varDict.get("yCoordinate"));				
@@ -347,8 +357,8 @@ public class Presentation extends JPanel {
 								pos,
 								(Integer) varDict.get("width"),
 								(Integer) varDict.get("height"),
-								getCurrentSlide());
-						getCurrentSlide().add(text);
+								newSlide);
+						newSlide.add(text);
 						break;
 					}
 				}
