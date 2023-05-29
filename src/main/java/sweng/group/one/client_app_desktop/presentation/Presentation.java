@@ -141,7 +141,6 @@ public class Presentation extends JPanel {
 				
 				Slide newSlide = new Slide(width, height);
 				this.addSlide(newSlide);
-  
 				
 				for(int s = 0; s < slideXML.getLength(); s++) {
 					final String[] varNames = {"width", 
@@ -289,7 +288,7 @@ public class Presentation extends JPanel {
 								(URL) varDict.get("url"),
 								loops);
 						newSlide.add(videoPlayer);
-						videoPlayer.displayElement();
+						System.out.println("video");
 						break; 
 					case "audio":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
@@ -304,6 +303,7 @@ public class Presentation extends JPanel {
 								(URL) varDict.get("url"),
 								loops);
 						newSlide.add(audioPlayer);
+						System.out.println("Audio");
 						break;
 					case "rectangle":
 						pos = new Point((Integer) varDict.get("xCoordinate"), (Integer)varDict.get("yCoordinate"));
@@ -363,8 +363,8 @@ public class Presentation extends JPanel {
 					}
 				}
 			}
-			
         }
+        System.out.println(slides.get(1).getElements().size());
 	}
 	
 	public void addSlide(Slide newSlide) {
