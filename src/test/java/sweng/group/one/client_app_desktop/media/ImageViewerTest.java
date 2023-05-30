@@ -56,7 +56,7 @@ public class ImageViewerTest {
 	
 	private void initViewer (String url) throws MalformedURLException {
 		sampleImage = new URL(url);
-		testImageViewer = new ImageViewer(pos, width, height, duration, testSlide, sampleImage);
+		testImageViewer = new ImageViewer(pos, width, height, duration, 0, 0, testSlide, sampleImage);
 		testSlide.add(testImageViewer);
 	}
 	

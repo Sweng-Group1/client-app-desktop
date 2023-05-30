@@ -19,10 +19,8 @@ import org.json.JSONObject;
  * @author Paul Pickering
 */
 
-
 //TODO: Refactor to
 public class User {
-	
 	
 	private String username = new String();
 	private String accessToken;
@@ -56,8 +54,7 @@ public class User {
 		this.refreshToken = refreshToken;
 	}
 	
-public void saveAccessToken(String token) throws IOException {
-		
+	public void saveAccessToken(String token) throws IOException {
 		Path directoryPath = Paths.get("temp");
 		Path filepath = Paths.get("temp/" + username + "-access_token.txt");
 		// Checking if temp folder already exists, if not create one. 
@@ -70,7 +67,6 @@ public void saveAccessToken(String token) throws IOException {
 		
 		Files.write(filepath, token.getBytes());
 	}
-		
 
 	//TODO: Double check best practice on the visibility here - test was complaining if these two were private. 
 	public void saveRefreshToken(String token) throws IOException {
@@ -83,7 +79,7 @@ public void saveAccessToken(String token) throws IOException {
 		}
 
 	Files.write(filepath, token.getBytes());
-}
+	}	
 	
 	public String readRefreshToken() throws IOException {
 		Path filepath = Paths.get("temp/" + username + "-refresh_token.txt");

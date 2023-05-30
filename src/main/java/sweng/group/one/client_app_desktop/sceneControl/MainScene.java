@@ -343,7 +343,7 @@ public class MainScene extends JFrame{
 	    	ArrayList<Slide> slides = new ArrayList<>();
 	    	slides.add(slide);
 	    	
-	    	ImageViewer ie = new ImageViewer(new Point(0, 0), slideX, slideY, 0, slide, new URL("https://getsamplefiles.com/download/png/sample-1.png"));
+	    	ImageViewer ie = new ImageViewer(new Point(0, 0), slideX, slideY, 0, 0, 0, slide, new URL("https://getsamplefiles.com/download/png/sample-1.png"));
 	    	slide.add(ie);
 	    	/*
 	    	 *  Testing sideBar prevslide/ next slide 

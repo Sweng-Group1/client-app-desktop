@@ -2,6 +2,8 @@ package sweng.group.one.client_app_desktop.sceneControl;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import sweng.group.one.client_app_desktop.data.User;
+import sweng.group.one.client_app_desktop.data.UserService;
 
 /**
  * Modified JPanel that allows users to login or create an account using a chosen username and password
@@ -41,6 +46,13 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	private JPasswordField passwordField;
 	private JTextField usernameField;
 	
+	private String accessToken;
+	private String refreshToken;
+	private UserService userService = new UserService();
+	private User user;
+	
+	private MapScene mapScene;
+	
 	// -------------------------------------------------------------- //
 	// ----------------------- CONSTRUCTOR -------------------------- //
 	// -------------------------------------------------------------- //
@@ -56,6 +68,8 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		createPasswordField();
 		createButtons();
 		createLogo();
+		checkAccessToken();
+		setMouseListeners();
 	}
 	
 	/**
@@ -204,17 +218,70 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		createAccountButton.setSize((passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
 		createAccountButton.setLocation(passwordPanel.getX(), (height/2)+(5*(height/16)));
 	
-		logoPanel.setIcon(new ImageIcon(logo.getScaledInstance( (height/2)-(height/16), (height/2)-(height/16), java.awt.Image.SCALE_SMOOTH)));
-		logoPanel.setLocation( (width/2)-( ((height/2)-(height/16))/2),0);
+		logoPanel.setIcon(new ImageIcon(logo.getScaledInstance((height/2)-(height/16), (height/2)-(height/16), java.awt.Image.SCALE_SMOOTH)));
+		logoPanel.setLocation((width/2)-( ((height/2)-(height/16))/2),0);
 		logoPanel.setSize(passwordPanel.getWidth(), (height/2)-(height/16));
 	}
 	
-	/**
-	 * 
-	 */
-	public void login() {
-		usernameField.setText("The Login Button Works");
-		System.out.println("The Login Button Works");
+	public void loginButtonPressed() {
+		if (checkAccessToken()==true) {
+			// User already has a valid token and does not need to login
+		}
+		else {
+			user = new User(usernameField.getText());
+			String password = String.valueOf(passwordField.getPassword());
+			userService.login(user, password);
+		}
+	}
+	
+	public boolean checkAccessToken() {
+		if (userService.refreshAccessToken(user)==200) {
+			this.setVisible(false);
+			mapScene.setVisible(true);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public String getUsername() {
+		return usernameField.getText();
+	}
+	
+	private void setMouseListeners() {
+		loginButton.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				loginButtonPressed();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	public void createAccount() {

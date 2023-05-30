@@ -78,9 +78,7 @@ public class UserService {
 		    // Handle IOException (e.g., network error)
 		    e.printStackTrace();
 		}
-			 
 			 return statusCode;
-	
 		}
 
 	public int refreshAccessToken(User user) {
@@ -133,9 +131,6 @@ public class UserService {
 	        return 0;
 	    }
 	}
-
-	
-	
 
 }
 
