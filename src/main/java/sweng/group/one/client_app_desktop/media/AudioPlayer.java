@@ -20,9 +20,10 @@ import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 
 public class AudioPlayer extends PlayableMediaElement{
 	
-	JPanel audioPanel;
-	ImageIcon icon;
-	JToggleButton toggleB;
+	private final AudioPlayerComponent AudioPlayer;
+	private JPanel audioPanel;
+	private ImageIcon icon;
+	private JToggleButton toggleB;
 	
 	public AudioPlayer(Point pos, int pointWidth, int pointHeight,
 						float duration, Slide slide, URL fileURL, boolean loops) {
@@ -30,18 +31,12 @@ public class AudioPlayer extends PlayableMediaElement{
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
 		this.AudioPlayer = new AudioPlayerComponent();
 		
-//		audioPanel = new JPanel();
-//		audioPanel.setBounds(pointHeight, pointHeight, pointWidth, pointHeight);
-//		audioPanel.setBackground(Color.blue);
-//		slide.add(audioPanel);
-//		
 		icon = new ImageIcon(".//assets//speaker_icon.png");
 		Image img = icon.getImage();
 		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bi.createGraphics();
 		g.drawImage(img, 0, 0, pointWidth+10, pointHeight+10, null);
 		ImageIcon newIcon = new ImageIcon(bi);
-		
 		
 		toggleB = new JToggleButton(newIcon);
 		component = toggleB;
@@ -57,7 +52,8 @@ public class AudioPlayer extends PlayableMediaElement{
 			
 		});
 	}
-	private final AudioPlayerComponent AudioPlayer;
+	
+	
 
 	@Override
 	public void togglePlaying() {

@@ -14,6 +14,17 @@ public class VideoPlayer extends PlayableMediaElement {
 	private final EmbeddedMediaPlayerComponent mediaPlayer;
 	private Boolean nativeLib;
 	
+	
+	/**
+	 * Creates a new VideoPlayer object with the specified parameters.
+	 *
+	 * @param pos         the position of the video player
+	 * @param pointWidth  the width of the video player
+	 * @param pointHeight the height of the video player
+	 * @param slide       the slide to which the video player belongs
+	 * @param fileURL     the URL of the video file
+	 * @param loops       specifies whether the video should loop when played
+	 */
 	public VideoPlayer(Point pos, 
 						  int pointWidth, 
 						  int pointHeight,
@@ -70,7 +81,11 @@ public class VideoPlayer extends PlayableMediaElement {
 		mediaPlayer.mediaPlayer().media().prepare(localPath);
 	}
 	
-	/* Tests if the user has native libraries installed for VLC */
+	/**
+	 * Tests if the user has native libraries installed for VLC.
+	 *
+	 * @return true if the native libraries are installed, false otherwise
+	 */
 	public boolean nativeLibsInstalled() {
 		return nativeLib;
 	}

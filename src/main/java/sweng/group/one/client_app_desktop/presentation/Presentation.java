@@ -2,18 +2,21 @@ package sweng.group.one.client_app_desktop.presentation;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +32,6 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -60,6 +62,7 @@ public class Presentation extends JPanel {
 	private String title;
 	private String author;
 	private LocalDate date;
+	private boolean isMouseHovered;
 	
 	public Presentation() {
 		super();
@@ -70,6 +73,42 @@ public class Presentation extends JPanel {
 				resizeCurrentSlide();
 			}
 		});
+		
+		this.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				isMouseHovered = true;
+				repaint();
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.getX() > getWidth()/2) {
+					nextSlide();
+				}
+				else {
+					prevSlide();
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				isMouseHovered = false;
+				repaint();
+			}
+			
+		});
+		numSlides = 0;
 		currentSlideNo = 0;
 	}
 	
@@ -93,8 +132,6 @@ public class Presentation extends JPanel {
 
         Validator validator = schema.newValidator();
         validator.validate(new StreamSource(xml));
-        //TODO: Handle the error thrown when the XML is not valid
-		
         
         //load xml file as a document
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -126,7 +163,6 @@ public class Presentation extends JPanel {
 						//is in format YYYY-MM-DDD
 						this.date = LocalDate.parse(infoItem.getTextContent());
 						break;
-						//TODO: Complete this
 					default:
 						break;
 					}
@@ -368,9 +404,51 @@ public class Presentation extends JPanel {
         showCurrentSlide();
 	}
 	
+	@Override
+	public void paint(Graphics g) {
+	    super.paint(g);
+	   
+		// Draw arrows if the mouse is hovered
+		if (isMouseHovered) {
+			Slide current = slides.get(currentSlideNo);
+		    int width = current.getWidth();
+		    int height = current.getHeight();
+		    int arrowSizeX = width/3;
+		    int arrowSizeY = height/5;
+		    
+		    Graphics2D g2d = (Graphics2D) g.create();
+		    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		    g2d.setColor(new Color(0.0f, 0.0f, 0.0f, 0.5f));
+		
+		    //Draw left arrow
+		    int[] leftArrowXPoints = {arrowSizeX, arrowSizeX, 0};
+	        int[] leftArrowYPoints = {(height / 2) - arrowSizeY, (height / 2) + arrowSizeY, height / 2};
+	        g2d.fillPolygon(leftArrowXPoints, leftArrowYPoints, 3);
+	
+	        //Draw right arrow
+	        int[] rightArrowXPoints = {width - arrowSizeX, width - arrowSizeX, width};
+	        int[] rightArrowYPoints = {(height / 2) - arrowSizeY, (height / 2) + arrowSizeY, height / 2};
+	        g2d.fillPolygon(rightArrowXPoints, rightArrowYPoints, 3);
+	        
+	        //Draw Text Box
+	        g2d.setColor(new Color(1.0f, 1.0f, 1.0f, 0.5f));
+	        int fontSize = g2d.getFont().getSize();
+	        g2d.fillRect(0, 0, width, fontSize*4);
+	        g2d.setColor(Color.black);
+	        
+	        //Draw Text
+	        g2d.drawString(title, 10, 20);
+	        g2d.drawString("Author: " + author, 10, 20 + fontSize);
+	        g2d.drawString("Date: " + date, 10, 20 + fontSize*2);
+	        
+	        g2d.dispose();
+	    }
+	}
+	
 	public void addSlide(Slide newSlide) {
 		slides.add(newSlide);
 		this.add(newSlide);
+		numSlides++;
 		newSlide.setVisible(false);
 	}
 	
@@ -395,8 +473,6 @@ public class Presentation extends JPanel {
 		
 		int maxSlide = slides.size()-1;
 		currentSlideNo++;
-		// Using a modulo here causes a div/0 if slides.size = 1
-		// We're just gonna loop around anyway, so just use a ternary
 		currentSlideNo = currentSlideNo > maxSlide ? 0 : currentSlideNo;
 		showCurrentSlide();
 	}
@@ -408,7 +484,7 @@ public class Presentation extends JPanel {
 		
 		int maxSlide = slides.size()-1;
 		currentSlideNo--;
-		currentSlideNo = currentSlideNo > 0 ? currentSlideNo : maxSlide;
+		currentSlideNo = currentSlideNo >= 0 ? currentSlideNo : maxSlide;
 		showCurrentSlide();
 	}
 	
