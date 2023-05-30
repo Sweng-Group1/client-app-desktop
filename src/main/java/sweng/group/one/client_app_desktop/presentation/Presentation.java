@@ -397,7 +397,7 @@ public class Presentation extends JPanel {
 		currentSlideNo++;
 		// Using a modulo here causes a div/0 if slides.size = 1
 		// We're just gonna loop around anyway, so just use a ternary
-		currentSlideNo = currentSlideNo >= maxSlide ? 0 : currentSlideNo;
+		currentSlideNo = currentSlideNo > maxSlide ? 0 : currentSlideNo;
 		showCurrentSlide();
 	}
 	
