@@ -64,6 +64,9 @@ public class Presentation extends JPanel {
 	private LocalDate date;
 	private boolean isMouseHovered;
 	
+	/**
+	 * Creates a new empty Presentation object.
+	 */
 	public Presentation() {
 		super();
 		this.slides = new ArrayList<>();
@@ -112,6 +115,11 @@ public class Presentation extends JPanel {
 		currentSlideNo = 0;
 	}
 	
+	/**
+	 * Creates a new Presentation object with the given list of slides.
+	 *
+	 * @param slides the list of slides for the presentation
+	 */
 	public Presentation(List<Slide> slides){
 		this();
 		
@@ -122,6 +130,14 @@ public class Presentation extends JPanel {
 		showCurrentSlide();
 	}
 	
+	/**
+	 * Creates a new Presentation object by parsing the given XML file.
+	 *
+	 * @param xml the XML file representing the presentation
+	 * @throws SAXException                 if there is an error during XML parsing
+	 * @throws IOException                  if an I/O error occurs while reading the XML file
+	 * @throws ParserConfigurationException if a parser cannot be created with the specified configuration
+	 */
 	public Presentation(File xml) throws SAXException, IOException, ParserConfigurationException {
 		this();
 		
@@ -445,6 +461,11 @@ public class Presentation extends JPanel {
 	    }
 	}
 	
+	/**
+	 * Adds a new slide to the presentation.
+	 *
+	 * @param newSlide the slide to be added
+	 */
 	public void addSlide(Slide newSlide) {
 		slides.add(newSlide);
 		this.add(newSlide);
@@ -452,6 +473,10 @@ public class Presentation extends JPanel {
 		newSlide.setVisible(false);
 	}
 	
+	/**
+	 * Shows the current slide and hides other slides.
+	 * Resizes the current slide to maintain a fixed aspect ratio relative to the presentation size.
+	 */
 	private void showCurrentSlide() {
 		if (slides.isEmpty()) {
 			return;
@@ -466,6 +491,10 @@ public class Presentation extends JPanel {
 		desiredSlide.validate();
 	}
 	
+	/**
+	 * Moves to the next slide in the presentation.
+	 * If there are no slides, this method does nothing.
+	 */
 	public void nextSlide() {
 		if (slides.isEmpty()) {
 			return;
@@ -477,6 +506,10 @@ public class Presentation extends JPanel {
 		showCurrentSlide();
 	}
 	
+	/**
+	 * Moves to the previous slide in the presentation.
+	 * If there are no slides, this method does nothing.
+	 */
 	public void prevSlide() {
 		if (slides.isEmpty()) {
 			return;
@@ -488,18 +521,28 @@ public class Presentation extends JPanel {
 		showCurrentSlide();
 	}
 	
+	/**
+	 * Returns the current slide in the presentation.
+	 * Returns null if there are no slides.
+	 *
+	 * @return the current slide
+	 */
 	public Slide getCurrentSlide() {
 		return slides.isEmpty() ? null : slides.get(currentSlideNo);
 	}
 	
+	/**
+	 * Returns a list of all slides in the presentation.
+	 *
+	 * @return the list of slides
+	 */
 	public List<Slide> getSlides() {
 		return slides;
 	}
 	
 	
 	/*
-	 * Resize currentSlide to keep a fixed aspect ratio with reference to
-	 * the size of the Presentation
+	 * Resizes the current slide to maintain a fixed aspect ratio with reference to the size of the Presentation.
 	 */
 	private void resizeCurrentSlide() {
 		if (slides.isEmpty()) {
