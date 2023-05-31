@@ -17,110 +17,109 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * @author Paul Pickering
- *  *Service class for handling all map related server tasks, i.e. uploading, retrieving, deleting, etc. 
+ * @author Paul Pickering Service class for handling all map related server
+ *         tasks, i.e. uploading, retrieving, deleting, etc.
  */
 public class MapService {
-	//TODO: Do we want to change these URLs to constant specified elsewhere perhaps?
+	// TODO: Do we want to change these URLs to constant specified elsewhere
+	// perhaps?
 	private final static String MAP_URL = "http://localhost:8080/api/v1/map/";
 	private static final String MAP_FOLDER = "./assets/map/";
+
 	/**
-     * Gets a map file from the server. 
-     * @param name The name of the map file, i.e. "York". 
-     * @return Returns the path to the map file. 
-     */
-	public Path retrieveMap(String name) {
+	 * Gets a map file from the server.
+	 * 
+	 * @param name The name of the map file, i.e. "York".
+	 * @return Returns the path to the map file.
+	 * @throws AuthenticationException
+	 * @throws IOException
+	 */
+	public Path retrieveMap(String name) throws IOException, AuthenticationException {
 		int statusCode = 0;
-	
+
 		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder()
-				.url(MAP_URL + name)
-				.get()
-				.build();
-		
+		Request request = new Request.Builder().url(MAP_URL + name).get().build();
+
 		try {
-		    Response response = client.newCall(request).execute();
-	
-		    // Handling the response.
-		    statusCode = response.code();
-	
-		    if (statusCode == 403) {
-		        System.out.println("Error: Server returned 403 forbidden");
-		        return null;
-		    }
-		    
-		    else if (statusCode == 417) {
-		    	System.out.println("Error: server returned 417 expectation failed.");
-		    	return null;
-		    }
-	
-		    System.out.println("Status code: " + statusCode);
-		    
-		    // Save the map locally. 
-		    Path mapPath = Paths.get(MAP_FOLDER + name + ".map");
-		    Files.createFile(mapPath);
-		    ResponseBody body = response.body();
-		    Files.write(mapPath,body.bytes());
-		    return mapPath;
-		    
+			Response response = client.newCall(request).execute();
+
+			// Handling the response.
+			statusCode = response.code();
+
+			if (statusCode == 200) {
+				// Success! Save the map locally.
+				Path mapPath = Paths.get(MAP_FOLDER + name + ".map");
+				Files.createFile(mapPath);
+				ResponseBody body = response.body();
+				Files.write(mapPath, body.bytes());
+				return mapPath;
+			} else if (statusCode == 403) {
+				throw new AuthenticationException(
+						"Server returned 403 code - auth token not valid. Try refreshing first.");
+			} else if (statusCode == 500) {
+				throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+			} else if (statusCode == 400) {
+				throw new RuntimeException("400 server response, bad request - check the request is valid");
+			} else {
+				throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
+			}
 		} catch (FileAlreadyExistsException e) {
 			Path mapPath = Paths.get(MAP_FOLDER + name + ".map");
 			return mapPath;
-		} catch (IOException e) {
-		    // Handle IOException (e.g., network error)
-		    e.printStackTrace();
-		    return null;
 		}
 	}
-	
+
 	/**
-     * Uploads a map file to the server. 
-     * @param map The map file. 
-     * @param accessToken the authorisation token. 
-     * @return Returns the status code (e.g. 200 success, 403 forbidden). Returns 0 if exception occurred.  
-     */
-	public int uploadMap(Map map, String accessToken) {
+	 * Uploads a map file to the server.
+	 * 
+	 * @param map         The map file.
+	 * @param accessToken the authorisation token.
+	 * @return Returns the status code (e.g. 200 success, 403 forbidden).
+	 * @throws IOException             - can fail reading the map file.
+	 * @throws AuthenticationException
+	 */
+	public int uploadMap(Map map, String accessToken) throws IOException, AuthenticationException {
 		String filepath = map.getFile().getPath();
 		byte[] fileAsBytes;
 		try {
 			fileAsBytes = Files.readAllBytes(map.getFile().toPath());
 		} catch (IOException e) {
-			//TODO: Where should we be printing error messages?
-			e.printStackTrace();
-			return 0;
+			throw new IOException("Failed to read file " + filepath, e);
 		}
-		
+
 		OkHttpClient client = new OkHttpClient();
 		String nameKey = "name";
 		String nameValue = map.getName();
-        
-        // Ensures non-alphanumeric characters are handled properly. 
-        String encodedNameValue = URLEncoder.encode(nameValue, StandardCharsets.UTF_8);
 
-        // Here we build the body of the request, specifying the MultiPartFile "file" 
-        // and String "name" parameters. 
-        RequestBody requestBody = new MultipartBody.Builder()
-        		.setType(MultipartBody.FORM)
-        		.addFormDataPart("file", filepath,
-        		RequestBody.create(fileAsBytes, MediaType.parse("application/octet-stream")))
-        		.addFormDataPart(nameKey, encodedNameValue)
-				.build();
-        
-        Request request = new Request.Builder()
-        		.url(MAP_URL)
-        		.header("Content-Type", "application/x-www-form-urlencoded")
-        		.header("Authorization", "Bearer " + accessToken)
-        		.post(requestBody)
-        		.build();
- 
-        try {
-			Response response = client.newCall(request).execute();
-			System.out.println("Attempted to upload map! Response Code: " + response.code()
-			+ "Response Body: " + response.body().toString());
-			return response.code();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return 0;
+		// Ensures non-alphanumeric characters are handled properly.
+		String encodedNameValue = URLEncoder.encode(nameValue, StandardCharsets.UTF_8);
+
+		// Here we build the body of the request, specifying the MultiPartFile "file"
+		// and String "name" parameters.
+		RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+				.addFormDataPart("file", filepath,
+						RequestBody.create(fileAsBytes, MediaType.parse("application/octet-stream")))
+				.addFormDataPart(nameKey, encodedNameValue).build();
+
+		Request request = new Request.Builder().url(MAP_URL).header("Content-Type", "application/x-www-form-urlencoded")
+				.header("Authorization", "Bearer " + accessToken).post(requestBody).build();
+
+		Response response = client.newCall(request).execute();
+
+		// Handling the response.
+		int statusCode = response.code();
+
+		if (statusCode == 200) {
+			// Success! Save the map locally.
+			return statusCode;
+		} else if (statusCode == 403) {
+			throw new AuthenticationException("Server returned 403 code - auth token not valid. Try refreshing first.");
+		} else if (statusCode == 500) {
+			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+		} else if (statusCode == 400) {
+			throw new RuntimeException("400 server response, bad request - check the request is valid");
+		} else {
+			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
 	}
 }

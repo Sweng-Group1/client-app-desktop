@@ -26,6 +26,7 @@ public class MapServerIntegrationTests {
 	private UserService userService = new UserService();
 
 	
+	// Create a map file for the tests. 
 	@Before
 	public void setup() throws IOException {
 	File tempFile = File.createTempFile("york", ".map");
