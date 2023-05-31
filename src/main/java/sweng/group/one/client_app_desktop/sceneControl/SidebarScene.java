@@ -3,6 +3,7 @@ package sweng.group.one.client_app_desktop.sceneControl;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -222,9 +223,44 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		}
 	}
 	
+	
+	/**
+	 * Defines actions for buttons on the sidebar
+	 */
+	private void setMouseListeners() {
+		minimiseButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				close(500L);
+				
+			}
+		});
+		maximiseButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				open(500L);
+			}
+		});
+		
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(isOpen==false) {
+					open(500L);
+				}
+				String inputText= header.getSearchBarTextField().getText();
+				String newText= inputText.replace(inputText.charAt(0), Character.toUpperCase(inputText.charAt(0)));
+				header.getSearchBarTextField().setText(newText);
+			}
+		});
+	}
+	
+	
 	/**
 	 * Overrides the mouse listeners used for interacting with the sidebar
 	 */
+	
+	/*
 	private void setMouseListeners() {
 		minimiseButton.addMouseListener(new MouseListener() {
 			@Override
@@ -286,6 +322,9 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 			}
 		});
 	}
+	
+	*/
+	
 	
 	// -------------------------------------------------------------- //
 	// ------------------------- CHECKS ----------------------------- //
