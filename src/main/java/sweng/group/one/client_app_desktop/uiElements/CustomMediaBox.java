@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -49,6 +50,7 @@ public class CustomMediaBox extends UploadSceneComponent{
 	MediaElementIcon selectedMediaElement;
 	URL selectedMediaURL;
 	File selectedFile;
+
 	
 	public CustomMediaBox() {
 		this.main= colorLight;
@@ -79,11 +81,12 @@ public class CustomMediaBox extends UploadSceneComponent{
 					if(returnVal==JFileChooser.APPROVE_OPTION) {
 						selectedFile= fileExplorer.getSelectedFile();
 						if(selectedFile.getAbsolutePath().endsWith(".png")||
-								(selectedFile.getAbsolutePath().endsWith(".jpeg"))) {
+								(selectedFile.getAbsolutePath().endsWith(".jpg"))) {
 							System.out.println("File selected");
 							try {
 								System.out.println("File A");
 								icons.add(new ImageElementIcon(selectedFile.toURI().toURL(),ImageIO.read(selectedFile)));
+								
 								System.out.println("File B");
 								
 								setSizeOfIcons(r.x+curvatureRadius,r.y+curvatureRadius,
@@ -209,6 +212,10 @@ public class CustomMediaBox extends UploadSceneComponent{
 	public void turnOffMediaSelected() {
 		selectedMediaElement=null;
 		isElementSelected=false;
+	}
+
+	public URL getSelectedURL()  {
+		return selectedMediaURL;
 	}
 	
 	/**

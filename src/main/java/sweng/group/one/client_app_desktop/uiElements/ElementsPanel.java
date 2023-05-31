@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.LinearGradientPaint;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
@@ -14,6 +15,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -509,7 +511,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 	 * ToolBar's selectedElement is set to this new element
 	 * PropertiesPanel is set to display properties of new element
 	 */
-	public void addImageElement(File file, BufferedImage image,Point pixelPos, int pixelWidth, int pixelHeight, Slide slide, int slideNumber) {
+	public void addImageElement(File file, BufferedImage image,Point pixelPos, int pixelWidth, int pixelHeight, Slide slide, int slideNumber, URL url) {
 		if(slide==null) {
 			slide=currentSlide;
 			for(int i=0;i<slides.size();i++) {
@@ -528,7 +530,7 @@ public class ElementsPanel extends UploadSceneComponent implements ComponentInte
 		Point imagePointPos= slide.pxToPt(new Point(pixelBounds.x,pixelBounds.y));
 		
 		
-		ImageElement i= new ImageElement(imagePointPos,(int)imagePointWidth,(int)imagePointHeight,0, slide,image);
+		ImageElement i= new ImageElement(imagePointPos,(int)imagePointWidth,(int)imagePointHeight,0, slide,image,url);
 		for(SlideElementRectsPanel e:slides) {
 			if(e.getSlide()==slide) {
 				e.addElement(i);
@@ -785,9 +787,10 @@ class ViewRect extends JPanel implements ComponentInterface{
 	public void paint(Graphics g) {
 		Graphics2D g2= (Graphics2D)g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		GradientPaint gp= new GradientPaint(this.getWidth()/2,0,colorLightHighlight,this.getWidth()/2,this.getHeight()/2,colorDark
-				);
-		g2.setPaint(gp);
+		// gp= new LinearGradientPaint(this.getWidth()/2,0,colorLightHighlight,this.getWidth()/2,this.getHeight()/2,colorDark
+		//		);
+		//g2.setPaint(gp);
+		g2.setColor(colorLight);
 		g2.fillRoundRect(5, 5, this.getWidth()-10,this.getHeight()-5,10,10);
 		if(clicked==true) {
 			g2.setColor(clickedColor);

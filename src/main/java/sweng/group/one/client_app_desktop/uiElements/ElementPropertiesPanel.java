@@ -11,6 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.Scrollbar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
@@ -19,15 +21,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import sweng.group.one.client_app_desktop.graphics.Circle;
+import sweng.group.one.client_app_desktop.graphics.Rectangle;
+import sweng.group.one.client_app_desktop.media.GraphicsElement;
+import sweng.group.one.client_app_desktop.media.TextElement;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 
@@ -55,6 +70,8 @@ import sweng.group.one.client_app_desktop.sceneControl.ComponentInterface;
 public class ElementPropertiesPanel extends UploadSceneComponent implements ComponentInterface {
 	private ElementTab elementTab;
 	private ElementColorManipulator colorTab;
+	private TextManipulater textTab;
+	private ShadowTab shadowTab;
 	private PresElement element;
 	JTabbedPane tabbedPane;
 	
@@ -68,6 +85,8 @@ public class ElementPropertiesPanel extends UploadSceneComponent implements Comp
 		this.main= colorLight;
 		this.secondary= colorDark;
 		elementTab= new ElementTab();
+		textTab= new TextManipulater();
+		shadowTab= new ShadowTab();
 	}
 	
 	/**
@@ -114,6 +133,8 @@ public class ElementPropertiesPanel extends UploadSceneComponent implements Comp
 			tabbedPane.addTab(" Element ",elementTab);
 			colorTab.setColorManipulatorFor(element);
 			tabbedPane.addTab(" Colour ",colorTab);
+			shadowTab.setManipulaterFor(element);
+			tabbedPane.add(shadowTab);
 			break;
 		case "RECTANGLE":
 			tabbedPane.removeAll();
@@ -121,6 +142,17 @@ public class ElementPropertiesPanel extends UploadSceneComponent implements Comp
 			tabbedPane.addTab(" Element ",elementTab);
 			colorTab.setColorManipulatorFor(element);
 			tabbedPane.addTab(" Colour ",colorTab);
+			break;
+		case "TEXT":
+			tabbedPane.removeAll();
+			elementTab.setValuesForElement(element);
+			tabbedPane.addTab(" Element ",elementTab);
+			colorTab.setColorManipulatorFor(element);
+			tabbedPane.addTab("Colour", colorTab);
+			textTab.setTextManipulaterFor(element);
+			tabbedPane.addTab("Text", textTab);
+			break;
+		default:
 			break;
 		}
 	}
@@ -152,6 +184,7 @@ public class ElementPropertiesPanel extends UploadSceneComponent implements Comp
  *  Values are not updated to presElement
  */
 class ElementTab extends JPanel implements ComponentInterface{
+	private static final long serialVersionUID = 1L;
 	Color transparent= new Color(255,255,255,0);
 	JPanel xPosPane;
 	JTextField xPos;
@@ -499,48 +532,37 @@ class ElementColorManipulator extends JPanel implements ComponentInterface{
 		colorChooser= new JColorChooser();
 		pane.add(colorChooser);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		colorChooser.addMouseListener(new MouseListener() {
+		colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
+			public void stateChanged(ChangeEvent e) {
 				if(element!=null) {
 					switch(element.getType()){
 					case "GRAPHIC":
 							toolBar.setPaintColor(colorChooser.getColor());
+							GraphicsElement gEl= (GraphicsElement)element;
+							gEl.setColor(colorChooser.getColor());
 						break;
 					case "CIRCLE":
+						toolBar.setPaintColor(colorChooser.getColor());
+						Circle cEl= (Circle)element;
+						cEl.setColour(colorChooser.getColor());
 						break;
 					case "RECTANGLE":
+						toolBar.setPaintColor(colorChooser.getColor());
+						Rectangle rEl= (Rectangle)element;
+						rEl.setColour(colorChooser.getColor());
 						break;
 					case "TEXT":
 							toolBar.setTextColor(colorChooser.getColor());
+							TextElement tEl= (TextElement) element;
+							tEl.setColour(colorChooser.getColor());
+							tEl.getComponent().repaint();
+						break;
+					default:
 						break;
 					}
 				}
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -559,6 +581,138 @@ class ElementColorManipulator extends JPanel implements ComponentInterface{
 	}
 }
 
+class TextManipulater extends JPanel implements ComponentInterface{
+	TextElement textElement;
+	CustomToolBar toolBar;
+	JTextField textField;
+	 ArrayList<String> list;
+	
+	public TextManipulater() {
+		this.setBackground(colorLight);
+		this.setLayout(new GridLayout());
+		JPanel pane= new JPanel();
+		pane.setBackground(colorLight);
+		textField= new JTextField();
+		pane.add(textField);
+		this.add(pane);
+		
+		textField.setBackground(colorLight);
+		textField.setCaretColor(Color.white);
+		textField.setForeground(Color.white);
+		textField.setSelectedTextColor(Color.white);
+		textField.setDisabledTextColor(Color.white);
+		textField.addFocusListener(new FocusListener() {
 
+			@Override
+			public void focusGained(FocusEvent e) {
+				textField.enableInputMethods(true);
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(textElement!=null) {
+					textElement.setText(textField.getText());
+				}
+				
+			}
+			
+		});
+		
+		JPanel paneLower= new JPanel();
+		paneLower.setOpaque(false);
+		pane.add(paneLower);
+		JLabel lbl = new JLabel("Fonts:");
+	    lbl.setVisible(true);
+
+	    paneLower.add(lbl);
+	   
+	    String[] choices = { "Ariel","Arial Bold","Ariel Italic","Sans Serif","Serif", "Mono spaced","Dialog","True Type", "Type 1", "Roman"};
+	    list= new ArrayList<String>();
+	    for(String s:choices) {
+	    	list.add(s);
+	    }
+	   
+	    final JComboBox<String> cb = new JComboBox<String>(choices);
+
+	    cb.setVisible(true);
+	    paneLower.add(cb);
+
+	    JButton btn = new JButton("OK");
+	    paneLower.add(btn);
+	    btn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(textElement!=null) {
+					textElement.setFont(list.get(cb.getSelectedIndex()));
+					textElement.getComponent().repaint();
+				}
+				
+			
+			}
+	    });
+	}
+	public void setTextManipulaterFor(PresElement element) {
+		if(element.getType()=="TEXT") {
+			textElement= (TextElement)element;
+			textField.setText(textElement.getText());
+		}else {
+			textElement=null;
+		}
+	}
+}
+
+class ShadowTab  extends JPanel implements ComponentInterface{
+	PresElement element;
+	public ShadowTab() {
+			this.setBackground(colorLight);
+			this.setLayout(new GridLayout());
+			JPanel pane= new JPanel();
+			pane.setBackground(colorLight);
+			this.add(pane);
+			JPanel one= new JPanel();
+			pane.add(one);
+			JLabel shadowRadius= new JLabel("Shadow radius:");
+			one.add(shadowRadius);
+			JTextField shadowRadiusIn= new JTextField();
+			one.add(shadowRadiusIn);
+			shadowRadiusIn.addFocusListener(new FocusListener() {
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					
+				}
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					if(element!=null) {
+						if(shadowRadiusIn.getText()!="") {
+						switch(element.getType()) {
+						case "TEXT":
+							TextElement tEl= (TextElement) element;
+							
+							break;
+						case "CIRCLE":
+							Circle cEl= (Circle) element;
+							
+							cEl.setShadowRadius(Integer.valueOf(shadowRadiusIn.getText()));
+							break;
+							default:
+								break;
+						}
+					}}
+					
+					
+				}
+				
+			});
+	}
+	public void setManipulaterFor(PresElement element) {
+		this.element=element;
+	}
+	
+	
+}
 
 

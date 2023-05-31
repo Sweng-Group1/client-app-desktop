@@ -7,9 +7,25 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.xml.sax.SAXException;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.uiElements.CustomDescriptionBox;
@@ -62,6 +78,7 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 	boolean elementIsBeingMoved;
 	MouseListener movingElementToListener;
 	
+	JFileChooser fileChooser;
 	
 	public UploadScene() {
 		super();
@@ -105,6 +122,7 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 		for(UploadSceneComponent c:components) {
 			this.add(c);
 		}
+		
 		
 	
 		/* 
@@ -177,7 +195,7 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 				if(elementIsBeingMoved==true) {
 					if(mediaBox.getSelectedMediaType()=="IMAGE") {
 						BufferedImage image= mediaBox.getSelectedMediaImage();
-						graphicsBox.addImageElement(mediaBox.getSelectedFile(),image,e.getPoint(),image.getWidth(),image.getHeight(),null,0);
+						graphicsBox.addImageElement(mediaBox.getSelectedFile(),image,e.getPoint(),image.getWidth(),image.getHeight(),null,0,mediaBox.getSelectedURL());
 						
 					}
 					mediaBox.turnOffMediaSelected();
@@ -207,6 +225,61 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 			}
 			
 		};
+		toolBar.getConfirmButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				 
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				fileChooser= new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter ("XML-File","xml");
+				fileChooser.setFileFilter((javax.swing.filechooser.FileFilter) filter);
+				
+				int userSelection = fileChooser.showSaveDialog(fileChooser.getParent());
+				if (userSelection == JFileChooser.APPROVE_OPTION) {
+				    File fileToSave = fileChooser.getSelectedFile();
+				    try {
+						saveToXL(fileToSave);
+					} catch (SAXException | ParserConfigurationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (TransformerException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				   
+				}
+				
+				
+				//fileChooser.getCurrentDirectory().renameTo(graphicsBox.getPresentation().getXML(TOOL_TIP_TEXT_KEY));
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+
 	}
 
 	
@@ -219,6 +292,17 @@ public class UploadScene extends UploadSceneComponent implements ComponentInterf
 	 *  to be a mouseListener in mainScene or you pass a listener into this scene from mainScene
 	 *  
 	 */
+	private void saveToXL(File file) throws TransformerException, IOException, SAXException, ParserConfigurationException {
+		graphicsBox.getPresentation().setSlides(tabPane.getSlides());
+		org.w3c.dom.Document doc= graphicsBox.getPresentation().getXMLDoc(file);
+		Transformer transformer = TransformerFactory.newInstance().newTransformer();
+		Result output = new StreamResult(new File(file.getName()+".xml"));
+		Source input = new DOMSource(doc);
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			
+		transformer.transform(input, output);
+	     
+	}
 	public CustomToolBar getToolBar() {
 		return toolBar;
 	}

@@ -208,9 +208,11 @@ public class MainScene extends JFrame{
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				/*
 				upload.setVisible(false);
 				sidebarScene.setVisible(true);
 				options.setVisible(true);	
+				*/
 			
 			}
 
@@ -269,7 +271,7 @@ public class MainScene extends JFrame{
 		mapScene.setVisible(true);
 		options.setVisible(true);
 		sidebarScene.setVisible(true);
-		upload.setVisible(false);
+		upload.setVisible(true);
 		login.setVisible(false);
 		
 		this.remove(waitingScreen);
@@ -277,11 +279,12 @@ public class MainScene extends JFrame{
 	};
 	public void setZOrder() {
 		panel= this.getLayeredPane();
+		/*
 		panel.setLayer(mapScene,0);
 		panel.add(mapScene);
 		
 		mapScene.loadMapFile(new File("./assets/map/york.map"));
-	
+	*/
 		/*
 		try {
 			addDemoMarkers();
@@ -292,14 +295,15 @@ public class MainScene extends JFrame{
 		mapScene.repaint();
 		*/
 		
-	
+	/*
 		panel.setLayer(sidebarScene, 1);
 		panel.add(sidebarScene);
 		panel.setLayer(options, 2);
 		panel.add(options);
 		panel.setLayer(login, 3);
 		panel.add(login);
-		panel.setLayer(upload, 4);
+		*/
+		panel.setLayer(upload, 0);
 		panel.add(upload);
 		
 		

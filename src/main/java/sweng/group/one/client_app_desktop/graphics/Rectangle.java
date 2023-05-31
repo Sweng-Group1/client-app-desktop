@@ -247,7 +247,7 @@ public class Rectangle extends Shape {
 			Border border, Shadow shadow) {
 		super(getPos(pos, border, shadow), getWidth(rectWidth, border, shadow), getHeight(rectHeight, border, shadow),
 				duration, slide, fillColour, border, shadow);
-
+		type= "RECTANGLE";
 		if (shadow != null) {
 			// Shadow parameters
 			this.shadowDx = (int) shadow.getShadowDx();
@@ -289,5 +289,11 @@ public class Rectangle extends Shape {
 
 	public Paint getGradient() {
 		return gradient;
+	}
+	public Color getColour() {
+		return fillColour;
+	}
+	public void setColour(Color color) {
+		this.fillColour=color;
 	}
 }

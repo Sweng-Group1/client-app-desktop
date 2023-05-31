@@ -30,6 +30,9 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
 public class TextElement extends PresElement {
 	String text;
 	JTextArea textEditer;
+	int fontSizePt;
+	Color colour;
+	String fontName;
 	/**
 	 * TextElement constructor.
 	 * 
@@ -49,6 +52,9 @@ public class TextElement extends PresElement {
 		super(pos, width, height, duration, slide);
 		type= "TEXT";
 		this.text= text;
+		this.fontSizePt= fontSizePt;
+		this.fontName=fontName;
+		this.colour= Colour;
 		// Load system fonts
 		Font[] t = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 
@@ -113,6 +119,55 @@ public class TextElement extends PresElement {
 		}
 			
 		textEditer.setVisible(bool);
-	
-
-}}
+	}
+	public Integer getFontSize() {
+		return fontSizePt;
+	}
+	public String getFontName() {
+		return fontName;
+	}
+	public Color getColour() {
+		return colour;
+	}
+	public void setColour(Color color) {
+		this.colour= color;
+		this.getComponent().setForeground(color);
+	}
+	public void setFont(String fontName) {
+		switch(fontName) {
+		case "Arial":
+			this.getComponent().setFont(new Font("Arial",Font.PLAIN,getFontSize()));
+			break;
+		case "Ariel Bold":
+			this.getComponent().setFont(new Font("Bold",Font.BOLD,getFontSize()));
+			break;
+		case "Ariel Italic":
+			this.getComponent().setFont(new Font("Italic",Font.ITALIC,getFontSize()));
+		break;
+		case "Sans Serif":
+			this.getComponent().setFont(new Font(Font.SANS_SERIF,Font.PLAIN,getFontSize()));
+			break;
+		case "Serif":
+			this.getComponent().setFont(new Font(Font.SERIF,Font.PLAIN,getFontSize()));
+			break;
+		case "Mono spaced":
+			this.getComponent().setFont(new Font(Font.MONOSPACED,Font.PLAIN,getFontSize()));
+			break;
+		case "Dialog":
+			this.getComponent().setFont(new Font(Font.DIALOG,Font.PLAIN,getFontSize()));
+			break;
+		case "True Type":
+			this.getComponent().setFont(new Font("True Type",Font.TRUETYPE_FONT,getFontSize()));
+			break;
+		case "Type 1":
+			this.getComponent().setFont(new Font("Type 1",Font.TYPE1_FONT,getFontSize()));
+			break;
+		case "Roman":
+			this.getComponent().setFont(new Font("Roman",Font.ROMAN_BASELINE,getFontSize()));
+			break;
+			
+			
+		}
+		
+	}
+}

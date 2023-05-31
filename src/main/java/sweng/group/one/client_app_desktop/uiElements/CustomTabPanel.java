@@ -333,6 +333,9 @@ public class CustomTabPanel extends UploadSceneComponent implements ComponentInt
 	public Component getCurrentComponent() {
 		return tabPane.getSelectedComponent();
 	}
+	public ArrayList<Slide> getSlides() {
+		return tabPane.getSlides();
+	}
 }
 /*
  *  

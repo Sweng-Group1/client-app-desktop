@@ -33,6 +33,7 @@ public class Circle extends Shape {
 	// Access to gradient paint for testing
 	private Paint gradient;
 
+	
 	/**
 	 * Draws the circle.
 	 * 
@@ -259,6 +260,8 @@ public class Circle extends Shape {
 				duration, slide, fillColour, border, shadow);
 
 		this.radius = radius;
+		this.fillColour= fillColour;
+		
 		this.type= "CIRCLE";
 		if (shadow != null) {
 			// Shadow parameters
@@ -302,9 +305,17 @@ public class Circle extends Shape {
 	public int getRadius() {
 		return radius;
 	}
+	public Color getColour() {
+		return fillColour;
+	}
 	public void setRadius(int r) {
 		this.radius=r;
-		
-		
 	}
+	public void setColour(Color color) {
+		this.fillColour=color;
+	}
+	public void setShadowRadius(int shadowRadius) {
+		this.shadow= new Shadow(Color.black,shadowRadius, shadowRadius,shadowRadius);
+	}
+	
 }

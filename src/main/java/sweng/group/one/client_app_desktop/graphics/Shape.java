@@ -14,7 +14,7 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
  */
 public abstract class Shape extends PresElement {
 	protected final Border border;
-	protected final Shadow shadow;
+	protected Shadow shadow;
 	protected Color fillColour;
 
 	protected Shape(Point pos, int width, int height, float duration, Slide slide, Color fillColour, Border border,
@@ -43,5 +43,14 @@ public abstract class Shape extends PresElement {
 
 	protected int relativeToSlide(int input) {
 		return (int) Math.floor(input * slide.getWidth() / (float) slide.getPointWidth());
+	}
+	public Border getBorder() {
+		return border;
+	}
+	public Shadow getShadow() {
+		return shadow;
+	}
+	public Color getFillColor() {
+		return fillColour;
 	}
 }

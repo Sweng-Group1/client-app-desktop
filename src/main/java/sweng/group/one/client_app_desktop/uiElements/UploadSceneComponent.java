@@ -1,9 +1,9 @@
 package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.LinearGradientPaint;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
@@ -52,9 +52,10 @@ public class UploadSceneComponent extends JPanel implements ComponentInterface{
         	color2 = colorLightHighlight;
         }
        
-        GradientPaint gp = new GradientPaint(w/2, 0, color2, w/2, 100, color1);
+       // LinearGradientPaint gp = new LinearGradientPaint(w/2, 0, color2, w/2, 100, color1);
        
-        g2.setPaint(gp);
+        //g2.setPaint(gp);
+        g2.setColor(color1);
 		g2.fillRoundRect(r.x, r.y, this.getWidth()-r.width-r.x, this.getHeight()-(r.height)-r.y, curvatureRadius, curvatureRadius);
 		g2.dispose();
 		super.paintComponent(g);

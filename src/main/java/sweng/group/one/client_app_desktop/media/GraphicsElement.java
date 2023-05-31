@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.media;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -96,5 +97,19 @@ public class GraphicsElement extends PresElement{
 	
 	public void setDuration(long duration) {
 		this.duration=duration;
+	}
+	public void setColor(Color color) {
+		int[] pixels= null;
+		BufferedImage currentImage= getCurrentImage();
+		for (int x = 0; x < currentImage.getWidth(); x++) {
+		    for (int y = 0; y < currentImage.getHeight(); y++) {
+		    	Color colorVal = new Color(currentImage.getRGB(x, y), true);
+		    	if(colorVal.getAlpha()>0) {
+		    		currentImage.setRGB(x, y,color.getRGB());
+		    	}
+		    }
+		}
+		
+		addBufferedImageToGraphicsList(currentImage);
 	}
 }
