@@ -34,6 +34,8 @@ public class PostService {
 	 * @throws IOException
 	 * @throws AuthenticationException
 	 */
+	
+	//TODO: TEST - XMLs one has been tested
 	public ArrayList<Presentation> retrievePostsPresentations(String accessToken)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 
@@ -127,6 +129,7 @@ public class PostService {
 	 * @throws AuthenticationException - Try refreshing access token. 
 	 * @throws IOException 
 	 */
+	//TODO: TEST
 	public int deletePost(int id, String accessToken) throws AuthenticationException, IOException {
 
 		int statusCode = 0;
@@ -161,8 +164,8 @@ public class PostService {
 	 * @param accessToken the user making the request.
 	 * @return The status code of the request (200 success, 403 forbidden, etc).
 	 *         Returns 0 if an exception occurs.
-	 * @throws IOException 
-	 * @throws AuthenticationException 
+	 * @throws IOException This means the XML cannot be read. 
+	 * @throws AuthenticationException Invalid accessToken - try refreshing. 
 	 */
 	public int uploadPost(Path xml, int validityHours, EventMarker hashtag, String accessToken) throws IOException, AuthenticationException {
 		int statusCode = 0;
@@ -173,16 +176,10 @@ public class PostService {
 		String longitude = Double.toString(hashtag.getLatLong().getLongitude());
 
 		RequestBody body = null;
-		try {
-			body = new MultipartBody.Builder().addFormDataPart("xmlContent", Files.readString(xml))
-					.addFormDataPart("validityHours", Integer.toString(validityHours))
-					.addFormDataPart("latitude", latitude).addFormDataPart("longitude", longitude)
-					.addFormDataPart("hashtagName", hashtag.getHashtag()).build();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		body = new MultipartBody.Builder().addFormDataPart("xmlContent", Files.readString(xml))
+				.addFormDataPart("validityHours", Integer.toString(validityHours))
+				.addFormDataPart("latitude", latitude).addFormDataPart("longitude", longitude)
+				.addFormDataPart("hashtagName", hashtag.getHashtag()).build();
 
 		Request request = new Request.Builder().url(postURL).post(body).header("Authorization", "Bearer " + accessToken)
 				.build();
