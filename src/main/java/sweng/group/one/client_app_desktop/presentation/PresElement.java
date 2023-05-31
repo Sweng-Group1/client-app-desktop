@@ -34,10 +34,10 @@ public abstract class PresElement{
 	}
 	
 	/**
-	 * Method to which makes the element visible for a given time
-	 * specified as "duration"
-	 * The element will not disappear if the duration > 0
-	 *
+	 * Sets the visibility of the component based on the provided boolean value.
+	 * If the component is set to be displayed and a positive duration is specified,
+	 * it will automatically hide the component after the specified duration in seconds.
+	 * @param displaying true if the component should be displayed, false otherwise
 	 */
 	protected void displayElement(boolean displaying) {
 		component.setVisible(displaying);
