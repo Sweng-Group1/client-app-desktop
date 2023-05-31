@@ -28,7 +28,7 @@ import sweng.group.one.client_app_desktop.sideBarUIElements.PresentationPanel;
  * Modified JPanel sliding viewer to hold presentation slides which can overlay other JPanels
  * 
  * @author Will Hinton, Jonathan Cooke, Sophie Maw & Luke George
- * @since 28/05/2023
+ * @since 31/05/2023
  *
  */
 public class SidebarScene extends JPanel implements ComponentInterface{
@@ -231,14 +231,14 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		minimiseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				close(500L);
+				close(800L);
 				
 			}
 		});
 		maximiseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				open(500L);
+				open(800L);
 			}
 		});
 		
@@ -246,11 +246,12 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(isOpen==false) {
-					open(500L);
+					open(800L);
 				}
 				String inputText= header.getSearchBarTextField().getText();
 				String newText= inputText.replace(inputText.charAt(0), Character.toUpperCase(inputText.charAt(0)));
 				header.getSearchBarTextField().setText(newText);
+				System.out.println(newText);
 			}
 		});
 	}
