@@ -17,6 +17,7 @@ public class EventMarker extends Marker{
 	private final int tapRadius;
 	private MapScene mapView;
 	private boolean selected;
+	private String tag;
 	private ArrayList<Presentation> posts;
 
 	public EventMarker(MapScene mapView, LatLong latLong, Bitmap bitmap) {
@@ -27,6 +28,7 @@ public class EventMarker extends Marker{
 		this.mapView = mapView;
 		this.posts = new ArrayList<>();
 		this.setSelected(false);
+		this.tag = ""; //TODO: add tag to constructor
 	}
 	
 	@Override
@@ -63,6 +65,14 @@ public class EventMarker extends Marker{
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 		this.requestRedraw();
+	}
+
+	public String getName() {
+		return tag;
+	}
+
+	public void setName(String name) {
+		this.tag = name;
 	}
 
 }

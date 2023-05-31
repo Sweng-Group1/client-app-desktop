@@ -42,15 +42,19 @@ import sweng.group.one.client_app_desktop.text.TextElement;
 
 public class MainScene extends JFrame{
 
-	private JLayeredPane panel;
+	private JLayeredPane mainFrame;
 	private MapScene mapScene;
 	private SidebarScene sidebarScene;
-	private LoginScene login;
-	private UploadScene upload;
-	private OptionsScene options;
+//	private LoginScene login;
+//	private UploadScene upload;
+//	private OptionsScene options;
 	
-	private Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
+	// Window size
+//	private Dimension windowSize = new Dimension(800, 600);
+	private Dimension windowSize = new Dimension(800, 600);
+
 	
+	// Colours
 	private static final Color colorLight= new Color(78,106,143);
 	private static final Color colorDark= new Color(46,71,117);
 	
@@ -61,226 +65,38 @@ public class MainScene extends JFrame{
 	public MainScene() {
 		super();
 		
-		
-		this.setSize(screenSize);
+		this.setSize(windowSize);
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		gapWidth= screenSize.height/48;
+		gapWidth= windowSize.height/48;
 		curvatureRadius= 20;
-		this.setVisible(true); 
-		waitingScreen= new JPanel();
-		waitingScreen.setBackground(Color.yellow);
-		this.getLayeredPane().add(waitingScreen, 5);
-		
+		this.setVisible(true);
 		
 		sidebarScene = new SidebarScene(null);
 		
-		mapScene = new MapScene() {
-			@Override
-			public void selectMarker(EventMarker selected) {
-				super.selectMarker(selected);
-				
-				if (selected != null) {
-					sidebarScene.replacePres(selected.getPosts());
-				}
-			}
-		};
-		try {
-			options = new OptionsScene();
-			login= new LoginScene();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		upload= new UploadScene();
-		options.getAccountButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				sidebarScene.setVisible(false);
-				options.setVisible(false);
-				login.setVisible(true);
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		login.getContinueButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				login.setVisible(false);
-				sidebarScene.setVisible(true);
-				options.setVisible(true);		
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		options.getAddPostButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			
-				sidebarScene.setVisible(false);
-				options.setVisible(false);	
-				upload.setVisible(true);
+		mapScene = new MapScene();
 		
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+//		options = new OptionsScene();
+//		login = new LoginScene();
 			
-		});
-		upload.getConfirmButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				upload.setVisible(false);
-				sidebarScene.setVisible(true);
-				options.setVisible(true);	
-			
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		this.addComponentListener(new ComponentListener() {
-
-			@Override
-			public void componentResized(ComponentEvent e) {
-				resizeComponents();
-				
-			}
-
-			@Override
-			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		
-		
 		resizeComponents();
 		setZOrder();
 		
 		mapScene.setVisible(true);
-		options.setVisible(true);
 		sidebarScene.setVisible(true);
-		upload.setVisible(false);
-		login.setVisible(false);
+//		options.setVisible(true);
+//		upload.setVisible(false);
+//		login.setVisible(false);
 		
-		this.remove(waitingScreen);
 	
-	};
+	}
+	
 	public void setZOrder() {
-		panel= this.getLayeredPane();
-		panel.setLayer(mapScene,0);
-		panel.add(mapScene);
+		mainFrame = this.getLayeredPane();
+		mainFrame.setLayer(mapScene,0);
+		mainFrame.add(mapScene);
 		
-		mapScene.loadMapFile(new File("./assets/map/york.map"));
+		mapScene.loadMapFile(new File("./assets/map/york.map"), new File("./assets/map/theme.xml"));
 	
 		try {
 			addDemoMarkers();
@@ -291,29 +107,29 @@ public class MainScene extends JFrame{
 		mapScene.repaint();
 		
 	
-		panel.setLayer(sidebarScene, 1);
-		panel.add(sidebarScene);
-		panel.setLayer(options, 2);
-		panel.add(options);
-		panel.setLayer(login, 3);
-		panel.add(login);
-		panel.setLayer(upload, 4);
-		panel.add(upload);
-		
+		mainFrame.setLayer(sidebarScene, 1);
+		mainFrame.add(sidebarScene);
+//		panel.setLayer(options, 2);
+//		panel.add(options);
+//		panel.setLayer(login, 3);
+//		panel.add(login);
+//		panel.setLayer(upload, 4);
+//		panel.add(upload);
 		
 	}
+	
 	public void resizeComponents() {
-		screenSize= this.getSize();
-		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
+		windowSize= this.mainFrame.getSize();
+		mapScene.setBounds(0, 0, windowSize.width,windowSize.height);
 		
 		
-		sidebarScene.setSize(screenSize.width/3,screenSize.height);
+		sidebarScene.setSize(windowSize.width/3,windowSize.height);
 		sidebarScene.setLocation(0,0);
-		options.setSize(screenSize.height/4, screenSize.height/4);
-		options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
-		login.setSize(screenSize.width/4, screenSize.height/2);
-		login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
-		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
+//		options.setSize(windowSize.height/4, windowSize.height/4);
+//		options.setLocation(windowSize.width-gapWidth-(windowSize.height/4), gapWidth);
+//		login.setSize(windowSize.width/4, windowSize.height/2);
+//		login.setLocation((windowSize.width- windowSize.width/4)/2, windowSize.height/4);
+//		upload.setBounds(windowSize.width/10, windowSize.height/10, 4*(windowSize.width/5), 4*(windowSize.height/5));
 	}
 	
 	
@@ -390,8 +206,7 @@ public class MainScene extends JFrame{
 	
 
 	public static void main(String[] args) {
-		MainScene ms = new MainScene();
-		
+		new MainScene();
 	}
 	
 	
