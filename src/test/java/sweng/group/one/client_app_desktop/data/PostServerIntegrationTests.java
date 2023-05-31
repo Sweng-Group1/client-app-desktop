@@ -44,7 +44,7 @@ public class PostServerIntegrationTests {
 	}
 	
 	@Test
-	public void canUploadAndDownloadAPost() throws SAXException, ParserConfigurationException, IOException {
+	public void canUploadAndDownloadAPost() throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 		File testXML = new File("temp/evaluation.xml");
 		
 		MapScene mapScene = new MapScene();
