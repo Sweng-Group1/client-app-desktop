@@ -33,6 +33,10 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.mapping.HeatMap;
 
+/**
+ * @author flt515
+ *
+ */
 @SuppressWarnings("serial")
 public class MapScene extends MapView{
 	

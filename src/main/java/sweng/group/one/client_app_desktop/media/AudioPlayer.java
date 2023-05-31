@@ -9,9 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
@@ -20,8 +18,7 @@ import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 
 public class AudioPlayer extends PlayableMediaElement{
 	
-	private final AudioPlayerComponent AudioPlayer;
-	private JPanel audioPanel;
+	private final AudioPlayerComponent audioPlayer;
 	private ImageIcon icon;
 	private JToggleButton toggleB;
 	
@@ -29,7 +26,7 @@ public class AudioPlayer extends PlayableMediaElement{
 						float duration, Slide slide, URL fileURL, boolean loops) {
 		
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
-		this.AudioPlayer = new AudioPlayerComponent();
+		this.audioPlayer = new AudioPlayerComponent();
 		
 		icon = new ImageIcon(".//assets//speaker_icon.png");
 		Image img = icon.getImage();
@@ -58,20 +55,20 @@ public class AudioPlayer extends PlayableMediaElement{
 	@Override
 	public void togglePlaying() {
 		if(getPlaying()) {
-			AudioPlayer.mediaPlayer().controls().pause();
+			audioPlayer.mediaPlayer().controls().pause();
 		}
 		else {
-			AudioPlayer.mediaPlayer().controls().play();
+			audioPlayer.mediaPlayer().controls().play();
 		}
 	}
 	@Override
 	public boolean getPlaying() {
-		return AudioPlayer.mediaPlayer().status().isPlaying();
+		return audioPlayer.mediaPlayer().status().isPlaying();
 	}
 	@Override
 	protected void loadFile() {
 		String AudioLocalPath = getLocalPath();
-		AudioPlayer.mediaPlayer().media().startPaused(AudioLocalPath);
+		audioPlayer.mediaPlayer().media().startPaused(AudioLocalPath);
 		
 	}
 

@@ -69,9 +69,10 @@ public class VideoPlayer extends PlayableMediaElement {
 	}
 	
 	@Override
-	public void displayElement() {
+	public void displayElement(boolean displaying) {
+		component.setVisible(displaying);
 		mediaPlayer.mediaPlayer().controls().stop();
-		if(component.isDisplayable()) {
+		if(component.isDisplayable() && displaying) {
 			mediaPlayer.mediaPlayer().controls().play();
 		}
 	}

@@ -484,11 +484,10 @@ public class Presentation extends JPanel {
 		
 		Slide desiredSlide = getCurrentSlide();
 		for (Slide slide:slides) {
-			slide.setVisible(slide == desiredSlide);
+			slide.displaySlide(slide == desiredSlide);
 		}
-		desiredSlide.displaySlide();
 		resizeCurrentSlide();
-		desiredSlide.validate();
+		this.validate();
 	}
 	
 	/**

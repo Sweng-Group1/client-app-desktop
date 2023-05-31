@@ -51,10 +51,12 @@ public class Slide extends JPanel implements LayoutManager {
 		element.component.validate();
 	}
 	
-	public void displaySlide() {
+	public void displaySlide(boolean displaying) {
+		this.setVisible(displaying);
 		for (PresElement e:getElements()) {
-			e.displayElement();
+			e.displayElement(displaying);
 		}
+		this.validate();
 	}
 	
 	public Point pxToPt(Point pixel) {
