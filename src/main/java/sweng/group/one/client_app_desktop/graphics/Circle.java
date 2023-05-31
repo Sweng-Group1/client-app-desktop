@@ -4,15 +4,18 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.MultipleGradientPaint.CycleMethod;
+import java.awt.LinearGradientPaint;
 import java.awt.Paint;
 import java.awt.Point;
 import java.awt.RadialGradientPaint;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.geom.Point2D;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
+
+import java.awt.MultipleGradientPaint.CycleMethod;
 
 /**
  * The “Circle” class draws a circle of a given radius and colour at a given
@@ -23,13 +26,13 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
  */
 public class Circle extends Shape {
 	// Shadow parameters to be accessed in CanvasOperation
-	private int radius, shadowDx, shadowDy, shadowBlurRadius;
+	private final int radius, shadowDx, shadowDy, shadowBlurRadius;
 	private final Color shadowColour;
 
 	// Border Parameters to be accessed in CanvasOperation
 	private final Color borderColour;
 	private final int borderWidth;
-	
+
 	// Access to gradient paint for testing
 	private Paint gradient;
 
@@ -38,7 +41,6 @@ public class Circle extends Shape {
 	 * 
 	 * @param g2d Graphics2D object to draw the circle with.
 	 */
-	
 	public void drawCircle(Graphics2D g2d) {
 		Stroke previousStroke = g2d.getStroke();
 		Paint previousPaint = g2d.getPaint();
@@ -259,7 +261,7 @@ public class Circle extends Shape {
 				duration, slide, fillColour, border, shadow);
 
 		this.radius = radius;
-		this.type= "CIRCLE";
+
 		if (shadow != null) {
 			// Shadow parameters
 			this.shadowDx = (int) shadow.getShadowDx();
@@ -298,13 +300,5 @@ public class Circle extends Shape {
 
 	public Paint getGradient() {
 		return gradient;
-	}
-	public int getRadius() {
-		return radius;
-	}
-	public void setRadius(int r) {
-		this.radius=r;
-		
-		
 	}
 }

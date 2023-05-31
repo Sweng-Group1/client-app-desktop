@@ -28,6 +28,7 @@ public class VideoPlayer extends PlayableMediaElement {
 			this.component = mediaPlayer;
 			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
 			loadFile();
+			mediaPlayer.mediaPlayer().controls().setRepeat(loops);
 		}
 		else {
 			this.component = new JTextArea("VLC is required for media to be used in this application");
@@ -53,6 +54,14 @@ public class VideoPlayer extends PlayableMediaElement {
 	@Override
 	public boolean getPlaying() {
 		return mediaPlayer.mediaPlayer().status().isPlaying();
+	}
+	
+	@Override
+	public void displayElement() {
+		mediaPlayer.mediaPlayer().controls().stop();
+		if(component.isDisplayable()) {
+			mediaPlayer.mediaPlayer().controls().play();
+		}
 	}
 	
 	@Override
