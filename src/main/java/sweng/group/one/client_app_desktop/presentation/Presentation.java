@@ -480,7 +480,7 @@ public class Presentation extends JPanel {
 	 * Shows the current slide and hides other slides.
 	 * Resizes the current slide to maintain a fixed aspect ratio relative to the presentation size.
 	 */
-	private void showCurrentSlide() {
+	public void showCurrentSlide() {
 		if (slides.isEmpty()) {
 			return;
 		}
