@@ -123,8 +123,8 @@ public class MediaElementTest {
 	
 	@AfterClass
 	public static void cleanup() {
-		File assetFolder = new File(System.getProperty("java.io.tmpdir") + "WhatsOn\\assets\\");
-		File tempFolder = new File(System.getProperty("java.io.tmpdir") + "WhatsOn\\");
+		File assetFolder = new File(System.getProperty("java.io.tmpdir") + "/WhatsOn/assets/");
+		File tempFolder = new File(System.getProperty("java.io.tmpdir") + "/WhatsOn/");
 		
 		for (File file:assetFolder.listFiles()) {
 			file.delete();

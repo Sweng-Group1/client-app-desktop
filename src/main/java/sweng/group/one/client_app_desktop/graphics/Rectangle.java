@@ -1,11 +1,11 @@
 package sweng.group.one.client_app_desktop.graphics;
 
 import java.awt.BasicStroke;
+import java.awt.MultipleGradientPaint.CycleMethod;
+import java.awt.Paint;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
-import java.awt.MultipleGradientPaint.CycleMethod;
-import java.awt.Paint;
 import java.awt.Point;
 import java.awt.RadialGradientPaint;
 import java.awt.Stroke;
@@ -13,7 +13,7 @@ import java.awt.Stroke;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
 /**
- * The “Rectangle” class draws a rectangle of given dimensions on a “Slide”
+ * The â€œRectangleâ€� class draws a rectangle of given dimensions on a â€œSlideâ€�
  * object, with the possibility of a border and shadow.
  * 
  * @author joe2k01

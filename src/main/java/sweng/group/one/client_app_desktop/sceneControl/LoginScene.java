@@ -2,6 +2,8 @@ package sweng.group.one.client_app_desktop.sceneControl;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,34 +16,51 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import sweng.group.one.client_app_desktop.data.User;
+import sweng.group.one.client_app_desktop.data.UserService;
+
+/**
+ * Modified JPanel that allows users to login or create an account using a chosen username and password
+ * 
+ * @author Srikanth Jakka & Luke George
+ * @since 29/05/2023
+ *
+ */
+
 public class LoginScene extends JPanel implements ComponentInterface{
-	/**
-	 * 
-	 */
+	
+	// -------------------------------------------------------------- //
+	// --------------------- INITIALISATIONS ------------------------ //
+	// -------------------------------------------------------------- //
+
 	private static final long serialVersionUID = 1L;
-	
-	//private static int WINDOW_X_SIZE = 200;
-	//private static int WINDOW_Y_SIZE = 200;
-	//private static Color textFieldPanelColor = Color.white;
-	//private static Color buttonPanelColor = Color.white;
-	
-	//private JPanel textFieldPanel; 
-	//private JPanel buttonPanel;
-	
-	private JPanel usernamePanel;
-	private JPanel passwordPanel;
-	private JLabel logoPanel;
-	private BufferedImage logo;
-	private JTextField usernameField;
-	private JPasswordField passwordField;
-	
-	private JButton loginButton;
-	private JButton createAccountButton;
-	private JButton continueButton;
-	private String username;
-	private String password;
 	private boolean isOpen;
 	
+	private BufferedImage logo;
+	private JButton continueButton;
+	private JButton createAccountButton;
+	private JButton loginButton;
+	private JLabel logoPanel;
+	private JPanel passwordPanel;
+	private JPanel usernamePanel;
+	private JPasswordField passwordField;
+	private JTextField usernameField;
+	
+	private String accessToken;
+	private String refreshToken;
+	private UserService userService = new UserService();
+	private User user;
+	
+	private MapScene mapScene;
+	
+	// -------------------------------------------------------------- //
+	// ----------------------- CONSTRUCTOR -------------------------- //
+	// -------------------------------------------------------------- //
+	
+	/**
+	 * 
+	 * @throws IOException
+	 */
 	public LoginScene() throws IOException {
 		this.setOpaque(false);
 		this.setLayout(null);
@@ -49,20 +68,27 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		createPasswordField();
 		createButtons();
 		createLogo();
+		checkAccessToken();
+		setMouseListeners();
 	}
+	
+	/**
+	 * Creates the username panel that allows the user to input their username, and adds it to LoginScene
+	 */
 	private void createUserNameInput() {
-		usernamePanel= new JPanel() {
+		usernamePanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.setColor(colorDark);
-				//g.setColor(Color.white);
 				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 				super.paint(g);
 			}
 		};
-		usernameField= new JTextField();
+		usernameField = new JTextField();
+		
 		usernamePanel.add(usernameField);
 		usernamePanel.setLayout(null);
 		usernamePanel.setOpaque(false);
+		
 		usernameField.setOpaque(false);
 		usernameField.setBackground(transparent);
 		usernameField.setBorder(null);
@@ -71,22 +97,28 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		usernameField.setDisabledTextColor(Color.white);
 		usernameField.setForeground(Color.white);
 		this.add(usernamePanel);
+		
 		usernameField.setName("usernameField");
 		usernameField.setVisible(true);
 	}
+	
+	/**
+	 * Creates the password panel that allows the user to input their password, and adds it to LoginScene
+	 */
 	private void createPasswordField() {
-		passwordPanel= new JPanel() {
+		passwordPanel = new JPanel() {
 			public void paint(Graphics g) {
 				g.setColor(colorLight);
-				//g.setColor(Color.white);
 				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 				super.paint(g);
 			}
 		};
-		passwordField= new JPasswordField();
+		passwordField = new JPasswordField();
+		
 		passwordPanel.add(passwordField);
 		passwordPanel.setLayout(null);
 		passwordPanel.setOpaque(false);
+		
 		passwordField.setOpaque(false);
 		passwordField.setBackground(transparent);
 		passwordField.setBorder(null);
@@ -95,11 +127,16 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		passwordField.setDisabledTextColor(Color.white);
 		passwordField.setForeground(Color.white);
 		this.add(passwordPanel);
+		
 		passwordField.setName("usernameField");
 		passwordField.setVisible(true);
 	}
+	
+	/**
+	 * Creates the buttons that the user interacts with to submit their information, and adds them to LoginScene
+	 */
 	private void createButtons() {
-		loginButton= new JButton() {	
+		loginButton = new JButton() {	
 			public void paint(Graphics g) {
 				g.setColor(colorLight);
 				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
@@ -115,7 +152,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		loginButton.setBorder(null);	
 		this.add(loginButton);
 		
-		continueButton= new JButton(){	
+		continueButton = new JButton(){	
 			public void paint(Graphics g) {
 				g.setColor(colorLight);
 				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
@@ -131,11 +168,9 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		continueButton.setBorder(null);	
 		this.add(continueButton);
 		
-		createAccountButton= new JButton(){	
+		createAccountButton = new JButton(){	
 			public void paint(Graphics g) {
 				g.setColor(colorLight);
-				//g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 50, 50);
-				//g.setColor(Color.white);
 				g.drawString("Create Account",(this.getWidth()/2)-(g.getFontMetrics().
 						stringWidth("Create Account")/2),(this.getHeight()/2)+(g.getFontMetrics().getHeight()/4));
 				super.paint(g);
@@ -146,16 +181,24 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		createAccountButton.setBorderPainted(false);
 		createAccountButton.setBorder(null);	
 		this.add(createAccountButton);
-		
-		
 	}
+	
+	/**
+	 * Adds the YUSU Logo to LoginScene
+	 * @throws IOException
+	 */
 	private void createLogo() throws IOException {
 		logoPanel= new JLabel();
 		logo= ImageIO.read(new File("./assets/Yusu Logo 14.png"));
 		this.add(logoPanel);
 	}
+	
+	/**
+	 * Sets the size of LoginScene and scales its components
+	 */
 	public void setSize(int width, int height) {
 		super.setSize(width, height);
+		
 		usernamePanel.setSize((width/6)*4, height/16);
 		usernamePanel.setLocation((width-((width/6)*4))/2, (height/2)-(height/16));
 		usernameField.setSize(usernamePanel.getWidth()-20, usernamePanel.getHeight());
@@ -175,16 +218,70 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		createAccountButton.setSize((passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
 		createAccountButton.setLocation(passwordPanel.getX(), (height/2)+(5*(height/16)));
 	
-		logoPanel.setIcon(new ImageIcon(logo.getScaledInstance( (height/2)-(height/16), (height/2)-(height/16), java.awt.Image.SCALE_SMOOTH)));
-		logoPanel.setLocation( (width/2)-( ((height/2)-(height/16))/2),0);
+		logoPanel.setIcon(new ImageIcon(logo.getScaledInstance((height/2)-(height/16), (height/2)-(height/16), java.awt.Image.SCALE_SMOOTH)));
+		logoPanel.setLocation((width/2)-( ((height/2)-(height/16))/2),0);
 		logoPanel.setSize(passwordPanel.getWidth(), (height/2)-(height/16));
 	}
 	
+	public void loginButtonPressed() {
+		if (checkAccessToken()==true) {
+			// User already has a valid token and does not need to login
+		}
+		else {
+			user = new User(usernameField.getText());
+			String password = String.valueOf(passwordField.getPassword());
+			userService.login(user, password);
+		}
+	}
 	
+	public boolean checkAccessToken() {
+		if (userService.refreshAccessToken(user)==200) {
+			this.setVisible(false);
+			mapScene.setVisible(true);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
-	public void login() {
-		usernameField.setText("The Login Button Works");
-		System.out.println("The Login Button Works");
+	public String getUsername() {
+		return usernameField.getText();
+	}
+	
+	private void setMouseListeners() {
+		loginButton.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				loginButtonPressed();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	public void createAccount() {
@@ -195,27 +292,19 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	public boolean isOpen() {
 		return isOpen;
 	}
+	
 	public void paint(Graphics g) {
 		g.setColor(colorDark);
-		//g.setColor(Color.white);
 		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 		super.paint(g);
 	}
+	
 	public JButton getLoginButton() {
 		return loginButton;
 	}
+	
 	public JButton getContinueButton() {
 		return continueButton;
 	}
 	
-//	private boolean login(String username, String password) {
-//		
-//		return false;
-//	}
-//	
-//	private boolean createAccount(String username, String password) {
-//		
-//		return false;
-//	}
-//	
 }
