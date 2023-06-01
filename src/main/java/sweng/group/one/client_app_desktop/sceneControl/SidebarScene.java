@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -275,8 +276,11 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 
 		// Update the content of the containerPanel
 		scrollView.removeAll(); // Clear the existing panels from the containerPanel
-		for (JPanel panel : p) {
+		System.out.println(scrollView.getComponentCount());
+		for (Presentation panel : p) {
 			scrollView.add(panel); // Add the updated panels to the containerPanel
+			panel.showCurrentSlide(); // Show the first slide
+			panel.setBackground(colorDark); // Same colour as sideBar for seamless look
 		}
 		scrollView.revalidate(); // Update the layout of the containerPanel
 		scrollView.repaint(); // Refresh the visuals of the containerPanel

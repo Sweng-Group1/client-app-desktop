@@ -1,12 +1,9 @@
 package sweng.group.one.client_app_desktop.presentation;
 
 import java.awt.Point;
-<<<<<<< HEAD
 import java.awt.image.BufferedImage;
-=======
 import java.util.Timer;
 import java.util.TimerTask;
->>>>>>> refs/remotes/origin/main
 
 import javax.swing.JComponent;
 
@@ -21,12 +18,9 @@ public abstract class PresElement{
 	protected float duration;
 	protected Slide slide;
 	protected JComponent component;
-<<<<<<< HEAD
 	protected String type;
 
-=======
 	protected Timer displayTimer;
->>>>>>> refs/remotes/origin/main
 	
 	protected PresElement(Point pos, 
 						int width, 
@@ -39,11 +33,8 @@ public abstract class PresElement{
 		this.height = height;
 		this.duration = duration;
 		this.slide = slide;
-<<<<<<< HEAD
 		
-=======
 		this.displayTimer = new Timer();
->>>>>>> refs/remotes/origin/main
 	}
 	
 	/**
