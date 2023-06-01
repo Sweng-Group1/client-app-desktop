@@ -14,7 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 import sweng.group.one.client_app_desktop.data.User;
 import sweng.group.one.client_app_desktop.data.UserService;
@@ -51,9 +53,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	private String accessToken;
 	private String refreshToken;
 	private UserService userService = new UserService();
-	private User user;
-	
-	private MapScene mapScene;
+	private User user = new User("Default");
 	
 	// -------------------------------------------------------------- //
 	// ----------------------- CONSTRUCTOR -------------------------- //
@@ -81,7 +81,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	private void createUserNameInput() {
 		usernamePanel = new JPanel() {
 			public void paint(Graphics g) {
-				g.setColor(colorDark);
+				g.setColor(colorLight);
 				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
 				super.paint(g);
 			}
@@ -156,7 +156,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		this.add(feedbackPanel);
 		
 		feedbackMessage.setName("feedbackMessage");
-		feedbackMessage.setVisible(true);
+		feedbackMessage.setVisible(false);
 	}
 	
 	/**
@@ -215,8 +215,8 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	 * @throws IOException
 	 */
 	private void createLogo() throws IOException {
-		logoPanel= new JLabel();
-		logo= ImageIO.read(new File("./assets/Yusu Logo 14.png"));
+		logoPanel = new JLabel();
+		logo = ImageIO.read(new File("./assets/Yusu Logo 14.png"));
 		this.add(logoPanel);
 	}
 	
@@ -237,7 +237,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		passwordField.setLocation(curvatureRadius/2, 0);
 		
 		feedbackPanel.setSize((width/6)*4, height/16);
-		feedbackPanel.setLocation((width-((width/6)*4))/2, (height/2)+(height/6));
+		feedbackPanel.setLocation((width-((width/6)*4))/2, (height/2)+(6*height/16));
 		feedbackMessage.setSize(feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
 		feedbackMessage.setLocation(curvatureRadius/2, 0);
 		
@@ -255,30 +255,41 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		logoPanel.setSize(passwordPanel.getWidth(), (height/2)-(height/16));
 	}
 	
-	public void loginButtonPressed() {		
-		if (checkAccessToken()==true) {
-			// User already has a valid token and does not need to login
-			return;
+	public boolean loginButtonPressed() {		
+		if (usernameField.getText().equals("") || passwordField.getPassword().length==0) {
+			feedbackMessage.setText("Please enter your login credentials");
+			feedbackMessage.setVisible(true);
 		}
 		
-		user = new User(usernameField.getText());
-		String password = String.valueOf(passwordField.getPassword());
-		
-		if (userService.login(user, password)!=403) {
-			
+		if (checkAccessToken()==true) {
+			feedbackMessage.setText("You are already logged in!");
+			feedbackMessage.setVisible(true);
+			return true;
 		}
 		else {
-			
-			userService.login(user, password);
+			user = new User(usernameField.getText());
+			String password = String.valueOf(passwordField.getPassword());
+			System.out.println(userService.login(user, password));
+			if (userService.login(user, password)==403) {
+				feedbackMessage.setText("Invalid login credentials");
+				feedbackMessage.setVisible(true);
+				passwordField.setText("");
+				return false;
+			} else {
+				System.out.println("User successfully logged in");
+				changeScene();
+				return true;
+			}
 		}
 	}
 	
 	public boolean checkAccessToken() {
 		if (userService.refreshAccessToken(user)==200) {
-			changeScene();
+			System.out.println("User has a valid access token");
 			return true;
 		}
 		else {
+			System.out.println("User does not have a valid access token");
 			return false;
 		}
 	}
@@ -305,6 +316,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				loginButtonPressed();
+				System.out.println("LoginScene");
 			}
 			
 			@Override
@@ -351,3 +363,4 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	}
 	
 }
+
