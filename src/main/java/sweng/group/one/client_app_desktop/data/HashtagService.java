@@ -17,6 +17,8 @@ import okhttp3.Response;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.sceneControl.MapScene;
 
+
+// Rough and ready test - need to run post tests first to add a Hashtag to the server. 
 public class HashtagService {
 
 	private String hashtagURL = "http://localhost:8080/api/v1/hashtag";
@@ -101,7 +103,7 @@ public class HashtagService {
 		OkHttpClient client = new OkHttpClient();
 		
 		RequestBody body = new MultipartBody.Builder()
-				.addFormDataPart("name", hashtag.getHashtag())
+				.addFormDataPart("name", hashtag.getTag())
 				.addFormDataPart("newName", newName)
 				.build();
 				
@@ -116,7 +118,7 @@ public class HashtagService {
 		int statusCode = response.code();
 		
 		if (statusCode == 200) {
-			hashtag.setHashtag(authToken);
+			hashtag.setTag(newName);
 			return hashtag;
 			 
 		} else if (statusCode == 403) {
