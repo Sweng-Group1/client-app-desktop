@@ -1,6 +1,6 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-//import org.assertj.core.api.Assertions.assertThatIllegalStateException;
+//import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -92,6 +92,7 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		upload= new UploadScene();
 		options.getAccountButton().addMouseListener(new MouseListener() {
 
@@ -128,6 +129,7 @@ public class MainScene extends JFrame{
 			}
 			
 		});
+		
 		login.getContinueButton().addMouseListener(new MouseListener() {
 
 			@Override
@@ -162,6 +164,7 @@ public class MainScene extends JFrame{
 			}
 			
 		});
+		
 		options.getAddPostButton().addMouseListener(new MouseListener() {
 
 			@Override
