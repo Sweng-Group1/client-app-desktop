@@ -43,13 +43,13 @@ public class MapServerIntegrationTests {
 	}
 
 	@Test
-	public void testUploadingMap() {
+	public void testUploadingMap() throws IOException, AuthenticationException {
 	int statusCode = testMapService.uploadMap(testMap, userTest.getAccessToken());
 	assertThat(statusCode).isEqualTo(200);
 	}
 
 	@Test
-	public void canDownloadMap() {
+	public void canDownloadMap() throws IOException, AuthenticationException {
 	Path mapPath = testMapService.retrieveMap(testMapName);
 	assertThat(mapPath).isNotEmptyFile();
 	}
