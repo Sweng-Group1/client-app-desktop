@@ -302,7 +302,7 @@ public class Presentation extends JPanel {
 		newSlide.setVisible(false);
 	}
 	
-	private void showCurrentSlide() {
+	public void showCurrentSlide() {
 		if (slides.isEmpty()) {
 			return;
 		}
