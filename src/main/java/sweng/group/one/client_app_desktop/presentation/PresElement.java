@@ -1,10 +1,19 @@
 package sweng.group.one.client_app_desktop.presentation;
 
 import java.awt.Point;
+<<<<<<< HEAD
 import java.awt.image.BufferedImage;
+=======
+import java.util.Timer;
+import java.util.TimerTask;
+>>>>>>> refs/remotes/origin/main
 
 import javax.swing.JComponent;
 
+/**
+ * @author flt515
+ *
+ */
 public abstract class PresElement{
 	protected Point pos;
 	protected int width;
@@ -12,8 +21,12 @@ public abstract class PresElement{
 	protected float duration;
 	protected Slide slide;
 	protected JComponent component;
+<<<<<<< HEAD
 	protected String type;
 
+=======
+	protected Timer displayTimer;
+>>>>>>> refs/remotes/origin/main
 	
 	protected PresElement(Point pos, 
 						int width, 
@@ -26,20 +39,25 @@ public abstract class PresElement{
 		this.height = height;
 		this.duration = duration;
 		this.slide = slide;
+<<<<<<< HEAD
 		
+=======
+		this.displayTimer = new Timer();
+>>>>>>> refs/remotes/origin/main
 	}
 	
 	/**
-	 * Method to which makes the element visible for a given time
-	 * specified as "duration"
-	 * The element will not disappear if the duration > 0
-	 *
+	 * Sets the visibility of the component based on the provided boolean value.
+	 * If the component is set to be displayed and a positive duration is specified,
+	 * it will automatically hide the component after the specified duration in seconds.
+	 * @param displaying true if the component should be displayed, false otherwise
 	 */
-	protected void displayElement() {
-		component.setVisible(true);
-		if (duration > 0) {
-			new java.util.Timer().schedule( 
-			        new java.util.TimerTask() {
+	protected void displayElement(boolean displaying) {
+		component.setVisible(displaying);
+		if (duration > 0 && displaying) {
+			displayTimer = new Timer();
+			displayTimer.schedule( 
+			        new TimerTask() {
 			            @Override
 			            public void run() {
 			                component.setVisible(false);
@@ -48,6 +66,14 @@ public abstract class PresElement{
 			        (long) (duration*1000) 
 			);
 		}
+		else {
+			displayTimer.cancel();
+			displayTimer.purge();
+		}
+	}
+	
+	protected void displayElement() {
+		this.displayElement(true);
 	}
 	public String getType() {
 		return type;
