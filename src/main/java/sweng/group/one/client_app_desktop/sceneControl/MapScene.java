@@ -1,12 +1,8 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageFilter;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,6 +43,10 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.mapping.HeatMap;
 
+/**
+ * @author flt515
+ *
+ */
 @SuppressWarnings("serial")
 public class MapScene extends MapView{
 	
@@ -108,7 +108,6 @@ public class MapScene extends MapView{
 				@Override //print co-ords when map is clicked
 	            public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
 	                addEventMarker(tapLatLong);
-	                System.out.println(tapLatLong);
 	                return true;
 	            }
 	        };
@@ -142,12 +141,12 @@ public class MapScene extends MapView{
 	}
 	
 	/**
-	 * Loads a map file and applies the default render theme to display the map.
+	 * Loads a map file and applies the custom render theme to display the map.
 	 *
 	 * @param mapFile  the map file to be loaded
 	 */
 	public void loadMapFile(File mapFile) {
-		loadMapFile(mapFile, null);
+		loadMapFile(mapFile, new File("./assets/map/theme.xml"));
 	}
 	
 	
@@ -197,30 +196,7 @@ public class MapScene extends MapView{
 		}
 	}
 	
-	
 	public ArrayList<EventMarker> getMarkers() {
 		return markers;
-	}
-
-	public void paint(Graphics g) {
-		Graphics2D g2= (Graphics2D)g.create();
-		BufferedImage buffer= new BufferedImage(this.getWidth(),this.getHeight(),BufferedImage.BITMASK);
-		g.drawImage(buffer, 0, 0, null);
-		
-		if(buffer.getRaster().getDataBuffer().getSize()==(this.getWidth()*this.getHeight())) {
-			//
-			
-			super.paint(g);
-			
-		}
-	
-		 /* GraphicContext graphicContext = AwtGraphicFactory.createGraphicContext(g);
-		 
-		  this.getFrameBuffer().draw(graphicContext);
-		  if (this.getMapScaleBar() != null) {
-		    this.getMapScaleBar().draw(graphicContext);
-		  }
-		  this.getFpsCounter().draw(graphicContext);
-		  this.getFrameBuffer().destroy();*/
 	}
 }

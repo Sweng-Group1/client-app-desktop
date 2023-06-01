@@ -3,6 +3,7 @@ package sweng.group.one.client_app_desktop.sceneControl;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -27,7 +28,7 @@ import sweng.group.one.client_app_desktop.sideBarUIElements.PresentationPanel;
  * Modified JPanel sliding viewer to hold presentation slides which can overlay other JPanels
  * 
  * @author Will Hinton, Jonathan Cooke, Sophie Maw & Luke George
- * @since 29/05/2023
+ * @since 31/05/2023
  *
  */
 public class SidebarScene extends JPanel implements ComponentInterface{
@@ -222,70 +223,39 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		}
 	}
 	
+	
 	/**
-	 * Overrides the mouse listeners used for interacting with the sidebar
+	 * Defines actions for buttons on the sidebar
 	 */
 	private void setMouseListeners() {
-		minimiseButton.addMouseListener(new MouseListener() {
+		minimiseButton.addActionListener(new ActionListener() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				close(500L);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {	
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
+				close(800L);
+				
 			}
 		});
-		maximiseButton.addMouseListener(new MouseListener() {
+		maximiseButton.addActionListener(new ActionListener() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				open(500L);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
+				open(800L);
 			}
 		});
-		searchButton.addMouseListener(new MouseListener() {
+		
+		searchButton.addActionListener(new ActionListener() {
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				if(isOpen==false) {
-					open(500L);
+					open(800L);
 				}
 				String inputText= header.getSearchBarTextField().getText();
 				String newText= inputText.replace(inputText.charAt(0), Character.toUpperCase(inputText.charAt(0)));
 				header.getSearchBarTextField().setText(newText);
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
+				System.out.println(newText);
 			}
 		});
 	}
+	
 	
 	// -------------------------------------------------------------- //
 	// ------------------------- CHECKS ----------------------------- //
