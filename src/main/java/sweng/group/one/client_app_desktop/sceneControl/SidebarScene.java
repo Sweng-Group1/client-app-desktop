@@ -1,17 +1,9 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -22,58 +14,39 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import org.assertj.core.error.ShouldBeUpperCase;
-
 import sweng.group.one.client_app_desktop.presentation.Presentation;
-import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.sideBarUIElements.CustomPanel;
 import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
 import sweng.group.one.client_app_desktop.sideBarUIElements.Header;
-import sweng.group.one.client_app_desktop.sideBarUIElements.PresentationPanel;
-import sweng.group.one.client_app_desktop.sideBarUIElements.SearchBar;
 
 /**
  * @author joncooke
  * Refactored sophiemaw
- *
+ * Re-refactored srikanthj
  */
 public class SidebarScene extends JPanel implements ComponentInterface{
 	
 	private static final long serialVersionUID = 1L;
 	private boolean isOpen;
 	
-	private CustomPanel panel;
+	private CustomPanel sidebarMainPanel;
 	private JTextField searchBarTextField;
 	private Header header;
 	
-	private List<Presentation> presentations;
-	
+	// GUI Components
 	private JTextField searchTextField;
 	private JButton minimiseButton;
 	private JButton maximiseButton;
 	private JButton searchButton;
 	private JScrollBar scrollBar;
 	
+	// Scrollpane to show presentations
 	private JScrollPane scrollPane;
+	// This is the viewport for the scrollpane
 	private JPanel scrollView;
-	
-	private boolean presScrollEnabled = true;
-	
-	private GridBagConstraints gbc;
-	
+			
 	private final static int searchBarInset = 10;
 	private final static int rectCurveRadius = 20;
-	
-
-
-	/*
-	 * 	Sophie: I've put in another way the presentations can appear on the scrollView
-	 * 			I haven't been able to get the gridbag layout to work 
-	 * 				Set this value to false to use GridBag instead of my null layout:
-	 */
-				private boolean sophiesLayout= true;
-				private ArrayList<PresentationPanel>presentationPanels;
-				private ArrayList<JPanel>panes;
 
 	public SidebarScene(ActionListener searchAction) {
 		this.setLayout(null);
@@ -85,11 +58,12 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		setMouseListeners();
 		isOpen=true;
 	}
+	
 	private void setUpBackground() {
-		panel = new CustomPanel();
+		sidebarMainPanel = new CustomPanel();
 		header= new Header();
 		
-		this.add(panel);
+		this.add(sidebarMainPanel);
 		this.add(header);
 
 		searchBarTextField= header.getSearchBarTextField();
@@ -97,41 +71,48 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		maximiseButton= header.getMaximiseButton();
 		minimiseButton= header.getMinimiseButton();
 	}
+	
 	private void setUpScrollPane(){
-		scrollView= new JPanel();
-		scrollPane= new JScrollPane(scrollView);
+		// The viewport to have a BoxLayout to order vertically
+		scrollView = new JPanel();
+		// Use BoxLayout with Y_AXIS orientation
+		scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS)); 
+		// Init scrollPane with scrollView JPanel viewport and add to sidebar jpanel
+		scrollPane = new JScrollPane(scrollView);
 		this.add(scrollPane);
-		scrollView.setLayout(new GridBagLayout());
+		
+		// Custom Scrollbar setup
 		scrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);	
 		scrollBar= scrollPane.getVerticalScrollBar();
 		scrollBar.setUI(new CustomScrollBarUI());
 		scrollBar.setOpaque(false);
 		
+		// Add scrollbar to JPanel
 		this.add(scrollBar);
 	
-		
 	}
+	
 	private void configureComponents() {
 		header.setColours(colorDark, colorDark);
 		scrollPane.setBackground(colorDark);
 		scrollView.setBackground(colorDark);
 		scrollPane.setBorder(null);
 		
-		panel.setScrollBar(scrollBar);
-		panel.setScrollPane(scrollPane);
+		sidebarMainPanel.setScrollBar(scrollBar);
+		sidebarMainPanel.setScrollPane(scrollPane);		
 		
-		
-		panel.setVisible(true);
+		sidebarMainPanel.setVisible(true);
 		header.setVisible(true);
 		scrollPane.setVisible(true);
 		
 		this.setComponentZOrder(header, 0);
 		this.setComponentZOrder(scrollBar, 1);
 		this.setComponentZOrder(scrollPane, 2);
-		this.setComponentZOrder(panel, 3);
-		//searchBar.setVisible(true);
+		this.setComponentZOrder(sidebarMainPanel, 3);
+
 	}
+	
 	private void setMouseListeners() {
 		minimiseButton.addMouseListener(new MouseListener() {
 
@@ -245,7 +226,7 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		
 		Rectangle rPanel= new Rectangle(gapWidth,gapWidth, width-gapWidth, height-(2*gapWidth));
 
-		panel.setBounds(rPanel,curveRadius);
+		sidebarMainPanel.setBounds(rPanel,curveRadius);
 		Rectangle rHeader= new Rectangle(gapWidth, gapWidth, width-gapWidth,(height-gapWidth)/15);
 		header.setBounds(rHeader,curveRadius);
 		
@@ -257,26 +238,23 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		scrollPane.setVisible(true);
 		scrollView.setVisible(true);
 		
-		if(sophiesLayout==true) {
-			if(presentationPanels!=null) {
-				for(int i=0;i<presentationPanels.size();i++) {
-					presentationPanels.get(i).setPreferredSize(new Dimension(width,width));
-				}
-			}
-		}
-		
 	}
 	
+	// Called to open the sidebar
 	public void open(long timeTo) {
 		isOpen = true;
-		panel.maximise(timeTo);
+		// Both run at the same time
+		sidebarMainPanel.maximise(timeTo);
 		header.setMinimise(timeTo);
 	}
 	
+	// Called to close the sidebar
 	public void close(long timeTo) {
 		isOpen = false;
-		panel.minimise(timeTo);
+		// Both run at the same time
+		sidebarMainPanel.minimise(timeTo);
 		header.setMaximise(timeTo);
+		// Hide the presentation elements
 		scrollPane.setVisible(false);
 		scrollBar.setVisible(false);
 		
@@ -285,69 +263,17 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 	public boolean isOpen() {
 		return isOpen;
 	}
-
-	public void goTo(Presentation p) {
-		if(sophiesLayout==true) {
-		
-			for(int i=0;i<presentationPanels.size();i++) {
-				if(presentationPanels.get(i).getPresentation()==p) {
-					int y= presentationPanels.get(i).getY();
-					scrollBar.setValue(y);
-				}
-			}
-		}else {
-			// What we might want to do is make a presentationPanel for the presentation being viewed
-			// At the moment we just put this one to the top of the list, and then move to the top of 
-			// the scrollpane.
-			List<Presentation> newPresentations = new ArrayList<Presentation>();
-			presentations.remove(p); // Remove p from the list.
-			newPresentations.add(p);
-			newPresentations.addAll(presentations);
-			
-			replacePres(newPresentations);
-			
-			scrollPane.getVerticalScrollBar().setValue(0);
-		}
-		
-		
-	}
 	
 	/* Replaces the current presentation list with p */
 	public void replacePres(List<Presentation> p) {
 
-		if(sophiesLayout==true) {
-			scrollView.removeAll();
-			presentationPanels= new ArrayList<PresentationPanel>();
-			scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS));
-			for(int i=0;i<p.size();i++) {
-				PresentationPanel presentationPanel = new PresentationPanel(p.get(i));
-				presentationPanel.setPreferredSize(new Dimension(scrollPane.getWidth(),scrollPane.getWidth()));
-				scrollView.add(presentationPanel);
-				presentationPanels.add(presentationPanel);
-
-			}
-
-		}else {
-			scrollView.setLayout(new GridBagLayout());
-			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.fill = GridBagConstraints.BOTH;
-			gbc.gridwidth = 1;
-			gbc.gridheight = 1;
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.weightx = 1;
-			gbc.weighty = 1;
-			scrollView.removeAll();
-			presentations = p;
-			for (int i = 0; i < p.size(); i++) {
-				Presentation pres = p.get(i);
-				gbc.gridy = i;
-				scrollView.add(pres, gbc);
-				pres.setEnabled(true);
-				pres.setBackground(colorLight);
-				pres.setVisible(true);
-			}	
+		// Update the content of the containerPanel
+		scrollView.removeAll(); // Clear the existing panels from the containerPanel
+		for (JPanel panel : p) {
+			scrollView.add(panel); // Add the updated panels to the containerPanel
 		}
+		scrollView.revalidate(); // Update the layout of the containerPanel
+		scrollView.repaint(); // Refresh the visuals of the containerPanel
 	
 	}
 		

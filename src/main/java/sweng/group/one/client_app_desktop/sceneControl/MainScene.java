@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
@@ -50,31 +51,44 @@ public class MainScene extends JFrame{
 //	private OptionsScene options;
 	
 	// Window size
-//	private Dimension windowSize = new Dimension(800, 600);
 	private Dimension windowSize = new Dimension(800, 600);
-
 	
 	// Colours
 	private static final Color colorLight= new Color(78,106,143);
 	private static final Color colorDark= new Color(46,71,117);
 	
-	JPanel waitingScreen;
+	// UI Parameters
 	private int gapWidth;
 	private int curvatureRadius;
 	
 	public MainScene() {
+		// Call JFrame super constructor
 		super();
 		
+		// Set size of window, name, icon and close function
 		this.setSize(windowSize);
-		
+		this.setTitle("What's On: AppBar Ltd.");
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("./assets/Yusu Logo 14.png"));
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		// Set panel to be visible
 		gapWidth= windowSize.height/48;
 		curvatureRadius= 20;
 		this.setVisible(true);
 		
 		sidebarScene = new SidebarScene(null);
 		
-		mapScene = new MapScene();
+		// New MapScene
+		mapScene = new MapScene()
+		{
+			@Override
+			public void selectMarker(EventMarker selected) {
+				super.selectMarker(selected);
+				
+				if (selected != null) {
+					sidebarScene.replacePres(selected.getPosts());
+				}
+			}
+		};
 		
 //		options = new OptionsScene();
 //		login = new LoginScene();
@@ -92,12 +106,15 @@ public class MainScene extends JFrame{
 	}
 	
 	public void setZOrder() {
+		// 
 		mainFrame = this.getLayeredPane();
 		mainFrame.setLayer(mapScene,0);
 		mainFrame.add(mapScene);
 		
+		// 
 		mapScene.loadMapFile(new File("./assets/map/york.map"), new File("./assets/map/theme.xml"));
 	
+		// Add some demo markers
 		try {
 			addDemoMarkers();
 		} catch (MalformedURLException e) {
@@ -119,7 +136,8 @@ public class MainScene extends JFrame{
 	}
 	
 	public void resizeComponents() {
-		windowSize= this.mainFrame.getSize();
+		// https://stackoverflow.com/questions/5097301/jframe-get-size-without-borders
+		windowSize = this.getContentPane().getSize();
 		mapScene.setBounds(0, 0, windowSize.width,windowSize.height);
 		
 		
@@ -132,7 +150,7 @@ public class MainScene extends JFrame{
 //		upload.setBounds(windowSize.width/10, windowSize.height/10, 4*(windowSize.width/5), 4*(windowSize.height/5));
 	}
 	
-	
+	// Some test markers
 	public void addDemoMarkers() throws MalformedURLException {
 		int slideX = 100;
 		int slideY = 50;
@@ -157,7 +175,8 @@ public class MainScene extends JFrame{
 	    	ArrayList<Slide> slides = new ArrayList<>();
 	    	slides.add(slide);
 	    	
-	    	ImageViewer ie = new ImageViewer(new Point(0, 0), slideX, slideY, 0, slide, new URL("https://getsamplefiles.com/download/png/sample-1.png"));
+	    	ImageViewer ie = new ImageViewer(new Point(0, 0), slideX, slideY, 1, 0, 1, slide, new URL("https://getsamplefiles.com/download/png/sample-1.png"));
+
 	    	slide.add(ie);
 	    	/*
 	    	 *  Testing sideBar prevslide/ next slide 
