@@ -355,4 +355,10 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 	public String getSearchText() {
 		return searchTextField.getText();
 	}
+	public JTextField getSearchBarTextField() {
+		return header.getSearchBarTextField();
+	}
+	public JScrollBar getScrollBar() {
+		return scrollBar;
+	}
 }

@@ -8,10 +8,17 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -23,6 +30,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import org.mapsforge.core.model.LatLong;
@@ -40,8 +50,8 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.text.TextElement;
 
-public class MainScene extends JFrame{
-
+public class MainScene extends JFrame {
+	private MainScene mainScene= this;
 	private JLayeredPane panel;
 	private MapScene mapScene;
 	private SidebarScene sidebarScene;
@@ -92,6 +102,10 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		/*
+		 *  Set listeners:
+		 */
 		upload= new UploadScene();
 		options.getAccountButton().addMouseListener(new MouseListener() {
 
@@ -260,7 +274,73 @@ public class MainScene extends JFrame{
 			}
 			
 		});
-		
+		/*
+		 *  Accessibility listener:
+		 *  SHIFT + 'S' : gives search bar focus
+		 *  SHIFT + BACKSPACE : search bar loses focus
+		 *  SHIFT + 'O' : opens sideBarScene
+		 *  SHIFT + 'C' : closes sideBarScene
+		 */
+		JTextField searchBar= sidebarScene.getSearchBarTextField();
+		KeyListener kl= new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				 int keyCode = e.getKeyCode();
+	                int modifiers = e.getModifiersEx();
+
+	                // Check if Shift key and 'S' key are pressed
+	                if (keyCode == KeyEvent.VK_S && (modifiers & KeyEvent.SHIFT_DOWN_MASK) != 0) {
+	                    // Enable the search bar and request focus
+	                    searchBar.setEnabled(true);
+	                    searchBar.requestFocusInWindow();
+	                }
+
+	                // Check if Shift key and Backspace key are pressed
+	                if (keyCode == KeyEvent.VK_BACK_SPACE && (modifiers & KeyEvent.SHIFT_DOWN_MASK) != 0) {
+	                    // Disable the search bar and clear the focus
+	                    searchBar.setEnabled(false);
+	                    KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+	                    mainScene.requestFocus();
+	                }
+
+	                // Check if Shift key and 'O' key are pressed
+	                if (keyCode == KeyEvent.VK_O && (modifiers & KeyEvent.SHIFT_DOWN_MASK) != 0) {
+	                    // Open the sidebar
+	                	if(sidebarScene.isOpen()==false) {
+	                		sidebarScene.open(500L);
+	                	}
+	                }
+
+	                // Check if Shift key and 'C' key are pressed
+	                if (keyCode == KeyEvent.VK_C && (modifiers & KeyEvent.SHIFT_DOWN_MASK) != 0) {
+	                    // Close the sidebar
+	                	if(sidebarScene.isOpen()) {
+	                		sidebarScene.close(500L);
+	                	}
+	                }
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		};
+		this.addKeyListener(kl);
+	     searchBar.addKeyListener(kl);
+	
+
+	        setFocusable(true);
+	        requestFocus();
 		
 		
 		resizeComponents();
@@ -275,6 +355,9 @@ public class MainScene extends JFrame{
 		this.remove(waitingScreen);
 	
 	};
+
+		
+	
 	public void setZOrder() {
 		panel= this.getLayeredPane();
 		panel.setLayer(mapScene,0);
@@ -393,6 +476,7 @@ public class MainScene extends JFrame{
 		MainScene ms = new MainScene();
 		
 	}
+
 	
 	
 
