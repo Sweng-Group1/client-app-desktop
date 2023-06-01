@@ -52,9 +52,13 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		this.setLayout(null);
 		this.setOpaque(false);
 
+		// Sets up search bar, back button, etc.
 		setUpBackground();
+		// Sets up the main Presentation scroll pane
 		setUpScrollPane();
+		// 
 		configureComponents();
+		// Button click animations
 		setMouseListeners();
 		isOpen=true;
 	}
@@ -72,6 +76,7 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		minimiseButton= header.getMinimiseButton();
 	}
 	
+	// The ScrollPane is the Presentation View
 	private void setUpScrollPane(){
 		// The viewport to have a BoxLayout to order vertically
 		scrollView = new JPanel();
@@ -79,12 +84,11 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS)); 
 		// Init scrollPane with scrollView JPanel viewport and add to sidebar jpanel
 		scrollPane = new JScrollPane(scrollView);
-		this.add(scrollPane);
 		
 		// Custom Scrollbar setup
 		scrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI());
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);	
-		scrollBar= scrollPane.getVerticalScrollBar();
+		scrollBar = scrollPane.getVerticalScrollBar();
 		scrollBar.setUI(new CustomScrollBarUI());
 		scrollBar.setOpaque(false);
 		
@@ -100,7 +104,7 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		scrollPane.setBorder(null);
 		
 		sidebarMainPanel.setScrollBar(scrollBar);
-		sidebarMainPanel.setScrollPane(scrollPane);		
+		sidebarMainPanel.setScrollPane(scrollPane);
 		
 		sidebarMainPanel.setVisible(true);
 		header.setVisible(true);
@@ -113,6 +117,8 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 
 	}
 	
+	// To allow animations of closing/opening scrollpane,
+	// search bar opens sidebar, etc.
 	private void setMouseListeners() {
 		minimiseButton.addMouseListener(new MouseListener() {
 
@@ -264,7 +270,7 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		return isOpen;
 	}
 	
-	/* Replaces the current presentation list with p */
+	/* Replaces the current presentation pane with p */
 	public void replacePres(List<Presentation> p) {
 
 		// Update the content of the containerPanel
@@ -274,11 +280,12 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 		}
 		scrollView.revalidate(); // Update the layout of the containerPanel
 		scrollView.repaint(); // Refresh the visuals of the containerPanel
-	
 	}
 		
 	/* Gets the content of the searchbar */
 	public String getSearchText() {
 		return searchTextField.getText();
 	}
+	
+	
 }

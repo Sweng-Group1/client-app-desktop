@@ -51,7 +51,7 @@ public class CustomPanel extends JPanel implements ComponentInterface {
 		Graphics2D g2 = (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setColor(colorDark);
-		g2.fillRoundRect(0, 0, r.width, r.height, curvatureRadius, curvatureRadius);
+		g2.fillRoundRect(0, 0, r.width - 1, r.height - 1, curvatureRadius, curvatureRadius);
 		super.paint(g2);
 	}
 

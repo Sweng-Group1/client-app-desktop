@@ -51,7 +51,7 @@ public class MainScene extends JFrame{
 //	private OptionsScene options;
 	
 	// Window size
-	private Dimension windowSize = new Dimension(800, 600);
+	private Dimension windowSize = new Dimension(1024, 768);
 	
 	// Colours
 	private static final Color colorLight= new Color(78,106,143);
@@ -90,6 +90,35 @@ public class MainScene extends JFrame{
 			}
 		};
 		
+		// Resizing components
+		this.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				resizeComponents();
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 //		options = new OptionsScene();
 //		login = new LoginScene();
 			
@@ -105,13 +134,14 @@ public class MainScene extends JFrame{
 	
 	}
 	
+	// Sets layers of JLayerPanel
 	public void setZOrder() {
 		// 
 		mainFrame = this.getLayeredPane();
 		mainFrame.setLayer(mapScene,0);
 		mainFrame.add(mapScene);
 		
-		// 
+		// Load map and theme
 		mapScene.loadMapFile(new File("./assets/map/york.map"), new File("./assets/map/theme.xml"));
 	
 		// Add some demo markers
@@ -135,6 +165,7 @@ public class MainScene extends JFrame{
 		
 	}
 	
+	// Resizes map and others
 	public void resizeComponents() {
 		// https://stackoverflow.com/questions/5097301/jframe-get-size-without-borders
 		windowSize = this.getContentPane().getSize();
