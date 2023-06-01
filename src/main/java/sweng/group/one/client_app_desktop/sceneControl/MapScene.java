@@ -118,7 +118,7 @@ public class MapScene extends MapView{
 			        return false; //silence log of internal asset use
 			    }
 			});
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException | NullPointerException e) {
 			tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
 		}
 		
