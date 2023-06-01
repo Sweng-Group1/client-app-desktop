@@ -43,8 +43,10 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	private JLabel logoPanel;
 	private JPanel passwordPanel;
 	private JPanel usernamePanel;
+	private JPanel feedbackPanel;
 	private JPasswordField passwordField;
 	private JTextField usernameField;
+	private JLabel feedbackMessage;
 	
 	private String accessToken;
 	private String refreshToken;
@@ -66,6 +68,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		this.setLayout(null);
 		createUserNameInput();
 		createPasswordField();
+		createFeedbackMessage();
 		createButtons();
 		createLogo();
 		checkAccessToken();
@@ -128,8 +131,32 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		passwordField.setForeground(Color.white);
 		this.add(passwordPanel);
 		
-		passwordField.setName("usernameField");
+		passwordField.setName("passwordField");
 		passwordField.setVisible(true);
+	}
+	
+	private void createFeedbackMessage() {
+		feedbackPanel = new JPanel() {
+			public void paint(Graphics g) {
+				g.setColor(colorLight);
+				g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
+				super.paint(g);
+			}
+		};
+		feedbackMessage = new JLabel();
+		
+		feedbackPanel.add(feedbackMessage);
+		feedbackPanel.setLayout(null);
+		feedbackPanel.setOpaque(false);
+		
+		feedbackMessage.setOpaque(false);
+		feedbackMessage.setBackground(transparent);
+		feedbackMessage.setBorder(null);
+		feedbackMessage.setForeground(Color.white);
+		this.add(feedbackPanel);
+		
+		feedbackMessage.setName("feedbackMessage");
+		feedbackMessage.setVisible(true);
 	}
 	
 	/**
@@ -206,8 +233,13 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		
 		passwordPanel.setSize((width/6)*4, height/16);
 		passwordPanel.setLocation((width-((width/6)*4))/2, (height/2)+(height/16));
-		passwordField.setSize(usernamePanel.getWidth()-20, usernamePanel.getHeight());
+		passwordField.setSize(passwordPanel.getWidth()-20, passwordPanel.getHeight());
 		passwordField.setLocation(curvatureRadius/2, 0);
+		
+		feedbackPanel.setSize((width/6)*4, height/16);
+		feedbackPanel.setLocation((width-((width/6)*4))/2, (height/2)+(height/6));
+		feedbackMessage.setSize(feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
+		feedbackMessage.setLocation(curvatureRadius/2, 0);
 		
 		continueButton.setSize((passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
 		continueButton.setLocation(passwordPanel.getX(), (height/2)+(3*(height/16)));
@@ -223,26 +255,37 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		logoPanel.setSize(passwordPanel.getWidth(), (height/2)-(height/16));
 	}
 	
-	public void loginButtonPressed() {
+	public void loginButtonPressed() {		
 		if (checkAccessToken()==true) {
 			// User already has a valid token and does not need to login
+			return;
+		}
+		
+		user = new User(usernameField.getText());
+		String password = String.valueOf(passwordField.getPassword());
+		
+		if (userService.login(user, password)!=403) {
+			
 		}
 		else {
-			user = new User(usernameField.getText());
-			String password = String.valueOf(passwordField.getPassword());
+			
 			userService.login(user, password);
 		}
 	}
 	
 	public boolean checkAccessToken() {
 		if (userService.refreshAccessToken(user)==200) {
-			this.setVisible(false);
-			mapScene.setVisible(true);
+			changeScene();
 			return true;
 		}
 		else {
 			return false;
 		}
+	}
+	
+	public void changeScene() {
+		isOpen = false;
+		this.setVisible(false);
 	}
 	
 	public String getUsername() {
