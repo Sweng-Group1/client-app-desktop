@@ -46,7 +46,7 @@ public class MainScene extends JFrame{
 	private MapScene mapScene;
 	private SidebarScene sidebarScene;
 	private LoginScene login;
-	private UploadScene upload;
+	//private UploadScene upload;
 	private OptionsScene options;
 	
 	private Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
@@ -92,7 +92,7 @@ public class MainScene extends JFrame{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		upload= new UploadScene();
+		//upload= new UploadScene();
 		options.getAccountButton().addMouseListener(new MouseListener() {
 
 			@Override
@@ -107,6 +107,43 @@ public class MainScene extends JFrame{
 				options.setVisible(false);
 				login.setVisible(true);
 				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		login.getLoginButton().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (login.loginButtonPressed()==true) {
+					login.setVisible(false);
+					sidebarScene.setVisible(true);
+					options.setVisible(true);
+					System.out.println("MainScene");
+				}			
 			}
 
 			@Override
@@ -175,7 +212,7 @@ public class MainScene extends JFrame{
 			
 				sidebarScene.setVisible(false);
 				options.setVisible(false);	
-				upload.setVisible(true);
+				//upload.setVisible(true);
 		
 			}
 
@@ -198,41 +235,41 @@ public class MainScene extends JFrame{
 			}
 			
 		});
-		upload.getConfirmButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				upload.setVisible(false);
-				sidebarScene.setVisible(true);
-				options.setVisible(true);	
-			
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+//		upload.getConfirmButton().addMouseListener(new MouseListener() {
+//
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				upload.setVisible(false);
+//				sidebarScene.setVisible(true);
+//				options.setVisible(true);	
+//			
+//			}
+//
+//			@Override
+//			public void mouseReleased(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//		});
 		this.addComponentListener(new ComponentListener() {
 
 			@Override
@@ -269,7 +306,7 @@ public class MainScene extends JFrame{
 		mapScene.setVisible(true);
 		options.setVisible(true);
 		sidebarScene.setVisible(true);
-		upload.setVisible(false);
+		//upload.setVisible(false);
 		login.setVisible(false);
 		
 		this.remove(waitingScreen);
@@ -299,8 +336,8 @@ public class MainScene extends JFrame{
 		panel.add(options);
 		panel.setLayer(login, 3);
 		panel.add(login);
-		panel.setLayer(upload, 4);
-		panel.add(upload);
+		//panel.setLayer(upload, 4);
+		//panel.add(upload);
 		
 		
 	}
@@ -315,7 +352,7 @@ public class MainScene extends JFrame{
 		options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
 		login.setSize(screenSize.width/4, screenSize.height/2);
 		login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
-		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
+		//upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
 	}
 	
 	
