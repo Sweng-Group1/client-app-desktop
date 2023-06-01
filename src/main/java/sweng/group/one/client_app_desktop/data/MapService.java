@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.data;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -27,14 +28,14 @@ public class MapService {
 	private static final String MAP_FOLDER = "./assets/map/";
 
 	/**
-	 * Gets a map file from the server.
+	 * Gets a map file from the server. No authorisation required. 
 	 * 
 	 * @param name The name of the map file, i.e. "York".
 	 * @return Returns the path to the map file.
 	 * @throws AuthenticationException
 	 * @throws IOException
 	 */
-	public Path retrieveMap(String name) throws IOException, AuthenticationException {
+	public Path retrieveMap(String name) throws IOException {
 		int statusCode = 0;
 
 		OkHttpClient client = new OkHttpClient();
@@ -53,11 +54,8 @@ public class MapService {
 				ResponseBody body = response.body();
 				Files.write(mapPath, body.bytes());
 				return mapPath;
-			} else if (statusCode == 403) {
-				throw new AuthenticationException(
-						"Server returned 403 code - auth token not valid. Try refreshing first.");
-			} else if (statusCode == 500) {
-				throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+			}  else if (statusCode == 500) {
+				throw new RuntimeException("500 server response - server error. Check the server code / constraints.");
 			} else if (statusCode == 400) {
 				throw new RuntimeException("400 server response, bad request - check the request is valid");
 			} else {
@@ -70,7 +68,7 @@ public class MapService {
 	}
 
 	/**
-	 * Uploads a map file to the server.
+	 * Uploads a map file to the server. Admin or Verified authorisation required.
 	 * 
 	 * @param map         The map file.
 	 * @param accessToken the authorisation token.
@@ -114,6 +112,8 @@ public class MapService {
 			return statusCode;
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid. Try refreshing first.");
+		}	else if (statusCode == 404) {
+			throw new FileNotFoundException("No maps on the server!");
 		} else if (statusCode == 500) {
 			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
 		} else if (statusCode == 400) {
