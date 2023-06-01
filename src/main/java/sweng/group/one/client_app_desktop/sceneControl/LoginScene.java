@@ -68,7 +68,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		createPasswordField();
 		createButtons();
 		createLogo();
-		checkAccessToken();
+		//checkAccessToken();
 		setMouseListeners();
 	}
 	
