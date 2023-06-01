@@ -113,6 +113,9 @@ public class Presentation extends JPanel {
 		});
 		numSlides = 0;
 		currentSlideNo = 0;
+		title = "";
+		author = "";
+		date = LocalDate.EPOCH;
 	}
 	
 	/**
