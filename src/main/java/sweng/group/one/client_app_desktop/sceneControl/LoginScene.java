@@ -14,9 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
 
 import sweng.group.one.client_app_desktop.data.User;
 import sweng.group.one.client_app_desktop.data.UserService;

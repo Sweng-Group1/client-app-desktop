@@ -1,20 +1,17 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -28,7 +25,6 @@ import javax.swing.WindowConstants;
 
 import org.mapsforge.core.model.LatLong;
 
-import sweng.group.one.client_app_desktop.graphics.Circle;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.media.ImageViewer;
 import sweng.group.one.client_app_desktop.media.VideoPlayer;
@@ -124,19 +120,6 @@ public class MainScene extends JFrame implements LayoutManager{
 			
 		});
 
-		setZOrder();
-		
-		mapScene.setVisible(true);
-		options.setVisible(true);
-		sidebarScene.setVisible(true);
-		//upload.setVisible(false);
-		login.setVisible(false);
-		
-		this.setLayout(this);
-		
-		mapScene.loadMapFile(new File("./assets/map/york.map"));
-	};
-	public void setZOrder() {
 		JLayeredPane pane = this.getLayeredPane();
 		
 		pane.setLayer(mapScene,0);
@@ -149,7 +132,33 @@ public class MainScene extends JFrame implements LayoutManager{
 		pane.add(login);
 //		pane.setLayer(upload, 4);
 //		pane.add(upload);
-	}
+		
+		mapScene.setVisible(true);
+		options.setVisible(true);
+		sidebarScene.setVisible(true);
+		//upload.setVisible(false);
+		login.setVisible(false);
+		
+		this.setLayout(this);
+		
+		mapScene.loadMapFile(new File("./assets/map/york.map"));
+		
+		this.addWindowStateListener(new WindowStateListener() {
+            @Override
+            public void windowStateChanged(WindowEvent e) {
+                if ((e.getNewState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
+                    System.out.println("Window is now in fullscreen mode");
+                    validate();
+                    repaint();
+                } else {
+                    System.out.println("Window is not in fullscreen mode");
+                    validate();
+                    repaint();
+                }
+            }
+        });
+	};
+	
 	public void resizeComponents() {
 		screenSize= this.getSize();
 		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
@@ -252,14 +261,14 @@ public class MainScene extends JFrame implements LayoutManager{
 	}
 	@Override
 	public void layoutContainer(Container parent) {
-		int w = this.getContentPane().getWidth();
-		int h = this.getContentPane().getHeight();
+		int w = parent.getWidth();
+		int h = parent.getHeight();
 		
 		final int optionsGap = 20;
 		
 		mapScene.setBounds(0, 0, w, h);
 		sidebarScene.setBounds(0, 0, w/3, h);
-		options.setBounds(w-optionsGap-h/4, optionsGap, h/4, h/4);
+		options.setBounds(w-optionsGap-h/3, optionsGap, h/3, h/3);
 		login.setBounds(3*w/8, h/4, w/4, h/2);
 //		upload.setBounds(w/10, h/10, 4*(w/5), 4*(h/5));
 	}

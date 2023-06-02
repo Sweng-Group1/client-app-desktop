@@ -4,17 +4,15 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.LayoutManager;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import sweng.group.one.client_app_desktop.uiElements.CircularButton;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
 
 
@@ -43,7 +41,10 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 				private static final long serialVersionUID = 1L;
 
 				public void paint(Graphics g) {
-					Graphics g2 = g.create();
+					Graphics2D g2 = (Graphics2D)g.create();
+					RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+					g2.setRenderingHints(qualityHints);
 					g2.setColor(Color.white);
 					g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius,curvatureRadius);
 					g2.dispose();
