@@ -71,7 +71,7 @@ public class LoginScene extends JPanel implements ComponentInterface{
 		createFeedbackMessage();
 		createButtons();
 		createLogo();
-		checkAccessToken();
+		//checkAccessToken();
 		setMouseListeners();
 	}
 	
@@ -256,7 +256,13 @@ public class LoginScene extends JPanel implements ComponentInterface{
 	}
 	
 	public boolean loginButtonPressed() {		
-		if (usernameField.getText().equals("") || passwordField.getPassword().length==0) {
+		user = new User(usernameField.getText());
+		String password = String.valueOf(passwordField.getPassword());
+		
+//		System.out.println("Here");
+//		System.out.println(userService.login(user, password));
+		
+		if (user.getUsername().equals("") || password.equals("")) {
 			feedbackMessage.setText("Please enter your login credentials");
 			feedbackMessage.setVisible(true);
 		}
@@ -267,18 +273,19 @@ public class LoginScene extends JPanel implements ComponentInterface{
 			return true;
 		}
 		else {
-			user = new User(usernameField.getText());
-			String password = String.valueOf(passwordField.getPassword());
-			System.out.println(userService.login(user, password));
 			if (userService.login(user, password)==403) {
+				System.out.println("User login unsuccessful");
 				feedbackMessage.setText("Invalid login credentials");
 				feedbackMessage.setVisible(true);
 				passwordField.setText("");
 				return false;
-			} else {
+			} else if (userService.login(user, password)==200) {
 				System.out.println("User successfully logged in");
 				changeScene();
 				return true;
+			} else {
+				System.out.println("Returned invalid status code");
+				return false;
 			}
 		}
 	}

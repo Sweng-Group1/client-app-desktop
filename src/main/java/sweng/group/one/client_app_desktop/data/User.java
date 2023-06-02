@@ -61,7 +61,7 @@ public class User {
 		
 		if(!Files.exists(directoryPath)) {
 			//TODO: Fix this warning. 
-			Files.createDirectory(directoryPath, null);
+			Files.createDirectory(directoryPath);
 			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
 		}
 		
