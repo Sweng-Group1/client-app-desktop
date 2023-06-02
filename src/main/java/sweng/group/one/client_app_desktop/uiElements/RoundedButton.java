@@ -9,16 +9,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 
 /**
  * Modified JButton with custom graphics
  * 
- * @author Sophie Maw & Luke George 
+ * @author Sophie Maw & Luke George & Fraser Todd
  * @since 28/05/2023
  * 
  */
-public class RoundedButton extends JButton{
+public class RoundedButton extends JPanel{
 	
 	// -------------------------------------------------------------- //
 	// --------------------- INITIALISATIONS ------------------------ //
@@ -32,6 +33,7 @@ public class RoundedButton extends JButton{
 	private Color backgroundColour;
 	private Color backgroundWhenPressed;
 	private Color backgroundWhenHover;
+	private Color currentColour;
 	private int curveRadius;
 	
 	// -------------------------------------------------------------- //
@@ -46,6 +48,9 @@ public class RoundedButton extends JButton{
 		this.backgroundWhenPressed = pressedColour;
 		this.backgroundWhenHover = hoverColour;
 		
+		this.currentColour = backgroundColour;
+		this.setOpaque(false);
+		
 		
 		MouseAdapter mouseListener = new MouseAdapter () {
 			/**
@@ -53,26 +58,30 @@ public class RoundedButton extends JButton{
 			 * Changes the background colour whilst the button is held down
 			 */
 			public void mousePressed(MouseEvent me) {
-				setBackground(backgroundWhenPressed);
+				currentColour = backgroundWhenPressed;
 				buttonPressed();
+				repaint();
 			}
 			/**
 			 * Changes the background colour when the button is released
 			 */
 			public void mouseReleased(MouseEvent me) {
-				setBackground(backgroundWhenHover);
+				currentColour = backgroundWhenHover;
+				repaint();
 			}
 			/**
 			 * Changes the background colour when the button is exited
 			 */
 			public void mouseExited(MouseEvent me) {
-				setBackground(backgroundColour);
+				currentColour = backgroundColour;
+				repaint();
 			}
 			/**
 			 * Changes the background colour when the button is hovered over
 			 */
 			public void mouseMoved(MouseEvent me) {
-				setBackground(backgroundWhenHover);
+				currentColour = backgroundWhenHover;
+				repaint();
 			}
 		};
 		addMouseListener(mouseListener);
@@ -96,7 +105,7 @@ public class RoundedButton extends JButton{
 		backgroundColour = normalColour;
 		backgroundWhenHover = hoverColour;
 		backgroundWhenPressed = pressedColour;
-		super.setBackground(backgroundColour);
+		currentColour = normalColour;
 	}
 	
 	/**
@@ -110,27 +119,34 @@ public class RoundedButton extends JButton{
 	
 	@Override
 	public void paint(Graphics g) {
-		int diameter = Math.min(getWidth(), getHeight());
-	
+		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
+		int radius = Math.min(getWidth(), getHeight())/2;
 		
-		if(this.isSelected()==true) {
-			g2.setColor(backgroundWhenHover);
-		}else {
-			g2.setColor(this.getBackground());
-		}
-		g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
+		RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		g2.setRenderingHints(qualityHints);
 		
-		if(image!=null) {	
-			int imageWidth = diameter/2;
-			int imageHeight = diameter/2;
+		g2.setColor(this.currentColour);
+		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), radius, radius);
+		
+		if(image!=null) {
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			g2.drawImage(image,
-					(getWidth()-imageWidth)/2,
-					(getHeight()-imageHeight)/2,
-					imageWidth,
-					imageHeight,
+					(getWidth()-radius)/2,
+					(getHeight()-radius)/2,
+					radius,
+					radius,
 					null);
+		}
+		g2.dispose();
+	}
+	
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		if (visible) {
+			currentColour = backgroundColour;
 		}
 	}
 	
