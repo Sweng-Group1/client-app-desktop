@@ -81,36 +81,9 @@ public class CustomPanel extends JPanel implements ComponentInterface{
 	 *@author sophiemaw
 	 */
 	public void maximise(long timeToMaximise) {
-		long numFrames = 60;
-		long timeInterval = (timeToMaximise/numFrames);
-		
-		
-		// Speed = distance / time 
-		// time = distance / speed
-		// fps = 60
-		
-		long timeElapsed = 0;
-		
-		for (int i=0; i<numFrames; i++) {
-			timer.schedule(new TimerTask() {
 
-				@Override
-				public void run() {
-					r.setBounds(r.x,r.y, r.width+1, r.height);
-					repaint();
-					if(r.width==maxWidth) {
-						isMoving=false;
-						scrollPane.setVisible(true);
-						scrollBar.setVisible(true);
-					}
-				    //System.out.println(r.width);
-				}
-				
-			}, timeInterval);
-		}
-	}
-			
-		/*
+		int timeInterval= (int) (timeToMaximise/maxWidth);
+		
 		for(int i=0; i<maxWidth;i++) {
 			timer.schedule(new TimerTask() {
 
@@ -126,11 +99,10 @@ public class CustomPanel extends JPanel implements ComponentInterface{
 				    //System.out.println(r.width);
 				}
 				
-			}, timeElapsed = timeElapsed + timeInterval);
+			}, timeInterval*i);
 		}
 	}
 
-	*/
 	public void setBackground(Color light, Color dark) {
 		
 		
