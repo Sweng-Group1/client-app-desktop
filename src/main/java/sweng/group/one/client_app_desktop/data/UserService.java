@@ -13,6 +13,7 @@ import java.util.Properties;
 import org.json.JSONObject;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -29,6 +30,7 @@ import okhttp3.Response;
 public class UserService {
     private String loginURL;
     private String refreshURL;
+    private String userURL;
     
     
     // The constructors combined with the loadProperties method allow us to store 
@@ -123,6 +125,37 @@ public class UserService {
 		    e.printStackTrace();
 		}
 		return statusCode;
+	}
+	
+	//TODO: Test and comment. 
+	public int createUser(String username, String password, String firstName, String lastName, String email) throws IOException {
+		OkHttpClient client = new OkHttpClient();
+		int statusCode = 0;
+		RequestBody body = new MultipartBody.Builder()
+				.addFormDataPart("username", username)
+				.addFormDataPart("password", password)
+				.addFormDataPart("firstname", firstName)
+				.addFormDataPart("lastname", lastName)
+				.addFormDataPart("email", email)
+				.build();
+		
+		Request request = new Request.Builder()
+				.url(userURL)
+		        .post(body)
+		        .build();
+		
+			Response response  = client.newCall(request).execute();
+			statusCode = response.code();
+			
+			if (statusCode == 200) {
+				return statusCode;
+			} else if (statusCode == 500) {
+				throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+			} else if (statusCode == 400) {
+				throw new RuntimeException("400 server response, bad request - check the request is valid");
+			} else {
+				throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
+			}	
 	}
 	
 	
