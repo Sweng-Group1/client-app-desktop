@@ -33,7 +33,6 @@ public class PostServerIntegrationTests {
 	private String defaultAdminPass = "password123";
 	private User userTest = new User(defaultAdminUsername);
 	private UserService userService = new UserService();
-
 	
 	@Before
 	public void setup() throws IOException {
@@ -57,18 +56,65 @@ public class PostServerIntegrationTests {
 		}
 		
 	 	Bitmap markerBitmap = new AwtBitmap(markerImage);
-		
 		EventMarker marker = new EventMarker(mapScene, markerPos, markerBitmap);
 		marker.setHashtag("#MovieSociety");
 		
 		int statusCode = underTest.uploadPost(testXML.toPath(), 10, marker, userTest.getAccessToken());
 		assertThat(statusCode).isEqualTo(200);
 		ArrayList<Path> posts = underTest.retrievePostsXMLs(userTest.getAccessToken());
-		File postFile = posts.get(0).toFile();
+		
+		assertThat(Files.isSameFile(testXML.toPath(), posts.get(0)));
+	}
+
+	@Test
+	public void canRetrieveAPostWithAPaticularHashtag() throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
+		File testXML = new File("temp/evaluation-hashtag.xml");
+		
+		MapScene mapScene = new MapScene();
+		LatLong markerPos = new LatLong(50, 50);
+		BufferedImage markerImage = null;
+		
+		try {
+			markerImage = ImageIO.read(new File(MARKER_IMAGE_PATH));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	 	Bitmap markerBitmap = new AwtBitmap(markerImage);
+		EventMarker marker = new EventMarker(mapScene, markerPos, markerBitmap);
+		marker.setHashtag("#MovieSociety");
+		
+		int statusCode = underTest.uploadPost(testXML.toPath(), 10, marker, userTest.getAccessToken());
+		assertThat(statusCode).isEqualTo(200);
+		ArrayList<Path> posts = underTest.retrievePostsWithHastagXMLs("#MovieSociety", userTest.getAccessToken());
 		
 		assertThat(Files.isSameFile(testXML.toPath(), posts.get(0)));
 	}
 	
+	@Test
+	public void RetrievePostsByHashtagWillIgnorePostsWithoutTag() throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
+		File testXML = new File("temp/evaluation-hashtag.xml");
+		
+		MapScene mapScene = new MapScene();
+		LatLong markerPos = new LatLong(50, 50);
+		BufferedImage markerImage = null;
+		
+		try {
+			markerImage = ImageIO.read(new File(MARKER_IMAGE_PATH));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	 	Bitmap markerBitmap = new AwtBitmap(markerImage);
+		EventMarker marker = new EventMarker(mapScene, markerPos, markerBitmap);
+		marker.setHashtag("#MovieSociety");
+		
+		int statusCode = underTest.uploadPost(testXML.toPath(), 10, marker, userTest.getAccessToken());
+		assertThat(statusCode).isEqualTo(200);
+		ArrayList<Path> posts = underTest.retrievePostsWithHastagXMLs("#NotInTheDatabase", userTest.getAccessToken());
+		
+		assertThat(posts.isEmpty());
+	}
 	
 }
 
