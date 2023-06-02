@@ -26,6 +26,7 @@ to mock the server interactions. Mockito is used for mocking User.
 public class UserServiceUnitTests {
     private MockWebServer server;
     private UserService serviceTest;
+    String defaultAdminUsername = "sid";
     
     @Mock
     private User mockedUser;
@@ -39,7 +40,6 @@ public class UserServiceUnitTests {
 
     @Test
     public void SuccessfulLoginSavesAccessAndRefreshTokens() throws IOException {
-        String defaultAdminUsername = "sid";
         String defaultAdminPass = "password123";
         String testAccessToken = "TestAccessToken";
         String testRefreshToken = "TestRefreshToken";
@@ -57,7 +57,6 @@ public class UserServiceUnitTests {
 
     @Test
     public void successfulRefreshSavesNewAccessToken() throws IOException {
-        String defaultAdminUsername = "sid";
         String testAccessToken = "TestAccessToken";
 
         server.enqueue(new MockResponse()
