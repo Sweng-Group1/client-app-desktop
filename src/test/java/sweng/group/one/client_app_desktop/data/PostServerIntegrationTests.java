@@ -23,12 +23,19 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.sceneControl.MapScene;
 import org.mapsforge.core.graphics.Bitmap;
 
+
+/* TEST STRATEGY
+ * Here we verify the client post interactions with the server work correctly. 
+ * Must test we can upload and retrieve posts, and that the information contained
+ * is as we expect. 
+ */
+
 public class PostServerIntegrationTests {
 	
 	private PostService underTest = new PostService();
 	private static final String MARKER_IMAGE_PATH = "./assets/map/marker.png";
 	
-	// Need these for authorisation as uploading maps is restricted to Admins. 
+	// Needed for authorisation aspects of tests. 
 	private String defaultAdminUsername = "sid";
 	private String defaultAdminPass = "password123";
 	private User userTest = new User(defaultAdminUsername);
@@ -64,6 +71,7 @@ public class PostServerIntegrationTests {
 		ArrayList<Path> posts = underTest.retrievePostsXMLs(userTest.getAccessToken());
 		
 		assertThat(Files.isSameFile(testXML.toPath(), posts.get(0)));
+		
 	}
 
 	@Test

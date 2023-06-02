@@ -18,11 +18,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
-/**
- * @author Paul Pickering 
+/*
  * TEST STRATEGY
  * The results of the upload method can only be properly verified by integration testing, 
- * but we can verify the download method saves the file correctly with a mocked server response. 
+ * but we can verify the download method saves the file correctly with a mocked server response.
+ * @author Paul Pickering  
  */
 
 @RunWith(MockitoJUnitRunner.class)
