@@ -12,8 +12,8 @@ import sweng.group.one.client_app_desktop.data.UserService;
 
 // These are integration tests that will communicate with the actual server software. 
 // As such they require the server to be running. 
-// TODO: While these essentially also cover unit testing, unit tests should be added with mocked server interactions. 
-public class ServerCommunicationTests {
+// TODO: While these essentially also cover unit testing, they are integration tests. unit tests should be added with mocked server interactions. 
+public class LoginIntegrationTests {
 	
 	private String defaultAdminUsername = "sid";
 	private String defaultAdminPass = "password123";
@@ -52,7 +52,6 @@ public class ServerCommunicationTests {
 	// Valid tokens will consist of a long seemingly random set of characters. 
 	// Failure to save these strings will likely result in an empty file.
 	// Checking length of line in file is reasonably big should reliably check the tokens exist.
-	// TODO: Use mocking to eliminate actual server from this interaction.
 	// TODO: These are unit tests for the User class now, move to another file.  
 	@Test
 	public void tokensAreSavedAndAreRetrieveableFromFile() {
@@ -77,6 +76,7 @@ public class ServerCommunicationTests {
 		assertThat(accessToken.length()).isGreaterThan(100);
 		assertThat(refreshToken.length()).isGreaterThan(100);
 	}
+
 	
 
 }

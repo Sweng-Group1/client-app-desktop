@@ -61,10 +61,11 @@ public class User {
 		
 		if(!Files.exists(directoryPath)) {
 			//TODO: Fix this warning. 
-			Files.createDirectory(directoryPath, null);
+			Files.createDirectory(directoryPath);
 			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
 		}
 		
+		this.accessToken = token;
 		Files.write(filepath, token.getBytes());
 	}
 
@@ -74,10 +75,11 @@ public class User {
 		Path filepath = Paths.get("temp/" + username + "-refresh_token.txt");
 		// Checking if temp folder already exists, if not create one. 
 		if(!Files.exists(directoryPath)) {
-			Files.createDirectory(directoryPath, null);
+			Files.createDirectory(directoryPath);
 			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
 		}
-
+		
+	this.refreshToken = token;
 	Files.write(filepath, token.getBytes());
 	}	
 	
