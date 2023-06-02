@@ -20,22 +20,24 @@ import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 
 /**
- * @author Paul Pickering Service class for handling all post related server
- *         tasks, i.e. uploading, retrieving, deleting, etc.
+ * Service class for handling all post related server tasks, i.e., uploading, retrieving, deleting, etc.
+ * Communicates with a server at the specified URL to perform these tasks.
+ * 
+ * @author Paul Pickering
  */
 public class PostService {
 	private final static String postURL = "http://localhost:8080/api/v1/post";
 
 	/**
-	 * Retrieves
-	 * 
+	 * Retrieves posts from the server and returns them as an array of presentations. 
+	 * Access Token provided will allow logged in users to retrieve posts not made by an Admin or Verified. 
 	 * @param accessToken the authorisation token of the user making the request.
 	 * @return ArrayList<Presentation> consisting of the posts (presentations).
 	 * @throws IOException
 	 * @throws AuthenticationException
+	 * @throws SAXEException
+	 * @throws ParserConfigurationException
 	 */
-
-	// TODO: TEST - XMLs one has been tested
 	public ArrayList<Presentation> retrievePostsPresentations(String accessToken)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 
@@ -129,6 +131,18 @@ public class PostService {
 		return null;
 	}
 
+	/**
+	 * Retrieves posts from the server and returns them as an array of presentations. 
+	 * Only includes posts from the hashtag specified. 
+	 * Access Token provided will allow logged in users to retrieve posts not made by an Admin or Verified.
+	 * @param hashtag The hashtag attached to the desired posts.  
+	 * @param accessToken the authorisation token of the user making the request.
+	 * @return ArrayList<Presentation> consisting of the posts (presentations).
+	 * @throws IOException File system error. Error saving XMLs to disk.  
+	 * @throws AuthenticationException Invalid authorisation. Try refreshing access token or method for logged out users. 
+	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
+	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
+	 */
 	public ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag, String accessToken)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 		
@@ -178,6 +192,15 @@ public class PostService {
 		return null;
 	}
 	
+	/**
+	 * Retrieves posts from the server and returns them as an array of presentations. 
+	 * Only includes posts from the hashtag specified, from verified or admin users. 
+	 * @param hashtag The hashtag attached to the desired posts.  
+	 * @return ArrayList<Presentation> consisting of the posts (presentations).
+	 * @throws IOException File system error. Error saving XMLs to disk.  
+	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
+	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
+	 */
 	public ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 		
@@ -226,7 +249,16 @@ public class PostService {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Retrieves all admin or verified posts from the server and returns them as an array of paths to XMLs. 
+	 * @param hashtag The hashtag attached to the desired posts.  
+	 * @return ArrayList<Path> consisting of the posts as XMLs. 
+	 * @throws AuthenticationException Invalid authorisation. Try refreshing access token or method for logged out users. 
+	 * @throws IOException File system error. Error saving XMLs to disk.  
+	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
+	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
+	 */
 	public ArrayList<Path> retrievePostsXMLs(String accessToken)
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
@@ -266,7 +298,16 @@ public class PostService {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
 	}
-
+	
+	
+	/**
+	 * Retrieves all verified or admin posts from the server and returns them as an array of paths to XMLs. 
+	 * @return ArrayList<Path> consisting of the posts as XMLs. 
+	 * @throws AuthenticationException Invalid authorisation. Try refreshing access token or method for logged out users. 
+	 * @throws IOException File system error. Error saving XMLs to disk.  
+	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
+	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
+	 */
 	public ArrayList<Path> retrievePostsXMLs()
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
@@ -306,6 +347,13 @@ public class PostService {
 		}
 	}
 
+	/**
+	 * Retrieves all posts from the server matching the hashtag, and returns them as an array of paths to XMLs. 
+	 * @return ArrayList<Path> consisting of the posts as XMLs. 
+	 * @throws IOException File system error. Error saving XMLs to disk.  
+	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
+	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
+	 */
 	public ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag, String accessToken)
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
@@ -322,6 +370,7 @@ public class PostService {
 		statusCode = response.code();
 
 		if (statusCode == 200) {
+			// Success! Now handles the response. 
 			JSONArray jsonArray = new JSONArray(response.body().string());
 			ArrayList<Path> posts = new ArrayList<Path>();
 
@@ -349,6 +398,13 @@ public class PostService {
 		}
 	}
 	
+	/**
+	 * Retrieves all verified or admin posts from the server and returns them as an array of paths to XMLs. 
+	 * @return ArrayList<Path> consisting of the posts as XMLs. 
+	 * @throws IOException File system error. Error saving XMLs to disk.  
+	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
+	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
+	 */
 	public ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag)
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
@@ -371,7 +427,6 @@ public class PostService {
 			// Run through each post, add it to the post (presentation) list.
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject postJSON = jsonArray.getJSONObject(i);
-				System.out.println(postJSON.toString());
 				String postHashtag = postJSON.getString("xmlContent");
 				if (postHashtag.contains("<title>" + hashtag)) {
 					byte[] postXML = postJSON.toString().getBytes();
