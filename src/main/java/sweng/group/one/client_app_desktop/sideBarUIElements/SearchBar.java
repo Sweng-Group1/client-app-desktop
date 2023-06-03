@@ -70,7 +70,7 @@ public class SearchBar extends JPanel {
 	
 	public SearchBar() {
 		this.setOpaque(false);
-		this.setLayout(null);
+		//this.setLayout(null);
 		isMaxState=false;
 		isMoving=false;
 		createSearchButton();
@@ -88,17 +88,16 @@ public class SearchBar extends JPanel {
 				Graphics2D g2= (Graphics2D) g.create();
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 				g2.setColor(this.getBackground());
-				//g2.fillOval(0, 0, this.getWidth(), this.getHeight());
 				g2.fillOval(0,0,this.getWidth(), this.getWidth());
 				Image im;
 				
-					try {
-						im = ImageIO.read(new File("./assets/forwardBlack.png")).getScaledInstance(this.getWidth()/2,this.getHeight()/2, java.awt.Image.SCALE_SMOOTH);
-						g2.drawImage(im,this.getWidth()/4,this.getWidth()/4, null);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}		
+				try {
+					im = ImageIO.read(new File("./assets/forwardBlack.png")).getScaledInstance(this.getWidth()/2,this.getHeight()/2, java.awt.Image.SCALE_SMOOTH);
+					g2.drawImage(im,this.getWidth()/4,this.getWidth()/4, null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
 					//super.paint(g);
 			}
 		};
@@ -142,18 +141,11 @@ public class SearchBar extends JPanel {
 	public void paint(Graphics g) {
 		Graphics2D g2= (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		if(isMaxState==true) {
-			//g2.setColor(new Color(255,255,255,100));
-			//g2.fillRoundRect(rMaxButton.x,rMaxButton.y-5,rMin.width,rMin.height,rMin.height,rMin.height);
-			//maximisePanelButton.setBounds(rMaxButton.x+5,rMaxButton.y,rMaxButton.width,rMaxButton.height);
-		}
-		int shadowHeight=2;
-		int shadowWidth=1;
-		
 		g2.setColor(Color.white);
-		g2.fillRoundRect(r.x, r.y, r.width, r.height, r.height, r.height);
+		g2.fillRoundRect(getX(), getY(), getWidth(), getHeight(), getHeight(), getHeight());
 		super.paint(g);
 	}	
+	
 	private void createTextField() {
 		textField= new JTextField();
 		this.add(textField);

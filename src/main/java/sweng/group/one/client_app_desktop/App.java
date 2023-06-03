@@ -8,6 +8,7 @@ import javax.swing.WindowConstants;
 
 import sweng.group.one.client_app_desktop.sceneControl.LoginScene;
 import sweng.group.one.client_app_desktop.sceneControl.OptionsScene;
+import sweng.group.one.client_app_desktop.sideBarUIElements.SearchBar;
 
 public class App {
 	
@@ -22,7 +23,10 @@ public class App {
 		//OptionsScene os = new OptionsScene();
 		LoginScene ls = new LoginScene();
 		
-		frame.add(ls);
+		SearchBar sb = new SearchBar();
+		
+		
+		frame.add(sb);
 		
 		frame.validate();
 	}
