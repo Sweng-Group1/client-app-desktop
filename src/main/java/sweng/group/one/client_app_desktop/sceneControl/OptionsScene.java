@@ -68,6 +68,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 				@Override
 				public void buttonPressed() {
 					accountPressed();
+					multipleOptionsPanel.setVisible(false);
 				}
 			};
 			multipleOptionsPanel.add(accountButton);
@@ -82,6 +83,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 
 				@Override
 				public void buttonPressed() {
+					multipleOptionsPanel.setVisible(false);
 					addPostPressed();
 				}
 			};
@@ -113,6 +115,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 				@Override
 				public void buttonPressed() {
 					multipleOptionsPanel.setVisible(false);
+					closePressed();
 				}
 			};
 			multipleOptionsPanel.add(closeButton);
@@ -163,6 +166,10 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 		}
 		
 		public void accountPressed() {
+			
+		}
+		
+		public void closePressed() {
 			
 		}
 		

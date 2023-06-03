@@ -89,6 +89,14 @@ public class MainScene extends JFrame implements LayoutManager{
 					sidebarScene.setVisible(false);
 					login.setVisible(true);
 				}
+				
+				@Override
+				public void closePressed() {
+					sidebarScene.setVisible(true);
+					sidebarScene.close(100);
+					login.setVisible(false);
+					//upload.setVisible(false)
+				}
 			};
 			login= new LoginScene();
 		} catch (IOException e) {
