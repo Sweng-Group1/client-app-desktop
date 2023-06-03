@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import javax.swing.WindowConstants;
 
+import sweng.group.one.client_app_desktop.sceneControl.LoginScene;
 import sweng.group.one.client_app_desktop.sceneControl.OptionsScene;
 
 public class App {
@@ -18,9 +19,10 @@ public class App {
 		frame.setVisible(true);	
 		frame.getContentPane().setBackground(Color.red);
 		
-		OptionsScene os = new OptionsScene();
+		//OptionsScene os = new OptionsScene();
+		LoginScene ls = new LoginScene();
 		
-		frame.add(os);
+		frame.add(ls);
 		
 		frame.validate();
 	}
