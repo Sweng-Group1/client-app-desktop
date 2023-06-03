@@ -41,6 +41,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	private static final int GAP_WIDTH= 10;
 	private static final int ANIMATION_TIME_MS = 300;
 	private static final int ANIMATION_FRAME_TIME_MS = 16;
+	private static final int PRESENTATION_SCROLL_SPEED = 20;
 	private boolean isOpen;
 	
 	private JPanel sidebarMainPanel;
@@ -170,6 +171,9 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		scrollBar = scrollPane.getVerticalScrollBar();
 		scrollBar.setUI(new CustomScrollBarUI());
 		scrollBar.setOpaque(false);
+		
+		// Default mouse scroll speed is too slow, set to a better value:
+		scrollPane.getVerticalScrollBar().setUnitIncrement(PRESENTATION_SCROLL_SPEED);
 		
 		// Add scrollbar to JPanel
 		sidebarMainPanel.add(scrollBar);
