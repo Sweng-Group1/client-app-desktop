@@ -917,7 +917,7 @@ class MovingObject extends JPanel implements ComponentInterface{
 			}
 			int radiusPt= slide.pxToPt(new Point(radiusPx,radiusPx)).x;
 			Circle element= (Circle)presElement;
-			element.setRadius(radiusPt);
+			//element.setRadius(radiusPt);
 			element.setWidth(2*radiusPt);
 			element.setHeight(2*radiusPt);
 			

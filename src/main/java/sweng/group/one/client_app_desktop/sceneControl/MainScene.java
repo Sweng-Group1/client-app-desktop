@@ -1,19 +1,17 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -26,12 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import org.mapsforge.core.model.LatLong;
-import org.mapsforge.map.controller.FrameBufferController;
-import org.mapsforge.map.layer.Layer;
-import org.mapsforge.map.layer.TileLayer;
-import org.mapsforge.map.layer.renderer.TileRendererLayer;
 
-import sweng.group.one.client_app_desktop.graphics.Circle;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.media.ImageViewer;
 import sweng.group.one.client_app_desktop.media.VideoPlayer;
@@ -40,9 +33,8 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.text.TextElement;
 
-public class MainScene extends JFrame{
+public class MainScene extends JFrame implements LayoutManager{
 
-	private JLayeredPane panel;
 	private MapScene mapScene;
 	private SidebarScene sidebarScene;
 	private LoginScene login;
@@ -56,21 +48,15 @@ public class MainScene extends JFrame{
 	
 	JPanel waitingScreen;
 	private int gapWidth;
-	private int curvatureRadius;
 	
 	public MainScene() {
 		super();
 		
-		
-		this.setSize(screenSize);
+		this.setSize(800, 500);
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		gapWidth= screenSize.height/48;
-		curvatureRadius= 20;
 		this.setVisible(true); 
-		waitingScreen= new JPanel();
-		waitingScreen.setBackground(Color.yellow);
-		this.getLayeredPane().add(waitingScreen, 5);
 		
 		
 		sidebarScene = new SidebarScene(null);
@@ -86,92 +72,35 @@ public class MainScene extends JFrame{
 			}
 		};
 		try {
-			options = new OptionsScene();
+			options = new OptionsScene() {
+				@Override
+				public void helpPressed() {
+					//Unimplemented
+				}
+				
+				@Override
+				public void addPostPressed() {
+					sidebarScene.setVisible(false);
+					//upload.setVisible(true);
+				}
+				
+				@Override
+				public void accountPressed() {
+					sidebarScene.setVisible(false);
+					login.setVisible(true);
+				}
+			};
 			login= new LoginScene();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//upload= new UploadScene();
-		options.getAccountButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				sidebarScene.setVisible(false);
-				options.setVisible(false);
-				login.setVisible(true);
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		login.getLoginButton().addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (login.loginButtonPressed()==true) {
-					login.setVisible(false);
-					sidebarScene.setVisible(true);
-					options.setVisible(true);
-					System.out.println("MainScene");
-				}			
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
+		
 		login.getContinueButton().addMouseListener(new MouseListener() {
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseClicked(MouseEvent e) {}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -181,127 +110,28 @@ public class MainScene extends JFrame{
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseReleased(MouseEvent e) {}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseEntered(MouseEvent e) {}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseExited(MouseEvent e) {}
 			
 		});
-		options.getAddPostButton().addMouseListener(new MouseListener() {
 
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			
-				sidebarScene.setVisible(false);
-				options.setVisible(false);	
-				//upload.setVisible(true);
+		JLayeredPane pane = this.getLayeredPane();
 		
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-//		upload.getConfirmButton().addMouseListener(new MouseListener() {
-//
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				upload.setVisible(false);
-//				sidebarScene.setVisible(true);
-//				options.setVisible(true);	
-//			
-//			}
-//
-//			@Override
-//			public void mouseReleased(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//
-//			@Override
-//			public void mouseEntered(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//
-//			@Override
-//			public void mouseExited(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//		});
-		this.addComponentListener(new ComponentListener() {
-
-			@Override
-			public void componentResized(ComponentEvent e) {
-				resizeComponents();
-				
-			}
-
-			@Override
-			public void componentMoved(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void componentShown(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void componentHidden(ComponentEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		
-		
-		
-		resizeComponents();
-		setZOrder();
+		pane.setLayer(mapScene,0);
+		pane.add(mapScene);
+		pane.setLayer(sidebarScene, 1);
+		pane.add(sidebarScene);
+		pane.setLayer(options, 2);
+		pane.add(options);
+		pane.setLayer(login, 3);
+		pane.add(login);
+//		pane.setLayer(upload, 4);
+//		pane.add(upload);
 		
 		mapScene.setVisible(true);
 		options.setVisible(true);
@@ -309,50 +139,36 @@ public class MainScene extends JFrame{
 		//upload.setVisible(false);
 		login.setVisible(false);
 		
-		this.remove(waitingScreen);
-	
-	};
-	public void setZOrder() {
-		panel= this.getLayeredPane();
-		panel.setLayer(mapScene,0);
-		panel.add(mapScene);
+		this.setLayout(this);
 		
 		mapScene.loadMapFile(new File("./assets/map/york.map"));
+		
+		this.addWindowStateListener(new WindowStateListener() {
+            @Override
+            public void windowStateChanged(WindowEvent e) {
+                if ((e.getNewState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
+                    System.out.println("Window is now in fullscreen mode");
+                    validate();
+                    repaint();
+                } else {
+                    System.out.println("Window is not in fullscreen mode");
+                    validate();
+                    repaint();
+                }
+            }
+        });
+	};
 	
-		/*
-		try {
-			addDemoMarkers();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mapScene.repaint();
-		*/
-		
-	
-		panel.setLayer(sidebarScene, 1);
-		panel.add(sidebarScene);
-		panel.setLayer(options, 2);
-		panel.add(options);
-		panel.setLayer(login, 3);
-		panel.add(login);
-		//panel.setLayer(upload, 4);
-		//panel.add(upload);
-		
-		
-	}
 	public void resizeComponents() {
 		screenSize= this.getSize();
 		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
-		
-		
 		sidebarScene.setSize(screenSize.width/3,screenSize.height);
 		sidebarScene.setLocation(0,0);
 		options.setSize(screenSize.height/4, screenSize.height/4);
 		options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
 		login.setSize(screenSize.width/4, screenSize.height/2);
 		login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
-		//upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
+//		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
 	}
 	
 	
@@ -426,13 +242,39 @@ public class MainScene extends JFrame{
 		}
 		
 	}
-	
 
-	public static void main(String[] args) {
-		MainScene ms = new MainScene();
-		
+	@Override
+	public void addLayoutComponent(String name, Component comp) {
 	}
 	
+	@Override
+	public void removeLayoutComponent(Component comp) {
+	}
 	
+	@Override
+	public Dimension preferredLayoutSize(Container parent) {
+		return null;
+	}
+	@Override
+	public Dimension minimumLayoutSize(Container parent) {
+		return null;
+	}
+	@Override
+	public void layoutContainer(Container parent) {
+		int w = parent.getWidth();
+		int h = parent.getHeight();
+		
+		final int optionsGap = 20;
+		
+		mapScene.setBounds(0, 0, w, h);
+		sidebarScene.setBounds(0, 0, w/3, h);
+		options.setBounds(w-optionsGap-h/3, optionsGap, h/3, h/3);
+		login.setBounds(3*w/8, h/4, w/4, h/2);
+//		upload.setBounds(w/10, h/10, 4*(w/5), 4*(h/5));
+	}
+	
+	public static void main(String[] args) {
+		MainScene ms = new MainScene();
+	}
 
 }

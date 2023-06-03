@@ -81,12 +81,8 @@ public class CustomPanel extends JPanel implements ComponentInterface{
 	 *@author sophiemaw
 	 */
 	public void maximise(long timeToMaximise) {
+
 		int timeInterval= (int) (timeToMaximise/maxWidth);
-		
-		
-		// Speed = distance / time 
-		// time = distance / speed
-		// fps = 60
 		
 		for(int i=0; i<maxWidth;i++) {
 			timer.schedule(new TimerTask() {

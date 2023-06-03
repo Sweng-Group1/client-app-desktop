@@ -1,49 +1,31 @@
 package sweng.group.one.client_app_desktop;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
+import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+
 import javax.swing.WindowConstants;
 
-import sweng.group.one.client_app_desktop.sceneControl.MainScene;
-import sweng.group.one.client_app_desktop.sceneControl.MapScene;
-import sweng.group.one.client_app_desktop.sceneControl.SidebarScene;
+import sweng.group.one.client_app_desktop.sceneControl.OptionsScene;
 
 public class App {
 	
-	static final Dimension screenD= Toolkit.getDefaultToolkit().getScreenSize();
-	JPanel backPanel;
-	JPanel midPanel;
-	JPanel topPanel;
-	
-	public App() {
+	public App() throws IOException {
 		
 		JFrame frame = new JFrame();
-		frame.setSize(screenD);
+		frame.setSize(800, 500);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);	
-		frame.setLayout(null);
+		frame.getContentPane().setBackground(Color.red);
 		
+		OptionsScene os = new OptionsScene();
 		
-		JLayeredPane layered= frame.getLayeredPane();
-		layered.setLayout(null);
-		
-		SidebarScene sb= new SidebarScene(null);
-		layered.setLayer(sb, 0);
-		
-		layered.add(sb);
-		sb.setLocation(0, 0);
-		sb.setSize(screenD.width/3, screenD.height);
+		frame.add(os);
 		
 		frame.validate();
-	
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		App app= new App();
 
 	}
