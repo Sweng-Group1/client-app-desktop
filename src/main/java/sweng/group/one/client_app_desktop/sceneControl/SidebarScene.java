@@ -267,13 +267,13 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 				String inputText= header.getSearchBarTextField().getText();
 				String newText= inputText.replace(inputText.charAt(0), Character.toUpperCase(inputText.charAt(0)));
 				header.getSearchBarTextField().setText(newText);
-				System.out.println(newText);
 				
 				try {
 					// 3. Replace presentations with presentations from search
 					replacePres(searchPosts(inputText));
 				} catch (SAXException | ParserConfigurationException | IOException | AuthenticationException e1) {
 					e1.printStackTrace();
+					header.getSearchBarTextField().setText("Search error, not connected to the server...");
 				}
 			}
 		});

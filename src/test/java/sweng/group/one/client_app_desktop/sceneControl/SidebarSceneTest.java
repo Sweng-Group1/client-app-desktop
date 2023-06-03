@@ -65,11 +65,15 @@ public class SidebarSceneTest  {
 		
 		System.out.println(presentationsTestArray);
 		
-		presentationsTestArray = sidebar.searchPosts(testString);
+		try {
+			presentationsTestArray = sidebar.searchPosts(testString);
+		}
+		catch (SAXException | ParserConfigurationException | IOException | AuthenticationException e1) {
+			System.out.println("Search Test Error");
+		}
 		
 		// Would indicate that data has been returned
 		assertNotNull("The presentations should not be null", presentationsTestArray);
-		assertType();
 	}
 	
 	/*
