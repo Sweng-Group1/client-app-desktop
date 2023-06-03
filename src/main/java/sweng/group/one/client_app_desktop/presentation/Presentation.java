@@ -430,8 +430,8 @@ public class Presentation extends JPanel {
 		// Draw arrows if the mouse is hovered
 		if (isMouseHovered) {
 			Slide current = slides.get(currentSlideNo);
-		    int width = current.getWidth();
-		    int height = current.getHeight();
+		    int width = getWidth();
+		    int height = getHeight();
 		    int arrowSizeX = width/3;
 		    int arrowSizeY = height/5;
 		    
@@ -555,4 +555,10 @@ public class Presentation extends JPanel {
 		Dimension preferredLayout = currentSlide.preferredLayoutSize(this);
 		currentSlide.setPreferredSize(preferredLayout);
 	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+        Slide currentSlide = getCurrentSlide();
+		return currentSlide.preferredLayoutSize(this);
+    }
 }

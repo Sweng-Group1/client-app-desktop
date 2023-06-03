@@ -118,9 +118,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	 */
 	private void createUserNameInput() {
 		usernamePanel = new JPanel() {
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = -343751050506935580L;
 
 			public void paint(Graphics g) {
@@ -388,27 +386,31 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		return continueButton;
 	}
 
+	/**
+	 * Needed by LayoutManager
+	 */
 	@Override
-	public void addLayoutComponent(String name, Component comp) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addLayoutComponent(String name, Component comp) {}
 
+	/**
+	 * Needed by LayoutManager
+	 */
 	@Override
-	public void removeLayoutComponent(Component comp) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void removeLayoutComponent(Component comp) {}
 
+	/**
+	 * Needed by LayoutManager
+	 */
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * Needed by LayoutManager
+	 */
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -128,7 +128,7 @@ public class RoundedButton extends JPanel{
 		g2.setRenderingHints(qualityHints);
 		
 		g2.setColor(this.currentColour);
-		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), radius, radius);
+		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curveRadius, curveRadius);
 		
 		if(image!=null) {
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);

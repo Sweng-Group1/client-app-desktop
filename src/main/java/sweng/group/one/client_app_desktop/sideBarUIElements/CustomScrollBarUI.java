@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
@@ -19,11 +20,14 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
 		thumbDarkShadowColor= shadowThumb;
 		thumbLightShadowColor= new Color(75,75,75,150);
 		thumbHighlightColor = highlightThumb;
-		
 	}
+	
+    @Override
 	public void paintTrack(Graphics g, JComponent c, Rectangle r) {
 		//Dont paint track
 	}
+    
+    @Override
 	public void paintThumb(Graphics g, JComponent c, Rectangle r) {
 		//super.paintThumb(g, c, r);
 		g.setColor(shadowThumb);

@@ -61,6 +61,7 @@ public class MainScene extends JFrame implements LayoutManager{
 		
 		sidebarScene = new SidebarScene(null);
 		
+		
 		mapScene = new MapScene() {
 			@Override
 			public void selectMarker(EventMarker selected) {
@@ -165,6 +166,13 @@ public class MainScene extends JFrame implements LayoutManager{
                 }
             }
         });
+		
+		try {
+			addDemoMarkers();
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	};
 	
 	public void resizeComponents() {
