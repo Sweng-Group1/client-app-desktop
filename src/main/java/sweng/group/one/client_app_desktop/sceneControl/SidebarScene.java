@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +18,26 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.sideBarUIElements.CustomPanel;
 import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
 import sweng.group.one.client_app_desktop.sideBarUIElements.Header;
 import sweng.group.one.client_app_desktop.sideBarUIElements.PresentationPanel;
+import sweng.group.one.client_app_desktop.data.AuthenticationException;
+import sweng.group.one.client_app_desktop.data.PostService;
 
 /**
  * Modified JPanel sliding viewer to hold presentation slides which can overlay other JPanels
+ * Includes a search field which can be used to fetch posts by hashtag
+ * 
+ * Added 03/06/2023
  * 
  * @author Will Hinton, Jonathan Cooke, Sophie Maw & Luke George
- * @since 31/05/2023
+ * 
  *
  */
 public class SidebarScene extends JPanel implements ComponentInterface{
@@ -242,18 +251,58 @@ public class SidebarScene extends JPanel implements ComponentInterface{
 			}
 		});
 		
+		/* Whenever the search button is clicked:
+		 * 1. The sidebar will be maximised
+		 * 2. Any text in the search field will be used to search the server for hashtags
+		 * 3. Refresh the presentation panel to show presentations with that hashtag
+		 */  
 		searchButton.addActionListener(new ActionListener() {
+			// 1. Maximise the sidebar
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(isOpen==false) {
 					open(800L);
 				}
+				// 2. Searchfield text searches server for hashtags
 				String inputText= header.getSearchBarTextField().getText();
 				String newText= inputText.replace(inputText.charAt(0), Character.toUpperCase(inputText.charAt(0)));
 				header.getSearchBarTextField().setText(newText);
 				System.out.println(newText);
+				
+				try {
+					// 3. Replace presentations with presentations from search
+					replacePres(searchPosts(inputText));
+				} catch (SAXException | ParserConfigurationException | IOException | AuthenticationException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
+	}
+	
+	
+	// -------------------------------------------------------------- //
+	// ------------------------- POST SEARCH ------------------------ //
+	// -------------------------------------------------------------- //
+	
+	/**
+	 * Search the server for Posts with hashtags matching the input string.
+	 * 
+	 * @author joncooke
+	 * @param searchString A hashtag string, intended to be a searchbar output
+	 * @throws AuthenticationException 
+	 * @throws IOException 
+	 * @throws ParserConfigurationException 
+	 * @throws SAXException 
+	 */
+	public ArrayList<Presentation> searchPosts(String searchString) throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
+		ArrayList<Presentation>searchResultPresentations;
+		
+		// Fetch relevant posts from the server
+		PostService retrievedPosts = new PostService();
+		searchResultPresentations = retrievedPosts.retrievePostsByHashtagAsPresentations(searchString);
+		
+		// Return found posts to the client
+		return searchResultPresentations;
 	}
 	
 	

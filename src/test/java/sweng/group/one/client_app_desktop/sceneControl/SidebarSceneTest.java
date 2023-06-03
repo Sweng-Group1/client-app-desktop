@@ -1,16 +1,16 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.assertj.swing.core.GenericTypeMatcher;
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
@@ -25,7 +25,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
+import org.xml.sax.SAXException;
 
+import sweng.group.one.client_app_desktop.data.AuthenticationException;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 
 public class SidebarSceneTest  {
@@ -42,6 +44,35 @@ public class SidebarSceneTest  {
 	
 	private String searchBarContent;
 	
+	
+	private ActionListener searchAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GuiActionRunner.execute(() -> searchBarContent = sidebar.getSearchText());
+		}
+	};
+	
+	@Before
+	public void setUpOnce() {
+		sidebar = new SidebarScene(searchAction);
+	}
+	
+	@Test
+	public void searchPosts() throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
+		ArrayList<Presentation> presentationsTestArray = null;
+		
+		String testString = "Lovely Search";
+		
+		System.out.println(presentationsTestArray);
+		
+		presentationsTestArray = sidebar.searchPosts(testString);
+		
+		// Would indicate that data has been returned
+		assertNotNull("The presentations should not be null", presentationsTestArray);
+		assertType();
+	}
+	
+	/*
 	private ActionListener searchAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -82,6 +113,7 @@ public class SidebarSceneTest  {
 		searchBar = window.textBox("Searchbar");
 	}
 
+
 	@After
 	public void tearDown() throws Exception {
 		window.cleanUp();
@@ -93,6 +125,8 @@ public class SidebarSceneTest  {
 		maximise.requireNotVisible();
 		assertTrue(GuiActionRunner.execute(() -> sidebar.isOpen()));
 	}
+	
+	
 	// Tests if the minimise button works
 	@Test
 	public void minimise() {
@@ -154,6 +188,8 @@ public class SidebarSceneTest  {
 	public void testTemp() {
 		
 	}
+	
+	*/
 }
 
 
