@@ -51,12 +51,25 @@ public class Slide extends JPanel implements LayoutManager {
 		element.component.validate();
 	}
 	
-	public void displaySlide() {
+	/**
+	 * Displays or hides the slide and its elements.
+	 *
+	 * @param displaying true to display the slide, false to hide it
+	 */
+	public void displaySlide(boolean displaying) {
+		this.setVisible(displaying);
 		for (PresElement e:getElements()) {
-			e.displayElement();
+			e.displayElement(displaying);
 		}
+		this.validate();
 	}
 	
+	/**
+	 * Converts a point from pixel coordinates to point coordinates.
+	 *
+	 * @param pixel the point in pixel coordinates
+	 * @return the point in point coordinates
+	 */
 	public Point pxToPt(Point pixel) {
 		int ptX = (int)((float)pixel.x/this.getWidth() * this.pointWidth);
 		int ptY = (int)((float)pixel.y/this.getHeight() * this.pointHeight);

@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
@@ -67,12 +68,12 @@ public class ImageViewer extends MediaElement {
 	
 	//account for delay
 	@Override
-	protected void displayElement() {
-		super.displayElement();
-		if (delay > 0){
+	protected void displayElement(boolean displaying) {
+		super.displayElement(displaying);
+		if (delay > 0 && displaying){
 			component.setVisible(false);
-			new java.util.Timer().schedule( 
-			        new java.util.TimerTask() {
+			displayTimer.schedule( 
+			        new TimerTask() {
 			            @Override
 			            public void run() {
 			            	component.setVisible(true);

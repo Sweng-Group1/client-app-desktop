@@ -12,6 +12,10 @@ import org.mapsforge.map.model.Model;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.sceneControl.MapScene;
 
+/**
+ * @author flt515
+ *
+ */
 public class EventMarker extends Marker{
 	
 	private final int tapRadius;

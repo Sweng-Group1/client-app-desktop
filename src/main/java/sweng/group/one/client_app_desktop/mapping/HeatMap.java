@@ -17,6 +17,10 @@ import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.awt.graphics.AwtBitmap;
 import org.mapsforge.map.awt.view.MapView;
 import org.mapsforge.map.layer.Layer;
+/**
+ * @author flt515
+ *
+ */
 public class HeatMap extends Layer {
     private static final String CIRCLEPIC_PATH = "./assets/map/bolilla.png";
     private static final String GRADIENT_PATH = "./assets/map/colors.png";
