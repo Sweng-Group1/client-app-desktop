@@ -67,12 +67,11 @@ public class PostService {
 				byte[] postXML = xmlString.getBytes();
 				Path xmlPath = Files.createTempFile("post", null);
 				Files.write(xmlPath, postXML);
-
+				
 				Presentation postPres = new Presentation(xmlPath.toFile());
 				posts.add(postPres);
-				return posts;
 			}
-
+			return posts;
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
 		} else if (statusCode == 500) {

@@ -35,6 +35,10 @@ import sweng.group.one.client_app_desktop.text.TextElement;
 
 public class MainScene extends JFrame implements LayoutManager{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7994175471538717547L;
 	private MapScene mapScene;
 	private SidebarScene sidebarScene;
 	private LoginScene login;
@@ -52,6 +56,8 @@ public class MainScene extends JFrame implements LayoutManager{
 		super();
 		
 		this.setSize(800, 500);
+		this.setMinimumSize(new Dimension(800, 500));
+		this.setMaximumSize(new Dimension(1920, 1080));
 		
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -59,6 +65,8 @@ public class MainScene extends JFrame implements LayoutManager{
 		this.setVisible(true); 
 		
 		mapScene = new MapScene() {
+			private static final long serialVersionUID = 1443164343428729852L;
+
 			@Override
 			public void selectMarker(EventMarker selected) {
 				super.selectMarker(selected);
@@ -72,6 +80,8 @@ public class MainScene extends JFrame implements LayoutManager{
 		try {
 			sidebarScene = new SidebarScene();
 			options = new OptionsScene() {
+				private static final long serialVersionUID = -4506870977494750646L;
+
 				@Override
 				public void helpPressed() {
 					//Unimplemented
@@ -222,8 +232,7 @@ public class MainScene extends JFrame implements LayoutManager{
 	    	 */
 	    	Slide slideB = new Slide(slideX, slideY);
 	    	slides.add(slideB);
-	    	slideB.setBackground(colorDark.MAGENTA);
-	    	//slideB.add(new Circle(new Point(0, 0), slideY/2, 0, slideB,Color.black,null,null));
+	    	slideB.setBackground(Color.MAGENTA);
 	    	
 	    	Presentation pres = new Presentation(slides);
 			mapScene.getMarkers().get(2).addPost(pres);
@@ -264,7 +273,7 @@ public class MainScene extends JFrame implements LayoutManager{
 	}
 	
 	public static void main(String[] args) {
-		MainScene ms = new MainScene();
+		new MainScene();
 	}
 
 }

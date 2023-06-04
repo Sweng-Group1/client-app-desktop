@@ -73,7 +73,8 @@ public class HashtagService {
 				  Double latitude = hashtagJSON.getDouble("latitude"); 
 				  Double longitude = hashtagJSON.getDouble("longitude");
 				  LatLong location = new LatLong(latitude, longitude); 
-				  EventMarker hashtag = new EventMarker(mapScene, location, bitmap); 
+				  EventMarker hashtag = new EventMarker(mapScene, location, bitmap);
+				  mapScene.addEventMarker(hashtag);
 				  hashtags.add(hashtag);
 				  }
 			  return hashtags;
