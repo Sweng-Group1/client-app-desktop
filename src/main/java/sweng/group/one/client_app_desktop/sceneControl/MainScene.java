@@ -196,18 +196,18 @@ public class MainScene extends JFrame implements LayoutManager{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		Thread thread = new Thread() {
-			@Override
-			public void run() {
-				try {
-					//addDemoMarkers();
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-        thread.start();
+//		
+//		Thread thread = new Thread() {
+//			@Override
+//			public void run() {
+//				try {
+//					//addDemoMarkers();
+//				} catch (MalformedURLException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		};
+//        thread.start();
 	};
 	
 	public void addDemoMarkers() throws MalformedURLException {
