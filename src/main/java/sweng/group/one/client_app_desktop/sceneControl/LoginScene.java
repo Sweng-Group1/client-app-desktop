@@ -416,9 +416,16 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		String password = String.valueOf(((JPasswordField) passwordPanel.inputTextField).getPassword());
 		
 		try {
-			userService.createUser(user.getUsername(), password, firstName, lastName, email);
+			if (userService.createUser(user.getUsername(), password, firstName, lastName, email)==0) {
+				feedbackLabel.setText("Please check your details and try again");
+			}
+			else {
+				feedbackLabel.setText("Thank you for registering " + firstName + "!");
+				System.out.println("Registering");
+			}
+			feedbackLabel.setVisible(true);
 		} catch (IOException e) {
-			feedbackLabel.setText("Enter your details");
+			feedbackLabel.setText("Cannot reach the server");
 			feedbackLabel.setVisible(true);
 			e.printStackTrace();
 		}
