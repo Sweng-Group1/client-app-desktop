@@ -26,7 +26,7 @@ import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
  * Modified JPanel that allows users to login or create an account using a chosen username and password
  * 
  * @author Srikanth Jakka & Luke George
- * @since 29/05/2023
+ * @since 04/06/2023
  *
  */
 
@@ -49,12 +49,14 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	private JPanel feedbackPanel;
 	private JPasswordField passwordField;
 	private JTextField usernameField;
-	private JLabel feedbackMessage;
+	private JLabel feedbackLabel;
 	
 	private String accessToken;
 	private String refreshToken;
 	private UserService userService = new UserService();
 	private User user = new User("Default");
+	
+	public boolean userLoggedIn = false;
 	
 	// -------------------------------------------------------------- //
 	// ----------------------- CONSTRUCTOR -------------------------- //
@@ -71,8 +73,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		createFeedbackMessage();
 		createButtons();
 		createLogo();
-		//checkAccessToken();
-		
+		checkAccessToken();
 		
 		this.setLayout(this);
 	}
@@ -208,28 +209,20 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 
 			public void paint(Graphics g) {
 				Graphics2D g2 = (Graphics2D)g;
-				RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-				g2.setRenderingHints(qualityHints);
-				g2.setColor(colorLight);
-				g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius/2, curvatureRadius/2);
 				super.paint(g);
 			}
 		};
-		feedbackMessage = new JLabel();
+		feedbackLabel = new JLabel();
 		
-		feedbackPanel.add(feedbackMessage);
+		feedbackPanel.add(feedbackLabel);
 		feedbackPanel.setLayout(null);
 		feedbackPanel.setOpaque(false);
 		
-		feedbackMessage.setOpaque(false);
-		feedbackMessage.setBackground(transparent);
-		feedbackMessage.setBorder(null);
-		feedbackMessage.setForeground(Color.white);
+		feedbackLabel.setForeground(Color.white);
 		this.add(feedbackPanel);
 		
-		feedbackMessage.setName("feedbackMessage");
-		feedbackMessage.setVisible(false);
+		feedbackLabel.setName("feedbackMessage");
+		feedbackLabel.setVisible(false);
 	}
 	
 	/**
@@ -315,27 +308,28 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		user = new User(usernameField.getText());
 		String password = String.valueOf(passwordField.getPassword());
 		
-		
 		if (user.getUsername().equals("") || password.equals("")) {
-			feedbackMessage.setText("Please enter your login credentials");
-			feedbackMessage.setVisible(true);
+			feedbackLabel.setText("Please enter your login credentials");
+			feedbackLabel.setVisible(true);
 		}
 		
 		if (checkAccessToken()==true) {
-			feedbackMessage.setText("You are already logged in!");
-			feedbackMessage.setVisible(true);
+			feedbackLabel.setText("You are already logged in!");
+			feedbackLabel.setVisible(true);
 			return true;
 		}
 		else {
 			if (userService.login(user, password)==403) {
 				System.out.println("User login unsuccessful");
-				feedbackMessage.setText("Invalid login credentials");
-				feedbackMessage.setVisible(true);
+				feedbackLabel.setText("Invalid login credentials");
+				feedbackLabel.setVisible(true);
 				passwordField.setText("");
+				userLoggedIn = false;
 				return false;
 			} else if (userService.login(user, password)==200) {
 				System.out.println("User successfully logged in");
 				changeScene();
+				userLoggedIn = true;
 				return true;
 			} else {
 				System.out.println("Returned invalid status code");
@@ -424,7 +418,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		passwordField.setBounds(curvatureRadius/2, 0, passwordPanel.getWidth()-20, passwordPanel.getHeight());
 		
 		feedbackPanel.setBounds((w-((w/6)*4))/2, (h/2)+(6*h/16), (w/6)*4, h/16);
-		feedbackMessage.setBounds(curvatureRadius/2, 0, feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
+		feedbackLabel.setBounds(curvatureRadius/2, 0, feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
 
 		continueButton.setBounds(passwordPanel.getX(), (h/2)+(3*(h/16)), (passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
 		loginButton.setBounds(passwordPanel.getX()+(passwordPanel.getWidth()/12)*7, (h/2)+(3*(h/16)), (passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
