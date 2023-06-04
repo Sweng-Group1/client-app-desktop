@@ -21,6 +21,8 @@ public class AudioPlayer extends PlayableMediaElement{
 	private final AudioPlayerComponent audioPlayer;
 	private ImageIcon icon;
 	private JToggleButton toggleB;
+	private ImageIcon onIcon;
+	private ImageIcon offIcon;
 	
 	public AudioPlayer(Point pos, int pointWidth, int pointHeight,
 						float duration, Slide slide, URL fileURL, boolean loops) {
@@ -28,14 +30,10 @@ public class AudioPlayer extends PlayableMediaElement{
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
 		this.audioPlayer = new AudioPlayerComponent();
 		
-		icon = new ImageIcon(".//assets//speaker_icon.png");
-		Image img = icon.getImage();
-		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-		Graphics g = bi.createGraphics();
-		g.drawImage(img, 0, 0, pointWidth+10, pointHeight+10, null);
-		ImageIcon newIcon = new ImageIcon(bi);
+		onIcon = new ImageIcon(".//assets//audioON.png");
+		offIcon = new ImageIcon(".//assets//audioOFF.png");
 		
-		toggleB = new JToggleButton(newIcon);
+		toggleB = new JToggleButton(offIcon);
 		component = toggleB;
 		component.setPreferredSize(new Dimension(pointWidth, pointHeight));
 		
@@ -49,6 +47,10 @@ public class AudioPlayer extends PlayableMediaElement{
 			
 		});
 	}
+		
+	public void changeButtonIcon(ImageIcon icon) {
+			toggleB.setIcon(icon);
+	}
 	
 	
 
@@ -56,9 +58,11 @@ public class AudioPlayer extends PlayableMediaElement{
 	public void togglePlaying() {
 		if(getPlaying()) {
 			audioPlayer.mediaPlayer().controls().pause();
+			changeButtonIcon(offIcon);
 		}
 		else {
 			audioPlayer.mediaPlayer().controls().play();
+			changeButtonIcon(onIcon);
 		}
 	}
 	@Override
@@ -73,12 +77,3 @@ public class AudioPlayer extends PlayableMediaElement{
 	}
 
 }
-
-
-
-
-
-
-
-
-
