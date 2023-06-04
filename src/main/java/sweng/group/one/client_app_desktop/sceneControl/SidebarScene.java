@@ -39,7 +39,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	
 	private static final long serialVersionUID = 1L;
 	private static final int GAP_WIDTH= 10;
-	private static final int ANIMATION_TIME_MS = 300;
+	private static final int ANIMATION_TIME_MS = 200;
 	private static final int ANIMATION_FRAME_TIME_MS = 16;
 	private static final int PRESENTATION_SCROLL_SPEED = 20;
 	private boolean isOpen;
@@ -183,14 +183,16 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	
 	// Called to open the sidebar
 	public void open() {
-		minimizeButton.setIconImage(backArrow);
-		isOpen = true;
+		
+		
 		Timer openTimer = new Timer();
 		int widthInc = (this.getWidth() - GAP_WIDTH)*ANIMATION_FRAME_TIME_MS/ANIMATION_TIME_MS;
-		System.out.println("Width inc: " + widthInc);
-		sidebarMainPanel.setVisible(true);
+
+		Rectangle bounds = new Rectangle(GAP_WIDTH, GAP_WIDTH, 1, getHeight()-(2*GAP_WIDTH));
+		sidebarMainPanel.setBounds(bounds);
+		//sidebarMainPanel.setVisible(true);
+		minimizeButton.setIconImage(backArrow);
 		
-		Rectangle bounds = new Rectangle(GAP_WIDTH, GAP_WIDTH, 0, getHeight()-(2*GAP_WIDTH));
 		
 		openTimer.scheduleAtFixedRate(new TimerTask() {
 
@@ -206,10 +208,11 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 
 			@Override
 			public void run() {
-				openTimer.cancel();
-				openTimer.purge();
+				isOpen = true;
 				bounds.width = getWidth() - GAP_WIDTH;
 				sidebarMainPanel.setBounds(bounds);
+				openTimer.cancel();
+				openTimer.purge();
 			}
 			
 		}, ANIMATION_TIME_MS);
@@ -220,11 +223,14 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	
 	// Called to close the sidebar
 	public void close() {
-		isOpen = false;
+		if(!isOpen) {
+			return;
+		}
+		
+		
 		minimizeButton.setIconImage(forwardsArrow);
 		Timer closeTimer = new Timer();
 		int widthDecr = sidebarMainPanel.getWidth()*ANIMATION_FRAME_TIME_MS/ANIMATION_TIME_MS;
-		System.out.println("Width dec: " + widthDecr);
 		closeTimer.scheduleAtFixedRate(new TimerTask() {
 
 			@Override
@@ -240,7 +246,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 
 			@Override
 			public void run() {
-				sidebarMainPanel.setVisible(false);
+				isOpen = false;
 				scrollPane.setVisible(false);
 				scrollBar.setVisible(false);
 				closeTimer.cancel();
@@ -302,14 +308,16 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		int w = this.getWidth();
 		int h = this.getHeight();
 		
-		sidebarMainPanel.setBounds(GAP_WIDTH, GAP_WIDTH, w-GAP_WIDTH, h-(2*GAP_WIDTH));
-		minimizeButton.setBounds(sidebarMainPanel.getWidth()-h/15, 2*GAP_WIDTH, h/15, h/15);
-		searchPanel.setBounds(2*GAP_WIDTH, 2*GAP_WIDTH, sidebarMainPanel.getWidth()-3*GAP_WIDTH-minimizeButton.getWidth(),h/15);
+		int mainPanelWidth = w-GAP_WIDTH;
+		
+		sidebarMainPanel.setBounds(GAP_WIDTH, GAP_WIDTH, isOpen ? mainPanelWidth : 0, h-(2*GAP_WIDTH));
+		minimizeButton.setBounds(mainPanelWidth-h/15, 2*GAP_WIDTH, h/15, h/15);
+		searchPanel.setBounds(2*GAP_WIDTH, 2*GAP_WIDTH, mainPanelWidth-3*GAP_WIDTH-minimizeButton.getWidth(),h/15);
 		searchButton.setBounds(searchPanel.getWidth()-searchPanel.getHeight(), 0, searchPanel.getHeight(), searchPanel.getHeight());
 		searchField.setBounds(GAP_WIDTH, 0, searchPanel.getWidth()-GAP_WIDTH-searchPanel.getHeight(), searchPanel.getHeight());
 		
-		scrollBar.setBounds(sidebarMainPanel.getWidth()-GAP_WIDTH, 2*GAP_WIDTH+searchPanel.getHeight(), GAP_WIDTH, sidebarMainPanel.getHeight()-searchPanel.getHeight()-3*GAP_WIDTH);
-		scrollPane.setBounds(GAP_WIDTH, 2*GAP_WIDTH+searchPanel.getHeight(), sidebarMainPanel.getWidth()-2*GAP_WIDTH, sidebarMainPanel.getHeight()-searchPanel.getHeight()-3*GAP_WIDTH);
+		scrollBar.setBounds(mainPanelWidth-GAP_WIDTH, 2*GAP_WIDTH+searchPanel.getHeight(), GAP_WIDTH, sidebarMainPanel.getHeight()-searchPanel.getHeight()-3*GAP_WIDTH);
+		scrollPane.setBounds(GAP_WIDTH, 2*GAP_WIDTH+searchPanel.getHeight(), mainPanelWidth-2*GAP_WIDTH, sidebarMainPanel.getHeight()-searchPanel.getHeight()-3*GAP_WIDTH);
 	}
 	
 	

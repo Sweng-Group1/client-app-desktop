@@ -26,7 +26,6 @@ public class GraphicsElement extends PresElement{
 
 	super(pos, width, height, duration, slide);
 	
-		type= "GRAPHIC";
 		backgroundImageList= new ArrayList<BufferedImage>();
 		backgroundImageListFuture= new ArrayList<BufferedImage>();
 		

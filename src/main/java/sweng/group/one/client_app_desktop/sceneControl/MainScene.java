@@ -94,9 +94,8 @@ public class MainScene extends JFrame implements LayoutManager{
 				@Override
 				public void closePressed() {
 					sidebarScene.setVisible(true);
-					sidebarScene.close(100);
+					sidebarScene.close();
 					login.setVisible(false);
-					//upload.setVisible(false)
 				}
 			};
 			login= new LoginScene();
