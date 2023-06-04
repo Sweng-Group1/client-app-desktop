@@ -1,17 +1,21 @@
 package sweng.group.one.client_app_desktop.media;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.net.URL;
 
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JWindow;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoPlayer extends PlayableMediaElement {
 	
-	private final EmbeddedMediaPlayerComponent mediaPlayer;
+	private final CallbackMediaPlayerComponent mediaPlayer;
 	private Boolean nativeLib;
 	
 	
@@ -34,13 +38,14 @@ public class VideoPlayer extends PlayableMediaElement {
 		
 		super(pos, pointWidth, pointHeight, 0, slide, fileURL, loops);
 		nativeLib = new NativeDiscovery().discover();
-		this.mediaPlayer = new EmbeddedMediaPlayerComponent();
+		this.mediaPlayer = new CallbackMediaPlayerComponent();
 		
 		if (Boolean.TRUE.equals(nativeLib)) {
 			this.component = mediaPlayer;
 			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
 			loadFile();
 			mediaPlayer.mediaPlayer().controls().setRepeat(loops);
+			
 		}
 		else {
 			this.component = new JTextArea("VLC is required for media to be used in this application");
