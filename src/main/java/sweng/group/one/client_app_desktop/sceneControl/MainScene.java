@@ -147,19 +147,6 @@ public class MainScene extends JFrame implements LayoutManager{
 		
 		mapScene.loadMapFile(new File("./assets/map/york.map"));
 		
-		this.addWindowStateListener(new WindowStateListener() {
-            @Override
-            public void windowStateChanged(WindowEvent e) {
-                if ((e.getNewState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
-                	repaint();
-                } else {
-                    System.out.println("Window is not in fullscreen mode");
-                    validate();
-                    repaint();
-                }
-            }
-        });
-		
 		Thread thread = new Thread() {
 			@Override
 			public void run() {

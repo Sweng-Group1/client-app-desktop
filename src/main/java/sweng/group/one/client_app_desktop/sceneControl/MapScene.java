@@ -134,7 +134,7 @@ public class MapScene extends MapView{
 		//zoom into the centre of the map
 		Model model = this.getModel();
 		model.init(preferencesFacade);
-		byte zoomLevel = (byte) (LatLongUtils.zoomForBounds(model.mapViewDimension.getDimension(), boundingBox, model.displayModel.getTileSize()) + 1);
+		byte zoomLevel = (byte) (LatLongUtils.zoomForBounds(getDimension(), boundingBox, model.displayModel.getTileSize()) + 1);
 		this.setZoomLevelMin(zoomLevel);
         model.mapViewPosition.setMapPosition(new MapPosition(boundingBox.getCenterPoint(), zoomLevel));
         model.mapViewPosition.setMapLimit(boundingBox);
