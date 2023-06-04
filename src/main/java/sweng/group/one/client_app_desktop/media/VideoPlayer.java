@@ -10,11 +10,12 @@ import javax.swing.JWindow;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoPlayer extends PlayableMediaElement {
 	
-	private final EmbeddedMediaPlayerComponent mediaPlayer;
+	private final CallbackMediaPlayerComponent mediaPlayer;
 	private Boolean nativeLib;
 	
 	
@@ -37,7 +38,7 @@ public class VideoPlayer extends PlayableMediaElement {
 		
 		super(pos, pointWidth, pointHeight, 0, slide, fileURL, loops);
 		nativeLib = new NativeDiscovery().discover();
-		this.mediaPlayer = new EmbeddedMediaPlayerComponent();
+		this.mediaPlayer = new CallbackMediaPlayerComponent();
 		
 		if (Boolean.TRUE.equals(nativeLib)) {
 			this.component = mediaPlayer;
