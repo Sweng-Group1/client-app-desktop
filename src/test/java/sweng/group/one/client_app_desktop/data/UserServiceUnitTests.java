@@ -39,7 +39,8 @@ public class UserServiceUnitTests {
     }
 
     @Test
-    public void SuccessfulLoginSavesAccessAndRefreshTokens() throws IOException {
+    public void SuccessfulLoginSavesAccessAndRefreshTokens() throws IOException, AuthenticationException {
+
         String defaultAdminPass = "password123";
         String testAccessToken = "TestAccessToken";
         String testRefreshToken = "TestRefreshToken";
@@ -56,7 +57,7 @@ public class UserServiceUnitTests {
     }
 
     @Test
-    public void successfulRefreshSavesNewAccessToken() throws IOException {
+    public void successfulRefreshSavesNewAccessToken() throws IOException, AuthenticationException {
         String testAccessToken = "TestAccessToken";
 
         server.enqueue(new MockResponse()

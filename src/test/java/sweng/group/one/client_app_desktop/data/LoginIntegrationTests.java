@@ -12,7 +12,6 @@ import sweng.group.one.client_app_desktop.data.UserService;
 
 // These are integration tests that will communicate with the actual server software. 
 // As such they require the server to be running. 
-// TODO: While these essentially also cover unit testing, they are integration tests. unit tests should be added with mocked server interactions. 
 public class LoginIntegrationTests {
 	
 	private String defaultAdminUsername = "sid";
@@ -21,7 +20,7 @@ public class LoginIntegrationTests {
 	private UserService serviceTest = new UserService();
 	
 	@Test
-	public void testLoginUsingDefaultAdminCredentialsReturns200OkCode() {
+	public void testLoginUsingDefaultAdminCredentialsReturns200OkCode() throws AuthenticationException, IOException {
 		System.out.println("Running login test for correct credentials: ");
 		int statusCode = serviceTest.login(userTest, defaultAdminPass);
 		System.out.println("Status Code: " + statusCode);
@@ -31,7 +30,7 @@ public class LoginIntegrationTests {
 	
 	
 	@Test
-	public void CanRefreshAccessToken() {
+	public void CanRefreshAccessToken() throws IOException, AuthenticationException {
 		System.out.println("Running login test for correct credentials: ");
 		int statusCode = serviceTest.login(userTest, defaultAdminPass); // Ensure refresh token is valid. 
 		statusCode = serviceTest.refreshAccessToken(userTest);
@@ -40,12 +39,10 @@ public class LoginIntegrationTests {
 	}
 	
 	
-	@Test
-	public void LoggingInWithIncorrectPasswordReturns403Forbidden() {
+	@Test(expected = AuthenticationException.class)
+	public void LoggingInWithIncorrectPasswordThrowsAuthenticationException() throws AuthenticationException, IOException {
 		System.out.println("Running login test for incorrect credentials: ");
-		int statusCode = serviceTest.login(userTest, "ThisPasswordIsIncorrect");
-		System.out.println("Status Code: " + statusCode);
-		assertThat(statusCode).isEqualTo(403);
+		serviceTest.login(userTest, "ThisPasswordIsIncorrect");
 	}
 	
 	
@@ -54,7 +51,7 @@ public class LoginIntegrationTests {
 	// Checking length of line in file is reasonably big should reliably check the tokens exist.
 	// TODO: These are unit tests for the User class now, move to another file.  
 	@Test
-	public void tokensAreSavedAndAreRetrieveableFromFile() {
+	public void tokensAreSavedAndAreRetrieveableFromFile() throws AuthenticationException, IOException {
 		System.out.println("Running test to ensure tokens are saved correctly:  ");
 		
 		serviceTest.login(userTest, defaultAdminPass);
