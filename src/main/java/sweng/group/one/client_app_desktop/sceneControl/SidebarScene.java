@@ -103,7 +103,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		backArrow = ImageIO.read(new File("./assets/backBlack.png"));
 		forwardsArrow = ImageIO.read(new File("./assets/forwardBlack.png"));
 		
-		minimizeButton = new RoundedButton(backArrow, curvatureRadius, Color.white, Color.darkGray, Color.gray) {
+		minimizeButton = new RoundedButton(forwardsArrow, curvatureRadius, Color.white, Color.darkGray, Color.gray) {
 			
 			private static final long serialVersionUID = -4821983731589305576L;
 
