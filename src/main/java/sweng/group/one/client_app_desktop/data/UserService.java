@@ -9,6 +9,8 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -131,7 +133,15 @@ public class UserService {
 		
 		int statusCode = 0;
 
-		if (username.isBlank()==true || password.isBlank()==true || firstName.isBlank()==true || lastName.isBlank()==true || email.isBlank()==true) {
+		if (username.isBlank()==true || password.length()<8 || firstName.isBlank()==true || lastName.isBlank()==true || email.isBlank()==true) {
+			return statusCode;
+		}
+		
+		if (username.length()>100 || password.length()>100 || firstName.length()>100 || lastName.length()>100 || email.length()>100) {
+			return statusCode;
+		}
+		
+		if (emailValidation(email)==false) {
 			return statusCode;
 		}
 		
@@ -222,6 +232,13 @@ public class UserService {
         else {
             return 0;
         }
-	}	
+	}
+	
+	private boolean emailValidation(String email) {
+		String regex = "^(.+)@(.+)$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
 }
 
