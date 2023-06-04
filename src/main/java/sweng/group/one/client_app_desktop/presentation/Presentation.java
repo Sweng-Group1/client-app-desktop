@@ -1,11 +1,13 @@
 package sweng.group.one.client_app_desktop.presentation;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
@@ -426,28 +428,86 @@ public class Presentation extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 	    super.paint(g);
+	    
+	    Graphics2D g2d = (Graphics2D) g.create();
+	    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	    
+	    Slide current = getCurrentSlide();
+	    
+	    int width = current.getWidth();
+	    int height = current.getHeight();
+	    
+	    //draw slide indicators
+	    int centerX = this.getWidth()/2;
+        int bottomY = (int) (height*0.95);
+        int radius = (int) (width*0.01);
+	    
+        g2d.setColor(Color.white);
+        g2d.fillOval(centerX - radius, 
+        		bottomY - radius, 
+        		radius*2, 
+        		radius*2);
+        
+        int next = this.numSlides - 1 - this.currentSlideNo;
+        int nextRadius = radius;
+        int nextX = centerX;
+        int radiusDecr = 2;
+        
+        for(int i = 0; i < Math.min(next, 3); i++) {
+        	nextRadius -= radiusDecr;
+        	nextX += radius*2;
+        	
+        	g2d.fillOval(nextX - nextRadius, 
+	        		bottomY - nextRadius, 
+	        		nextRadius*2, 
+	        		nextRadius*2);
+        }
+        
+        int prev = currentSlideNo;
+        int prevRadius = radius;
+        int prevX = centerX;
+        
+        for(int i = 0; i < Math.min(prev, 3); i++) {
+        	prevRadius -= radiusDecr;
+        	prevX -= radius*2;
+        	
+        	
+        	g2d.fillOval(prevX - prevRadius, 
+	        		bottomY - prevRadius, 
+	        		prevRadius*2, 
+	        		prevRadius*2);
+        }
 	   
 		// Draw arrows if the mouse is hovered
 		if (isMouseHovered) {
-			Slide current = slides.get(currentSlideNo);
-		    int width = getWidth();
-		    int height = getHeight();
-		    int arrowSizeX = width/3;
-		    int arrowSizeY = height/5;
 		    
-		    Graphics2D g2d = (Graphics2D) g.create();
-		    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		    int buttonRadius = (int) (this.getWidth()*0.05);
+		    
 		    g2d.setColor(new Color(0.0f, 0.0f, 0.0f, 0.5f));
 		
-		    //Draw left arrow
-		    int[] leftArrowXPoints = {arrowSizeX, arrowSizeX, 0};
-	        int[] leftArrowYPoints = {(height / 2) - arrowSizeY, (height / 2) + arrowSizeY, height / 2};
-	        g2d.fillPolygon(leftArrowXPoints, leftArrowYPoints, 3);
-	
-	        //Draw right arrow
-	        int[] rightArrowXPoints = {width - arrowSizeX, width - arrowSizeX, width};
-	        int[] rightArrowYPoints = {(height / 2) - arrowSizeY, (height / 2) + arrowSizeY, height / 2};
-	        g2d.fillPolygon(rightArrowXPoints, rightArrowYPoints, 3);
+		    
+		    //draw circle buttons
+		    g2d.setColor(Color.white);
+		    g2d.fillOval(width - 2*buttonRadius, 
+		    		height/2 - buttonRadius, 
+		    		buttonRadius*2, 
+		    		buttonRadius*2);
+		    g2d.fillOval(0, 
+		    		height/2 - buttonRadius, 
+		    		buttonRadius*2, 
+		    		buttonRadius*2);
+		    		    
+		    g2d.setColor(Color.gray);
+		    int thickness = (int) (width*0.01);
+		    g2d.setStroke(new BasicStroke(thickness));
+		    
+		    g2d.drawLine(width-thickness, height/2, width-buttonRadius*2+thickness, height/2);
+		    g2d.drawLine(width, height/2, width-buttonRadius/2, (height-buttonRadius)/2);
+		    g2d.drawLine(width, height/2, width-buttonRadius/2, (height+buttonRadius)/2);
+		    
+		    g2d.drawLine(thickness, height/2, buttonRadius*2-thickness, height/2);
+		    g2d.drawLine(0, height/2, buttonRadius/2, (height-buttonRadius)/2);
+		    g2d.drawLine(0, height/2, buttonRadius/2, (height+buttonRadius)/2);
 	        
 	        //Draw Text Box
 	        g2d.setColor(new Color(1.0f, 1.0f, 1.0f, 0.5f));
@@ -459,9 +519,8 @@ public class Presentation extends JPanel {
 	        g2d.drawString(title, 10, 20);
 	        g2d.drawString("Author: " + author, 10, 20 + fontSize);
 	        g2d.drawString("Date: " + date, 10, 20 + fontSize*2);
-	        
-	        g2d.dispose();
 	    }
+		g2d.dispose();
 	}
 	
 	/**
