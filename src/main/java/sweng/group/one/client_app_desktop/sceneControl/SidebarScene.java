@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
-import sweng.group.one.client_app_desktop.sideBarUIElements.CustomPanel;
 import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
 
@@ -63,13 +61,10 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	public SidebarScene() throws IOException {
 		super();
 		this.setOpaque(false);
-
-		// Sets up search bar, back button, etc.
 		setUpBackground();
 		setUpSearchBar();
-		
 		setUpScrollPane();
-		isOpen=true;
+		this.isOpen = false;
 		this.setLayout(this);
 	}
 	
@@ -110,6 +105,8 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		
 		minimizeButton = new RoundedButton(backArrow, curvatureRadius, Color.white, Color.darkGray, Color.gray) {
 			
+			private static final long serialVersionUID = -4821983731589305576L;
+
 			@Override
 			public void buttonPressed() {
 				if (isOpen) {
@@ -129,6 +126,9 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	
 	private void setUpBackground() {
 		sidebarMainPanel = new JPanel() {
+
+			private static final long serialVersionUID = -5344802688141891908L;
+
 			@Override
 			public void paint(Graphics g) {
 				Graphics2D g2= (Graphics2D) g.create();
@@ -188,9 +188,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 
 		Rectangle bounds = new Rectangle(GAP_WIDTH, GAP_WIDTH, 1, getHeight()-(2*GAP_WIDTH));
 		sidebarMainPanel.setBounds(bounds);
-		//sidebarMainPanel.setVisible(true);
 		minimizeButton.setIconImage(backArrow);
-		
 		
 		openTimer.scheduleAtFixedRate(new TimerTask() {
 
@@ -276,26 +274,20 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	}
 
 	@Override
-	public void addLayoutComponent(String name, Component comp) {
-		// TODO Auto-generated method stub
-		
+	public void addLayoutComponent(String name, Component comp) {	
 	}
 
 	@Override
 	public void removeLayoutComponent(Component comp) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -305,15 +297,18 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		int h = this.getHeight();
 		
 		int mainPanelWidth = w-GAP_WIDTH;
+		int mainPanelHeight = h-(2*GAP_WIDTH);
+		int headerHeight = 30;
 		
-		sidebarMainPanel.setBounds(GAP_WIDTH, GAP_WIDTH, isOpen ? mainPanelWidth : 0, h-(2*GAP_WIDTH));
-		minimizeButton.setBounds(mainPanelWidth-h/15, 2*GAP_WIDTH, h/15, h/15);
-		searchPanel.setBounds(2*GAP_WIDTH, 2*GAP_WIDTH, mainPanelWidth-3*GAP_WIDTH-minimizeButton.getWidth(),h/15);
-		searchButton.setBounds(searchPanel.getWidth()-searchPanel.getHeight(), 0, searchPanel.getHeight(), searchPanel.getHeight());
-		searchField.setBounds(GAP_WIDTH, 0, searchPanel.getWidth()-GAP_WIDTH-searchPanel.getHeight(), searchPanel.getHeight());
 		
-		scrollBar.setBounds(mainPanelWidth-GAP_WIDTH, 2*GAP_WIDTH+searchPanel.getHeight(), GAP_WIDTH, sidebarMainPanel.getHeight()-searchPanel.getHeight()-3*GAP_WIDTH);
-		scrollPane.setBounds(GAP_WIDTH, 2*GAP_WIDTH+searchPanel.getHeight(), mainPanelWidth-2*GAP_WIDTH, sidebarMainPanel.getHeight()-searchPanel.getHeight()-3*GAP_WIDTH);
+		sidebarMainPanel.setBounds(GAP_WIDTH, GAP_WIDTH, isOpen ? mainPanelWidth : 0, mainPanelHeight);
+		minimizeButton.setBounds(mainPanelWidth-headerHeight, 2*GAP_WIDTH, headerHeight, headerHeight);
+		searchPanel.setBounds(2*GAP_WIDTH, 2*GAP_WIDTH, mainPanelWidth-3*GAP_WIDTH-headerHeight, headerHeight);
+		searchButton.setBounds(searchPanel.getWidth()-headerHeight, 0, headerHeight, headerHeight);
+		searchField.setBounds(GAP_WIDTH, 0, searchPanel.getWidth()-GAP_WIDTH-headerHeight, headerHeight);
+		
+		scrollBar.setBounds(mainPanelWidth-GAP_WIDTH, 2*GAP_WIDTH+headerHeight, GAP_WIDTH, mainPanelHeight-headerHeight-3*GAP_WIDTH);
+		scrollPane.setBounds(GAP_WIDTH, 2*GAP_WIDTH+headerHeight, mainPanelWidth-2*GAP_WIDTH, mainPanelHeight-headerHeight-3*GAP_WIDTH);
 	}
 	
 	

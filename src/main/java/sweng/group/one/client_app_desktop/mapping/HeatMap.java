@@ -81,7 +81,9 @@ public class HeatMap extends Layer {
 	        int top = (int) (pixelY - topLeftPoint.y - radius);
 	        
 	        //draw the shape on the map with opacity proportional to the number of posts
-	        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, m.getNumPosts()/(float)(maxNumPosts*1.1)));
+	        float alpha =  m.getNumPosts()/(float)(maxNumPosts*1.1);
+	        
+	        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha-(int)alpha)); //set alpha to floor
 	        g.drawImage(scaledImage, left, top, null);
     	}
     	
