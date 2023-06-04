@@ -325,6 +325,8 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 				return true;
 			} else {
 				System.out.println("Returned invalid status code");
+				feedbackMessage.setText("Cannot reach the server");
+				feedbackMessage.setVisible(true);
 				return false;
 			}
 		}
