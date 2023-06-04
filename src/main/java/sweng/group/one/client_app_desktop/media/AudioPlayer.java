@@ -50,24 +50,23 @@ public class AudioPlayer extends PlayableMediaElement{
 			
 			public void paintComponent(Graphics g) {
 				Graphics2D g2d = (Graphics2D)g;
-		
-				//g2d.draw(getBounds());
 				
 				int w = this.getWidth();
 				int h = this.getHeight();
 				int x = (int)((float)pos.x / slide.getPointWidth() * w);
 				int y = (int)((float)pos.y / slide.getPointHeight() * h);
-					
-			    g2d.drawImage(icon, x-w/2, y-w/4, w, h, java.awt.Color.red, null);
+				
+				g2d.setColor(java.awt.Color.white);
+				g2d.fillRect(x-w/2, y-w/4, w, h);
+			    g2d.drawImage(icon, x-w/2, y-w/4, w, h, null);
 
 			    g2d.dispose();  // Dispose the Graphics2D object
-			    
-			    super.paintComponent(g);
 			}
 		};
 		
 		component = toggleB;
 		component.setPreferredSize(new Dimension(pointWidth, pointHeight));
+		component.setOpaque(false);
 		
 		loadFile();
 		toggleB.addActionListener(new ActionListener() {
