@@ -27,13 +27,8 @@ import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
 /**
  * Modified JPanel that allows users to login or create an account using a chosen username and password
  * 
-<<<<<<< HEAD
- * @author Srikanth Jakka & Luke George
- * @since 04/06/2023
-=======
  * @author Srikanth Jakka & Luke George. Sophie Maw, Fraser Todd & Jonathan Cooke.
- * @since 29/05/2023
->>>>>>> UIElementsRefactor
+ * @since 04/06/2023
  *
  */
 
@@ -50,9 +45,13 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	private LoginSceneButton continueButton;
 	private LoginSceneButton createAccountButton;
 	private LoginSceneButton loginButton;
+	private LoginSceneButton registerButton;
 	private JPanel logoPanel;
-	private InputTextPanel passwordPanel;
 	private InputTextPanel usernamePanel;
+	private InputTextPanel passwordPanel;
+	private InputTextPanel emailPanel;
+	private InputTextPanel firstNamePanel;
+	private InputTextPanel lastNamePanel;
 	private JPanel feedbackPanel;
 	private JLabel feedbackLabel;
 	
@@ -62,6 +61,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	private User user = new User("Default");
 	
 	public boolean userLoggedIn = false;
+	private boolean createAccount = false;
 	
 	// -------------------------------------------------------------- //
 	// ----------------------- CONSTRUCTOR -------------------------- //
@@ -79,8 +79,20 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		
 		passwordPanel = new InputTextPanel("Password", true);
 		this.add(passwordPanel);
+
+		emailPanel = new InputTextPanel("e-mail", false);
+		emailPanel.setVisible(false);
+		this.add(emailPanel);
 		
-		createFeedbackMessage();
+		firstNamePanel = new InputTextPanel("First Name", false);	
+		firstNamePanel.setVisible(false);
+		this.add(firstNamePanel);
+		
+		lastNamePanel = new InputTextPanel("Last Name", false);	
+		lastNamePanel.setVisible(false);
+		this.add(lastNamePanel);
+		
+		createFeedbackLabel();
 		createButtons();
 		createLogo();
 		checkAccessToken();
@@ -202,6 +214,10 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			this.buttonName = buttonName;
 		}
 		
+		public void setButtonName(String buttonName) {
+			this.buttonName = buttonName;
+		}
+
 		// Overriding paint is bad practice, however, this is necessary due to the use of paint overrides in RoundedButton
 		@Override
 		public void paint(Graphics g) {
@@ -214,11 +230,11 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		}
 	}
 	
-	private class FeedbackMessageDisplay extends JPanel {
+	private class FeedbackLabelDisplay extends JPanel {
 		
 	}
 	
-	private void createFeedbackMessage() {
+	private void createFeedbackLabel() {
 		feedbackPanel = new JPanel() {
 			/**
 			 * 
@@ -227,11 +243,6 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 
 			public void paintComponent(Graphics g) {
 				Graphics2D g2 = (Graphics2D)g;
-				RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-				g2.setRenderingHints(qualityHints);
-				g2.setColor(colorLight);
-				g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius/2, curvatureRadius/2);
 				super.paintComponent(g);
 			}
 		};
@@ -266,11 +277,26 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		};
 		
 		continueButton = new LoginSceneButton("Cancel");
-		createAccountButton = new LoginSceneButton("Create Account", transparent, transparent, Color.gray);
+		
+		createAccountButton = new LoginSceneButton("Create Account", transparent, transparent, Color.gray) {
+			@Override
+			public void buttonPressed() {
+				createAccountButtonPressed();
+			}
+		};
+		
+		registerButton = new LoginSceneButton("Register") {
+			@Override
+			public void buttonPressed() {
+				registerButtonPressed();
+			}
+		};
+		registerButton.setVisible(false);
 		
 		this.add(loginButton);
 		this.add(continueButton);
 		this.add(createAccountButton);
+		this.add(registerButton);
 	}
 	
 	
@@ -302,6 +328,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		if (user.getUsername().equals("") || password.equals("")) {
 			feedbackLabel.setText("Enter your details");
 			feedbackLabel.setVisible(true);
+			return false;
 		}
 		
 		if (checkAccessToken()==true) {
@@ -311,35 +338,25 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		}
 		else {
 			try {
-				if (userService.login(user, password)==403) {
-					System.out.println("User login unsuccessful");
-					feedbackLabel.setText("Invalid login credentials");
+				if (userService.login(user, password)==200) {
+					System.out.println("User successfully logged in");
+					changeScene();
+					userLoggedIn = true;
+					return true;
+				} else {
+					System.out.println("Returned invalid status code");
+					feedbackLabel.setText("Cannot reach the server");
 					feedbackLabel.setVisible(true);
-					passwordPanel.inputTextField.setText("");
 					return false;
-				} else
-					try {
-						if (userService.login(user, password)==200) {
-							System.out.println("User successfully logged in");
-							changeScene();
-							userLoggedIn = true;
-							return true;
-						} else {
-							System.out.println("Returned invalid status code");
-							feedbackLabel.setText("Cannot reach the server");
-							feedbackLabel.setVisible(true);
-							return false;
-						}
-					} catch (AuthenticationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				}
 			} catch (AuthenticationException e) {
-				// TODO Auto-generated catch block
+				System.out.println("User login unsuccessful");
+				feedbackLabel.setText("Invalid login credentials");
+				feedbackLabel.setVisible(true);
+				passwordPanel.inputTextField.setText("");
+				userLoggedIn = false;
 				e.printStackTrace();
+				return false;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -368,6 +385,46 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		return false;
 	}
 	
+	public void createAccountButtonPressed() {
+		if (createAccount==false) {
+			logoPanel.setVisible(false);
+			emailPanel.setVisible(true);
+			firstNamePanel.setVisible(true);
+			lastNamePanel.setVisible(true);
+			loginButton.setVisible(false);
+			registerButton.setVisible(true);
+			createAccountButton.setButtonName("Back to Log In");
+			createAccount = true;
+		}
+		else {
+			logoPanel.setVisible(true);
+			emailPanel.setVisible(false);
+			firstNamePanel.setVisible(false);
+			lastNamePanel.setVisible(false);
+			loginButton.setVisible(true);
+			registerButton.setVisible(false);
+			createAccountButton.setButtonName("Create Account");
+			createAccount = false;
+		}
+	}
+	
+	public void registerButtonPressed() {
+		String email = emailPanel.inputTextField.getText();
+		String firstName = firstNamePanel.inputTextField.getText();
+		String lastName = lastNamePanel.inputTextField.getText();
+		user = new User(usernamePanel.inputTextField.getText());
+		String password = String.valueOf(((JPasswordField) passwordPanel.inputTextField).getPassword());
+		
+		try {
+			userService.createUser(user.getUsername(), password, firstName, lastName, email);
+		} catch (IOException e) {
+			feedbackLabel.setText("Enter your details");
+			feedbackLabel.setVisible(true);
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void changeScene() {
 		isOpen = false;
 		this.setVisible(false);
@@ -375,11 +432,6 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	
 	public String getUsername() {
 		return usernamePanel.inputTextField.getText();
-	}
-	
-	public void createAccount() {
-		usernamePanel.inputTextField.setText("The Create Account Button Works");
-		System.out.println("The Create Account Button Works");
 	}
 	
 	public boolean isOpen() {
@@ -431,23 +483,37 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 
 	@Override
 	public void layoutContainer(Container parent) {
-		int w = getWidth();
-		int h = getHeight();
+		int sceneWidth = getWidth();
+		int sceneHeight = getHeight();
+		int fieldX = sceneWidth/2-sceneHeight/3;
+		int fieldY = sceneHeight/2+sceneHeight/16;
+		int fieldWidth = 2*sceneWidth/3;
+		int fieldHeight = sceneHeight/16;
 		
-		usernamePanel.setBounds(w/2-w/3, h/2 - h/16, 2*w/3, h/16);
+		usernamePanel.setBounds(fieldX, fieldY-sceneHeight/8, fieldWidth, fieldHeight);
 		usernamePanel.inputTextField.setBounds(curvatureRadius/2, 0, usernamePanel.getWidth()-20, usernamePanel.getHeight());
 		
-		passwordPanel.setBounds((w-((w/6)*4))/2, (h/2)+(h/16), (w/6)*4, h/16);
+		passwordPanel.setBounds(fieldX, fieldY, fieldWidth, fieldHeight);
 		passwordPanel.inputTextField.setBounds(curvatureRadius/2, 0, passwordPanel.getWidth()-20, passwordPanel.getHeight());
 		
-		feedbackPanel.setBounds((w-((w/6)*4))/2, (h/2)+(6*h/16), (w/6)*4, h/16);
+		emailPanel.setBounds(fieldX, fieldY-4*sceneHeight/8, fieldWidth, fieldHeight);
+		emailPanel.inputTextField.setBounds(curvatureRadius/2, 0, emailPanel.getWidth()-20, emailPanel.getHeight());
+		
+		firstNamePanel.setBounds(fieldX, fieldY-3*sceneHeight/8, fieldWidth, fieldHeight);
+		firstNamePanel.inputTextField.setBounds(curvatureRadius/2, 0, firstNamePanel.getWidth()-20, firstNamePanel.getHeight());
+		
+		lastNamePanel.setBounds(fieldX, fieldY-2*sceneHeight/8, fieldWidth, fieldHeight);
+		lastNamePanel.inputTextField.setBounds(curvatureRadius/2, 0, lastNamePanel.getWidth()-20, lastNamePanel.getHeight());
+		
+		feedbackPanel.setBounds(fieldX, fieldY+(5*sceneHeight/16), fieldWidth, fieldHeight);
 		feedbackLabel.setBounds(curvatureRadius/2, 0, feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
 
-		loginButton.setBounds(passwordPanel.getX(), (h/2)+(3*(h/16)), (passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
-		continueButton.setBounds(passwordPanel.getX()+(passwordPanel.getWidth()/12)*7, (h/2)+(3*(h/16)), (passwordPanel.getWidth()/12)*5, passwordPanel.getHeight());
-		createAccountButton.setBounds(passwordPanel.getX(), (h/2)+(5*(h/16)), passwordPanel.getWidth(), passwordPanel.getHeight());
+		loginButton.setBounds(fieldX, fieldY+2*sceneHeight/16, 5*fieldWidth/12, fieldHeight);
+		continueButton.setBounds(fieldX+(fieldWidth/12)*7, fieldY+2*sceneHeight/16, 5*fieldWidth/12, fieldHeight);
+		createAccountButton.setBounds(fieldX, fieldY+sceneHeight/4, fieldWidth, fieldHeight);
+		registerButton.setBounds(fieldX, fieldY+2*sceneHeight/16, 5*fieldWidth/12, fieldHeight);
 
-		logoPanel.setBounds(passwordPanel.getX(), 0, passwordPanel.getWidth(), (h/2)-(h/16));
+		logoPanel.setBounds(fieldX, 0, fieldWidth, fieldY-sceneHeight/8);
 	}
 	
 }
