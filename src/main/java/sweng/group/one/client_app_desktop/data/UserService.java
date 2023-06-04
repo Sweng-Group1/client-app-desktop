@@ -159,7 +159,10 @@ public class UserService {
 			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
 		} else if (statusCode == 400) {
 			throw new RuntimeException("400 server response, bad request - check the request is valid");
-		} else {
+		} else if(statusCode == 0) {
+			throw new IOException("0 server response. Check that the server is running.");
+		}
+		else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}	
 	}

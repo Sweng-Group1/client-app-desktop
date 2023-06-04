@@ -406,6 +406,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			createAccountButton.setButtonName("Create Account");
 			createAccount = false;
 		}
+		feedbackLabel.setVisible(false);
 	}
 	
 	public void registerButtonPressed() {
@@ -492,10 +493,11 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	public void layoutContainer(Container parent) {
 		int sceneWidth = getWidth();
 		int sceneHeight = getHeight();
-		int fieldX = sceneWidth/2-sceneHeight/3;
-		int fieldY = sceneHeight/2+sceneHeight/16;
 		int fieldWidth = 2*sceneWidth/3;
 		int fieldHeight = sceneHeight/16;
+		int fieldX = (sceneWidth-fieldWidth)/2;
+		int fieldY = sceneHeight/2+sceneHeight/16;
+		int smallButtonWidth = 5*fieldWidth/12;
 		
 		usernamePanel.setBounds(fieldX, fieldY-sceneHeight/8, fieldWidth, fieldHeight);
 		usernamePanel.inputTextField.setBounds(curvatureRadius/2, 0, usernamePanel.getWidth()-20, usernamePanel.getHeight());
@@ -512,13 +514,13 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		lastNamePanel.setBounds(fieldX, fieldY-2*sceneHeight/8, fieldWidth, fieldHeight);
 		lastNamePanel.inputTextField.setBounds(curvatureRadius/2, 0, lastNamePanel.getWidth()-20, lastNamePanel.getHeight());
 		
-		feedbackPanel.setBounds(fieldX, fieldY+(5*sceneHeight/16), fieldWidth, fieldHeight);
+		feedbackPanel.setBounds(fieldX, fieldY+(11*sceneHeight/32), fieldWidth, fieldHeight);
 		feedbackLabel.setBounds(curvatureRadius/2, 0, feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
 
-		loginButton.setBounds(fieldX, fieldY+2*sceneHeight/16, 5*fieldWidth/12, fieldHeight);
-		continueButton.setBounds(fieldX+(fieldWidth/12)*7, fieldY+2*sceneHeight/16, 5*fieldWidth/12, fieldHeight);
+		loginButton.setBounds(fieldX, fieldY+2*sceneHeight/16, smallButtonWidth, fieldHeight);
+		continueButton.setBounds(fieldX+fieldWidth-smallButtonWidth, fieldY+2*sceneHeight/16, smallButtonWidth, fieldHeight);
 		createAccountButton.setBounds(fieldX, fieldY+sceneHeight/4, fieldWidth, fieldHeight);
-		registerButton.setBounds(fieldX, fieldY+2*sceneHeight/16, 5*fieldWidth/12, fieldHeight);
+		registerButton.setBounds(fieldX, fieldY+2*sceneHeight/16, smallButtonWidth, fieldHeight);
 
 		logoPanel.setBounds(fieldX, 0, fieldWidth, fieldY-sceneHeight/8);
 	}
