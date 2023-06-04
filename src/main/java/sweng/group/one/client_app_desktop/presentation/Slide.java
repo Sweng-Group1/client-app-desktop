@@ -4,7 +4,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
-
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -38,22 +39,42 @@ public class Slide extends JPanel implements LayoutManager {
 	 */
 	public void add(PresElement element) throws IllegalArgumentException{
 		
-		if (element.pos.x + element.width > pointWidth ||
-			element.pos.y + element.height > pointHeight ||
-			element.pos.x < 0 ||
-			element.pos.y < 0){
-			throw new IllegalArgumentException("Element does not fit this slide");
+		Rectangle slideRect = new Rectangle(0, 0, pointWidth, pointHeight);
+		Rectangle elementRect = new Rectangle(element.pos.x, element.pos.y, element.width, element.height);
+		
+		if (!elementRect.intersects(slideRect)){
+			throw new IllegalArgumentException("Element does not appear on the slide");
 		}
 		
 		this.add(element.component);
+		this.setComponentZOrder(element.component, elements.size());
 		this.getElements().add(element);
 		element.component.validate();
 	}
 	
-	public void displaySlide() {
+	/**
+	 * Displays or hides the slide and its elements.
+	 *
+	 * @param displaying true to display the slide, false to hide it
+	 */
+	public void displaySlide(boolean displaying) {
+		this.setVisible(displaying);
 		for (PresElement e:getElements()) {
-			e.displayElement();
+			e.displayElement(displaying);
 		}
+		this.validate();
+	}
+	
+	/**
+	 * Converts a point from pixel coordinates to point coordinates.
+	 *
+	 * @param pixel the point in pixel coordinates
+	 * @return the point in point coordinates
+	 */
+	public Point pxToPt(Point pixel) {
+		int ptX = (int)((float)pixel.x/this.getWidth() * this.pointWidth);
+		int ptY = (int)((float)pixel.y/this.getHeight() * this.pointHeight);
+		return new Point(ptX, ptY);
 	}
 
 	public int getPointWidth() {
@@ -106,7 +127,8 @@ public class Slide extends JPanel implements LayoutManager {
 	public Dimension preferredLayoutSize(Container parent) {
 		int slideX = getPointWidth();
 		int slideY = getPointHeight();
-		int w = (int) (parent.getWidth()*0.9);
+		int w = parent.getWidth();
+
 		float slideAspectRatio = (float)slideX/slideY;
 		
 		return new Dimension(w, (int) (w/slideAspectRatio));
