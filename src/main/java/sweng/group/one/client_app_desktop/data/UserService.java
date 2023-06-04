@@ -59,6 +59,7 @@ public class UserService {
         
         this.loginURL = urlProps.getProperty("loginURL");
         this.refreshURL = urlProps.getProperty("refreshURL");
+        this.userURL = urlProps.getProperty("userURL");
     }
 
 
@@ -127,8 +128,15 @@ public class UserService {
 	
 	//TODO: Test and comment. 
 	public int createUser(String username, String password, String firstName, String lastName, String email) throws IOException {
-		OkHttpClient client = new OkHttpClient();
+		
 		int statusCode = 0;
+
+		if (username.isBlank()==true || password.isBlank()==true || firstName.isBlank()==true || lastName.isBlank()==true || email.isBlank()==true) {
+			return statusCode;
+		}
+		
+		OkHttpClient client = new OkHttpClient();
+
 		RequestBody body = new MultipartBody.Builder()
 				.addFormDataPart("username", username)
 				.addFormDataPart("password", password)
@@ -151,7 +159,10 @@ public class UserService {
 			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
 		} else if (statusCode == 400) {
 			throw new RuntimeException("400 server response, bad request - check the request is valid");
-		} else {
+		} else if(statusCode == 0) {
+			throw new IOException("0 server response. Check that the server is running.");
+		}
+		else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}	
 	}
