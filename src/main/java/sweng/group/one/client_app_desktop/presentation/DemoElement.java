@@ -5,6 +5,10 @@ import java.awt.Point;
 
 import javax.swing.JPanel;
 
+/**
+ * @author flt515
+ *
+ */
 public class DemoElement extends PresElement{
 
 	public DemoElement(Point pos, int width, int height, float duration, Slide slide) {

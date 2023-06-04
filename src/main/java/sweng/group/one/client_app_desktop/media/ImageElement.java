@@ -17,7 +17,6 @@ public class ImageElement extends PresElement{
 	public ImageElement(Point pos, int width,int height, float duration, Slide slide,BufferedImage image) {
 		super(pos, height, height, duration, slide);
 		this.image=image;
-		type= "IMAGE";
 		component = new JComponent() {
 			public void paint(Graphics g) {
 				Graphics2D g2= (Graphics2D) g.create();

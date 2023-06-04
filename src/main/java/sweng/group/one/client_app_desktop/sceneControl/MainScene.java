@@ -61,6 +61,7 @@ public class MainScene extends JFrame implements LayoutManager{
 		
 		sidebarScene = new SidebarScene(null);
 		
+		
 		mapScene = new MapScene() {
 			@Override
 			public void selectMarker(EventMarker selected) {
@@ -88,6 +89,13 @@ public class MainScene extends JFrame implements LayoutManager{
 				public void accountPressed() {
 					sidebarScene.setVisible(false);
 					login.setVisible(true);
+				}
+				
+				@Override
+				public void closePressed() {
+					sidebarScene.setVisible(true);
+					sidebarScene.close();
+					login.setVisible(false);
 				}
 			};
 			login= new LoginScene();
@@ -157,6 +165,13 @@ public class MainScene extends JFrame implements LayoutManager{
                 }
             }
         });
+		
+		try {
+			addDemoMarkers();
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	};
 	
 	public void resizeComponents() {

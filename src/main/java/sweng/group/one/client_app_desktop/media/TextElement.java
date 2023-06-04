@@ -20,8 +20,8 @@ import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
 /**
- * The “TextElement” class displays an arbitrary string, in an arbitrary font of
- * arbitrary size. The “TextElement” will fill the space on a "Slide" which is
+ * The â€œTextElementâ€� class displays an arbitrary string, in an arbitrary font of
+ * arbitrary size. The â€œTextElementâ€� will fill the space on a "Slide" which is
  * specified by the element's position, width and height.
  * 
  * @author joe2k01
@@ -39,7 +39,7 @@ public class TextElement extends PresElement {
 	 * @param Colour     the colour of the text.
 	 * @param duration   Duration.
 	 * @param pos        The coordinates of the top left corner of the TextElement.
-	 *                   on the “Slide” class.
+	 *                   on the â€œSlideâ€� class.
 	 * @param width      width of text element.
 	 * @param height     height of TextElement.
 	 * @param slide      The Slide owning the TextElement.
@@ -47,7 +47,6 @@ public class TextElement extends PresElement {
 	public TextElement(String text, String fontName, int fontSizePt, Color Colour, float duration, Point pos, int width,
 			int height, Slide slide) {
 		super(pos, width, height, duration, slide);
-		type= "TEXT";
 		this.text= text;
 		// Load system fonts
 		Font[] t = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();

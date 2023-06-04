@@ -13,6 +13,17 @@ public class VideoPlayer extends PlayableMediaElement {
 	private final EmbeddedMediaPlayerComponent mediaPlayer;
 	private Boolean nativeLib;
 	
+	
+	/**
+	 * Creates a new VideoPlayer object with the specified parameters.
+	 *
+	 * @param pos         the position of the video player
+	 * @param pointWidth  the width of the video player
+	 * @param pointHeight the height of the video player
+	 * @param slide       the slide to which the video player belongs
+	 * @param fileURL     the URL of the video file
+	 * @param loops       specifies whether the video should loop when played
+	 */
 	public VideoPlayer(Point pos, 
 						  int pointWidth, 
 						  int pointHeight,
@@ -28,6 +39,7 @@ public class VideoPlayer extends PlayableMediaElement {
 			this.component = mediaPlayer;
 			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
 			loadFile();
+			mediaPlayer.mediaPlayer().controls().setRepeat(loops);
 		}
 		else {
 			this.component = new JTextArea("VLC is required for media to be used in this application");
@@ -56,11 +68,24 @@ public class VideoPlayer extends PlayableMediaElement {
 	}
 	
 	@Override
+	public void displayElement(boolean displaying) {
+		component.setVisible(displaying);
+		mediaPlayer.mediaPlayer().controls().stop();
+		if(component.isDisplayable() && displaying) {
+			mediaPlayer.mediaPlayer().controls().play();
+		}
+	}
+	
+	@Override
 	protected void loadFile() {
 		mediaPlayer.mediaPlayer().media().prepare(localPath);
 	}
 	
-	/* Tests if the user has native libraries installed for VLC */
+	/**
+	 * Tests if the user has native libraries installed for VLC.
+	 *
+	 * @return true if the native libraries are installed, false otherwise
+	 */
 	public boolean nativeLibsInstalled() {
 		return nativeLib;
 	}
