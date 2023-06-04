@@ -60,17 +60,13 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	// This is the viewport for the scrollpane
 	private JPanel scrollView;
 
-	public SidebarScene(ActionListener searchAction) {
+	public SidebarScene() throws IOException {
+		super();
 		this.setOpaque(false);
 
 		// Sets up search bar, back button, etc.
 		setUpBackground();
-		try {
-			setUpSearchBar();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setUpSearchBar();
 		
 		setUpScrollPane();
 		isOpen=true;
@@ -183,7 +179,9 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	
 	// Called to open the sidebar
 	public void open() {
-		
+		if(isOpen) {
+			return;
+		}
 		
 		Timer openTimer = new Timer();
 		int widthInc = (this.getWidth() - GAP_WIDTH)*ANIMATION_FRAME_TIME_MS/ANIMATION_TIME_MS;
@@ -226,7 +224,6 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		if(!isOpen) {
 			return;
 		}
-		
 		
 		minimizeButton.setIconImage(forwardsArrow);
 		Timer closeTimer = new Timer();
@@ -273,7 +270,6 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 			panel.setBackground(colorDark); // Same colour as sideBar for seamless look
 			scrollView.doLayout();
 			scrollView.validate();
-			panel.repaint();
 		}
 		scrollView.revalidate(); // Update the layout of the containerPanel
 		scrollView.repaint(); // Refresh the visuals of the containerPanel

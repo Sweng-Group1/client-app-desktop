@@ -46,7 +46,6 @@ public class MainScene extends JFrame implements LayoutManager{
 	private static final Color colorLight= new Color(78,106,143);
 	private static final Color colorDark= new Color(46,71,117);
 	
-	JPanel waitingScreen;
 	private int gapWidth;
 	
 	public MainScene() {
@@ -54,13 +53,10 @@ public class MainScene extends JFrame implements LayoutManager{
 		
 		this.setSize(800, 500);
 		
+		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		gapWidth= screenSize.height/48;
 		this.setVisible(true); 
-		
-		
-		sidebarScene = new SidebarScene(null);
-		
 		
 		mapScene = new MapScene() {
 			@Override
@@ -68,11 +64,13 @@ public class MainScene extends JFrame implements LayoutManager{
 				super.selectMarker(selected);
 				
 				if (selected != null) {
+					sidebarScene.open();
 					sidebarScene.replacePres(selected.getPosts());
 				}
 			}
 		};
 		try {
+			sidebarScene = new SidebarScene();
 			options = new OptionsScene() {
 				@Override
 				public void helpPressed() {
@@ -100,8 +98,8 @@ public class MainScene extends JFrame implements LayoutManager{
 			};
 			login= new LoginScene();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new RuntimeException("Missing Assets");
 		}
 		//upload= new UploadScene();
 		
@@ -138,8 +136,6 @@ public class MainScene extends JFrame implements LayoutManager{
 		pane.add(options);
 		pane.setLayer(login, 3);
 		pane.add(login);
-//		pane.setLayer(upload, 4);
-//		pane.add(upload);
 		
 		mapScene.setVisible(true);
 		options.setVisible(true);
@@ -155,9 +151,7 @@ public class MainScene extends JFrame implements LayoutManager{
             @Override
             public void windowStateChanged(WindowEvent e) {
                 if ((e.getNewState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
-                    System.out.println("Window is now in fullscreen mode");
-                    validate();
-                    repaint();
+                	repaint();
                 } else {
                     System.out.println("Window is not in fullscreen mode");
                     validate();
@@ -166,26 +160,18 @@ public class MainScene extends JFrame implements LayoutManager{
             }
         });
 		
-		try {
-			addDemoMarkers();
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				try {
+					addDemoMarkers();
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+        thread.start();
 	};
-	
-	public void resizeComponents() {
-		screenSize= this.getSize();
-		mapScene.setBounds(0, 0, screenSize.width,screenSize.height);
-		sidebarScene.setSize(screenSize.width/3,screenSize.height);
-		sidebarScene.setLocation(0,0);
-		options.setSize(screenSize.height/4, screenSize.height/4);
-		options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
-		login.setSize(screenSize.width/4, screenSize.height/2);
-		login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
-//		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
-	}
-	
 	
 	public void addDemoMarkers() throws MalformedURLException {
 		int slideX = 100;
@@ -283,9 +269,11 @@ public class MainScene extends JFrame implements LayoutManager{
 		
 		mapScene.setBounds(0, 0, w, h);
 		sidebarScene.setBounds(0, 0, w/3, h);
+		sidebarScene.layoutContainer(getContentPane());
 		options.setBounds(w-optionsGap-h/3, optionsGap, h/3, h/3);
+		options.layoutContainer(getContentPane());
 		login.setBounds(3*w/8, h/4, w/4, h/2);
-//		upload.setBounds(w/10, h/10, 4*(w/5), 4*(h/5));
+		login.layoutContainer(getContentPane());
 	}
 	
 	public static void main(String[] args) {

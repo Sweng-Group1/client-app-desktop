@@ -14,13 +14,13 @@ import java.nio.file.Paths;
 import org.json.JSONObject;
 
 /*
- * This class handles logging in, refreshing access and authentication tokens,
- * storing them, and storing the user's username.
+ * This class handles logging in, refreshing access and authentication tokens, 
+ * storing them, and storing the user's username. 
  * @author Paul Pickering
- */
+*/
 
 public class User {
-	private String username;
+	private String username = new String();
 	private String accessToken;
 	private String refreshToken;
 
@@ -52,7 +52,13 @@ public class User {
 		this.refreshToken = refreshToken;
 	}
 
+	/**
+	 * Saves the access token locally, and also saves it to the User field.
+	 * 
+	 * @param token the access token to the saved.
+	 */
 	public void saveAccessToken(String token) throws IOException {
+
 		Path directoryPath = Paths.get("temp");
 		Path filepath = Paths.get("temp/" + username + "-access_token.txt");
 		// Checking if temp folder already exists, if not create one.
@@ -65,6 +71,11 @@ public class User {
 		Files.write(filepath, token.getBytes());
 	}
 
+	/**
+	 * Saves the refresh token locally, and also saves it to the User field.
+	 * 
+	 * @param token the refresh token to be saved.
+	 */
 	public void saveRefreshToken(String token) throws IOException {
 		Path directoryPath = Paths.get("temp");
 		Path filepath = Paths.get("temp/" + username + "-refresh_token.txt");
@@ -77,13 +88,20 @@ public class User {
 		Files.write(filepath, token.getBytes());
 	}
 
+	/**
+	 * Reads the refresh token from disk.
+	 */
 	public String readRefreshToken() throws IOException {
 		Path filepath = Paths.get("temp/" + username + "-refresh_token.txt");
 		return Files.readString(filepath);
 	}
 
+	/**
+	 * Reads the access token from disk.
+	 */
 	public String readAccessToken() throws IOException {
 		Path filepath = Paths.get("temp/" + username + "-access_token.txt");
 		return Files.readString(filepath);
 	}
+
 }

@@ -554,6 +554,7 @@ public class Presentation extends JPanel {
 		Slide currentSlide = getCurrentSlide();
 		Dimension preferredLayout = currentSlide.preferredLayoutSize(this);
 		currentSlide.setPreferredSize(preferredLayout);
+		currentSlide.layoutContainer(this);
 	}
 	
 	@Override
