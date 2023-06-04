@@ -30,7 +30,7 @@ import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
 /**
  * Modified JPanel that allows users to login or create an account using a chosen username and password
  * 
- * @author Srikanth Jakka & Luke George. Sophie Maw, Fraser Todd & Jonathan Cooke.
+ * @author Luke George, Srikanth Jakka, Sophie Maw, Fraser Todd & Jonathan Cooke.
  * @since 04/06/2023
  *
  */
@@ -58,8 +58,6 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	private JPanel feedbackPanel;
 	private JLabel feedbackLabel;
 	
-	private String accessToken;
-	private String refreshToken;
 	private UserService userService = new UserService();
 	private User user = new User("Default");
 	
@@ -263,9 +261,9 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	}
 	
 	
-//	/**
-//	 * Creates the buttons that the user interacts with to submit their information, and adds them to LoginScene
-//	 */
+	/**
+	 * Creates the buttons that the user interacts with to submit their information, and adds them to LoginScene
+	 */
 	private void createButtons() {
 		loginButton = new LoginSceneButton("Log In") {
 			/**
@@ -324,6 +322,12 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		this.add(logoPanel);
 	}
 	
+	/**
+	 * Checks the validity of the users login details with the server and attempts to log them in
+	 * Informs the user whether or not their attempt was successful
+	 * 
+	 * @return Indicates if the login was a success
+	 */
 	public boolean loginButtonPressed() {		
 		user = new User(usernamePanel.inputTextField.getText());
 		String password = String.valueOf(((JPasswordField) passwordPanel.inputTextField).getPassword());
@@ -368,6 +372,11 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		return false;
 	}
 	
+	/**
+	 * Checks whether the user has a valid access token 
+	 * 
+	 * @return
+	 */
 	public boolean checkAccessToken() {
 		try {
 			if (userService.refreshAccessToken(user)==200) {
@@ -388,6 +397,10 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		return false;
 	}
 	
+	/**
+	 * Alters the appearance and functionality of LoginScene dependent on its current state
+	 * Either allows for logging in, or for account creation
+	 */
 	public void createAccountButtonPressed() {
 		if (createAccount==false) {
 			logoPanel.setVisible(false);
@@ -417,6 +430,9 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		feedbackLabel.setVisible(false);
 	}
 	
+	/**
+	 * Sends valid user details to the server in order to setup a new user account
+	 */
 	public void registerButtonPressed() {
 		String email = emailPanel.inputTextField.getText();
 		String firstName = firstNamePanel.inputTextField.getText();
@@ -438,9 +454,11 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			feedbackLabel.setVisible(true);
 			e.printStackTrace();
 		}
-		
 	}
 	
+	/**
+	 * Removes LoginScene from the view
+	 */
 	public void changeScene() {
 		isOpen = false;
 		this.setVisible(false);
