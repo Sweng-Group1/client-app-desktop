@@ -398,6 +398,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			registerButton.setVisible(true);
 			createAccountButton.setButtonName("Back to Log In");
 			createAccount = true;
+			passwordPanel.inputTextField.setText("");
 		}
 		else {
 			logoPanel.setVisible(true);
@@ -408,6 +409,10 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			registerButton.setVisible(false);
 			createAccountButton.setButtonName("Create Account");
 			createAccount = false;
+			passwordPanel.inputTextField.setText("");
+			emailPanel.inputTextField.setText("");
+			firstNamePanel.inputTextField.setText("");
+			lastNamePanel.inputTextField.setText("");
 		}
 		feedbackLabel.setVisible(false);
 	}
