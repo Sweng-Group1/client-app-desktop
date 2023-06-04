@@ -200,7 +200,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag)
+	public static ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 		
 		int statusCode = 0;

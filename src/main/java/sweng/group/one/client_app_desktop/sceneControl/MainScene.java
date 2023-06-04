@@ -12,18 +12,24 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import javax.xml.parsers.ParserConfigurationException;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.map.awt.graphics.AwtBitmap;
+import org.xml.sax.SAXException;
 
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.media.ImageViewer;
@@ -32,6 +38,9 @@ import sweng.group.one.client_app_desktop.presentation.DemoElement;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import sweng.group.one.client_app_desktop.text.TextElement;
+import sweng.group.one.client_app_desktop.data.AuthenticationException;
+import sweng.group.one.client_app_desktop.data.HashtagService;
+import sweng.group.one.client_app_desktop.data.PostService;
 
 public class MainScene extends JFrame implements LayoutManager{
 
@@ -52,13 +61,12 @@ public class MainScene extends JFrame implements LayoutManager{
 	
 	private int gapWidth;
 	
-	public MainScene() {
+	public MainScene() throws IOException {
 		super();
 		
 		this.setSize(800, 500);
 		this.setMinimumSize(new Dimension(800, 500));
 		this.setMaximumSize(new Dimension(1920, 1080));
-		
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		gapWidth= screenSize.height/48;
@@ -157,11 +165,43 @@ public class MainScene extends JFrame implements LayoutManager{
 		
 		mapScene.loadMapFile(new File("./assets/map/york.map"));
 		
+		BufferedImage poiImage = ImageIO.read(new File("./assets/map/marker.png"));
+		Bitmap markerImage = new AwtBitmap(poiImage);
+		
+		try {
+			ArrayList<EventMarker> events = HashtagService.retrieveHashtagsAsEventMarkers(mapScene, markerImage);
+			
+			for(EventMarker e : events) {
+				Thread downloadThread = new Thread() {
+					@Override
+					public void run() {
+						ArrayList<Presentation> pres = new ArrayList<>();
+						try {
+							pres = PostService.retrievePostsByHashtagAsPresentations(e.getName());
+						} catch (SAXException | ParserConfigurationException | IOException
+								| AuthenticationException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						for(Presentation p : pres) {
+							e.addPost(p);
+						}
+						mapScene.addEventMarker(e);
+					}
+				};
+				downloadThread.start();
+			}
+			
+		} catch (IOException | AuthenticationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
 				try {
-					addDemoMarkers();
+					//addDemoMarkers();
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}

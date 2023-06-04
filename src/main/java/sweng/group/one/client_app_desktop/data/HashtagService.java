@@ -21,7 +21,7 @@ import sweng.group.one.client_app_desktop.sceneControl.MapScene;
 // Rough and ready test - need to run post tests first to add a Hashtag to the server. 
 public class HashtagService {
 
-	private String hashtagURL = "http://localhost:8080/api/v1/hashtag";
+	private static String hashtagURL = "http://localhost:8080/api/v1/hashtag";
 
 	/**
      * Retrieves hashtags from the server and returns them in JSON.
@@ -54,7 +54,7 @@ public class HashtagService {
      * @param bitmap the Bitmap the EventMarkers will use for the pin. 
      * @return ArrayList<EventMarker> ArrayList of the EventMarkers.
      */
-	public ArrayList<EventMarker> retrieveHashtagsAsEventMarkers(MapScene mapScene, Bitmap bitmap) throws IOException, AuthenticationException {
+	public static ArrayList<EventMarker> retrieveHashtagsAsEventMarkers(MapScene mapScene, Bitmap bitmap) throws IOException, AuthenticationException {
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().url(hashtagURL).get().build();
@@ -74,7 +74,7 @@ public class HashtagService {
 				  Double longitude = hashtagJSON.getDouble("longitude");
 				  LatLong location = new LatLong(latitude, longitude); 
 				  EventMarker hashtag = new EventMarker(mapScene, location, bitmap);
-				  mapScene.addEventMarker(hashtag);
+				  hashtag.setName(hashtagJSON.getString("name"));
 				  hashtags.add(hashtag);
 				  }
 			  return hashtags;
