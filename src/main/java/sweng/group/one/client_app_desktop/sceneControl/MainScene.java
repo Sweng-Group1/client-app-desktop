@@ -54,13 +54,6 @@ public class MainScene extends JFrame implements LayoutManager{
 	//private UploadScene upload;
 	private OptionsScene options;
 	
-	private Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
-	
-	private static final Color colorLight= new Color(78,106,143);
-	private static final Color colorDark= new Color(46,71,117);
-	
-	private int gapWidth;
-	
 	public MainScene() throws IOException {
 		super();
 		
@@ -69,7 +62,6 @@ public class MainScene extends JFrame implements LayoutManager{
 		this.setMaximumSize(new Dimension(1920, 1080));
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		gapWidth= screenSize.height/48;
 		this.setVisible(true); 
 		
 		mapScene = new MapScene() {
@@ -86,7 +78,16 @@ public class MainScene extends JFrame implements LayoutManager{
 			}
 		};
 		try {
-			sidebarScene = new SidebarScene();
+			sidebarScene = new SidebarScene() {
+				@Override
+				public void search(String text) {
+					for (EventMarker e : mapScene.getMarkers()) {
+						if(e.getName().contains(text)) {
+							mapScene.selectMarker(e);
+						}
+					}
+				}
+			};
 			options = new OptionsScene() {
 				private static final long serialVersionUID = -4506870977494750646L;
 
@@ -313,7 +314,12 @@ public class MainScene extends JFrame implements LayoutManager{
 	}
 	
 	public static void main(String[] args) {
-		new MainScene();
+		try {
+			new MainScene();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

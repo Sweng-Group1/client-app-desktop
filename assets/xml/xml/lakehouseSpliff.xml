@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<presentation xmlns="urn:SWENG"
+    xmlns:SWENG="https://raw.githubusercontent.com/SWENG-G2/xml_standard/main/standard.xsd">
+    <info>
+        <title>#LakehouseLagers</title>
+        <author>Fraser Todd</author>
+        <date>2023-06-05</date>
+        <numSlides>1</numSlides>
+    </info>
+    <slide height="1332" width="750" title="1">
+        <image url="http://localhost:8080/api/v1/media/16" height="1332" width="750" xCoordinate="0" yCoordinate="0"/>
+    </slide>
+</presentation>

@@ -9,6 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.UUID;
 
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Slide;
@@ -48,6 +49,7 @@ public abstract class MediaElement extends PresElement {
 				throw new IOException("Given URL does not contain a file");
 			}
 			String fileName = fieldValue.substring(fieldValue.indexOf("filename=") + 9, fieldValue.length());
+			fileName = UUID.randomUUID() + fileName;
 			fileName = fileName.substring(fileName.lastIndexOf("/")+1); //prevent new folders from being made
 			this.localPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/assets/" + fileName;
 			

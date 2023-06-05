@@ -103,14 +103,7 @@ public class MapScene extends MapView{
 				tileCache, 
 				mapStore, 
 				this.getModel().mapViewPosition, 
-				GRAPHIC_FACTORY) {
-			//TODO: Remove this
-				@Override //print co-ords when map is clicked
-	            public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
-	                addEventMarker(tapLatLong);
-	                return true;
-	            }
-	        };
+				GRAPHIC_FACTORY);
 	        
         //set custom theme
 		try {
@@ -193,6 +186,10 @@ public class MapScene extends MapView{
 	public void selectMarker(EventMarker selected) {
 		for (EventMarker m : markers) {
 			m.setSelected(m == selected);
+		}
+		
+		if(selected != null) {
+			this.getModel().mapViewPosition.animateTo(selected.getLatLong());
 		}
 	}
 	

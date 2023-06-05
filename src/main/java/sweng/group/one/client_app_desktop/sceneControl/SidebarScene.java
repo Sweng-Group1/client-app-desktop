@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
@@ -48,6 +50,9 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	private RoundedButton searchButton;
 	
 	private Image backArrow, forwardsArrow;
+	
+	
+	private ArrayList<Presentation> presentations;
 	
 	// GUI Components
 	private JScrollBar scrollBar;
@@ -98,7 +103,13 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		searchField.setBackground(transparent);
 		searchField.setBorder(null);
 		
-		searchButton = new RoundedButton(ImageIO.read(new File("./assets/searchBlack.png")), curvatureRadius, Color.white, Color.darkGray, Color.gray);
+		searchButton = new RoundedButton(ImageIO.read(new File("./assets/searchBlack.png")), curvatureRadius, Color.white, Color.darkGray, Color.gray) {
+			
+			@Override
+			public void buttonPressed() {
+				search(searchField.getText());
+			}
+		};
 		
 		backArrow = ImageIO.read(new File("./assets/backBlack.png"));
 		forwardsArrow = ImageIO.read(new File("./assets/forwardBlack.png"));
@@ -124,6 +135,10 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		this.setComponentZOrder(minimizeButton, 0);
 	}
 	
+	protected void search(String name) {
+		//Override this in parent class
+	}
+
 	private void setUpBackground() {
 		sidebarMainPanel = new JPanel() {
 
@@ -182,6 +197,11 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		if(isOpen) {
 			return;
 		}
+		if(presentations != null) {
+			for(Presentation pres: presentations) {
+				pres.showCurrentSlide();
+			}
+		}
 		
 		Timer openTimer = new Timer();
 		int widthInc = (this.getWidth() - GAP_WIDTH)*ANIMATION_FRAME_TIME_MS/ANIMATION_TIME_MS;
@@ -223,6 +243,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 			return;
 		}
 		
+		
 		minimizeButton.setIconImage(forwardsArrow);
 		Timer closeTimer = new Timer();
 		int widthDecr = sidebarMainPanel.getWidth()*ANIMATION_FRAME_TIME_MS/ANIMATION_TIME_MS;
@@ -244,6 +265,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 				isOpen = false;
 				scrollPane.setVisible(false);
 				scrollBar.setVisible(false);
+				stopPresentations();
 				closeTimer.cancel();
 				closeTimer.purge();
 			}
@@ -259,6 +281,8 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 	
 	/* Replaces the current presentation pane with p */
 	public void replacePres(List<Presentation> p) {
+		stopPresentations();
+		presentations = (ArrayList<Presentation>)p;
 
 		// Update the content of the containerPanel
 		scrollView.removeAll(); // Clear the existing panels from the containerPanel
@@ -272,6 +296,15 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		scrollView.revalidate(); // Update the layout of the containerPanel
 		scrollView.repaint(); // Refresh the visuals of the containerPanel
 	}
+	
+	private void stopPresentations() {
+		if(presentations != null) {
+			for(Presentation pres: presentations) {
+				pres.hidePresentation();
+			}
+		}
+	}
+	
 
 	@Override
 	public void addLayoutComponent(String name, Component comp) {	

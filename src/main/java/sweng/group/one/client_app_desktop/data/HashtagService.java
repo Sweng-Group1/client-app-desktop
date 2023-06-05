@@ -104,7 +104,7 @@ public class HashtagService {
 		OkHttpClient client = new OkHttpClient();
 		
 		RequestBody body = new MultipartBody.Builder()
-				.addFormDataPart("name", hashtag.getTag())
+				.addFormDataPart("name", hashtag.getName())
 				.addFormDataPart("newName", newName)
 				.build();
 				
@@ -119,7 +119,7 @@ public class HashtagService {
 		int statusCode = response.code();
 		
 		if (statusCode == 200) {
-			hashtag.setTag(newName);
+			hashtag.setName(newName);
 			return hashtag;
 			 
 		} else if (statusCode == 403) {

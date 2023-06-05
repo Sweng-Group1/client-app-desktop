@@ -37,16 +37,15 @@ public class VideoPlayer extends PlayableMediaElement {
 		nativeLib = new NativeDiscovery().discover();
 		this.mediaPlayer = new CallbackMediaPlayerComponent();
 		
-		if (Boolean.TRUE.equals(nativeLib)) {
+//		if (Boolean.TRUE.equals(nativeLib)) {
 			this.component = mediaPlayer;
 			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
 			loadFile();
 			mediaPlayer.mediaPlayer().controls().setRepeat(loops);
-			
-		}
-		else {
-			this.component = new JTextArea("VLC is required for media to be used in this application");
-		}
+//		}
+//		else {
+//			this.component = new JTextArea("VLC is required for media to be used in this application");
+//		}
 	}
 	
 	@Override
@@ -73,6 +72,7 @@ public class VideoPlayer extends PlayableMediaElement {
 	@Override
 	public void displayElement(boolean displaying) {
 		component.setVisible(displaying);
+		mediaPlayer.mediaPlayer().controls().pause();
 		mediaPlayer.mediaPlayer().controls().stop();
 		if(component.isDisplayable() && displaying) {
 			mediaPlayer.mediaPlayer().controls().play();

@@ -81,7 +81,6 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 
 	public ArrayList<Presentation> retrievePostsPresentations()
@@ -226,7 +225,7 @@ public class PostService {
 				JSONObject postJSON = jsonArray.getJSONObject(i);
 				String xmlString = postJSON.getString("xmlContent");
 
-				if (xmlString.contains("<title>" + hashtag)) {
+				if (xmlString.contains(hashtag)) {
 					byte[] postXML = xmlString.getBytes();
 					Path xmlPath = Files.createTempFile("post", null);
 					Files.write(xmlPath, postXML);
@@ -234,8 +233,8 @@ public class PostService {
 					Presentation postPres = new Presentation(xmlPath.toFile());
 					posts.add(postPres);
 				}
-				return posts;
 			}
+			return posts;
 
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
@@ -246,7 +245,6 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 	
 	/**
@@ -505,7 +503,7 @@ public class PostService {
 		RequestBody body = null;
 		body = new MultipartBody.Builder().addFormDataPart("xmlContent", Files.readString(xml))
 				.addFormDataPart("validityHours", Integer.toString(validityHours)).addFormDataPart("latitude", latitude)
-				.addFormDataPart("longitude", longitude).addFormDataPart("hashtagName", hashtag.getHashtag()).build();
+				.addFormDataPart("longitude", longitude).addFormDataPart("hashtagName", hashtag.getName()).build();
 
 		Request request = new Request.Builder().url(postURL).post(body).header("Authorization", "Bearer " + accessToken)
 				.build();

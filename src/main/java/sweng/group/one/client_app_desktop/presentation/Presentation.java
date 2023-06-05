@@ -230,7 +230,7 @@ public class Presentation extends JPanel {
 					//set float values to 0 as floats cannot be null
 					varDict.put("delay", 0.0f);
 					varDict.put("timeOnScreen", 0.0f);
-					varDict.put("rotation", 0.0f);
+					varDict.put("rotation", 0);
 					
 					Node slideItem = slideXML.item(s);
 					String slideItemName = slideItem.getNodeName();
@@ -440,42 +440,43 @@ public class Presentation extends JPanel {
 	    //draw slide indicators
 	    int centerX = this.getWidth()/2;
         int bottomY = (int) (height*0.95);
-        int radius = (int) (width*0.01);
-	    
-        g2d.setColor(Color.white);
-        g2d.fillOval(centerX - radius, 
-        		bottomY - radius, 
-        		radius*2, 
-        		radius*2);
+        int radius = (int) (width*0.03);
         
-        int next = this.numSlides - 1 - this.currentSlideNo;
-        int nextRadius = radius;
-        int nextX = centerX;
-        int radiusDecr = 2;
-        
-        for(int i = 0; i < Math.min(next, 3); i++) {
-        	nextRadius -= radiusDecr;
-        	nextX += radius*2;
-        	
-        	g2d.fillOval(nextX - nextRadius, 
-	        		bottomY - nextRadius, 
-	        		nextRadius*2, 
-	        		nextRadius*2);
-        }
-        
-        int prev = currentSlideNo;
-        int prevRadius = radius;
-        int prevX = centerX;
-        
-        for(int i = 0; i < Math.min(prev, 3); i++) {
-        	prevRadius -= radiusDecr;
-        	prevX -= radius*2;
-        	
-        	
-        	g2d.fillOval(prevX - prevRadius, 
-	        		bottomY - prevRadius, 
-	        		prevRadius*2, 
-	        		prevRadius*2);
+        if (numSlides > 1) {
+	        g2d.setColor(Color.white);
+	        g2d.fillOval(centerX - radius, 
+	        		bottomY - radius, 
+	        		radius*2, 
+	        		radius*2);
+	        
+	        int next = this.numSlides - 1 - this.currentSlideNo;
+	        int nextRadius = radius;
+	        int nextX = centerX;
+	        
+	        for(int i = 0; i < Math.min(next, 4); i++) {
+	        	nextRadius = (int) (nextRadius*0.8);
+	        	nextX += radius*2;
+	        	
+	        	g2d.fillOval(nextX - nextRadius, 
+		        		bottomY - nextRadius, 
+		        		nextRadius*2, 
+		        		nextRadius*2);
+	        }
+	        
+	        int prev = currentSlideNo;
+	        int prevRadius = radius;
+	        int prevX = centerX;
+	        
+	        for(int i = 0; i < Math.min(prev, 4); i++) {
+	        	prevRadius = (int) (prevRadius*0.8);
+	        	prevX -= radius*2;
+	        	
+	        	
+	        	g2d.fillOval(prevX - prevRadius, 
+		        		bottomY - prevRadius, 
+		        		prevRadius*2, 
+		        		prevRadius*2);
+	        }
         }
 	   
 		// Draw arrows if the mouse is hovered
@@ -550,6 +551,19 @@ public class Presentation extends JPanel {
 		}
 		resizeCurrentSlide();
 		this.validate();
+	}
+	
+	/**
+	 * Stops displaying a post
+	 */
+	public void hidePresentation() {
+		if (slides.isEmpty()) {
+			return;
+		}
+		
+		for (Slide slide:slides) {
+			slide.displaySlide(false);
+		}
 	}
 	
 	/**

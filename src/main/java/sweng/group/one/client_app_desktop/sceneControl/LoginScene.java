@@ -12,6 +12,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import sweng.group.one.client_app_desktop.data.AuthenticationException;
 import sweng.group.one.client_app_desktop.data.User;
 import sweng.group.one.client_app_desktop.data.UserService;
+import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
 
 /**
@@ -378,6 +380,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		} catch (AuthenticationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
