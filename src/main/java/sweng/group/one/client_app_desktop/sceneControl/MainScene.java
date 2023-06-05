@@ -41,6 +41,7 @@ import sweng.group.one.client_app_desktop.text.TextElement;
 import sweng.group.one.client_app_desktop.data.AuthenticationException;
 import sweng.group.one.client_app_desktop.data.HashtagService;
 import sweng.group.one.client_app_desktop.data.PostService;
+import sweng.group.one.client_app_desktop.data.UserService;
 
 public class MainScene extends JFrame implements LayoutManager{
 
@@ -104,7 +105,7 @@ public class MainScene extends JFrame implements LayoutManager{
 				
 				@Override
 				public void accountPressed() {
-					sidebarScene.setVisible(false);
+					sidebarScene.close();
 					login.setVisible(true);
 				}
 				
@@ -115,7 +116,37 @@ public class MainScene extends JFrame implements LayoutManager{
 					login.setVisible(false);
 				}
 			};
-			login= new LoginScene();
+			login= new LoginScene() {
+				@Override
+				public boolean loginButtonPressed() {
+					boolean loggedIn = super.loginButtonPressed();
+					if(loggedIn) {
+						Thread dlThread = new Thread() {
+							@Override
+							public void run() {
+								
+							
+								try {
+									ArrayList<Presentation> newPres = PostService.retrievePostsByHashtagAsPresentations("#Rocketry", user.getAccessToken());
+									for(EventMarker e : mapScene.getMarkers()) {
+										if(e.getName().contains("#Rocketry")) {
+											for(Presentation p : newPres) {
+												e.addPost(p);
+											}
+										}
+									}
+								} catch (SAXException | ParserConfigurationException | IOException
+										| AuthenticationException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						};
+						dlThread.start();
+					}
+					return loggedIn;
+				}
+			};
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Missing Assets");

@@ -141,7 +141,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag, String accessToken)
+	public static ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag, String accessToken)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 		
 		int statusCode = 0;
@@ -167,7 +167,7 @@ public class PostService {
 				JSONObject postJSON = jsonArray.getJSONObject(i);
 				String xmlString = postJSON.getString("xmlContent");
 
-				if (xmlString.contains("<title>" + hashtag)) {
+				if (xmlString.contains(hashtag)) {
 					byte[] postXML = xmlString.getBytes();
 					Path xmlPath = Files.createTempFile("post", null);
 					Files.write(xmlPath, postXML);
@@ -175,8 +175,8 @@ public class PostService {
 					Presentation postPres = new Presentation(xmlPath.toFile());
 					posts.add(postPres);
 				}
-				return posts;
 			}
+			return posts;
 
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
@@ -187,7 +187,6 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 	
 	/**

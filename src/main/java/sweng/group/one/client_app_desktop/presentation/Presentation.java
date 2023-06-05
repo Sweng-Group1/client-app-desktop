@@ -482,33 +482,32 @@ public class Presentation extends JPanel {
 		// Draw arrows if the mouse is hovered
 		if (isMouseHovered) {
 		    
-		    int buttonRadius = (int) (this.getWidth()*0.05);
-		    
-		    g2d.setColor(new Color(0.0f, 0.0f, 0.0f, 0.5f));
-		
-		    
-		    //draw circle buttons
-		    g2d.setColor(Color.white);
-		    g2d.fillOval(width - 2*buttonRadius, 
-		    		height/2 - buttonRadius, 
-		    		buttonRadius*2, 
-		    		buttonRadius*2);
-		    g2d.fillOval(0, 
-		    		height/2 - buttonRadius, 
-		    		buttonRadius*2, 
-		    		buttonRadius*2);
-		    		    
-		    g2d.setColor(Color.gray);
-		    int thickness = (int) (width*0.01);
-		    g2d.setStroke(new BasicStroke(thickness));
-		    
-		    g2d.drawLine(width-thickness, height/2, width-buttonRadius*2+thickness, height/2);
-		    g2d.drawLine(width, height/2, width-buttonRadius/2, (height-buttonRadius)/2);
-		    g2d.drawLine(width, height/2, width-buttonRadius/2, (height+buttonRadius)/2);
-		    
-		    g2d.drawLine(thickness, height/2, buttonRadius*2-thickness, height/2);
-		    g2d.drawLine(0, height/2, buttonRadius/2, (height-buttonRadius)/2);
-		    g2d.drawLine(0, height/2, buttonRadius/2, (height+buttonRadius)/2);
+			if(numSlides > 1) {
+			    int buttonRadius = (int) (this.getWidth()*0.05);
+			
+			    //draw circle buttons
+			    g2d.setColor(Color.white);
+			    g2d.fillOval(width - 2*buttonRadius, 
+			    		height/2 - buttonRadius, 
+			    		buttonRadius*2, 
+			    		buttonRadius*2);
+			    g2d.fillOval(0, 
+			    		height/2 - buttonRadius, 
+			    		buttonRadius*2, 
+			    		buttonRadius*2);
+			    		    
+			    g2d.setColor(Color.gray);
+			    int thickness = (int) (width*0.01);
+			    g2d.setStroke(new BasicStroke(thickness));
+			    
+			    g2d.drawLine(width-thickness, height/2, width-buttonRadius*2+thickness, height/2);
+			    g2d.drawLine(width, height/2, width-buttonRadius/2, (height-buttonRadius)/2);
+			    g2d.drawLine(width, height/2, width-buttonRadius/2, (height+buttonRadius)/2);
+			    
+			    g2d.drawLine(thickness, height/2, buttonRadius*2-thickness, height/2);
+			    g2d.drawLine(0, height/2, buttonRadius/2, (height-buttonRadius)/2);
+			    g2d.drawLine(0, height/2, buttonRadius/2, (height+buttonRadius)/2);
+			}
 	        
 	        //Draw Text Box
 	        g2d.setColor(new Color(1.0f, 1.0f, 1.0f, 0.5f));

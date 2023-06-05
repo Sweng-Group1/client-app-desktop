@@ -60,7 +60,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	private String accessToken;
 	private String refreshToken;
 	private UserService userService = new UserService();
-	private User user = new User("Default");
+	protected User user = new User("Default");
 	
 	public boolean userLoggedIn = false;
 	private boolean createAccount = false;
