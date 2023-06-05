@@ -2,15 +2,21 @@ package sweng.group.one.client_app_desktop.media;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
+
+import org.mapsforge.core.graphics.Color;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
@@ -19,8 +25,10 @@ import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 public class AudioPlayer extends PlayableMediaElement{
 	
 	private final AudioPlayerComponent audioPlayer;
-	private ImageIcon icon;
+	private Image icon;
 	private JToggleButton toggleB;
+	private File onIcon;
+	private File offIcon;
 	
 	public AudioPlayer(Point pos, int pointWidth, int pointHeight,
 						float duration, Slide slide, URL fileURL, boolean loops) {
@@ -28,16 +36,40 @@ public class AudioPlayer extends PlayableMediaElement{
 		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
 		this.audioPlayer = new AudioPlayerComponent();
 		
-		icon = new ImageIcon(".//assets//speaker_icon.png");
-		Image img = icon.getImage();
-		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-		Graphics g = bi.createGraphics();
-		g.drawImage(img, 0, 0, pointWidth+10, pointHeight+10, null);
-		ImageIcon newIcon = new ImageIcon(bi);
+		onIcon = new File(".//assets//audioON.png");
+		offIcon = new File(".//assets//audioOFF.png");
 		
-		toggleB = new JToggleButton(newIcon);
+		//Image icon;
+		try {
+			icon = ImageIO.read(offIcon);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		toggleB = new JToggleButton() {
+			
+			@Override
+			public void paint(Graphics g) {
+				Graphics2D g2d = (Graphics2D)g;
+				
+				int w = this.getWidth();
+				int h = this.getHeight();
+				int x = (int)((float)pos.x / slide.getPointWidth() * w);
+				int y = (int)((float)pos.y / slide.getPointHeight() * h);
+				
+				g2d.setColor(java.awt.Color.white);
+				//g2d.fillRect(x-w/2, y-w/4, w, h);
+				g2d.fillRect(x-w/2, y-h/2, w, h);
+				g2d.drawImage(icon, x-w/2, y-h/2, w, h, null);
+			    //g2d.drawImage(icon, x-w/2, y-w/4, w, h, null);
+
+			    g2d.dispose();  // Dispose the Graphics2D object
+			}
+		};
+		
 		component = toggleB;
 		component.setPreferredSize(new Dimension(pointWidth, pointHeight));
+		component.setOpaque(false);
 		
 		loadFile();
 		toggleB.addActionListener(new ActionListener() {
@@ -49,6 +81,15 @@ public class AudioPlayer extends PlayableMediaElement{
 			
 		});
 	}
+		
+	public void changeButtonIcon(File icon) {
+		//Image icon;
+		try {
+			this.icon = ImageIO.read(icon);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 	
 
@@ -56,9 +97,11 @@ public class AudioPlayer extends PlayableMediaElement{
 	public void togglePlaying() {
 		if(getPlaying()) {
 			audioPlayer.mediaPlayer().controls().pause();
+			changeButtonIcon(offIcon);
 		}
 		else {
 			audioPlayer.mediaPlayer().controls().play();
+			changeButtonIcon(onIcon);
 		}
 	}
 	@Override
@@ -73,6 +116,82 @@ public class AudioPlayer extends PlayableMediaElement{
 	}
 
 }
+
+//package sweng.group.one.client_app_desktop.media;
+//
+//import java.awt.Dimension;
+//import java.awt.Graphics;
+//import java.awt.Image;
+//import java.awt.Point;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
+//import java.awt.image.BufferedImage;
+//import java.net.URL;
+//
+//import javax.swing.ImageIcon;
+//import javax.swing.JToggleButton;
+//
+//import sweng.group.one.client_app_desktop.presentation.Slide;
+//import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
+//
+//
+//public class AudioPlayer extends PlayableMediaElement{
+//	
+//	private final AudioPlayerComponent audioPlayer;
+//	private ImageIcon icon;
+//	private JToggleButton toggleB;
+//	
+//	public AudioPlayer(Point pos, int pointWidth, int pointHeight,
+//						float duration, Slide slide, URL fileURL, boolean loops) {
+//		
+//		super(pos, pointWidth, pointHeight, duration, slide, fileURL, loops);
+//		this.audioPlayer = new AudioPlayerComponent();
+//		
+//		icon = new ImageIcon(".//assets//speaker_icon.png");
+//		Image img = icon.getImage();
+//		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+//		Graphics g = bi.createGraphics();
+//		g.drawImage(img, 0, 0, pointWidth+10, pointHeight+10, null);
+//		ImageIcon newIcon = new ImageIcon(bi);
+//		
+//		toggleB = new JToggleButton(newIcon);
+//		component = toggleB;
+//		component.setPreferredSize(new Dimension(pointWidth, pointHeight));
+//		
+//		loadFile();
+//		toggleB.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				togglePlaying();
+//			}
+//			
+//		});
+//	}
+//	
+//	
+//
+//	@Override
+//	public void togglePlaying() {
+//		if(getPlaying()) {
+//			audioPlayer.mediaPlayer().controls().pause();
+//		}
+//		else {
+//			audioPlayer.mediaPlayer().controls().play();
+//		}
+//	}
+//	@Override
+//	public boolean getPlaying() {
+//		return audioPlayer.mediaPlayer().status().isPlaying();
+//	}
+//	@Override
+//	protected void loadFile() {
+//		String AudioLocalPath = getLocalPath();
+//		audioPlayer.mediaPlayer().media().startPaused(AudioLocalPath);
+//		
+//	}
+//
+//}
 
 
 
