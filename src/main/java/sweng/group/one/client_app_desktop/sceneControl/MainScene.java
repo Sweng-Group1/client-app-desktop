@@ -40,6 +40,7 @@ public class MainScene extends JFrame implements LayoutManager{
 	private LoginScene login;
 	//private UploadScene upload;
 	private OptionsScene options;
+	private HelpScene help;
 	
 	private Dimension screenSize= Toolkit.getDefaultToolkit().getScreenSize();
 	
@@ -58,9 +59,11 @@ public class MainScene extends JFrame implements LayoutManager{
 		gapWidth= screenSize.height/48;
 		this.setVisible(true); 
 		
+		// User Manual PDF Location 
+		String helpFilePath= new String("./assets/User_Manual.pdf");
+		help= new HelpScene(helpFilePath);
 		
 		sidebarScene = new SidebarScene(null);
-		
 		
 		mapScene = new MapScene() {
 			@Override
@@ -76,7 +79,7 @@ public class MainScene extends JFrame implements LayoutManager{
 			options = new OptionsScene() {
 				@Override
 				public void helpPressed() {
-					//Unimplemented
+					help.setVisible(true);
 				}
 				
 				@Override
@@ -99,6 +102,7 @@ public class MainScene extends JFrame implements LayoutManager{
 				}
 			};
 			login= new LoginScene();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,12 +144,17 @@ public class MainScene extends JFrame implements LayoutManager{
 		pane.add(login);
 //		pane.setLayer(upload, 4);
 //		pane.add(upload);
+		pane.setLayer(help, 5);
+		pane.add(help);
+
+		
 		
 		mapScene.setVisible(true);
 		options.setVisible(true);
 		sidebarScene.setVisible(true);
 		//upload.setVisible(false);
 		login.setVisible(false);
+		help.setVisible(false);
 		
 		this.setLayout(this);
 		
@@ -183,6 +192,8 @@ public class MainScene extends JFrame implements LayoutManager{
 		options.setLocation(screenSize.width-gapWidth-(screenSize.height/4), gapWidth);
 		login.setSize(screenSize.width/4, screenSize.height/2);
 		login.setLocation((screenSize.width- screenSize.width/4)/2, screenSize.height/4);
+		help.setSize(screenSize.width, screenSize.height);
+		help.setLocation(0, 0);
 //		upload.setBounds(screenSize.width/10, screenSize.height/10, 4*(screenSize.width/5), 4*(screenSize.height/5));
 	}
 	
@@ -285,6 +296,7 @@ public class MainScene extends JFrame implements LayoutManager{
 		sidebarScene.setBounds(0, 0, w/3, h);
 		options.setBounds(w-optionsGap-h/3, optionsGap, h/3, h/3);
 		login.setBounds(3*w/8, h/4, w/4, h/2);
+		help.setBounds(3*w/8, h/4, w/4, h/2);
 //		upload.setBounds(w/10, h/10, 4*(w/5), 4*(h/5));
 	}
 	
