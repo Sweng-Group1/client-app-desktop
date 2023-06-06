@@ -97,9 +97,10 @@ public class MainScene extends JFrame implements LayoutManager{
 				public void helpPressed() {
 					if (help.isVisible()) {
 						help.setVisible(false);
+						this.setLayout(this);
 					} else {				
-						this.layoutContainer(getContentPane());
 						help.setVisible(true);
+						this.setLayout(this);
 					}
 				}
 				
