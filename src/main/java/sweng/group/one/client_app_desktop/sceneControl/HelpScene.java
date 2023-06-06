@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class HelpScene extends JPanel implements LayoutManager, ComponentInterface {
+public class HelpScene extends JPanel implements ComponentInterface {
 
 	// Static Design Declarations
 	private static final int GAP_WIDTH= 10;
@@ -45,7 +45,7 @@ public class HelpScene extends JPanel implements LayoutManager, ComponentInterfa
         try {
             File pdfFile = new File(filePath);
             pdfImages = new ArrayList<>();
-
+            this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
             scrollView = new JPanel();
             scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS));
         	scrollPane = new JScrollPane(scrollView);
@@ -73,7 +73,7 @@ public class HelpScene extends JPanel implements LayoutManager, ComponentInterfa
 			
 			// Call layoutContainer to perform the initial layout
             SwingUtilities.invokeLater(() -> {
-                layoutContainer(HelpScene.this);
+                //layoutContainer(HelpScene.this);
                 validate();
             });
     		
@@ -151,37 +151,4 @@ public class HelpScene extends JPanel implements LayoutManager, ComponentInterfa
 		super.paint(g);
 	}
     
-    @Override
-    public void layoutContainer(Container parent) {
-        int w = this.getWidth();
-        int h = this.getHeight();
-
-        int mainPanelWidth = w - GAP_WIDTH;
-        int mainPanelHeight = h - (2 * GAP_WIDTH);
-
-        scrollPane.setBounds(GAP_WIDTH, GAP_WIDTH, mainPanelWidth - scrollBar.getWidth(), mainPanelHeight);
-        scrollBar.setBounds(mainPanelWidth - GAP_WIDTH/2 - 1, GAP_WIDTH, GAP_WIDTH, mainPanelHeight);
-        
-        System.out.println(scrollView.getComponentCount());
-    }
-
-
-	// Unused Layout Overrides
-	@Override
-	public void addLayoutComponent(String name, Component comp) {		
-	}
-
-	@Override
-	public void removeLayoutComponent(Component comp) {		
-	}
-
-	@Override
-	public Dimension preferredLayoutSize(Container parent) {
-		return null;
-	}
-
-	@Override
-	public Dimension minimumLayoutSize(Container parent) {
-		return null;
-	}
 }
