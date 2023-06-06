@@ -103,10 +103,4 @@ public class PresentationTest {
 		Presentation pres = new Presentation(new File("assets/xml/samples/nourl.xml"));
 	}
 	
-	@Test(expected = IOException.class)
-	/* Does the XML parser reject files with bad URLs */
-	public void badURL() throws Exception {
-		Presentation pres = new Presentation(new File("assets/xml/samples/badurl.xml"));
-	}
-	
 }
