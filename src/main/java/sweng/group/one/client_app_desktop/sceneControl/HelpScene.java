@@ -4,6 +4,8 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
+import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,10 +16,22 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class HelpScene extends JScrollPane {
-    private List<BufferedImage> pdfImages;
+public class HelpScene extends JPanel implements LayoutManager, ComponentInterface {
+
+	// Static Design Declarations
+	private static final int GAP_WIDTH= 10;
+	private static final int PRESENTATION_SCROLL_SPEED = 20;
+	
+	// PDF Pages as list of buffered images
+    private static List<BufferedImage> pdfImages;
+    // For multi-threading to improve PDF Loading performance
     private ExecutorService executorService;
+    
+	// GUI Components
+    private JScrollPane scrollPane;
     private JPanel scrollView;
+	private JScrollBar scrollBar;
+
 
     public HelpScene(String filePath) {
         try {
@@ -25,13 +39,36 @@ public class HelpScene extends JScrollPane {
             pdfImages = new ArrayList<>();
             executorService = Executors.newFixedThreadPool(1);
 
+            // Create and add the UI
             SwingUtilities.invokeLater(() -> {
                 scrollView = new JPanel();
                 scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS));
-                setViewportView(scrollView);
+            	scrollPane = new JScrollPane(scrollView);
+            	
+            	scrollPane.setOpaque(false);
+        		scrollPane.setBackground(colorDark);
+        		scrollPane.setBorder(null);
+            	
+        		// Custom Scrollbar setup
+        		scrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        		scrollBar = scrollPane.getVerticalScrollBar();
+        		scrollBar.setUI(new CustomScrollBarUI());
+        		scrollBar.setOpaque(false);
+        		
+        		// Default mouse scroll speed is too slow, set to a better value:
+        		scrollPane.getVerticalScrollBar().setUnitIncrement(PRESENTATION_SCROLL_SPEED);
+        		
+        		// Add scrollbar and scrollPane to JPanel
+        		add(scrollPane);
+        		add(scrollBar);
+        		
+        		this.setOpaque(false);
             });
 
-            executorService.execute(() -> {
+            // Load PDF on new thread
+        	executorService.execute(() -> {
                 try {
                     PDDocument document = PDDocument.load(pdfFile);
                     PDFRenderer pdfRenderer = new PDFRenderer(document);
@@ -46,8 +83,8 @@ public class HelpScene extends JScrollPane {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            });
-
+            }); 
+        	
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,6 +92,7 @@ public class HelpScene extends JScrollPane {
 
     private void addPageToScrollView(BufferedImage image) {
         ImagePanel imagePanel = new ImagePanel(image);
+        System.out.println(pdfImages.size());
         scrollView.add(imagePanel);
         scrollView.revalidate();
         scrollView.repaint();
@@ -74,7 +112,7 @@ public class HelpScene extends JScrollPane {
                 int scrollViewWidth = getParent().getParent().getWidth(); // Get the width of the scroll view
                 int totalHeight = 0; // Initialize the total height of the content
                 
-                List<Image> imagesCopy = new ArrayList<>(pdfImages); // Create a copy of the list
+                List<Image> imagesCopy = new ArrayList<>(pdfImages); // Create a copy of the list to avoid repaint issues
                 
                 for (Image image : imagesCopy) {
                     int imageWidth = image.getWidth(null); // Get the original width of the image
@@ -94,4 +132,46 @@ public class HelpScene extends JScrollPane {
             }
         }
     }
+    
+    @Override
+	public void paint(Graphics g) {
+		Graphics2D g2= (Graphics2D) g.create();
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(colorDark);
+		g2.fillRoundRect(0,0,this.getWidth(),this.getHeight(), curvatureRadius, curvatureRadius);
+		g2.dispose();
+		super.paint(g);
+	}
+    
+    @Override
+    public void layoutContainer(Container parent) {
+        int w = this.getWidth();
+        int h = this.getHeight();
+
+        int mainPanelWidth = w - GAP_WIDTH;
+        int mainPanelHeight = h - (2 * GAP_WIDTH);
+
+        scrollPane.setBounds(GAP_WIDTH, GAP_WIDTH, mainPanelWidth - scrollBar.getWidth(), mainPanelHeight);
+        scrollBar.setBounds(mainPanelWidth - GAP_WIDTH/2, GAP_WIDTH, GAP_WIDTH, mainPanelHeight);
+    }
+
+
+	// Unused Layout Overrides
+	@Override
+	public void addLayoutComponent(String name, Component comp) {		
+	}
+
+	@Override
+	public void removeLayoutComponent(Component comp) {		
+	}
+
+	@Override
+	public Dimension preferredLayoutSize(Container parent) {
+		return null;
+	}
+
+	@Override
+	public Dimension minimumLayoutSize(Container parent) {
+		return null;
+	}
 }

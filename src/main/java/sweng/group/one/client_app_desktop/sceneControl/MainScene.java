@@ -52,6 +52,7 @@ public class MainScene extends JFrame implements LayoutManager{
 	private MapScene mapScene;
 	private SidebarScene sidebarScene;
 	private LoginScene login;
+	private HelpScene help;
 	//private UploadScene upload;
 	private OptionsScene options;
 	
@@ -94,7 +95,12 @@ public class MainScene extends JFrame implements LayoutManager{
 
 				@Override
 				public void helpPressed() {
-					//Unimplemented
+					if (help.isVisible()) {
+						help.setVisible(false);
+					} else {				
+						this.layoutContainer(getContentPane());
+						help.setVisible(true);
+					}
 				}
 				
 				@Override
@@ -151,6 +157,9 @@ public class MainScene extends JFrame implements LayoutManager{
 			e.printStackTrace();
 			throw new RuntimeException("Missing Assets");
 		}
+		
+		help = new HelpScene("./assets/User_Manual.pdf");
+		
 		//upload= new UploadScene();
 		
 		login.getContinueButton().addMouseListener(new MouseListener() {
@@ -186,12 +195,16 @@ public class MainScene extends JFrame implements LayoutManager{
 		pane.add(options);
 		pane.setLayer(login, 3);
 		pane.add(login);
+		pane.setLayer(help, 4);
+		pane.add(help);
+		
 		
 		mapScene.setVisible(true);
 		options.setVisible(true);
 		sidebarScene.setVisible(true);
 		//upload.setVisible(false);
 		login.setVisible(false);
+		help.setVisible(false);
 		
 		this.setLayout(this);
 		
@@ -342,6 +355,8 @@ public class MainScene extends JFrame implements LayoutManager{
 		options.layoutContainer(getContentPane());
 		login.setBounds(3*w/8, h/4, w/4, h/2);
 		login.layoutContainer(getContentPane());
+		help.setBounds(w/3 + optionsGap/2, optionsGap, w/2 + optionsGap, h - optionsGap * 2);
+		help.layoutContainer(getContentPane());
 	}
 	
 	public static void main(String[] args) {
