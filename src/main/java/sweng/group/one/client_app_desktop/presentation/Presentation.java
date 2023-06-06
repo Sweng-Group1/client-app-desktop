@@ -94,6 +94,8 @@ public class Presentation extends JPanel {
         Validator validator = schema.newValidator();
         validator.validate(new StreamSource(xml));
         //TODO: Handle the error thrown when the XML is not valid
+        // I think this is fine. The calling code should decide what to do 
+        // if the file's not valid - Will 6/6/23
 		
         
         //load xml file as a document
