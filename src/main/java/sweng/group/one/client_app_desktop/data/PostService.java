@@ -22,7 +22,6 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 /**
  * Service class for handling all post related server tasks, i.e., uploading, retrieving, deleting, etc.
  * Communicates with a server at the specified URL to perform these tasks.
- * 
  * @author Paul Pickering
  */
 public class PostService {
@@ -38,7 +37,7 @@ public class PostService {
 	 * @throws SAXEException
 	 * @throws ParserConfigurationException
 	 */
-	public ArrayList<Presentation> retrievePostsPresentations(String accessToken)
+	public static ArrayList<Presentation> retrievePostsPresentations(String accessToken)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 
 		int statusCode = 0;
@@ -83,7 +82,7 @@ public class PostService {
 		}
 	}
 
-	public ArrayList<Presentation> retrievePostsPresentations()
+	public static ArrayList<Presentation> retrievePostsPresentations()
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 
 		int statusCode = 0;
@@ -114,8 +113,8 @@ public class PostService {
 
 				Presentation postPres = new Presentation(xmlPath.toFile());
 				posts.add(postPres);
-				return posts;
 			}
+			return posts;
 
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
@@ -126,7 +125,6 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 
 	/**
@@ -255,7 +253,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsXMLs(String accessToken)
+	public static ArrayList<Path> retrievePostsXMLs(String accessToken)
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
 		int statusCode = 0;
@@ -304,7 +302,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsXMLs()
+	public static ArrayList<Path> retrievePostsXMLs()
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
 		int statusCode = 0;
@@ -350,7 +348,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag, String accessToken)
+	public static ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag, String accessToken)
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
 		int statusCode = 0;
@@ -401,7 +399,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag)
+	public static ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag)
 			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
 		int statusCode = 0;
@@ -453,7 +451,7 @@ public class PostService {
 	 * @throws IOException
 	 */
 	// TODO: TEST
-	public int deletePost(int id, String accessToken) throws AuthenticationException, IOException {
+	public static int deletePost(int id, String accessToken) throws AuthenticationException, IOException {
 
 		int statusCode = 0;
 		OkHttpClient client = new OkHttpClient();
@@ -490,7 +488,7 @@ public class PostService {
 	 * @throws IOException             This means the XML cannot be read.
 	 * @throws AuthenticationException Invalid accessToken - try refreshing.
 	 */
-	public int uploadPost(Path xml, int validityHours, EventMarker hashtag, String accessToken)
+	public static int uploadPost(Path xml, int validityHours, EventMarker hashtag, String accessToken)
 			throws IOException, AuthenticationException {
 		int statusCode = 0;
 

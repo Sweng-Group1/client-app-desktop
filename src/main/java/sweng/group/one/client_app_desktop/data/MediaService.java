@@ -17,14 +17,14 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * @author Paul Pickering
  * Service class for interfacing with the "Media" entity endpoints on the server. 
+ * @author Paul Pickering
  */
 
 public class MediaService {
 	
 	//TODO: Do we want to change these URLs to constant specified elsewhere perhaps?
-	private String mediaURL;
+	private static String mediaURL;
 	
 	public MediaService() {
 		this("server-urls.properties");
@@ -48,7 +48,7 @@ public class MediaService {
 	            // TODO: Is this how we want exceptions handled? Or propogate up?
 	        }
 	        
-	        this.mediaURL = urlProps.getProperty("mediaURL");
+	        MediaService.mediaURL = urlProps.getProperty("mediaURL");
 	    }
 	
 	/**
@@ -57,7 +57,7 @@ public class MediaService {
      * @param accessToken the authentication token of the user. Must correspond to logged in user. 
      * @return Returns the status code (standard HTTP codes, e.g. 200 success), or 0 if an error occurs. 
      */
-	public int uploadMedia(File media, String accessToken) {
+	public static int uploadMedia(File media, String accessToken) {
 		
 		OkHttpClient client = new OkHttpClient();
 		Path filepath = media.toPath();
@@ -114,7 +114,7 @@ public class MediaService {
      * @param id the database ID of the media being retrieved. 
      * @return Path to downloaded (temporary) file.
      */
-	public Path retrieveMedia(int id) {
+	public static Path retrieveMedia(int id) {
 		
 		int statusCode = 0;
 		OkHttpClient client = new OkHttpClient();
@@ -165,7 +165,7 @@ public class MediaService {
      * @param accessToken accessToken of user - requires verified or admin role. 
      * @return Path to downloaded (temporary) file.
      */
-	public Path deleteMedia(int id, String accessToken) {
+	public static Path deleteMedia(int id, String accessToken) {
 		
 		int statusCode = 0;
 		OkHttpClient client = new OkHttpClient();

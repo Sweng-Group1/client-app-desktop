@@ -27,7 +27,7 @@ public class HashtagService {
      * Retrieves hashtags from the server and returns them in JSON.
      * @return JSONArray of the hashtags. 
      */
-	public JSONArray retrieveHashtagsAsJSON() throws IOException, AuthenticationException {
+	public static JSONArray retrieveHashtagsAsJSON() throws IOException, AuthenticationException {
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().url(hashtagURL).get().build();
@@ -99,7 +99,7 @@ public class HashtagService {
      * @param authToken the authorisation token for the user. Must be admin or verified or 403 error will occur.
      * @return ArrayList<EventMarker> ArrayList of the EventMarkers.
      */
-	public EventMarker updateHashtagName(EventMarker hashtag, String newName, String authToken) throws IOException, AuthenticationException {
+	public static EventMarker updateHashtagName(EventMarker hashtag, String newName, String authToken) throws IOException, AuthenticationException {
 		
 		OkHttpClient client = new OkHttpClient();
 		

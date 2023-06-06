@@ -20,9 +20,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * @author Paul Pickering
- * 
  * Service class for interfacing with the "User" entity endpoints on the server. 
+ *  @author Paul Pickering
  */
 
 // TODO: Add method for creating a new user on the server. 

@@ -13,12 +13,11 @@ import java.nio.file.Paths;
 
 import org.json.JSONObject;
 
-/*
+/**
  * This class handles logging in, refreshing access and authentication tokens, 
  * storing them, and storing the user's username. 
  * @author Paul Pickering
-*/
-
+**/
 public class User {
 	private String username = new String();
 	private String accessToken;
