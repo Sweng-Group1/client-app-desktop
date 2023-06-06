@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<presentation xmlns="urn:SWENG"
+    xmlns:SWENG="https://raw.githubusercontent.com/SWENG-G2/xml_standard/main/standard.xsd">
+    <info>
+        <title>Evaluation presentation</title>
+        <author>The Penelope Team</author>
+        <date>2023-02-06</date>
+        <numSlides>1</numSlides>
+    </info>
+    <slide width="900" height="1000" title="1">
+        <rectangle width="800" height="600" xCoordinate="50" yCoordinate="350" colour="#00FFFFFF"
+            borderColour="#FF0000FF" borderWidth="5" shadowRadius="5" shadowDx="5" shadowDy="7"
+            shadowColour="#0000FFFF" />
+    </slide>
+</presentation>
