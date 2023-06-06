@@ -97,10 +97,8 @@ public class MainScene extends JFrame implements LayoutManager{
 				public void helpPressed() {
 					if (help.isVisible()) {
 						help.setVisible(false);
-						this.setLayout(this);
 					} else {				
 						help.setVisible(true);
-						this.setLayout(this);
 					}
 				}
 				
@@ -121,6 +119,7 @@ public class MainScene extends JFrame implements LayoutManager{
 					sidebarScene.setVisible(true);
 					sidebarScene.close();
 					login.setVisible(false);
+					help.setVisible(false);
 				}
 			};
 			login= new LoginScene() {
@@ -357,7 +356,6 @@ public class MainScene extends JFrame implements LayoutManager{
 		login.setBounds(3*w/8, h/4, w/4, h/2);
 		login.layoutContainer(getContentPane());
 		help.setBounds(w/3 + optionsGap/2, optionsGap, w/2 + optionsGap, h - optionsGap * 2);
-		//help.layoutContainer(getContentPane());
 	}
 	
 	public static void main(String[] args) {
