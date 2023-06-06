@@ -121,26 +121,21 @@ public class HelpScene extends JPanel implements LayoutManager, ComponentInterfa
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            
+            // This will scale the image from the PDF page to the size of the scrollpane
             if (pdfImages != null) {
                 int scrollViewWidth = getParent().getParent().getParent().getWidth(); // Get the width of the main JPanel
-                int totalHeight = 0; // Initialize the total height of the content
                 
-                List<Image> imagesCopy = new ArrayList<>(pdfImages); // Create a copy of the list to avoid repaint issues
+                int imageWidth = image.getWidth(null); // Get the original width of the image
+                int imageHeight = image.getHeight(null); // Get the original height of the image
                 
-                for (Image image : imagesCopy) {
-                    int imageWidth = image.getWidth(null); // Get the original width of the image
-                    int imageHeight = image.getHeight(null); // Get the original height of the image
-                    
-                    int scaledWidth = scrollViewWidth; // Set the scaled width to the width of the scroll view
-                    int scaledHeight = (int) (((double) scrollViewWidth / imageWidth) * imageHeight); // Calculate the proportional scaled height
-                    
-                    totalHeight += scaledHeight; // Update the total height
-
-                    // Draw the image with the scaled dimensions
-                    g.drawImage(image, 0, totalHeight - scaledHeight, scaledWidth, scaledHeight, null);
-                }
+                int scaledWidth = scrollViewWidth; // Set the scaled width to the width of the scroll view
+                int scaledHeight = (int) (((double) scrollViewWidth / imageWidth) * imageHeight); // Calculate the proportional scaled height
                 
-                setPreferredSize(new Dimension(scrollViewWidth, totalHeight)); // Set the preferred size of the scroll view
+                // Draw the image with the scaled dimensions
+                g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
+                
+                setPreferredSize(new Dimension(scrollViewWidth, scaledHeight)); // Set the preferred size of the scroll view
                 revalidate(); // Revalidate the layout
             }
         }
@@ -166,6 +161,8 @@ public class HelpScene extends JPanel implements LayoutManager, ComponentInterfa
 
         scrollPane.setBounds(GAP_WIDTH, GAP_WIDTH, mainPanelWidth - scrollBar.getWidth(), mainPanelHeight);
         scrollBar.setBounds(mainPanelWidth - GAP_WIDTH/2 - 1, GAP_WIDTH, GAP_WIDTH, mainPanelHeight);
+        
+        System.out.println(scrollView.getComponentCount());
     }
 
 
