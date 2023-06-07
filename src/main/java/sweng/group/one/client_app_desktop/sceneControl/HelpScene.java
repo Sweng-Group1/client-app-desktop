@@ -32,9 +32,6 @@ public class HelpScene extends JPanel{
 	
 	// ----------- CONSTANTS -------------
 	private static final long serialVersionUID = 1L;
-	// Static Design Declarations
-	private static final int GAP_WIDTH= 10;
-	private static final int PRESENTATION_SCROLL_SPEED = 20;
 
 
 	// -------------------------------------------------------------- //
@@ -71,7 +68,10 @@ public class HelpScene extends JPanel{
  		// -------------- OBJECTS AND APPEARANCE ------------------
  		// Set Layout and border.
 		this.setLayout(new BorderLayout());
-        this.setBorder(new EmptyBorder(GAP_WIDTH, GAP_WIDTH, GAP_WIDTH, GAP_WIDTH));
+        this.setBorder(new EmptyBorder(UIConstants.GAP_WIDTH, 
+        		UIConstants.GAP_WIDTH, 
+        		UIConstants.GAP_WIDTH, 
+        		UIConstants.GAP_WIDTH));
 		
 		// Make the main panel transparent
 		this.setOpaque(false);
