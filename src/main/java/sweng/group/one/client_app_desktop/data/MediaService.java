@@ -23,29 +23,31 @@ import okhttp3.ResponseBody;
 
 public class MediaService {
 	
-	//TODO: Do we want to change these URLs to constant specified elsewhere perhaps?
 	private static String mediaURL;
-	
-	public MediaService() {
-		this("server-urls.properties");
+	/**
+     * Reads in the URL from the default properties file. 
+     * Another file can be specified with the loadURLs method. 
+     */
+	static 
+	{
+		try {
+			loadURLs("server-urls.properties");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new RuntimeException("URLs file could not be found or loaded");
+		}
 	}
 	
-	public MediaService(String urlsPath) {
-		loadURLs(urlsPath);
-	}
-	
-	 private void loadURLs(String urlsPath) {
+	 private static void loadURLs(String urlsPath) throws FileNotFoundException {
 	        Properties urlProps = new Properties();
 	        try {
 	            urlProps.load(new FileInputStream(urlsPath));
 	        } catch (FileNotFoundException e) {
-	            System.out.println("Error - server url properties file not found.");
-	            e.printStackTrace();
-	            // TODO: Is this how we want exceptions handled? Or propogate up?
+	        	e.printStackTrace();
+	        	throw new FileNotFoundException("URL file not found");
 	        } catch (IOException e) {
-	            System.out.println("Error - server url properties can't be read.");
-	            e.printStackTrace();
-	            // TODO: Is this how we want exceptions handled? Or propogate up?
+	        	e.printStackTrace();
+	            throw new RuntimeException("URLs file not found.");
 	        }
 	        
 	        MediaService.mediaURL = urlProps.getProperty("mediaURL");
@@ -56,8 +58,9 @@ public class MediaService {
      * @param media The media file to be uploaded. 
      * @param accessToken the authentication token of the user. Must correspond to logged in user. 
      * @return Returns the status code (standard HTTP codes, e.g. 200 success), or 0 if an error occurs. 
+	 * @throws IOException 
      */
-	public static int uploadMedia(File media, String accessToken) {
+	public static int uploadMedia(File media, String accessToken) throws IOException {
 		
 		OkHttpClient client = new OkHttpClient();
 		Path filepath = media.toPath();
@@ -66,18 +69,17 @@ public class MediaService {
 		try {
 			fileAsBytes = Files.readAllBytes(filepath);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new IOException("Can't find/read media file.");
 		}
 		
-		// TODO: This method is apparently OS dependent, so need to check it's working correctly on Windows/Mac. 
+		// This method is apparently OS dependent, so worth checking if platform specific issues occur. 
 		String fileType = new String();
 		try {
 			fileType = Files.probeContentType(filepath);
 			System.out.println("Filetype is " + fileType);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IOException("Couldn't read fileType from file.");
 		}
 		
 		// Body of the request - server expects file as multipart, 
@@ -102,19 +104,18 @@ public class MediaService {
 			Response response = client.newCall(request).execute();
 			return response.code();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return 0;
+			throw new IOException("Couldn't communicate with server");
 		}
 	}
-	
 	
 	/**
      * Downloads a media file from the server. 
      * @param id the database ID of the media being retrieved. 
      * @return Path to downloaded (temporary) file.
+	 * @throws IOException 
      */
-	public static Path retrieveMedia(int id) {
+	public static Path retrieveMedia(int id) throws IOException {
 		
 		int statusCode = 0;
 		OkHttpClient client = new OkHttpClient();
@@ -124,6 +125,15 @@ public class MediaService {
 				.url(mediaURL + "/" + id)
 				.get()
 				.build();
+		
+		// Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/media/";
+
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 		
 		// Sends the request. 
 		try { 
@@ -144,17 +154,17 @@ public class MediaService {
 	            extension = ".jpg";
 	        } else if (mimeType.equalsIgnoreCase("image/png")) {
 	            extension = ".png";
-	        } // TODO: add more else if statements here for other mime types as needed
+	        } // add more else if statements here for other mime types as needed
 	        
 	        ResponseBody body = response.body();
-	        Path mediaPath = Files.createTempFile("media", extension);
+	        Path mediaPath = Files.createTempFile(tempDirectoryPath + extension, "media");
+
 		    Files.write(mediaPath, body.bytes());
 		    return mediaPath;
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			throw new IOException("Error communicating with server");
 		}
 	}
 	
@@ -163,9 +173,10 @@ public class MediaService {
      * Deletes a media file from the server. 
      * @param id the database ID of the media being retrieved.
      * @param accessToken accessToken of user - requires verified or admin role. 
-     * @return Path to downloaded (temporary) file.
+	 * @throws IOException 
+	 * @throws AuthenticationException 
      */
-	public static Path deleteMedia(int id, String accessToken) {
+	public static int deleteMedia(int id, String accessToken) throws IOException, AuthenticationException {
 		
 		int statusCode = 0;
 		OkHttpClient client = new OkHttpClient();
@@ -178,33 +189,19 @@ public class MediaService {
 				.build();
 		
 		// Sends the request. 
-		try { 
-		    Response response = client.newCall(request).execute();
-	
-		    // Handling the response.
-		    statusCode = response.code();
-		    if (statusCode == 403) {
-		        System.out.println("Error: Server returned 403 forbidden");
-		        return null;
-		    }
-		    
-		    String mimeType = response.header("Content-Type");
-		    String extension = "";
-	        // Get the extension from the mimeType
-	        if(mimeType.equalsIgnoreCase("image/jpeg")) {
-	            extension = ".jpg";
-	        } else if (mimeType.equalsIgnoreCase("image/png")) {
-	            extension = ".png";
-	        } // add more else if statements here for other mime types as needed
+	    Response response = client.newCall(request).execute();
 
-	        Path mediaPath = Files.createTempFile("media", extension);
-		    Files.write(mediaPath, response.body().bytes());
-		    return mediaPath;
-		    
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+	    // Handling the response.
+	    statusCode = response.code();
+	    
+	    if (statusCode == 200) {
+	    	return statusCode;
+	    }
+	    else if  (statusCode == 403) {
+	    	throw new AuthenticationException("403 code - check access Token");
+	    }
+	    else {
+	    	return 0;
+	    }
 	}
 }
