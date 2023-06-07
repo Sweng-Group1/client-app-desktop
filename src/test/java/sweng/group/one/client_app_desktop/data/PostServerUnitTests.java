@@ -23,16 +23,12 @@ import okhttp3.mockwebserver.MockWebServer;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 
 public class PostServerUnitTests {
-	
 	private MockWebServer server;
-	private PostService serviceTest;
 	
 	@Before
 	public void Setup() throws IOException {
 		server = new MockWebServer();
-		server.start(8080);
-		serviceTest = new PostService();
-		
+		server.start(8080);	
 	}
 	
 	@After
@@ -72,7 +68,7 @@ public class PostServerUnitTests {
             .setBody(jsonString)
             .addHeader("Content-Type", "application/json"));
         
-        ArrayList<Path> paths = serviceTest.retrievePostsXMLs("OpenSesame");
+        ArrayList<Path> paths = PostService.retrievePostsXMLs("OpenSesame");
         
         String xml = Files.readString(paths.get(0));
  
@@ -81,10 +77,8 @@ public class PostServerUnitTests {
 	}
 	
 	@Test
-	public void RetrievePostsAsPresentationsReturnsValidPresentations() throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
-        // Create the inner "hashtag" JSONObject.
-		
-		File testXML = new File("TestAssets/evaluation.xml");	
+	public void RetrievePostsAsPresentationsReturnsValidPresentations() throws SAXException, ParserConfigurationException, AuthenticationException, IOException {	
+		File testXML = new File("testAssets/evaluation.xml");	
 		Presentation expectedPresentation = new Presentation(testXML);
 		
         JSONObject hashtag = new JSONObject();
@@ -115,7 +109,7 @@ public class PostServerUnitTests {
             .setBody(jsonString)
             .addHeader("Content-Type", "application/json"));
         
-        ArrayList<Presentation> presentations = serviceTest.retrievePostsPresentations("OpenSesame");
+        ArrayList<Presentation> presentations = PostService.retrievePostsPresentations("OpenSesame");
         
         Presentation retrievedPresentation = presentations.get(0);
         // Double check this toString is valid. 

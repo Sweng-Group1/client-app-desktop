@@ -15,18 +15,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/* TEST STRATEGY
+ * Here we verify the client media interactions with the server work correctly. 
+ * Must test we can upload and retrieve media, and the media retrieved is as expected. 
+ * 
+ * These are integration tests that verify communication with the server. 
+ * As such they require the server to be running. 
+ * @author Paul Pickering
+ */
 public class MediaServerIntegrationTests {
-	
-	private MediaService testMediaService = new MediaService();
-	
-	@BeforeClass
-	public static void setup() throws IOException {
-	
-	}
-	
 	@Test
-	public void canUploadMedia() {
-		
+	public void canUploadMedia() throws AuthenticationException, IOException {
 		
 		// Must be logged in for some tests.
 		String defaultAdminUsername = "sid";
@@ -37,49 +36,32 @@ public class MediaServerIntegrationTests {
 		userService.login(userTest, defaultAdminPass);
 		File testFile = null;
 		
-		try {
-            int width = 100;
-            int height = 100;
+        int width = 100;
+        int height = 100;
 
-            // Create a buffered image in which to draw
-            BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-            java.awt.Graphics2D g2d = bufferedImage.createGraphics();
+        // Create a buffered image in which to draw
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        java.awt.Graphics2D g2d = bufferedImage.createGraphics();
 
-            // Draw a green rectangle
-            g2d.setColor(java.awt.Color.GREEN);
-            g2d.fillRect(0, 0, width, height);
+        // Draw a green rectangle
+        g2d.setColor(java.awt.Color.GREEN);
+        g2d.fillRect(0, 0, width, height);
 
-            // Graphics context no longer needed so dispose it
-            g2d.dispose();
+        // Graphics context no longer needed so dispose it
+        g2d.dispose();
 
-            // Save as JPEG
-            testFile = new File("test.jpg");
-            ImageIO.write(bufferedImage, "jpg", testFile);
-            
-        } catch (IOException ie) {
-            ie.printStackTrace();
-        }
+        // Save as JPEG
+        testFile = new File("test.jpg");
+        ImageIO.write(bufferedImage, "jpg", testFile);
+
 		
-		int statusCode = testMediaService.uploadMedia(testFile, userTest.getAccessToken());
+		int statusCode = MediaService.uploadMedia(testFile, userTest.getAccessToken());
 		assertThat(statusCode).isEqualTo(200);	
 	}
 	
 	@Test
-	public void canRetrieveMedia() {
-		
-		Path media = testMediaService.retrieveMedia(5);
-		try {
-			Desktop.getDesktop().open(media.toFile());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(media.toString());
+	public void canRetrieveMedia() throws IOException {
+		Path media = MediaService.retrieveMedia(5);
 		assertThat(Files.exists(media)).isTrue();
-		
 	}
-	
-	
-		
-
 }

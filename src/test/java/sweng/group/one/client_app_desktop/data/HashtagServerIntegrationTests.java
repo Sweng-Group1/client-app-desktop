@@ -8,6 +8,12 @@ import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 
+/*
+ * TEST STRATEGY
+ * These are integration tests that verify communication with the server. 
+ * As such they require the server to be running.  
+ * @author Paul Pickering
+ */ 
 public class HashtagServerIntegrationTests {
 	
 	// Need these for authorisation as altering hashtags is limited to admins. 
@@ -20,7 +26,7 @@ public class HashtagServerIntegrationTests {
 	
 	
 	@Before
-	public void setup() {
+	public void setup() throws AuthenticationException, IOException {
 		userService.login(userTest, defaultAdminPass);
 	}
 	@Test

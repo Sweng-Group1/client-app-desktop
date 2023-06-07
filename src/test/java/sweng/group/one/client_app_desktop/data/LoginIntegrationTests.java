@@ -10,8 +10,13 @@ import org.junit.runner.OrderWith;
 
 import sweng.group.one.client_app_desktop.data.UserService;
 
-// These are integration tests that will communicate with the actual server software. 
-// As such they require the server to be running. 
+/*
+ * TEST STRATEGY
+ * These are integration tests that verify communication with the server. 
+ * As such they require the server to be running.  
+ * @author Paul Pickering
+ */ 
+
 public class LoginIntegrationTests {
 	
 	private String defaultAdminUsername = "sid";
