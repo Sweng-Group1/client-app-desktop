@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
@@ -53,9 +52,10 @@ import sweng.group.one.client_app_desktop.text.TextElement;
  * @author flt515
  *
  */
-@SuppressWarnings("serial")
 public class Presentation extends JPanel {
 	
+	private static final long serialVersionUID = -4365673116114208302L;
+
 	private static final String XML_SCHEMA_PATH = "assets/xml/standard.xsd";
 	
 	private ArrayList<Slide> slides;
@@ -230,7 +230,7 @@ public class Presentation extends JPanel {
 					//set float values to 0 as floats cannot be null
 					varDict.put("delay", 0.0f);
 					varDict.put("timeOnScreen", 0.0f);
-					varDict.put("rotation", 0.0f);
+					varDict.put("rotation", 0);
 					
 					Node slideItem = slideXML.item(s);
 					String slideItemName = slideItem.getNodeName();
@@ -425,6 +425,10 @@ public class Presentation extends JPanel {
         showCurrentSlide();
 	}
 	
+	
+	/**
+	 * Draws slide with overlay to indicate the current slide and display info when a mouse is hovering
+	 */
 	@Override
 	public void paint(Graphics g) {
 	    super.paint(g);
@@ -440,74 +444,74 @@ public class Presentation extends JPanel {
 	    //draw slide indicators
 	    int centerX = this.getWidth()/2;
         int bottomY = (int) (height*0.95);
-        int radius = (int) (width*0.01);
-	    
-        g2d.setColor(Color.white);
-        g2d.fillOval(centerX - radius, 
-        		bottomY - radius, 
-        		radius*2, 
-        		radius*2);
+        int radius = (int) (width*0.03);
         
-        int next = this.numSlides - 1 - this.currentSlideNo;
-        int nextRadius = radius;
-        int nextX = centerX;
-        int radiusDecr = 2;
-        
-        for(int i = 0; i < Math.min(next, 3); i++) {
-        	nextRadius -= radiusDecr;
-        	nextX += radius*2;
-        	
-        	g2d.fillOval(nextX - nextRadius, 
-	        		bottomY - nextRadius, 
-	        		nextRadius*2, 
-	        		nextRadius*2);
-        }
-        
-        int prev = currentSlideNo;
-        int prevRadius = radius;
-        int prevX = centerX;
-        
-        for(int i = 0; i < Math.min(prev, 3); i++) {
-        	prevRadius -= radiusDecr;
-        	prevX -= radius*2;
-        	
-        	
-        	g2d.fillOval(prevX - prevRadius, 
-	        		bottomY - prevRadius, 
-	        		prevRadius*2, 
-	        		prevRadius*2);
+        if (numSlides > 1) {
+	        g2d.setColor(Color.white);
+	        g2d.fillOval(centerX - radius, 
+	        		bottomY - radius, 
+	        		radius*2, 
+	        		radius*2);
+	        
+	        int next = this.numSlides - 1 - this.currentSlideNo;
+	        int nextRadius = radius;
+	        int nextX = centerX;
+	        
+	        for(int i = 0; i < Math.min(next, 4); i++) {
+	        	nextRadius = (int) (nextRadius*0.8);
+	        	nextX += radius*2;
+	        	
+	        	g2d.fillOval(nextX - nextRadius, 
+		        		bottomY - nextRadius, 
+		        		nextRadius*2, 
+		        		nextRadius*2);
+	        }
+	        
+	        int prev = currentSlideNo;
+	        int prevRadius = radius;
+	        int prevX = centerX;
+	        
+	        for(int i = 0; i < Math.min(prev, 4); i++) {
+	        	prevRadius = (int) (prevRadius*0.8);
+	        	prevX -= radius*2;
+	        	
+	        	
+	        	g2d.fillOval(prevX - prevRadius, 
+		        		bottomY - prevRadius, 
+		        		prevRadius*2, 
+		        		prevRadius*2);
+	        }
         }
 	   
 		// Draw arrows if the mouse is hovered
 		if (isMouseHovered) {
 		    
-		    int buttonRadius = (int) (this.getWidth()*0.05);
-		    
-		    g2d.setColor(new Color(0.0f, 0.0f, 0.0f, 0.5f));
-		
-		    
-		    //draw circle buttons
-		    g2d.setColor(Color.white);
-		    g2d.fillOval(width - 2*buttonRadius, 
-		    		height/2 - buttonRadius, 
-		    		buttonRadius*2, 
-		    		buttonRadius*2);
-		    g2d.fillOval(0, 
-		    		height/2 - buttonRadius, 
-		    		buttonRadius*2, 
-		    		buttonRadius*2);
-		    		    
-		    g2d.setColor(Color.gray);
-		    int thickness = (int) (width*0.01);
-		    g2d.setStroke(new BasicStroke(thickness));
-		    
-		    g2d.drawLine(width-thickness, height/2, width-buttonRadius*2+thickness, height/2);
-		    g2d.drawLine(width, height/2, width-buttonRadius/2, (height-buttonRadius)/2);
-		    g2d.drawLine(width, height/2, width-buttonRadius/2, (height+buttonRadius)/2);
-		    
-		    g2d.drawLine(thickness, height/2, buttonRadius*2-thickness, height/2);
-		    g2d.drawLine(0, height/2, buttonRadius/2, (height-buttonRadius)/2);
-		    g2d.drawLine(0, height/2, buttonRadius/2, (height+buttonRadius)/2);
+			if(numSlides > 1) {
+			    int buttonRadius = (int) (this.getWidth()*0.05);
+			
+			    //draw circle buttons
+			    g2d.setColor(Color.white);
+			    g2d.fillOval(width - 2*buttonRadius, 
+			    		height/2 - buttonRadius, 
+			    		buttonRadius*2, 
+			    		buttonRadius*2);
+			    g2d.fillOval(0, 
+			    		height/2 - buttonRadius, 
+			    		buttonRadius*2, 
+			    		buttonRadius*2);
+			    		    
+			    g2d.setColor(Color.gray);
+			    int thickness = (int) (width*0.01);
+			    g2d.setStroke(new BasicStroke(thickness));
+			    
+			    g2d.drawLine(width-thickness, height/2, width-buttonRadius*2+thickness, height/2);
+			    g2d.drawLine(width, height/2, width-buttonRadius/2, (height-buttonRadius)/2);
+			    g2d.drawLine(width, height/2, width-buttonRadius/2, (height+buttonRadius)/2);
+			    
+			    g2d.drawLine(thickness, height/2, buttonRadius*2-thickness, height/2);
+			    g2d.drawLine(0, height/2, buttonRadius/2, (height-buttonRadius)/2);
+			    g2d.drawLine(0, height/2, buttonRadius/2, (height+buttonRadius)/2);
+			}
 	        
 	        //Draw Text Box
 	        g2d.setColor(new Color(1.0f, 1.0f, 1.0f, 0.5f));
@@ -550,6 +554,19 @@ public class Presentation extends JPanel {
 		}
 		resizeCurrentSlide();
 		this.validate();
+	}
+	
+	/**
+	 * Stops displaying a post
+	 */
+	public void hidePresentation() {
+		if (slides.isEmpty()) {
+			return;
+		}
+		
+		for (Slide slide:slides) {
+			slide.displaySlide(false);
+		}
 	}
 	
 	/**
@@ -613,5 +630,12 @@ public class Presentation extends JPanel {
 		Slide currentSlide = getCurrentSlide();
 		Dimension preferredLayout = currentSlide.preferredLayoutSize(this);
 		currentSlide.setPreferredSize(preferredLayout);
+		currentSlide.layoutContainer(this);
 	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+        Slide currentSlide = getCurrentSlide();
+		return currentSlide.preferredLayoutSize(this);
+    }
 }

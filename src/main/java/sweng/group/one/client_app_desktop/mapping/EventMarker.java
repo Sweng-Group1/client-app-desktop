@@ -24,6 +24,14 @@ public class EventMarker extends Marker{
 	private String tag;
 	private ArrayList<Presentation> posts;
 
+	
+	/**
+	 * Creates an EventMarker object with the given parameters.
+	 *
+	 * @param mapView   The MapScene object representing the map view.
+	 * @param latLong   The LatLong object specifying the marker's position.
+	 * @param bitmap    The Bitmap object representing the marker's image.
+	 */
 	public EventMarker(MapScene mapView, LatLong latLong, Bitmap bitmap) {
 		super(latLong, bitmap, 0, -bitmap.getHeight()/2);
 		int height = bitmap.getHeight();
@@ -32,10 +40,18 @@ public class EventMarker extends Marker{
 		this.mapView = mapView;
 		this.posts = new ArrayList<>();
 		this.setSelected(false);
-		this.tag = ""; //TODO: add tag to constructor
+		this.tag = "";
 	}
 	
 	@Override
+	/**
+	 * Handles the onTap event for the EventMarker.
+	 *
+	 * @param tapLatLong The LatLong position of the tap event.
+	 * @param layerXY    The Point representing the layer's position.
+	 * @param tapXY      The Point representing the tap's position.
+	 * @return True if the marker was tapped, false otherwise.
+	 */
 	public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
 		if (layerXY.distance(tapXY) < tapRadius) {
 			mapView.selectMarker(this);

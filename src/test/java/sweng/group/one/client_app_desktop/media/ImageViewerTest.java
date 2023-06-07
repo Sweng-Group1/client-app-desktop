@@ -1,6 +1,5 @@
 package sweng.group.one.client_app_desktop.media;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Point;
@@ -16,7 +15,6 @@ import org.junit.runner.RunWith;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
 @RunWith(JUnitParamsRunner.class)

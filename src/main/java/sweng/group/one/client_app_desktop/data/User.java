@@ -1,24 +1,15 @@
 package sweng.group.one.client_app_desktop.data;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.json.JSONObject;
-
-/*
+/**
  * This class handles logging in, refreshing access and authentication tokens, 
  * storing them, and storing the user's username. 
  * @author Paul Pickering
-*/
-
+**/
 public class User {
 	private String username = new String();
 	private String accessToken;
@@ -58,17 +49,20 @@ public class User {
 	 * @param token the access token to the saved.
 	 */
 	public void saveAccessToken(String token) throws IOException {
+		// Get the system temp directory
+		String directory = System.getProperty("java.io.tmpdir") + "/WhatsOn/tokens/";
+		 Path directoryPath = Path.of(directory);
 
-		Path directoryPath = Paths.get("temp");
-		Path filepath = Paths.get("temp/" + username + "-access_token.txt");
+;
 		// Checking if temp folder already exists, if not create one.
 		if (!Files.exists(directoryPath)) {
 			Files.createDirectory(directoryPath);
-			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
+			System.out.println("Temp directory for tokens created at: " + directoryPath);
 		}
-
+	   
 		this.accessToken = token;
-		Files.write(filepath, token.getBytes());
+		Files.write(Path.of(directory + username + "/access_token.txt"), token.getBytes());
+		Files.write(Path.of(directory + "last_login.txt"), username.getBytes());
 	}
 
 	/**
@@ -77,22 +71,28 @@ public class User {
 	 * @param token the refresh token to be saved.
 	 */
 	public void saveRefreshToken(String token) throws IOException {
-		Path directoryPath = Paths.get("temp");
-		Path filepath = Paths.get("temp/" + username + "-refresh_token.txt");
+		// Get the system temp directory
+		String directory = System.getProperty("java.io.tmpdir") + "/WhatsOn/tokens/";
+		Path directoryPath = Path.of(directory);
+
 		// Checking if temp folder already exists, if not create one.
 		if (!Files.exists(directoryPath)) {
 			Files.createDirectory(directoryPath);
-			System.out.println("Temp directory for tokens created at: " + directoryPath.toAbsolutePath());
+			System.out.println("Temp directory for tokens created at: " + directoryPath);
 		}
-		this.refreshToken = token;
-		Files.write(filepath, token.getBytes());
+	   
+		this.accessToken = token;
+		Files.write(Path.of(directory + username + "/refresh_token.txt"), token.getBytes());
+		Files.write(Path.of(directory + "last_login.txt"), username.getBytes());
+		
 	}
 
 	/**
 	 * Reads the refresh token from disk.
 	 */
 	public String readRefreshToken() throws IOException {
-		Path filepath = Paths.get("temp/" + username + "-refresh_token.txt");
+		String filePath = System.getProperty("java.io.tmpdir") + "/WhatsOn/tokens/" + username + "/";
+		Path filepath = Paths.get(filePath + "refresh_token.txt");
 		return Files.readString(filepath);
 	}
 
@@ -100,7 +100,20 @@ public class User {
 	 * Reads the access token from disk.
 	 */
 	public String readAccessToken() throws IOException {
-		Path filepath = Paths.get("temp/" + username + "-access_token.txt");
+		String filePath = System.getProperty("java.io.tmpdir") + "/WhatsOn/tokens/" + username + "/";
+		Path filepath = Paths.get(filePath + "access_token.txt");
+		return Files.readString(filepath);
+	}
+	
+	/**
+	 * Allows us to remember the last logged in user before sessions, so we can attempt to login automatically.
+	 * @return username of the last logged in user on this device.
+	 * @throws IOException
+	 */
+	
+	public String readLastLogin() throws IOException {
+		String filePath = System.getProperty("java.io.tmpdir") + "/WhatsOn/tokens/";
+		Path filepath = Paths.get(filePath + "last_login.txt");
 		return Files.readString(filepath);
 	}
 

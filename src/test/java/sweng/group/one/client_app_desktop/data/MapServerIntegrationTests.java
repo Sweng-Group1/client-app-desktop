@@ -10,8 +10,12 @@ import java.nio.file.Path;
 import org.junit.Before;
 import org.junit.Test;
 
-// As these are integration tests, they require the server to be running. 
-// TODO: Create unit tests for these methods with mocked server interactions. 
+/*
+ * TEST STRATEGY
+ * These are integration tests that verify communication with the server. 
+ * As such they require the server to be running.  
+ * @author Paul Pickering
+ */ 
 
 public class MapServerIntegrationTests {
 	
@@ -28,7 +32,7 @@ public class MapServerIntegrationTests {
 	
 	// Create a map file for the tests. 
 	@Before
-	public void setup() throws IOException {
+	public void setup() throws IOException, AuthenticationException {
 	File tempFile = File.createTempFile("york", ".map");
 	
     // Write some test data

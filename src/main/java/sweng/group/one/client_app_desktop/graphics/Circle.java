@@ -18,8 +18,8 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
 import java.awt.MultipleGradientPaint.CycleMethod;
 
 /**
- * The “Circle” class draws a circle of a given radius and colour at a given
- * position on a “Slide” object.
+ * The â€œCircleâ€� class draws a circle of a given radius and colour at a given
+ * position on a â€œSlideâ€� object.
  * 
  * @author joe2k01
  *
@@ -248,7 +248,7 @@ public class Circle extends Shape {
 	 * Circle constructor.
 	 * 
 	 * @param pos        Coordinate of the centre of the circle on the parent
-	 *                   “Slide” class.
+	 *                   â€œSlideâ€� class.
 	 * @param radius     Radius of the circle, relative to the centre of the circle.
 	 * @param duration   Duration.
 	 * @param slide      Slide owning the circle.

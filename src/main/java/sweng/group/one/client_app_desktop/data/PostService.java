@@ -1,5 +1,6 @@
 package sweng.group.one.client_app_desktop.data;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +23,6 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 /**
  * Service class for handling all post related server tasks, i.e., uploading, retrieving, deleting, etc.
  * Communicates with a server at the specified URL to perform these tasks.
- * 
  * @author Paul Pickering
  */
 public class PostService {
@@ -38,7 +38,7 @@ public class PostService {
 	 * @throws SAXEException
 	 * @throws ParserConfigurationException
 	 */
-	public ArrayList<Presentation> retrievePostsPresentations(String accessToken)
+	public static ArrayList<Presentation> retrievePostsPresentations(String accessToken)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 
 		int statusCode = 0;
@@ -47,9 +47,17 @@ public class PostService {
 		// Builds the request - simple get request, ID of is sent in URL.
 		Request request = new Request.Builder().url(postURL).get().header("Authorization", "Bearer " + accessToken)
 				.build();
+		
+		 // Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
+
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 
 		// Sends the request.
-
 		Response response = client.newCall(request).execute();
 
 		// Handling the response and generating the presentations (posts).
@@ -65,14 +73,13 @@ public class PostService {
 				JSONObject postJSON = jsonArray.getJSONObject(i);
 				String xmlString = postJSON.getString("xmlContent");
 				byte[] postXML = xmlString.getBytes();
-				Path xmlPath = Files.createTempFile("post", null);
+				Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
 				Files.write(xmlPath, postXML);
-
+				
 				Presentation postPres = new Presentation(xmlPath.toFile());
 				posts.add(postPres);
-				return posts;
 			}
-
+			return posts;
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
 		} else if (statusCode == 500) {
@@ -82,10 +89,9 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 
-	public ArrayList<Presentation> retrievePostsPresentations()
+	public static ArrayList<Presentation> retrievePostsPresentations()
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 
 		int statusCode = 0;
@@ -94,8 +100,15 @@ public class PostService {
 		// Builds the request - simple get request, ID of is sent in URL.
 		Request request = new Request.Builder().url(postURL).get().build();
 
-		// Sends the request.
+	    // Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
 
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
+		// Sends the request.
 		Response response = client.newCall(request).execute();
 
 		// Handling the response and generating the presentations (posts).
@@ -111,13 +124,13 @@ public class PostService {
 				JSONObject postJSON = jsonArray.getJSONObject(i);
 				String xmlString = postJSON.getString("xmlContent");
 				byte[] postXML = xmlString.getBytes();
-				Path xmlPath = Files.createTempFile("post", null);
+				Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
 				Files.write(xmlPath, postXML);
 
 				Presentation postPres = new Presentation(xmlPath.toFile());
 				posts.add(postPres);
-				return posts;
 			}
+			return posts;
 
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
@@ -128,7 +141,6 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 
 	/**
@@ -143,7 +155,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag, String accessToken)
+	public static ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag, String accessToken)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 		
 		int statusCode = 0;
@@ -152,9 +164,17 @@ public class PostService {
 		// Builds the request - simple get request, ID of is sent in URL.
 		Request request = new Request.Builder().url(postURL).get().header("Authorization", "Bearer " + accessToken)
 				.build();
+		
+		// Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
+
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 
 		// Sends the request.
-
 		Response response = client.newCall(request).execute();
 		// Handling the response and generating the presentations (posts).
 		statusCode = response.code();
@@ -169,16 +189,16 @@ public class PostService {
 				JSONObject postJSON = jsonArray.getJSONObject(i);
 				String xmlString = postJSON.getString("xmlContent");
 
-				if (xmlString.contains("<title>" + hashtag)) {
+				if (xmlString.contains(hashtag)) {
 					byte[] postXML = xmlString.getBytes();
-					Path xmlPath = Files.createTempFile("post", null);
+					Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
 					Files.write(xmlPath, postXML);
 
 					Presentation postPres = new Presentation(xmlPath.toFile());
 					posts.add(postPres);
 				}
-				return posts;
 			}
+			return posts;
 
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
@@ -189,7 +209,6 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 	
 	/**
@@ -201,7 +220,7 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag)
+	public static ArrayList<Presentation> retrievePostsByHashtagAsPresentations(String hashtag)
 			throws SAXException, ParserConfigurationException, IOException, AuthenticationException {
 		
 		int statusCode = 0;
@@ -210,9 +229,17 @@ public class PostService {
 		// Builds the request - simple get request, ID of is sent in URL.
 		Request request = new Request.Builder().url(postURL).get()
 				.build();
+		
+		// Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
+
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 
 		// Sends the request.
-
 		Response response = client.newCall(request).execute();
 		// Handling the response and generating the presentations (posts).
 		statusCode = response.code();
@@ -227,16 +254,16 @@ public class PostService {
 				JSONObject postJSON = jsonArray.getJSONObject(i);
 				String xmlString = postJSON.getString("xmlContent");
 
-				if (xmlString.contains("<title>" + hashtag)) {
+				if (xmlString.contains(hashtag)) {
 					byte[] postXML = xmlString.getBytes();
-					Path xmlPath = Files.createTempFile("post", null);
+					Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
 					Files.write(xmlPath, postXML);
 
 					Presentation postPres = new Presentation(xmlPath.toFile());
 					posts.add(postPres);
 				}
-				return posts;
 			}
+			return posts;
 
 		} else if (statusCode == 403) {
 			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
@@ -247,7 +274,6 @@ public class PostService {
 		} else {
 			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
 		}
-		return null;
 	}
 	
 	/**
@@ -259,45 +285,55 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsXMLs(String accessToken)
-			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
+	public static ArrayList<Path> retrievePostsXMLs(String accessToken)
+	        throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
-		int statusCode = 0;
-		OkHttpClient client = new OkHttpClient();
+	    int statusCode = 0;
+	    OkHttpClient client = new OkHttpClient();
 
-		// Builds the request - simple get request.
-		Request request = new Request.Builder().url(postURL).get().header("Authorization", "Bearer " + accessToken)
-				.build();
+	    // Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
 
-		// Sends the request.
-		Response response = client.newCall(request).execute();
-		// Handling the response and generating the presentations (posts).
-		statusCode = response.code();
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 
-		if (statusCode == 200) {
-			JSONArray jsonArray = new JSONArray(response.body().string());
-			ArrayList<Path> posts = new ArrayList<Path>();
+	    // Builds the request - simple get request.
+	    Request request = new Request.Builder().url(postURL).get().header("Authorization", "Bearer " + accessToken)
+	            .build();
 
-			// Run through each post, add it to the post (presentation) list.
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject postJSON = jsonArray.getJSONObject(i);
-				byte[] postXML = postJSON.toString().getBytes();
-				Path xmlPath = Files.createTempFile("post", null);
-				Files.write(xmlPath, postXML);
-				posts.add(xmlPath);
-			}
-			return posts;
+	    // Sends the request.
+	    Response response = client.newCall(request).execute();
+	    // Handling the response and generating the presentations (posts).
+	    statusCode = response.code();
 
-		} else if (statusCode == 403) {
-			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
-		} else if (statusCode == 500) {
-			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
-		} else if (statusCode == 400) {
-			throw new RuntimeException("400 server response, bad request - check the request is valid");
-		} else {
-			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
-		}
+	    if (statusCode == 200) {
+	        JSONArray jsonArray = new JSONArray(response.body().string());
+	        ArrayList<Path> posts = new ArrayList<Path>();
+
+	        // Run through each post, add it to the post (presentation) list.
+	        for (int i = 0; i < jsonArray.length(); i++) {
+	            JSONObject postJSON = jsonArray.getJSONObject(i);
+	            byte[] postXML = postJSON.toString().getBytes();
+	            Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
+	            Files.write(xmlPath, postXML);
+	            posts.add(xmlPath);
+	        }
+	        return posts;
+
+	    } else if (statusCode == 403) {
+	        throw new AuthenticationException("Server returned 403 code - auth token not valid.");
+	    } else if (statusCode == 500) {
+	        throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+	    } else if (statusCode == 400) {
+	        throw new RuntimeException("400 server response, bad request - check the request is valid");
+	    } else {
+	        throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
+	    }
 	}
+
 	
 	
 	/**
@@ -308,44 +344,54 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsXMLs()
-			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
+	public static ArrayList<Path> retrievePostsXMLs()
+	        throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
-		int statusCode = 0;
-		OkHttpClient client = new OkHttpClient();
+	    int statusCode = 0;
+	    OkHttpClient client = new OkHttpClient();
 
-		// Builds the request - simple get request.
-		Request request = new Request.Builder().url(postURL).get().build();
+	    // Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
 
-		// Sends the request.
-		Response response = client.newCall(request).execute();
-		// Handling the response and generating the presentations (posts).
-		statusCode = response.code();
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 
-		if (statusCode == 200) {
-			JSONArray jsonArray = new JSONArray(response.body().string());
-			ArrayList<Path> posts = new ArrayList<Path>();
+	    // Builds the request - simple get request.
+	    Request request = new Request.Builder().url(postURL).get().build();
 
-			// Run through each post, add it to the post (presentation) list.
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject postJSON = jsonArray.getJSONObject(i);
-				byte[] postXML = postJSON.toString().getBytes();
-				Path xmlPath = Files.createTempFile("post", null);
-				Files.write(xmlPath, postXML);
-				posts.add(xmlPath);
-			}
-			return posts;
+	    // Sends the request.
+	    Response response = client.newCall(request).execute();
+	    // Handling the response and generating the presentations (posts).
+	    statusCode = response.code();
 
-		} else if (statusCode == 403) {
-			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
-		} else if (statusCode == 500) {
-			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
-		} else if (statusCode == 400) {
-			throw new RuntimeException("400 server response, bad request - check the request is valid");
-		} else {
-			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
-		}
+	    if (statusCode == 200) {
+	        JSONArray jsonArray = new JSONArray(response.body().string());
+	        ArrayList<Path> posts = new ArrayList<Path>();
+
+	        // Run through each post, add it to the post (presentation) list.
+	        for (int i = 0; i < jsonArray.length(); i++) {
+	            JSONObject postJSON = jsonArray.getJSONObject(i);
+	            byte[] postXML = postJSON.toString().getBytes();
+	            Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
+	            Files.write(xmlPath, postXML);
+	            posts.add(xmlPath);
+	        }
+	        return posts;
+
+	    } else if (statusCode == 403) {
+	        throw new AuthenticationException("Server returned 403 code - auth token not valid.");
+	    } else if (statusCode == 500) {
+	        throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+	    } else if (statusCode == 400) {
+	        throw new RuntimeException("400 server response, bad request - check the request is valid");
+	    } else {
+	        throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
+	    }
 	}
+
 
 	/**
 	 * Retrieves all posts from the server matching the hashtag, and returns them as an array of paths to XMLs. 
@@ -354,49 +400,59 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag, String accessToken)
-			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
+	public static ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag, String accessToken)
+	        throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
-		int statusCode = 0;
-		OkHttpClient client = new OkHttpClient();
+	    int statusCode = 0;
+	    OkHttpClient client = new OkHttpClient();
 
-		// Builds the request - simple get request.
-		Request request = new Request.Builder().url(postURL).get().header("Authorization", "Bearer " + accessToken)
-				.build();
+	    // Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
 
-		// Sends the request.
-		Response response = client.newCall(request).execute();
-		// Handling the response and generating the presentations (posts).
-		statusCode = response.code();
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 
-		if (statusCode == 200) {
-			// Success! Now handles the response. 
-			JSONArray jsonArray = new JSONArray(response.body().string());
-			ArrayList<Path> posts = new ArrayList<Path>();
+	    // Builds the request - simple get request.
+	    Request request = new Request.Builder().url(postURL).get().header("Authorization", "Bearer " + accessToken)
+	            .build();
 
-			// Run through each post, add it to the post (presentation) list.
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject postJSON = jsonArray.getJSONObject(i);
-				System.out.println(postJSON.toString());
-				String postHashtag = postJSON.getString("xmlContent");
-				if (postHashtag.contains("<title>" + hashtag)) {
-					byte[] postXML = postJSON.toString().getBytes();
-					Path xmlPath = Files.createTempFile("post", null);
-					Files.write(xmlPath, postXML);
-					posts.add(xmlPath);
-				}
-			}
-			return posts;
-		} else if (statusCode == 403) {
-			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
-		} else if (statusCode == 500) {
-			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
-		} else if (statusCode == 400) {
-			throw new RuntimeException("400 server response, bad request - check the request is valid");
-		} else {
-			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
-		}
+	    // Sends the request.
+	    Response response = client.newCall(request).execute();
+	    // Handling the response and generating the presentations (posts).
+	    statusCode = response.code();
+
+	    if (statusCode == 200) {
+	        // Success! Now handles the response.
+	        JSONArray jsonArray = new JSONArray(response.body().string());
+	        ArrayList<Path> posts = new ArrayList<Path>();
+
+	        // Run through each post, add it to the post (presentation) list.
+	        for (int i = 0; i < jsonArray.length(); i++) {
+	            JSONObject postJSON = jsonArray.getJSONObject(i);
+	            System.out.println(postJSON.toString());
+	            String postHashtag = postJSON.getString("xmlContent");
+	            if (postHashtag.contains(hashtag)) {
+	                byte[] postXML = postJSON.toString().getBytes();
+	                Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
+	                Files.write(xmlPath, postXML);
+	                posts.add(xmlPath);
+	            }
+	        }
+	        return posts;
+	    } else if (statusCode == 403) {
+	        throw new AuthenticationException("Server returned 403 code - auth token not valid.");
+	    } else if (statusCode == 500) {
+	        throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+	    } else if (statusCode == 400) {
+	        throw new RuntimeException("400 server response, bad request - check the request is valid");
+	    } else {
+	        throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
+	    }
 	}
+
 	
 	/**
 	 * Retrieves all verified or admin posts from the server and returns them as an array of paths to XMLs. 
@@ -405,47 +461,57 @@ public class PostService {
 	 * @throws SAXEException issue loading the XMLs into presentations. Check XML content. 
 	 * @throws ParserConfigurationException issue loading the XMLs into presentations. Check XML content. 
 	 */
-	public ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag)
-			throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
+	public static ArrayList<Path> retrievePostsWithHastagXMLs(String hashtag)
+	        throws SAXException, ParserConfigurationException, AuthenticationException, IOException {
 
-		int statusCode = 0;
-		OkHttpClient client = new OkHttpClient();
+	    int statusCode = 0;
+	    OkHttpClient client = new OkHttpClient();
 
-		// Builds the request - simple get request.
-		Request request = new Request.Builder().url(postURL).get()
-				.build();
+	    // Get the system temp directory
+	    String tempDirectoryPath = System.getProperty("java.io.tmpdir") + "/WhatsOn/posts/";
 
-		// Sends the request.
-		Response response = client.newCall(request).execute();
-		// Handling the response and generating the presentations (posts).
-		statusCode = response.code();
+	    // Ensure the directory exists
+	    File tempDirectory = new File(tempDirectoryPath);
+	    if (!tempDirectory.exists()) {
+	        tempDirectory.mkdirs();
+	    }
 
-		if (statusCode == 200) {
-			JSONArray jsonArray = new JSONArray(response.body().string());
-			ArrayList<Path> posts = new ArrayList<Path>();
+	    // Builds the request - simple get request.
+	    Request request = new Request.Builder().url(postURL).get()
+	            .build();
 
-			// Run through each post, add it to the post (presentation) list.
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject postJSON = jsonArray.getJSONObject(i);
-				String postHashtag = postJSON.getString("xmlContent");
-				if (postHashtag.contains("<title>" + hashtag)) {
-					byte[] postXML = postJSON.toString().getBytes();
-					Path xmlPath = Files.createTempFile("post", null);
-					Files.write(xmlPath, postXML);
-					posts.add(xmlPath);
-				}
-			}
-			return posts;
-		} else if (statusCode == 403) {
-			throw new AuthenticationException("Server returned 403 code - auth token not valid.");
-		} else if (statusCode == 500) {
-			throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
-		} else if (statusCode == 400) {
-			throw new RuntimeException("400 server response, bad request - check the request is valid");
-		} else {
-			throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
-		}
+	    // Sends the request.
+	    Response response = client.newCall(request).execute();
+	    // Handling the response and generating the presentations (posts).
+	    statusCode = response.code();
+
+	    if (statusCode == 200) {
+	        JSONArray jsonArray = new JSONArray(response.body().string());
+	        ArrayList<Path> posts = new ArrayList<Path>();
+
+	        // Run through each post, add it to the post (presentation) list.
+	        for (int i = 0; i < jsonArray.length(); i++) {
+	            JSONObject postJSON = jsonArray.getJSONObject(i);
+	            String postHashtag = postJSON.getString("xmlContent");
+	            if (postHashtag.contains("<title>" + hashtag)) {
+	                byte[] postXML = postJSON.toString().getBytes();
+	                Path xmlPath = Files.createTempFile(tempDirectory.toPath(), "post", null);
+	                Files.write(xmlPath, postXML);
+	                posts.add(xmlPath);
+	            }
+	        }
+	        return posts;
+	    } else if (statusCode == 403) {
+	        throw new AuthenticationException("Server returned 403 code - auth token not valid.");
+	    } else if (statusCode == 500) {
+	        throw new RuntimeException("500 server response - server error. Check the server code / constraints. ");
+	    } else if (statusCode == 400) {
+	        throw new RuntimeException("400 server response, bad request - check the request is valid");
+	    } else {
+	        throw new RuntimeException(statusCode + "server response, unknown error - check code and debug.");
+	    }
 	}
+
 
 	/**
 	 * Deletes a specific post.
@@ -457,7 +523,7 @@ public class PostService {
 	 * @throws IOException
 	 */
 	// TODO: TEST
-	public int deletePost(int id, String accessToken) throws AuthenticationException, IOException {
+	public static int deletePost(int id, String accessToken) throws AuthenticationException, IOException {
 
 		int statusCode = 0;
 		OkHttpClient client = new OkHttpClient();
@@ -494,7 +560,7 @@ public class PostService {
 	 * @throws IOException             This means the XML cannot be read.
 	 * @throws AuthenticationException Invalid accessToken - try refreshing.
 	 */
-	public int uploadPost(Path xml, int validityHours, EventMarker hashtag, String accessToken)
+	public static int uploadPost(Path xml, int validityHours, EventMarker hashtag, String accessToken)
 			throws IOException, AuthenticationException {
 		int statusCode = 0;
 
@@ -506,7 +572,7 @@ public class PostService {
 		RequestBody body = null;
 		body = new MultipartBody.Builder().addFormDataPart("xmlContent", Files.readString(xml))
 				.addFormDataPart("validityHours", Integer.toString(validityHours)).addFormDataPart("latitude", latitude)
-				.addFormDataPart("longitude", longitude).addFormDataPart("hashtagName", hashtag.getHashtag()).build();
+				.addFormDataPart("longitude", longitude).addFormDataPart("hashtagName", hashtag.getName()).build();
 
 		Request request = new Request.Builder().url(postURL).post(body).header("Authorization", "Bearer " + accessToken)
 				.build();

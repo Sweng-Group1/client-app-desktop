@@ -18,8 +18,9 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 /**
- * @author Paul Pickering Service class for handling all map related server
- *         tasks, i.e. uploading, retrieving, deleting, etc.
+ *  Service class for handling all map related server
+ *  tasks, i.e. uploading, retrieving, deleting, etc.
+ *  @author Paul Pickering
  */
 public class MapService {
 	// TODO: Do we want to change these URLs to constant specified elsewhere
@@ -35,7 +36,7 @@ public class MapService {
 	 * @throws AuthenticationException
 	 * @throws IOException
 	 */
-	public Path retrieveMap(String name) throws IOException {
+	public static Path retrieveMap(String name) throws IOException {
 		int statusCode = 0;
 
 		OkHttpClient client = new OkHttpClient();
@@ -76,7 +77,7 @@ public class MapService {
 	 * @throws IOException             - can fail reading the map file.
 	 * @throws AuthenticationException
 	 */
-	public int uploadMap(Map map, String accessToken) throws IOException, AuthenticationException {
+	public static int uploadMap(Map map, String accessToken) throws IOException, AuthenticationException {
 		String filepath = map.getFile().getPath();
 		byte[] fileAsBytes;
 		try {
