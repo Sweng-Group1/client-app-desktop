@@ -12,6 +12,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -369,6 +370,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	
 	public boolean checkAccessToken() {
 		try {
+			 user.setUsername(user.readLastLogin());
 			if (userService.refreshAccessToken(user)==200) {
 				System.out.println("User has a valid access token");
 				return true;
