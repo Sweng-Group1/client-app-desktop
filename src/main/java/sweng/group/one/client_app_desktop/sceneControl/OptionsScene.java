@@ -14,21 +14,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
+import sweng.group.one.client_app_desktop.uiElements.UIConstants;
 
 
-
-public class OptionsScene extends JPanel implements ComponentInterface, LayoutManager{
+public class OptionsScene extends JPanel implements LayoutManager{
 		
 
 		private static final long serialVersionUID = 1L;
 		private RoundedButton accountButton, addPostButton, helpButton, closeButton, optionsButton;
 		JPanel multipleOptionsPanel;
-		
-		private static Color MAIN_COLOUR = Color.white;
-		private static Color PRESSED_COLOUR = new Color(203,203,203);
-		private static Color HOVER_COLOUR = new Color(239,238,238);
-		
-
 		
 		public OptionsScene() throws IOException { 
 			super();
@@ -46,7 +40,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 					qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 					g2.setRenderingHints(qualityHints);
 					g2.setColor(Color.white);
-					g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius,curvatureRadius);
+					g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), UIConstants.CURVE_RADIUS, UIConstants.CURVE_RADIUS);
 					g2.dispose();
 					super.paint(g);
 				}
@@ -57,11 +51,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 			multipleOptionsPanel.setLayout(null);
 			
 			//add buttons to multiple options scene
-			accountButton = new RoundedButton(ImageIO.read(new File("./assets/user.png")), 
-					curvatureRadius, 
-					MAIN_COLOUR, 
-					PRESSED_COLOUR, 
-					HOVER_COLOUR) {
+			accountButton = new RoundedButton(ImageIO.read(new File("./assets/user.png"))) {
 				
 				private static final long serialVersionUID = 119279111416231659L;
 
@@ -73,11 +63,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 			};
 			multipleOptionsPanel.add(accountButton);
 			
-			addPostButton= new RoundedButton(ImageIO.read(new File("./assets/plus.png")), 
-					curvatureRadius, 
-					MAIN_COLOUR, 
-					PRESSED_COLOUR, 
-					HOVER_COLOUR) {
+			addPostButton= new RoundedButton(ImageIO.read(new File("./assets/plus.png"))) {
 				
 				private static final long serialVersionUID = 734090059680252680L;
 
@@ -89,11 +75,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 			};
 			multipleOptionsPanel.add(addPostButton);
 			
-			helpButton= new RoundedButton(ImageIO.read(new File("./assets/question.png")), 
-					curvatureRadius, 
-					MAIN_COLOUR, 
-					PRESSED_COLOUR, 
-					HOVER_COLOUR) {
+			helpButton= new RoundedButton(ImageIO.read(new File("./assets/question.png"))) {
 				
 				private static final long serialVersionUID = -7831122631719107034L;
 
@@ -104,11 +86,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 			};
 			multipleOptionsPanel.add(helpButton);
 			
-			closeButton= new RoundedButton(ImageIO.read(new File("./assets/crossBlack.png")), 
-					curvatureRadius, 
-					MAIN_COLOUR, 
-					PRESSED_COLOUR, 
-					HOVER_COLOUR) {
+			closeButton= new RoundedButton(ImageIO.read(new File("./assets/crossBlack.png"))) {
 				
 				private static final long serialVersionUID = -5748520949039980009L;
 
@@ -121,11 +99,7 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 			multipleOptionsPanel.add(closeButton);
 
 			//Create options button with custom graphics
-			optionsButton= new RoundedButton(null, 
-					curvatureRadius, 
-					MAIN_COLOUR, 
-					PRESSED_COLOUR, 
-					HOVER_COLOUR) {
+			optionsButton= new RoundedButton(null) {
 				
 				private static final long serialVersionUID = 1L;
 
@@ -174,23 +148,15 @@ public class OptionsScene extends JPanel implements ComponentInterface, LayoutMa
 		}
 		
 		@Override
-		public void addLayoutComponent(String name, Component comp) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void addLayoutComponent(String name, Component comp) {}
 		@Override
-		public void removeLayoutComponent(Component comp) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void removeLayoutComponent(Component comp) {}
 		@Override
 		public Dimension preferredLayoutSize(Container parent) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override
 		public Dimension minimumLayoutSize(Container parent) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 		@Override

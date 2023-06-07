@@ -1,17 +1,16 @@
-package sweng.group.one.client_app_desktop.sideBarUIElements;
+package sweng.group.one.client_app_desktop.uiElements;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class CustomScrollBarUI extends BasicScrollBarUI {
-	Color baseThumb;
-	Color highlightThumb;
-	Color shadowThumb;
+	protected Color baseThumb;
+	protected Color highlightThumb;
+	protected Color shadowThumb;
 	
 	public CustomScrollBarUI() {
 		baseThumb= new Color(100,100,100,100);
@@ -29,7 +28,6 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
     
     @Override
 	public void paintThumb(Graphics g, JComponent c, Rectangle r) {
-		//super.paintThumb(g, c, r);
 		g.setColor(shadowThumb);
 		g.fillRoundRect(r.x, r.y, r.width, r.height, r.width/2, r.width/2);
 	}

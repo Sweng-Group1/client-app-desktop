@@ -26,18 +26,19 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
-import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
+import sweng.group.one.client_app_desktop.uiElements.CustomScrollBarUI;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
+import sweng.group.one.client_app_desktop.uiElements.UIConstants;
+import sweng.group.one.client_app_desktop.uiElements.YUSUColours;
 
 /**
  * @author joncooke
  * Refactored sophiemaw
  * Re-refactored srikanthj
  */
-public class SidebarScene extends JPanel implements ComponentInterface, LayoutManager{
+public class SidebarScene extends JPanel implements LayoutManager{
 	
 	private static final long serialVersionUID = 1L;
-	private static final int GAP_WIDTH= 10;
 	private static final int ANIMATION_TIME_MS = 200;
 	private static final int ANIMATION_FRAME_TIME_MS = 16;
 	private static final int PRESENTATION_SCROLL_SPEED = 20;
@@ -83,11 +84,11 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 				RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 				qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 				g2.setRenderingHints(qualityHints);
-				g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
+				g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), UIConstants.CURVE_RADIUS, UIConstants.CURVE_RADIUS);
 				if(searchField.getText().isBlank()) {
 					String str = "Search";
 					g2.setColor(Color.black);
-					g2.drawString(str, curvatureRadius/2,(this.getHeight()/2)+(g.getFontMetrics().getHeight()/4));
+					g2.drawString(str, UIConstants.CURVE_RADIUS/2,(this.getHeight()/2)+(g.getFontMetrics().getHeight()/4));
 				}
 				
 				super.paint(g);
@@ -99,10 +100,10 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		searchPanel.setOpaque(false);
 		
 		searchField.setOpaque(false);
-		searchField.setBackground(transparent);
+		searchField.setBackground(UIConstants.TRANSPARENT);
 		searchField.setBorder(null);
 		
-		searchButton = new RoundedButton(ImageIO.read(new File("./assets/searchBlack.png")), curvatureRadius, Color.white, Color.darkGray, Color.gray) {
+		searchButton = new RoundedButton(ImageIO.read(new File("./assets/searchBlack.png"))) {
 			
 			private static final long serialVersionUID = -4821983731589305576L;
 
@@ -115,7 +116,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		backArrow = ImageIO.read(new File("./assets/backBlack.png"));
 		forwardsArrow = ImageIO.read(new File("./assets/forwardBlack.png"));
 		
-		minimizeButton = new RoundedButton(forwardsArrow, curvatureRadius, Color.white, Color.darkGray, Color.gray) {
+		minimizeButton = new RoundedButton(forwardsArrow) {
 			
 			private static final long serialVersionUID = -4821983731589305576L;
 
@@ -149,8 +150,8 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 			public void paint(Graphics g) {
 				Graphics2D g2= (Graphics2D) g.create();
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				g2.setColor(colorDark);
-				g2.fillRoundRect(0,0,this.getWidth(),this.getHeight(), curvatureRadius, curvatureRadius);
+				g2.setColor(YUSUColours.DARK);
+				g2.fillRoundRect(0,0,this.getWidth(),this.getHeight(), UIConstants.CURVE_RADIUS, UIConstants.CURVE_RADIUS);
 				g2.dispose();
 				super.paint(g);
 			}
@@ -169,11 +170,11 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		scrollView.setOpaque(false);
 		// Use BoxLayout with Y_AXIS orientation
 		scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS)); 
-		scrollView.setBackground(colorDark);
+		scrollView.setBackground(YUSUColours.DARK);
 		// Init scrollPane with scrollView JPanel viewport and add to sidebar jpanel
 		scrollPane = new JScrollPane(scrollView);
 		scrollPane.setOpaque(false);
-		scrollPane.setBackground(colorDark);
+		scrollPane.setBackground(YUSUColours.DARK);
 		scrollPane.setBorder(null);
 		
 		// Custom Scrollbar setup
@@ -205,9 +206,9 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		}
 		
 		Timer openTimer = new Timer();
-		int widthInc = (this.getWidth() - GAP_WIDTH)*ANIMATION_FRAME_TIME_MS/ANIMATION_TIME_MS;
+		int widthInc = (this.getWidth() - UIConstants.GAP_WIDTH)*ANIMATION_FRAME_TIME_MS/ANIMATION_TIME_MS;
 
-		Rectangle bounds = new Rectangle(GAP_WIDTH, GAP_WIDTH, 1, getHeight()-(2*GAP_WIDTH));
+		Rectangle bounds = new Rectangle(UIConstants.GAP_WIDTH, UIConstants.GAP_WIDTH, 1, getHeight()-(2*UIConstants.GAP_WIDTH));
 		sidebarMainPanel.setBounds(bounds);
 		minimizeButton.setIconImage(backArrow);
 		
@@ -226,7 +227,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 			@Override
 			public void run() {
 				isOpen = true;
-				bounds.width = getWidth() - GAP_WIDTH;
+				bounds.width = getWidth() - UIConstants.GAP_WIDTH;
 				sidebarMainPanel.setBounds(bounds);
 				openTimer.cancel();
 				openTimer.purge();
@@ -290,7 +291,7 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		for (Presentation panel : p) {
 			scrollView.add(panel); // Add the updated panels to the containerPanel
 			panel.showCurrentSlide(); // Show the first slide
-			panel.setBackground(colorDark); // Same colour as sideBar for seamless look
+			panel.setBackground(YUSUColours.DARK); // Same colour as sideBar for seamless look
 			scrollView.doLayout();
 			scrollView.validate();
 		}
@@ -330,19 +331,19 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		int w = this.getWidth();
 		int h = this.getHeight();
 		
-		int mainPanelWidth = w-GAP_WIDTH;
-		int mainPanelHeight = h-(2*GAP_WIDTH);
+		int mainPanelWidth = w-UIConstants.GAP_WIDTH;
+		int mainPanelHeight = h-(2*UIConstants.GAP_WIDTH);
 		int headerHeight = 30;
 		
 		
-		sidebarMainPanel.setBounds(GAP_WIDTH, GAP_WIDTH, isOpen ? mainPanelWidth : 0, mainPanelHeight);
-		minimizeButton.setBounds(mainPanelWidth-headerHeight, 2*GAP_WIDTH, headerHeight, headerHeight);
-		searchPanel.setBounds(2*GAP_WIDTH, 2*GAP_WIDTH, mainPanelWidth-3*GAP_WIDTH-headerHeight, headerHeight);
+		sidebarMainPanel.setBounds(UIConstants.GAP_WIDTH, UIConstants.GAP_WIDTH, isOpen ? mainPanelWidth : 0, mainPanelHeight);
+		minimizeButton.setBounds(mainPanelWidth-headerHeight, 2*UIConstants.GAP_WIDTH, headerHeight, headerHeight);
+		searchPanel.setBounds(2*UIConstants.GAP_WIDTH, 2*UIConstants.GAP_WIDTH, mainPanelWidth-3*UIConstants.GAP_WIDTH-headerHeight, headerHeight);
 		searchButton.setBounds(searchPanel.getWidth()-headerHeight, 0, headerHeight, headerHeight);
-		searchField.setBounds(GAP_WIDTH, 0, searchPanel.getWidth()-GAP_WIDTH-headerHeight, headerHeight);
+		searchField.setBounds(UIConstants.GAP_WIDTH, 0, searchPanel.getWidth()-UIConstants.GAP_WIDTH-headerHeight, headerHeight);
 		
-		scrollBar.setBounds(mainPanelWidth-GAP_WIDTH, 2*GAP_WIDTH+headerHeight, GAP_WIDTH, mainPanelHeight-headerHeight-3*GAP_WIDTH);
-		scrollPane.setBounds(GAP_WIDTH, 2*GAP_WIDTH+headerHeight, mainPanelWidth-2*GAP_WIDTH, mainPanelHeight-headerHeight-3*GAP_WIDTH);
+		scrollBar.setBounds(mainPanelWidth-UIConstants.GAP_WIDTH, 2*UIConstants.GAP_WIDTH+headerHeight, UIConstants.GAP_WIDTH, mainPanelHeight-headerHeight-3*UIConstants.GAP_WIDTH);
+		scrollPane.setBounds(UIConstants.GAP_WIDTH, 2*UIConstants.GAP_WIDTH+headerHeight, mainPanelWidth-2*UIConstants.GAP_WIDTH, mainPanelHeight-headerHeight-3*UIConstants.GAP_WIDTH);
 	}
 	
 	

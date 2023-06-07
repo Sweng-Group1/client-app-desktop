@@ -20,6 +20,18 @@ public class ImageViewer extends MediaElement {
 	private int rotation;
 	private float delay;
 
+	/**
+	 * Constructs an ImageViewer with the specified parameters.
+	 *
+	 * @param pos         The position of the ImageViewer.
+	 * @param pointWidth  The width of the ImageViewer.
+	 * @param pointHeight The height of the ImageViewer.
+	 * @param duration    The duration of the ImageViewer, including delay.
+	 * @param rot         The rotation angle of the ImageViewer.
+	 * @param delay       The delay before the ImageViewer starts.
+	 * @param slide       The Slide object associated with the ImageViewer.
+	 * @param fileURL     The URL of the image file to load.
+	 */
 	public ImageViewer(Point pos, int pointWidth, int pointHeight, float duration, int rot, float delay, Slide slide, URL fileURL) {
 		super(pos, pointWidth, pointHeight, duration+delay, slide, fileURL);
 		this.rotation = rot;

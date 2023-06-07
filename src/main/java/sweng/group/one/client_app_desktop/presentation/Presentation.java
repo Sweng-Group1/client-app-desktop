@@ -425,6 +425,10 @@ public class Presentation extends JPanel {
         showCurrentSlide();
 	}
 	
+	
+	/**
+	 * Draws slide with overlay to indicate the current slide and display info when a mouse is hovering
+	 */
 	@Override
 	public void paint(Graphics g) {
 	    super.paint(g);

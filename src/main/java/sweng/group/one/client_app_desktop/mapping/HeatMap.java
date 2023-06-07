@@ -30,6 +30,12 @@ public class HeatMap extends Layer {
     private BufferedImage gradient;
     private ArrayList<EventMarker> markers;
 
+    /**
+     * Creates a HeatMap object with the given list of EventMarkers and MapView.
+     *
+     * @param markers The list of EventMarkers representing the data points for the heatmap.
+     * @param mapView The MapView object representing the map view.
+     */
     public HeatMap(ArrayList<EventMarker> markers, MapView mapView) {
     	super();
     	try {
@@ -45,6 +51,16 @@ public class HeatMap extends Layer {
     }
     
     @Override
+    /**
+     * Draws a heatmap of event markers on the canvas within the specified bounding box, at the given zoom level,
+     * and with the provided top left point. The heatmap is generated based on the number of posts associated with each marker.
+     * The method uses various calculations and image manipulations to create the heatmap effect.
+     *
+     * @param boundingBox  The bounding box of the map.
+     * @param zoomLevel    The zoom level of the map.
+     * @param canvas       The canvas to draw on.
+     * @param topLeftPoint The top-left point of the canvas.
+     */
     public synchronized void draw(BoundingBox boundingBox, byte zoomLevel, Canvas canvas, Point topLeftPoint) {
     	int width = canvas.getWidth();
     	int height = canvas.getHeight();
@@ -83,7 +99,7 @@ public class HeatMap extends Layer {
 	        //draw the shape on the map with opacity proportional to the number of posts
 	        float alpha =  m.getNumPosts()/(float)(maxNumPosts*1.1);
 	        
-	        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha-(int)alpha)); //set alpha to floor
+	        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha-(int)alpha)); //set alpha to 0-1 range
 	        g.drawImage(scaledImage, left, top, null);
     	}
     	

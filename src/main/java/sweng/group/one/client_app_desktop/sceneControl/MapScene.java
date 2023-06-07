@@ -42,9 +42,9 @@ import sweng.group.one.client_app_desktop.mapping.HeatMap;
  * @author flt515
  *
  */
-@SuppressWarnings("serial")
 public class MapScene extends MapView{
 	
+	private static final long serialVersionUID = 1503467272600667668L;
 	private static final GraphicFactory GRAPHIC_FACTORY = AwtGraphicFactory.INSTANCE;
 	private static final String MARKER_IMAGE_PATH = "./assets/map/marker.png";
 	private static final int TILE_SIZE = 256;

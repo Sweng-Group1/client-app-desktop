@@ -87,6 +87,11 @@ public class RoundedButton extends JPanel{
 		addMouseMotionListener(mouseListener);
 	}
 	
+	public RoundedButton(Image image) {
+		this(image, UIConstants.CURVE_RADIUS, YUSUColours.UI_MAIN, YUSUColours.UI_PRESSED, YUSUColours.UI_HOVER);
+	}
+	
+	
 	// -------------------------------------------------------------- //
 	// ----------------------- APPEARANCE --------------------------- //
 	// -------------------------------------------------------------- //

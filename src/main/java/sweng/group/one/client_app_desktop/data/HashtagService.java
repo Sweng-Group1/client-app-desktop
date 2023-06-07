@@ -59,7 +59,12 @@ public class HashtagService {
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder().url(hashtagURL).get().build();
-		Response response = client.newCall(request).execute();
+		Response response = null;
+		try {
+			response = client.newCall(request).execute();
+		} catch(IOException e){
+			throw new AuthenticationException("Unable to Reach the Server");
+		}
 
 		int statusCode = response.code();
 

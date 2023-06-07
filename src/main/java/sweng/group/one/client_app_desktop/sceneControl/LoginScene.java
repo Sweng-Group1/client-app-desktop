@@ -23,6 +23,8 @@ import sweng.group.one.client_app_desktop.data.AuthenticationException;
 import sweng.group.one.client_app_desktop.data.User;
 import sweng.group.one.client_app_desktop.data.UserService;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
+import sweng.group.one.client_app_desktop.uiElements.UIConstants;
+import sweng.group.one.client_app_desktop.uiElements.YUSUColours;
 
 /**
  * Modified JPanel that allows users to login or create an account using a chosen username and password
@@ -32,14 +34,13 @@ import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
  *
  */
 
-public class LoginScene extends JPanel implements ComponentInterface, LayoutManager{
+public class LoginScene extends JPanel implements LayoutManager{
 	
 	// -------------------------------------------------------------- //
 	// --------------------- INITIALISATIONS ------------------------ //
 	// -------------------------------------------------------------- //
 
 	private static final long serialVersionUID = 1L;
-	private boolean isOpen;
 	
 	private BufferedImage logo;
 	private LoginSceneButton continueButton;
@@ -126,11 +127,11 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			this.add(inputTextField);
 			this.setLayout(null);
 			this.setOpaque(false);
-			this.setBackground(transparent);
+			this.setBackground(UIConstants.TRANSPARENT);
 			
 			inputTextField.setOpaque(false);
 			// Background colour of input text box
-			inputTextField.setBackground(transparent);
+			inputTextField.setBackground(UIConstants.TRANSPARENT);
 			inputTextField.setBorder(null);
 			// Cursor colour
 			inputTextField.setCaretColor(Color.white);
@@ -154,19 +155,19 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			g2.setRenderingHints(qualityHints);
 			
 			// Set drawing colour to one the textbox background colour
-			g2.setColor(colorLight);
+			g2.setColor(YUSUColours.LIGHT);
 			
 			// Button geometry
-			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius/2, curvatureRadius/2);
+			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), UIConstants.CURVE_RADIUS/2, UIConstants.CURVE_RADIUS/2);
 			
 			if(inputTextField.getText().isBlank()) {
 				String str = inputTextField.getName();
-				g2.setColor(colorDark);
-				g2.drawString(str, curvatureRadius/2,(this.getHeight()/2)+(g.getFontMetrics().getHeight()/4));
+				g2.setColor(YUSUColours.DARK);
+				g2.drawString(str, UIConstants.CURVE_RADIUS/2,(this.getHeight()/2)+(g.getFontMetrics().getHeight()/4));
 			}
 	
 			// Set colour to one of the project defaults
-			g2.setColor(colorLight);
+			g2.setColor(YUSUColours.LIGHT);
 			
 			super.paintComponent(g);
 			 
@@ -174,9 +175,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	}
 	
 	private class LoginSceneButton extends RoundedButton {
-		/**
-		 * 
-		 */
+		
 		private static final long serialVersionUID = 1L;
 		private String buttonName;
 		
@@ -198,7 +197,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		 */
 		public LoginSceneButton(String buttonName, Color mainColour, Color pressedColour,
 				Color hoverColour) {
-			super(null, curvatureRadius, mainColour, pressedColour, hoverColour);
+			super(null, UIConstants.CURVE_RADIUS, mainColour, pressedColour, hoverColour);
 			this.buttonName = buttonName;
 		}
 		
@@ -208,7 +207,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		 * @param buttonName Will appear as text within the button.
 		 */
 		public LoginSceneButton(String buttonName) {
-			super(null, curvatureRadius, colorLight, colorDark, Color.gray);
+			super(null, UIConstants.CURVE_RADIUS, YUSUColours.LIGHT, YUSUColours.DARK, Color.gray);
 			this.buttonName = buttonName;
 		}
 		
@@ -268,7 +267,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		
 		continueButton = new LoginSceneButton("Cancel");
 		
-		createAccountButton = new LoginSceneButton("Create Account", transparent, transparent, Color.gray) {
+		createAccountButton = new LoginSceneButton("Create Account", UIConstants.TRANSPARENT, UIConstants.TRANSPARENT, Color.gray) {
 			private static final long serialVersionUID = 1974232860985997778L;
 
 			@Override
@@ -333,7 +332,6 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 			try {
 				if (userService.login(user, password)==200) {
 					System.out.println("User successfully logged in");
-					changeScene();
 					userLoggedIn = true;
 					return true;
 				} else {
@@ -370,11 +368,8 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 				return false;
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return false;
 		} catch (AuthenticationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
@@ -428,23 +423,16 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		
 	}
 	
-	public void changeScene() {
-		isOpen = false;
-		this.setVisible(false);
-	}
 	
 	public String getUsername() {
 		return usernamePanel.inputTextField.getText();
 	}
 	
-	public boolean isOpen() {
-		return isOpen;
-	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		g.setColor(colorDark);
-		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), curvatureRadius, curvatureRadius);
+		g.setColor(YUSUColours.DARK);
+		g.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), UIConstants.CURVE_RADIUS, UIConstants.CURVE_RADIUS);
 		super.paintComponent(g);
 	}
 	
@@ -495,22 +483,22 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		int smallButtonWidth = 5*fieldWidth/12;
 		
 		usernamePanel.setBounds(fieldX, fieldY-sceneHeight/8, fieldWidth, fieldHeight);
-		usernamePanel.inputTextField.setBounds(curvatureRadius/2, 0, usernamePanel.getWidth()-20, usernamePanel.getHeight());
+		usernamePanel.inputTextField.setBounds(UIConstants.CURVE_RADIUS/2, 0, usernamePanel.getWidth()-20, usernamePanel.getHeight());
 		
 		passwordPanel.setBounds(fieldX, fieldY, fieldWidth, fieldHeight);
-		passwordPanel.inputTextField.setBounds(curvatureRadius/2, 0, passwordPanel.getWidth()-20, passwordPanel.getHeight());
+		passwordPanel.inputTextField.setBounds(UIConstants.CURVE_RADIUS/2, 0, passwordPanel.getWidth()-20, passwordPanel.getHeight());
 		
 		emailPanel.setBounds(fieldX, fieldY-4*sceneHeight/8, fieldWidth, fieldHeight);
-		emailPanel.inputTextField.setBounds(curvatureRadius/2, 0, emailPanel.getWidth()-20, emailPanel.getHeight());
+		emailPanel.inputTextField.setBounds(UIConstants.CURVE_RADIUS/2, 0, emailPanel.getWidth()-20, emailPanel.getHeight());
 		
 		firstNamePanel.setBounds(fieldX, fieldY-3*sceneHeight/8, fieldWidth, fieldHeight);
-		firstNamePanel.inputTextField.setBounds(curvatureRadius/2, 0, firstNamePanel.getWidth()-20, firstNamePanel.getHeight());
+		firstNamePanel.inputTextField.setBounds(UIConstants.CURVE_RADIUS/2, 0, firstNamePanel.getWidth()-20, firstNamePanel.getHeight());
 		
 		lastNamePanel.setBounds(fieldX, fieldY-2*sceneHeight/8, fieldWidth, fieldHeight);
-		lastNamePanel.inputTextField.setBounds(curvatureRadius/2, 0, lastNamePanel.getWidth()-20, lastNamePanel.getHeight());
+		lastNamePanel.inputTextField.setBounds(UIConstants.CURVE_RADIUS/2, 0, lastNamePanel.getWidth()-20, lastNamePanel.getHeight());
 		
 		feedbackPanel.setBounds(fieldX, fieldY+(11*sceneHeight/32), fieldWidth, fieldHeight);
-		feedbackLabel.setBounds(curvatureRadius/2, 0, feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
+		feedbackLabel.setBounds(UIConstants.CURVE_RADIUS/2, 0, feedbackPanel.getWidth()-20, feedbackPanel.getHeight());
 
 		loginButton.setBounds(fieldX, fieldY+2*sceneHeight/16, smallButtonWidth, fieldHeight);
 		continueButton.setBounds(fieldX+fieldWidth-smallButtonWidth, fieldY+2*sceneHeight/16, smallButtonWidth, fieldHeight);

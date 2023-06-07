@@ -3,7 +3,10 @@ package sweng.group.one.client_app_desktop.sceneControl;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
-import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
+
+import sweng.group.one.client_app_desktop.uiElements.CustomScrollBarUI;
+import sweng.group.one.client_app_desktop.uiElements.UIConstants;
+import sweng.group.one.client_app_desktop.uiElements.YUSUColours;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,7 +24,7 @@ import java.io.IOException;
  * @since 04/06/2023
  * @version 0.5
  */
-public class HelpScene extends JPanel implements ComponentInterface {
+public class HelpScene extends JPanel {
 
 	// -------------------------------------------------------------- //
 	// --------------------- Initialisations ------------------------ //
@@ -83,7 +86,7 @@ public class HelpScene extends JPanel implements ComponentInterface {
     	
     	// UI Settings
     	scrollPane.setOpaque(false);
-		scrollPane.setBackground(colorDark);
+		scrollPane.setBackground(YUSUColours.DARK);
 		scrollPane.setBorder(null);
     	
 		// Custom Scrollbar setup
@@ -126,7 +129,7 @@ public class HelpScene extends JPanel implements ComponentInterface {
 
                     // For each page, render the page as an image at 300 dpi and add to scrollView
                     for (int pageIndex = 0; pageIndex < document.getNumberOfPages(); pageIndex++) {
-                        BufferedImage image = pdfRenderer.renderImageWithDPI(pageIndex, 300, ImageType.RGB);
+                        BufferedImage image = pdfRenderer.renderImageWithDPI(pageIndex, 300, ImageType.ARGB);
                         SwingUtilities.invokeLater(() -> addPageToScrollView(image));
                     }
                     
@@ -194,8 +197,8 @@ public class HelpScene extends JPanel implements ComponentInterface {
 	public void paint(Graphics g) {
 		Graphics2D g2= (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(colorDark);
-		g2.fillRoundRect(0,0,this.getWidth(),this.getHeight(), curvatureRadius, curvatureRadius);
+		g2.setColor(YUSUColours.DARK);
+		g2.fillRoundRect(0,0,this.getWidth(),this.getHeight(), UIConstants.CURVE_RADIUS, UIConstants.CURVE_RADIUS);
 		g2.dispose();
 		super.paint(g);
 	}

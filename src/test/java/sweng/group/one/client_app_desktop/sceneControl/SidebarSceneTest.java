@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +21,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
 
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 
@@ -42,12 +38,6 @@ public class SidebarSceneTest  {
 	
 	private String searchBarContent;
 	
-	private ActionListener searchAction = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			GuiActionRunner.execute(() -> searchBarContent = sidebar.getSearchText());
-		}
-	};
 	
 	@BeforeClass
 	public static void setUpOnce() {
@@ -62,7 +52,7 @@ public class SidebarSceneTest  {
 		// Since we can only interact with swing elements in the EDT, we
 		// have to use GuiActionRunner to interact with JFrames and JPanels
 		JFrame frame = GuiActionRunner.execute(() -> new JFrame());
-		sidebar = GuiActionRunner.execute(() -> new SidebarScene(searchAction));
+		sidebar = GuiActionRunner.execute(() -> new SidebarScene());
 		GuiActionRunner.execute(() -> frame.add(sidebar));
 		window = new FrameFixture(frame);
 		window.show(); // shows the frame to test
@@ -109,7 +99,7 @@ public class SidebarSceneTest  {
 	
 	@Test
 	public void maximise() {
-		GuiActionRunner.execute(() -> sidebar.close(100L));
+		GuiActionRunner.execute(() -> sidebar.close());
 		
 		maximise.click();
 		sidebarFixture.requireVisible();
