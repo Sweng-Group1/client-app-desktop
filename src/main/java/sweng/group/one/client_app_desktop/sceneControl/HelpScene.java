@@ -108,6 +108,7 @@ public class HelpScene extends JPanel implements ComponentInterface {
 
     	// Open the PDF document to view
     	controller.openDocument(filePath);
+
     }
     
     // Custom UI design to display in a coloured roundrect
@@ -119,6 +120,21 @@ public class HelpScene extends JPanel implements ComponentInterface {
 		g2.fillRoundRect(0,0,this.getWidth(),this.getHeight(), curvatureRadius, curvatureRadius);
 		g2.dispose();
 		super.paint(g);
+	}
+
+	// -------------------------------------------------------------- //
+	// ------------------------- TESTING ---------------------------- //
+	// -------------------------------------------------------------- //
+    // These getters are required to test proper functionailty of the 
+    // ICEPDF loader. (package-private classes only)
+    JPanel getViewerComponentPanel() {
+		// TODO Auto-generated method stub
+		return viewerComponentPanel;
+	}
+
+    SwingController getController() {
+		// TODO Auto-generated method stub
+		return controller;
 	}
     
 }
