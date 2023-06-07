@@ -24,7 +24,7 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
 public class MediaElementTest {
 	
 	private Slide slide;
-	private final static String TEST_ASSET_PATH = "./src/test/java/sweng/group/one/client_app_desktop/media/testAssets/";
+	private final static String TEST_ASSET_PATH = "./src/test/java/sweng/group/one/client_app_desktop/media/testassets/";
 	
 	@Before
 	public void setup() {

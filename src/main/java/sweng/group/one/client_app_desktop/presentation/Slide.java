@@ -47,16 +47,30 @@ public class Slide extends JPanel implements LayoutManager {
 		}
 		
 		this.add(element.component);
+		this.setComponentZOrder(element.component, elements.size());
 		this.getElements().add(element);
 		element.component.validate();
 	}
 	
-	public void displaySlide() {
+	/**
+	 * Displays or hides the slide and its elements.
+	 *
+	 * @param displaying true to display the slide, false to hide it
+	 */
+	public void displaySlide(boolean displaying) {
+		this.setVisible(displaying);
 		for (PresElement e:getElements()) {
-			e.displayElement();
+			e.displayElement(displaying);
 		}
+		this.validate();
 	}
 	
+	/**
+	 * Converts a point from pixel coordinates to point coordinates.
+	 *
+	 * @param pixel the point in pixel coordinates
+	 * @return the point in point coordinates
+	 */
 	public Point pxToPt(Point pixel) {
 		int ptX = (int)((float)pixel.x/this.getWidth() * this.pointWidth);
 		int ptY = (int)((float)pixel.y/this.getHeight() * this.pointHeight);
@@ -103,6 +117,7 @@ public class Slide extends JPanel implements LayoutManager {
 
 	/**
 	 *	Finds the preferred layout size for a given parent container (with a fixed aspect ratio)
+	 *	This will make the Slide take up 90% of it's parents container
 	 *
 	 *	@param parent: The parent container for the layout to be relative to
 	 *
@@ -113,7 +128,7 @@ public class Slide extends JPanel implements LayoutManager {
 		int slideX = getPointWidth();
 		int slideY = getPointHeight();
 		int w = parent.getWidth();
-		
+
 		float slideAspectRatio = (float)slideX/slideY;
 		
 		return new Dimension(w, (int) (w/slideAspectRatio));

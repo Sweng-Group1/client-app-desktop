@@ -17,10 +17,14 @@ import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.awt.graphics.AwtBitmap;
 import org.mapsforge.map.awt.view.MapView;
 import org.mapsforge.map.layer.Layer;
+/**
+ * @author flt515
+ *
+ */
 public class HeatMap extends Layer {
     private static final String CIRCLEPIC_PATH = "./assets/map/bolilla.png";
     private static final String GRADIENT_PATH = "./assets/map/colors.png";
-    private static final int HEAT_RADIUS_METERS = 100;
+    private static final int HEAT_RADIUS_METERS = 200;
     private MapView mapView;
     private BufferedImage image;
     private BufferedImage gradient;
@@ -77,7 +81,9 @@ public class HeatMap extends Layer {
 	        int top = (int) (pixelY - topLeftPoint.y - radius);
 	        
 	        //draw the shape on the map with opacity proportional to the number of posts
-	        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, m.getNumPosts()/(float)(maxNumPosts*1.1)));
+	        float alpha =  m.getNumPosts()/(float)(maxNumPosts*1.1);
+	        
+	        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha-(int)alpha)); //set alpha to floor
 	        g.drawImage(scaledImage, left, top, null);
     	}
     	

@@ -43,6 +43,10 @@ import org.mapsforge.map.rendertheme.InternalRenderTheme;
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.mapping.HeatMap;
 
+/**
+ * @author flt515
+ *
+ */
 @SuppressWarnings("serial")
 public class MapScene extends MapView{
 	
@@ -99,14 +103,7 @@ public class MapScene extends MapView{
 				tileCache, 
 				mapStore, 
 				this.getModel().mapViewPosition, 
-				GRAPHIC_FACTORY) {
-			//TODO: Remove this
-				@Override //print co-ords when map is clicked
-	            public boolean onTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
-	                addEventMarker(tapLatLong);
-	                return true;
-	            }
-	        };
+				GRAPHIC_FACTORY);
 	        
         //set custom theme
 		try {
@@ -118,7 +115,7 @@ public class MapScene extends MapView{
 			        return false; //silence log of internal asset use
 			    }
 			});
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException | NullPointerException e) {
 			tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
 		}
 		
@@ -130,19 +127,19 @@ public class MapScene extends MapView{
 		//zoom into the centre of the map
 		Model model = this.getModel();
 		model.init(preferencesFacade);
-		byte zoomLevel = (byte) (LatLongUtils.zoomForBounds(model.mapViewDimension.getDimension(), boundingBox, model.displayModel.getTileSize()) + 1);
+		byte zoomLevel = (byte) (LatLongUtils.zoomForBounds(getDimension(), boundingBox, model.displayModel.getTileSize()) + 1);
 		this.setZoomLevelMin(zoomLevel);
         model.mapViewPosition.setMapPosition(new MapPosition(boundingBox.getCenterPoint(), zoomLevel));
         model.mapViewPosition.setMapLimit(boundingBox);
 	}
 	
 	/**
-	 * Loads a map file and applies the default render theme to display the map.
+	 * Loads a map file and applies the custom render theme to display the map.
 	 *
 	 * @param mapFile  the map file to be loaded
 	 */
 	public void loadMapFile(File mapFile) {
-		loadMapFile(mapFile, null);
+		loadMapFile(mapFile, new File("./assets/map/theme.xml"));
 	}
 	
 	
@@ -189,6 +186,10 @@ public class MapScene extends MapView{
 	public void selectMarker(EventMarker selected) {
 		for (EventMarker m : markers) {
 			m.setSelected(m == selected);
+		}
+		
+		if(selected != null) {
+			this.getModel().mapViewPosition.animateTo(selected.getLatLong());
 		}
 	}
 	

@@ -13,7 +13,7 @@ import java.awt.Stroke;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
 /**
- * The “Rectangle” class draws a rectangle of given dimensions on a “Slide”
+ * The â€œRectangleâ€� class draws a rectangle of given dimensions on a â€œSlideâ€�
  * object, with the possibility of a border and shadow.
  * 
  * @author joe2k01
