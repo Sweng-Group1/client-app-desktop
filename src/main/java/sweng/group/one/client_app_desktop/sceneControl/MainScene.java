@@ -37,9 +37,8 @@ public class MainScene extends JFrame implements LayoutManager{
 	private OptionsScene options;
 	
 	public MainScene() {
-		super();
+		super("What's On: YUSU");
 		
-		this.setName("What's On: YUSU");
 		this.setSize(800, 500);
 		this.setMinimumSize(new Dimension(800, 500));
 		this.setMaximumSize(new Dimension(1920, 1080));
@@ -79,23 +78,17 @@ public class MainScene extends JFrame implements LayoutManager{
 				private static final long serialVersionUID = -4506870977494750646L;
 
 				@Override
-				public void helpPressed() {
-					if (help.isVisible()) {
-						help.setVisible(false);
-					} else {				
-						help.setVisible(true);
-					}
-				}
-				
-				@Override
-				public void addPostPressed() {
-					sidebarScene.setVisible(false);
+				public void helpPressed() {				
+					help.setVisible(true);
+					sidebarScene.close();
+					login.setVisible(false);
 				}
 				
 				@Override
 				public void accountPressed() {
 					sidebarScene.close();
 					login.setVisible(true);
+					help.setVisible(false);
 				}
 				
 				@Override
