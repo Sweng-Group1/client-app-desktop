@@ -355,7 +355,7 @@ public class MainScene extends JFrame implements LayoutManager{
 		options.layoutContainer(getContentPane());
 		login.setBounds(3*w/8, h/4, w/4, h/2);
 		login.layoutContainer(getContentPane());
-		help.setBounds(w/3 + optionsGap/2, optionsGap, w/2 + optionsGap, h - optionsGap * 2);
+		help.setBounds(w/3 + optionsGap/2, optionsGap, w/2, h - optionsGap * 2);
 	}
 	
 	public static void main(String[] args) {
