@@ -18,6 +18,11 @@ public class ImageElement extends PresElement{
 		super(pos, height, height, duration, slide);
 		this.image=image;
 		component = new JComponent() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4004719683804642451L;
+
 			public void paint(Graphics g) {
 				Graphics2D g2= (Graphics2D) g.create();
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

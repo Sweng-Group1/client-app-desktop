@@ -7,8 +7,6 @@ import java.awt.Point;
 
 import javax.swing.JComponent;
 
-import sweng.group.one.client_app_desktop.graphics.Rectangle;
-
 /**
  * @author sophiemaw
  * Interface for every component, all scene components 

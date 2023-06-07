@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
@@ -53,9 +52,10 @@ import sweng.group.one.client_app_desktop.text.TextElement;
  * @author flt515
  *
  */
-@SuppressWarnings("serial")
 public class Presentation extends JPanel {
 	
+	private static final long serialVersionUID = -4365673116114208302L;
+
 	private static final String XML_SCHEMA_PATH = "assets/xml/standard.xsd";
 	
 	private ArrayList<Slide> slides;

@@ -4,14 +4,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.LayoutManager;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +18,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -41,13 +36,9 @@ import sweng.group.one.client_app_desktop.text.TextElement;
 import sweng.group.one.client_app_desktop.data.AuthenticationException;
 import sweng.group.one.client_app_desktop.data.HashtagService;
 import sweng.group.one.client_app_desktop.data.PostService;
-import sweng.group.one.client_app_desktop.data.UserService;
 
 public class MainScene extends JFrame implements LayoutManager{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7994175471538717547L;
 	private MapScene mapScene;
 	private SidebarScene sidebarScene;
@@ -81,6 +72,11 @@ public class MainScene extends JFrame implements LayoutManager{
 		};
 		try {
 			sidebarScene = new SidebarScene() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -7428381636891994724L;
+
 				@Override
 				public void search(String text) {
 					for (EventMarker e : mapScene.getMarkers()) {
@@ -123,6 +119,9 @@ public class MainScene extends JFrame implements LayoutManager{
 				}
 			};
 			login= new LoginScene() {
+
+				private static final long serialVersionUID = -6328422788126069968L;
+
 				@Override
 				public boolean loginButtonPressed() {
 					boolean loggedIn = super.loginButtonPressed();

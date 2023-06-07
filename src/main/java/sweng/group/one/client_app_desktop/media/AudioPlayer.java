@@ -7,16 +7,12 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
-
-import org.mapsforge.core.graphics.Color;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
@@ -66,6 +62,8 @@ public class AudioPlayer extends PlayableMediaElement{
 		
 		toggleB = new JToggleButton() {
 			
+			private static final long serialVersionUID = -8855412922464758819L;
+
 			@Override
 			public void paint(Graphics g) {
 				Graphics2D g2d = (Graphics2D)g;

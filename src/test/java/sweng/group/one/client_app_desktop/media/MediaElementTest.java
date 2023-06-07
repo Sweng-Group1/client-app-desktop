@@ -18,7 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import sweng.group.one.client_app_desktop.media.MediaElement;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
 public class MediaElementTest {

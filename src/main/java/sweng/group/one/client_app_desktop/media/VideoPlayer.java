@@ -8,7 +8,6 @@ import javax.swing.JTextArea;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 public class VideoPlayer extends PlayableMediaElement {
 	
@@ -37,15 +36,15 @@ public class VideoPlayer extends PlayableMediaElement {
 		nativeLib = new NativeDiscovery().discover();
 		this.mediaPlayer = new CallbackMediaPlayerComponent();
 		
-//		if (Boolean.TRUE.equals(nativeLib)) {
+		if (Boolean.TRUE.equals(nativeLib)) {
 			this.component = mediaPlayer;
 			this.duration = (float)mediaPlayer.mediaPlayer().status().length()/1000;
 			loadFile();
 			mediaPlayer.mediaPlayer().controls().setRepeat(loops);
-//		}
-//		else {
-//			this.component = new JTextArea("VLC is required for media to be used in this application");
-//		}
+		}
+		else {
+			this.component = new JTextArea("VLC is required for media to be used in this application");
+		}
 	}
 	
 	@Override

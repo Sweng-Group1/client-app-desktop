@@ -3,25 +3,20 @@ package sweng.group.one.client_app_desktop.media;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import sweng.group.one.client_app_desktop.presentation.Slide;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 
 @RunWith(JUnitParamsRunner.class)

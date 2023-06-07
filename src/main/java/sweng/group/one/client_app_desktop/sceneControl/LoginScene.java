@@ -12,8 +12,6 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
@@ -24,7 +22,6 @@ import javax.swing.JTextField;
 import sweng.group.one.client_app_desktop.data.AuthenticationException;
 import sweng.group.one.client_app_desktop.data.User;
 import sweng.group.one.client_app_desktop.data.UserService;
-import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
 
 /**
@@ -58,8 +55,6 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	private JPanel feedbackPanel;
 	private JLabel feedbackLabel;
 	
-	private String accessToken;
-	private String refreshToken;
 	private UserService userService = new UserService();
 	protected User user = new User("Default");
 	
@@ -233,19 +228,11 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		}
 	}
 	
-	private class FeedbackLabelDisplay extends JPanel {
-		
-	}
-	
 	private void createFeedbackLabel() {
 		feedbackPanel = new JPanel() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 4422159517991702385L;
 
 			public void paintComponent(Graphics g) {
-				Graphics2D g2 = (Graphics2D)g;
 				super.paintComponent(g);
 			}
 		};
@@ -282,6 +269,8 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		continueButton = new LoginSceneButton("Cancel");
 		
 		createAccountButton = new LoginSceneButton("Create Account", transparent, transparent, Color.gray) {
+			private static final long serialVersionUID = 1974232860985997778L;
+
 			@Override
 			public void buttonPressed() {
 				createAccountButtonPressed();
@@ -289,6 +278,8 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 		};
 		
 		registerButton = new LoginSceneButton("Register") {
+			private static final long serialVersionUID = -5507249711470492566L;
+
 			@Override
 			public void buttonPressed() {
 				registerButtonPressed();
@@ -310,8 +301,7 @@ public class LoginScene extends JPanel implements ComponentInterface, LayoutMana
 	private void createLogo() throws IOException {
 		logo = ImageIO.read(new File("./assets/Yusu Logo 14.png"));
 		logoPanel = new JPanel() {
-
-			//private static final long serialVersionUID = 6961538361558408979L;
+			private static final long serialVersionUID = 810296644849212377L;
 
 			@Override
 			public void paintComponent(Graphics g) {

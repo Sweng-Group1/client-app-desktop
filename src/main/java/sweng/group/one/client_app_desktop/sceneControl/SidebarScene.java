@@ -25,7 +25,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
 import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
 import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
@@ -105,6 +104,8 @@ public class SidebarScene extends JPanel implements ComponentInterface, LayoutMa
 		
 		searchButton = new RoundedButton(ImageIO.read(new File("./assets/searchBlack.png")), curvatureRadius, Color.white, Color.darkGray, Color.gray) {
 			
+			private static final long serialVersionUID = -4821983731589305576L;
+
 			@Override
 			public void buttonPressed() {
 				search(searchField.getText());
