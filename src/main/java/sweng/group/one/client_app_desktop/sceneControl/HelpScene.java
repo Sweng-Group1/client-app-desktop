@@ -1,25 +1,20 @@
 package sweng.group.one.client_app_desktop.sceneControl;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.rendering.ImageType;
-import org.apache.pdfbox.rendering.PDFRenderer;
-import sweng.group.one.client_app_desktop.sideBarUIElements.CustomScrollBarUI;
+import org.icepdf.ri.common.ComponentKeyBinding;
+import org.icepdf.ri.common.SwingController;
+import org.icepdf.ri.common.SwingViewBuilder;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * JPanel for displaying a help scene that contains a PDF document.
- * The PDF document is loaded and rendered as images, which are displayed in a scrollable view.
- * The layout is automatically adjusted to fit the size of the scroll view.
+ * The PDF document is loaded and rendered with the ICEPDF viewer (with markup features)!
  * 
  * @author Srikanth Jakka
  * @since 04/06/2023
- * @version 0.5
+ * @version 1.1
  */
 public class HelpScene extends JPanel implements ComponentInterface {
 
@@ -27,10 +22,10 @@ public class HelpScene extends JPanel implements ComponentInterface {
 	// --------------------- Initialisations ------------------------ //
 	// -------------------------------------------------------------- //
     
-	// GUI Components
-    private JScrollPane scrollPane;
-    private JPanel scrollView;
-	private JScrollBar scrollBar;
+	// ICEPDF GUI Components
+	private SwingController controller;
+	private SwingViewBuilder factory;
+	private JPanel viewerComponentPanel;
 	
 	// ----------- CONSTANTS -------------
 	private static final long serialVersionUID = 1L;
@@ -65,41 +60,15 @@ public class HelpScene extends JPanel implements ComponentInterface {
  	// -------------------------------------------------------------- //
  	
     /**
-     * Creates a scrollPane with viewport scrollView, and custom scrollbar
-     * design as per the unified app UI spec.
+     * Sets basic properties of this JPanel.
      *
      */
  	private void setUpGUIElements() {
  		
  		// -------------- OBJECTS AND APPEARANCE ------------------
- 		this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+ 		// Set Layout and border.
+		this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(GAP_WIDTH, GAP_WIDTH, GAP_WIDTH, GAP_WIDTH));
-        
-		// Init scrollPane with scrollView JPanel viewport.
-        scrollView = new JPanel();
-		// Use BoxLayout with Y_AXIS orientation
-        scrollView.setLayout(new BoxLayout(scrollView, BoxLayout.Y_AXIS));
-    	scrollPane = new JScrollPane(scrollView);
-    	
-    	// UI Settings
-    	scrollPane.setOpaque(false);
-		scrollPane.setBackground(colorDark);
-		scrollPane.setBorder(null);
-    	
-		// Custom Scrollbar setup
-		scrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI());
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollBar = scrollPane.getVerticalScrollBar();
-		scrollBar.setUI(new CustomScrollBarUI());
-		scrollBar.setOpaque(false);
-		
-		// Default mouse scroll speed is too slow, set to a better value:
-		scrollPane.getVerticalScrollBar().setUnitIncrement(PRESENTATION_SCROLL_SPEED);
-		
-		// Add scrollbar and scrollPane to JPanel
-		add(scrollPane);
-		add(scrollBar);
 		
 		// Make the main panel transparent
 		this.setOpaque(false);
@@ -107,86 +76,38 @@ public class HelpScene extends JPanel implements ComponentInterface {
  	
     
     /**
-     * Loads the PDF file using apache PDF Renderer.
+     * Creates the ICEPDF component and adds to this JPanel, and loads the PDF file.
      *
      * @param filePath the path to the PDF file
      */
     private void loadPDF(String filePath) {
-    	// Sets up a File object for the pdf location
-        File pdfFile = new File(filePath);
-        
-        // Load PDF on new thread
-        Thread loadPDFThread = new Thread() {
-			@Override
-			public void run() {
-				try {
-					// Make the Apache PDF objects to handle the PDF File
-                    PDDocument document = PDDocument.load(pdfFile);
-                    PDFRenderer pdfRenderer = new PDFRenderer(document);
+    	// From https://github.com/pcorless/icepdf
+    	// Build a controller
+    	controller = new SwingController();
 
-                    // For each page, render the page as an image at 300 dpi and add to scrollView
-                    for (int pageIndex = 0; pageIndex < document.getNumberOfPages(); pageIndex++) {
-                        BufferedImage image = pdfRenderer.renderImageWithDPI(pageIndex, 300, ImageType.RGB);
-                        SwingUtilities.invokeLater(() -> addPageToScrollView(image));
-                    }
-                    
-                    // Close document
-                    document.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-			}
-		};
-		loadPDFThread.start();
-    }
-    
-    /**
-     * Adds an image of a page to the scroll view.
-     *
-     * @param image the image to add
-     */
-    private void addPageToScrollView(BufferedImage image) {
-        ImagePanel imagePanel = new ImagePanel(image);
-        scrollView.add(imagePanel);
-        scrollView.revalidate();
-        scrollView.repaint();
-    }
+    	// Build a SwingViewFactory configured with the controller
+    	factory = new SwingViewBuilder(controller);
+    	
+    	// Use the factory to build a JPanel that is pre-configured
+    	//with a complete, active Viewer UI.
+    	viewerComponentPanel = factory.buildViewerPanel();
 
-    /**
-     * ImagePanel class to hold BufferedImages in JPanel for correct 
-     * scaling of design.
-     *
-     */
-    private class ImagePanel extends JPanel {
-		private static final long serialVersionUID = 1L;
-		private BufferedImage image;
+    	// add copy keyboard command
+    	ComponentKeyBinding.install(controller, viewerComponentPanel);
 
-        public ImagePanel(BufferedImage image) {
-            this.image = image;
-        }
+    	// add interactive mouse link annotation support via callback
+    	controller.getDocumentViewController().setAnnotationCallback(
+    	     new org.icepdf.ri.common.MyAnnotationCallback(
+    	            controller.getDocumentViewController()));
+    	
+    	// Set the size of the viewer correctly
+    	viewerComponentPanel.setBounds(getVisibleRect());
 
-        // Custom paint function to scale the images of the PDF to size.
-        @Override
-        protected void paintComponent(Graphics g) {
-    		super.paintComponent(g);
-    		// Get the width of the main JPanel
-            int scrollViewWidth = getParent().getParent().getParent().getWidth(); 
-            
-            int imageWidth = image.getWidth(null); // Get the original width of the image
-            int imageHeight = image.getHeight(null); // Get the original height of the image
-            
-        	// Set the scaled width to the width of the scroll view
-            int scaledWidth = scrollViewWidth; 
-        	// Calculate the proportional scaled height		
-            int scaledHeight = (int) (((double) scrollViewWidth / imageWidth) * imageHeight); 
-            
-            // Draw the image with the scaled dimensions
-            g.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);
-            
-            // Set the preferred size of the scroll view
-            setPreferredSize(new Dimension(scrollViewWidth, scaledHeight)); 
-            revalidate(); // Revalidate the layout
-        }
+    	// Add the icepdf panel to the JPanel
+    	add(viewerComponentPanel, BorderLayout.CENTER);
+
+    	// Open the PDF document to view
+    	controller.openDocument(filePath);
     }
     
     // Custom UI design to display in a coloured roundrect
