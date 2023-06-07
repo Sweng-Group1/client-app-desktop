@@ -102,7 +102,6 @@ public class MapScene extends MapView{
 	        
         //set custom theme
 		try {
-			tileRendererLayer.setXmlRenderTheme(new ExternalRenderTheme(theme));
 			Logger logger = Logger.getLogger("org.mapsforge.map.rendertheme.XmlUtils");
 			logger.setFilter(new Filter() {
 			    @Override
@@ -110,6 +109,7 @@ public class MapScene extends MapView{
 			        return false; //silence log of internal asset use
 			    }
 			});
+			tileRendererLayer.setXmlRenderTheme(new ExternalRenderTheme(theme));
 		} catch (FileNotFoundException | NullPointerException e) {
 			tileRendererLayer.setXmlRenderTheme(InternalRenderTheme.DEFAULT);
 		}

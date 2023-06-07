@@ -2,7 +2,6 @@ package sweng.group.one.client_app_desktop.data;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,8 +10,6 @@ import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /* TEST STRATEGY

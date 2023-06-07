@@ -21,8 +21,6 @@ public class HashtagServerIntegrationTests {
 	private String defaultAdminPass = "password123";
 	private User userTest = new User(defaultAdminUsername);
 	private UserService userService = new UserService();
-	//private PostService postService = new PostService();
-	private HashtagService underTest = new HashtagService();
 	
 	
 	@Before
@@ -31,7 +29,7 @@ public class HashtagServerIntegrationTests {
 	}
 	@Test
 	public void testDownloadingHashtag() throws IOException, AuthenticationException {
-		JSONArray hashtags = underTest.retrieveHashtagsAsJSON();
+		JSONArray hashtags = HashtagService.retrieveHashtagsAsJSON();
 		System.out.println(hashtags.get(0).toString());
 		assertThat(hashtags).isNotNull();
 	}

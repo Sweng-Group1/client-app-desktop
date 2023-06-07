@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.ModuleLayer.Controller;
 
 import static org.junit.Assert.*;
 

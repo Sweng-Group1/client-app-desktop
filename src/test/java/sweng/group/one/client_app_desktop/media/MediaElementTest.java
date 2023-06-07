@@ -14,7 +14,6 @@ import java.nio.file.Files;
 import javax.imageio.ImageIO;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -24,11 +23,6 @@ public class MediaElementTest {
 	
 	private Slide slide;
 	private final static String TEST_ASSET_PATH = "./src/test/java/sweng/group/one/client_app_desktop/media/testassets/";
-	
-	@Before
-	public void setup() {
-		Slide slide = new Slide(100, 100);
-	}
 	
 	@Test
 	public void imageDownloadTest() throws IOException {

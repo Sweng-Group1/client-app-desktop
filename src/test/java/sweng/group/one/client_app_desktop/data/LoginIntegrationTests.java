@@ -3,12 +3,8 @@ package sweng.group.one.client_app_desktop.data;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.time.Duration;
 
 import org.junit.Test;
-import org.junit.runner.OrderWith;
-
-import sweng.group.one.client_app_desktop.data.UserService;
 
 /*
  * TEST STRATEGY

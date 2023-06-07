@@ -29,7 +29,6 @@ import okhttp3.mockwebserver.MockWebServer;
 public class MapServerUnitTests {
 
 	private MockWebServer server;
-	private MapService serviceTest = new MapService();
 	private File tempFile; 
 	// This needs to the same as the MAP_FOLDER specified in MapService. 
 	private static final String MAP_FOLDER = "./assets/map/";
@@ -59,7 +58,7 @@ public class MapServerUnitTests {
 				.setResponseCode(200)
 				.setBody(body.toString()));
 		
-		Path foundMap = serviceTest.retrieveMap("MockedMap");
+		Path foundMap = MapService.retrieveMap("MockedMap");
 		tempFile = foundMap.toFile();
 		Path expectedMap = Paths.get(MAP_FOLDER + "MockedMap" + ".map");
 		

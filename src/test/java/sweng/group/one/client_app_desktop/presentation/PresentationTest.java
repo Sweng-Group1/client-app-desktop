@@ -7,14 +7,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xml.sax.SAXException;
-
-import sweng.group.one.client_app_desktop.graphics.Rectangle;
-import sweng.group.one.client_app_desktop.text.TextElement;
 
 public class PresentationTest {
 
@@ -82,25 +77,25 @@ public class PresentationTest {
 	@Test(expected = IOException.class)
 	/* Does the XML parser reject bad paths?*/
 	public void badPath() throws Exception {
-		Presentation pres = new Presentation(new File("this/does/not/exist"));
+		new Presentation(new File("this/does/not/exist"));
 	}
 
 	@Test(expected = SAXException.class)
 	/* Does the XML parser reject bad files? */
 	public void nonsense() throws Exception{
-		Presentation pres = new Presentation(new File("assets/xml/samples/nonsense.xml"));
+		new Presentation(new File("assets/xml/samples/nonsense.xml"));
 	}
 	
 	@Test(expected = SAXException.class)
 	/* Does the XML parser reject files with missing mandatory attributes? */
 	public void badElements() throws Exception{
-		Presentation pres = new Presentation(new File("assets/xml/samples/badElements.xml"));
+		new Presentation(new File("assets/xml/samples/badElements.xml"));
 	}
 
 	@Test(expected = NullPointerException.class)
 	/* Does the XML parser reject files with missing URLs */
 	public void noURL() throws Exception {
-		Presentation pres = new Presentation(new File("assets/xml/samples/nourl.xml"));
+		new Presentation(new File("assets/xml/samples/nourl.xml"));
 	}
 	
 }

@@ -7,7 +7,6 @@ import javax.swing.JPasswordField;
 
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.fixture.JButtonFixture;
-import org.assertj.swing.fixture.JPanelFixture;
 import org.assertj.swing.fixture.JTextComponentFixture;
 import org.junit.After;
 import org.junit.Before;
@@ -19,8 +18,6 @@ public class LoginSceneTest {
 	private JFrame testFrame;
 	
 	private FrameFixture window;
-	private LoginScene loginScene;
-	private JPanelFixture loginSceneFixture;
 	private JTextComponentFixture usernameField;
 	private JPasswordField passwordField;
 	private JButtonFixture loginButton;

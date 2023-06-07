@@ -43,16 +43,11 @@ public class HelpScene extends JPanel{
      * @param filePath the path to the PDF file
      */
     public HelpScene(String filePath) {
-        try {
-        	// Setup GUI Design
-        	setUpGUIElements();
-    		
-        	// Load the PDF from the filepath
-    		loadPDF(filePath);
-			
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    	// Setup GUI Design
+    	setUpGUIElements();
+		
+    	// Load the PDF from the filepath
+		loadPDF(filePath);
     }
     
     // -------------------------------------------------------------- //
@@ -111,7 +106,6 @@ public class HelpScene extends JPanel{
 
     	// Open the PDF document to view
     	controller.openDocument(filePath);
-
     }
     
     // Custom UI design to display in a coloured roundrect

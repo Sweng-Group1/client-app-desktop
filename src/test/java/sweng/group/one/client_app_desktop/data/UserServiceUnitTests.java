@@ -10,7 +10,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,7 +49,7 @@ public class UserServiceUnitTests {
             .setBody("{\"access_token\":\"" + testAccessToken + "\",\"refresh_token\":\"" + testRefreshToken + "\"}"));
 
         when(mockedUser.getUsername()).thenReturn(defaultAdminUsername);
-        int statusCode = serviceTest.login(mockedUser, defaultAdminPass);
+        serviceTest.login(mockedUser, defaultAdminPass);
 
         verify(mockedUser).saveAccessToken(testAccessToken);
         verify(mockedUser).saveRefreshToken(testRefreshToken);
@@ -64,7 +63,7 @@ public class UserServiceUnitTests {
             .setResponseCode(200)
             .setBody("{\"access_token\":\"" + testAccessToken + "\"}"));
         
-        int statusCode = serviceTest.refreshAccessToken(mockedUser);
+        serviceTest.refreshAccessToken(mockedUser);
         verify(mockedUser).saveAccessToken(testAccessToken);
     }
     

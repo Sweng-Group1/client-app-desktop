@@ -21,7 +21,6 @@ public class MapServerIntegrationTests {
 	
 	private String testMapName = "York";
 	private Map testMap = new Map(testMapName);
-	private MapService testMapService = new MapService();
 	
 	// Need these for authorisation as uploading maps is restricted to Admins. 
 	private String defaultAdminUsername = "sid";
@@ -48,13 +47,13 @@ public class MapServerIntegrationTests {
 
 	@Test
 	public void testUploadingMap() throws IOException, AuthenticationException {
-	int statusCode = testMapService.uploadMap(testMap, userTest.getAccessToken());
+	int statusCode = MapService.uploadMap(testMap, userTest.getAccessToken());
 	assertThat(statusCode).isEqualTo(200);
 	}
 
 	@Test
 	public void canDownloadMap() throws IOException, AuthenticationException {
-	Path mapPath = testMapService.retrieveMap(testMapName);
+	Path mapPath = MapService.retrieveMap(testMapName);
 	assertThat(mapPath).isNotEmptyFile();
 	}
 

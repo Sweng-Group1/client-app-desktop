@@ -39,6 +39,7 @@ public class MainScene extends JFrame implements LayoutManager{
 	public MainScene() {
 		super();
 		
+		this.setName("What's On: YUSU");
 		this.setSize(800, 500);
 		this.setMinimumSize(new Dimension(800, 500));
 		this.setMaximumSize(new Dimension(1920, 1080));
@@ -61,6 +62,7 @@ public class MainScene extends JFrame implements LayoutManager{
 			}
 		};
 		try {
+			this.setIconImage(ImageIO.read(new File("./assets/Yusu Logo 14.png")));
 			sidebarScene = new SidebarScene() {
 				private static final long serialVersionUID = -7428381636891994724L;
 
