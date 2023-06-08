@@ -18,7 +18,7 @@ import sweng.group.one.client_app_desktop.uiElements.UIConstants;
 
 
 /**
- * @author Fraser Todd (flt515) & Sophie Maw
+ * @author Fraser Todd, Sarujan Thevathasan & Sophie Maw
  */
 public class OptionsScene extends JPanel implements LayoutManager{
 		
