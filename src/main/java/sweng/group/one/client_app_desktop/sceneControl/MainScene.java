@@ -23,10 +23,15 @@ import org.xml.sax.SAXException;
 
 import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.presentation.Presentation;
+import sweng.group.one.client_app_desktop.uiElements.UIConstants;
 import sweng.group.one.client_app_desktop.data.AuthenticationException;
 import sweng.group.one.client_app_desktop.data.HashtagService;
 import sweng.group.one.client_app_desktop.data.PostService;
 
+
+/**
+ * @author Fraser Todd (flt515)
+ */
 public class MainScene extends JFrame implements LayoutManager{
 
 	private static final long serialVersionUID = 7994175471538717547L;
@@ -210,7 +215,7 @@ public class MainScene extends JFrame implements LayoutManager{
 		int w = parent.getWidth();
 		int h = parent.getHeight();
 		
-		final int optionsGap = 20;
+		final int optionsGap = UIConstants.GAP_WIDTH * 2;
 		
 		mapScene.setBounds(0, 0, w, h);
 		sidebarScene.setBounds(0, 0, w/3, h);
