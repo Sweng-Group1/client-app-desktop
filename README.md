@@ -1,5 +1,5 @@
 # client-app-desktop
-The desktop client-side application for SwEng Group 1
+The desktop client-side application for SwEng Group 1. This Compiles from src/sweng/group/one/client_app_desktop/App.main
 
 # General Plan
 Within the home folder of the repository, there is a UML Class diagram outlining the structure of the application.
