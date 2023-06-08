@@ -3,7 +3,7 @@ package sweng.group.one.client_app_desktop.data;
 import java.io.File;
 
 
-/*
+/**
  * @author Paul Pickering
  */
 public class Map {

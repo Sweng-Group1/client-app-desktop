@@ -1,7 +1,7 @@
 package sweng.group.one.client_app_desktop.data;
 
 /*
- * @author Paul Pickering
+ * @author Paul Pickering & Fraser Todd
  */
 import java.io.IOException;
 import java.util.ArrayList;

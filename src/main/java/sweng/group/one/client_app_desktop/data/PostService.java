@@ -23,7 +23,7 @@ import sweng.group.one.client_app_desktop.presentation.Presentation;
 /**
  * Service class for handling all post related server tasks, i.e., uploading, retrieving, deleting, etc.
  * Communicates with a server at the specified URL to perform these tasks.
- * @author Paul Pickering
+ * @author Paul Pickering & Fraser Todd
  */
 public class PostService {
 	private final static String postURL = "http://localhost:8080/api/v1/post";

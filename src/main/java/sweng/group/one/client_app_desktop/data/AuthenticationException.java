@@ -1,6 +1,6 @@
 package sweng.group.one.client_app_desktop.data;
 
-/*
+/**
  * @author Paul Pickering
  */
 public class AuthenticationException extends Exception {
