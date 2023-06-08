@@ -11,7 +11,7 @@ import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 
 
 /**
- * @author Will Hinton & Fraser Todd (flt515)
+ * @author Will Hinton, Fraser Todd & Matteo Pearce
  */
 public class VideoPlayer extends PlayableMediaElement {
 	
