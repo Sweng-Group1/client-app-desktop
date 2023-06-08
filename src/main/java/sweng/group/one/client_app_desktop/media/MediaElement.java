@@ -14,6 +14,9 @@ import java.util.UUID;
 import sweng.group.one.client_app_desktop.presentation.PresElement;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
+/**
+ * @author Fraser Todd (flt515)
+ */
 public abstract class MediaElement extends PresElement {
 	
 	protected String localPath;

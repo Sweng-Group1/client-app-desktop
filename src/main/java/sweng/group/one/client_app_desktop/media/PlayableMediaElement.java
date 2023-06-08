@@ -6,8 +6,7 @@ import java.net.URL;
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
 /**
- * @author flt515
- *
+ * @author Fraser Todd (flt515)
  */
 public abstract class PlayableMediaElement extends MediaElement {
 	

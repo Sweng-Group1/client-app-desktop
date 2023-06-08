@@ -6,6 +6,9 @@ import java.util.TimerTask;
 
 import javax.swing.JComponent;
 
+/**
+ * @author Fraser Todd (flt515)
+ */
 public abstract class PresElement {
     protected Point pos;
     protected int width;

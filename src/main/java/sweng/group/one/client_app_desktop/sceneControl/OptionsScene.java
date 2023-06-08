@@ -17,6 +17,9 @@ import sweng.group.one.client_app_desktop.uiElements.RoundedButton;
 import sweng.group.one.client_app_desktop.uiElements.UIConstants;
 
 
+/**
+ * @author Fraser Todd (flt515) & Sophie Maw
+ */
 public class OptionsScene extends JPanel implements LayoutManager{
 		
 

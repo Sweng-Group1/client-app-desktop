@@ -35,6 +35,7 @@ import sweng.group.one.client_app_desktop.uiElements.YUSUColours;
  * @author joncooke
  * Refactored sophiemaw
  * Re-refactored srikanthj
+ * Completly Overhauled by Fraser Todd (flt515)
  */
 public class SidebarScene extends JPanel implements LayoutManager{
 	

@@ -1,6 +1,7 @@
 package sweng.group.one.client_app_desktop.mapping;
 
 import java.awt.AlphaComposite;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -17,9 +18,9 @@ import org.mapsforge.core.util.MercatorProjection;
 import org.mapsforge.map.awt.graphics.AwtBitmap;
 import org.mapsforge.map.awt.view.MapView;
 import org.mapsforge.map.layer.Layer;
+
 /**
- * @author flt515
- *
+ * @author Fraser Todd (flt515)
  */
 public class HeatMap extends Layer {
     private static final String CIRCLEPIC_PATH = "./assets/map/bolilla.png";

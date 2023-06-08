@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
- * @author flt515
- *
+ * @author Fraser Todd (flt515)
  */
 @SuppressWarnings("serial")
 public class Slide extends JPanel implements LayoutManager {

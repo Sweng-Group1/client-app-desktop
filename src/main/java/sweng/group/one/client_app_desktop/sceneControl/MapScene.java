@@ -39,8 +39,7 @@ import sweng.group.one.client_app_desktop.mapping.EventMarker;
 import sweng.group.one.client_app_desktop.mapping.HeatMap;
 
 /**
- * @author flt515
- *
+ * @author Fraser Todd (flt515)
  */
 public class MapScene extends MapView{
 	

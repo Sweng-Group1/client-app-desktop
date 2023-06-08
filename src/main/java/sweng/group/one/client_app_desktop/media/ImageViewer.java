@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 
 import sweng.group.one.client_app_desktop.presentation.Slide;
 
+/**
+ * @author Luke George & Fraser Todd (flt515)
+ */
 public class ImageViewer extends MediaElement {
 	private BufferedImage image; 
 	private int rotation;

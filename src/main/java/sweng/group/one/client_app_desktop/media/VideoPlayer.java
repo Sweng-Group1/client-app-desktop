@@ -9,6 +9,10 @@ import sweng.group.one.client_app_desktop.presentation.Slide;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.component.CallbackMediaPlayerComponent;
 
+
+/**
+ * @author Will Hinton & Fraser Todd (flt515)
+ */
 public class VideoPlayer extends PlayableMediaElement {
 	
 	private final CallbackMediaPlayerComponent mediaPlayer;

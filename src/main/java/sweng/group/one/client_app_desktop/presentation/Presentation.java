@@ -49,8 +49,7 @@ import sweng.group.one.client_app_desktop.media.VideoPlayer;
 import sweng.group.one.client_app_desktop.text.TextElement;
 
 /**
- * @author flt515
- *
+ * @author Fraser Todd (flt515)
  */
 public class Presentation extends JPanel {
 	

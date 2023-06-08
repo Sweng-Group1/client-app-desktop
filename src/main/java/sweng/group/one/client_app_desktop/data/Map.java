@@ -3,7 +3,9 @@ package sweng.group.one.client_app_desktop.data;
 import java.io.File;
 
 
-
+/*
+ * @author Paul Pickering
+ */
 public class Map {
 	
 	private String name; // This must correspond to the "name" of the map on the server. Eg. "YUSU" or "York"
